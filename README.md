@@ -13,12 +13,15 @@ Our technology stack still isn't finalized and we're still researching
 | ![GCP](https://img.icons8.com/color/48/000000/google-cloud-platform.png) ![AWS](https://img.icons8.com/color/48/000000/amazon-web-services.png) | **GCP** and **AWS** are cloud computing platforms that provide a range of services, including computing, storage, and databases, as well as tools for managing and deploying applications. They are used for scalable and reliable hosting. | Cloud Testing Frameworks |
 | ![Firebase](https://img.icons8.com/color/48/000000/firebase.png) | **Firebase** is a mobile and web application development platform that provides tools and services for building, deploying, and managing apps. It includes features such as authentication, real-time database, cloud storage, and hosting. | Firebase Testing Frameworks |
 ## The Team
-![enter image description here](https://drive.google.com/uc?export=view&id=1V4vdZwFScQq9mlrW2cNxjKZGItLo5gxc)
+
+The debugging angels:
 
 | Members                                          | Description                                            |
 | ------------------------------------------------ | ------------------------------------------------------ |
-| Tiyego Khoza (Team Lead) <br> ![Tiyego Khoza](https://github.com/emito-k.png?size=50) | Experienced team leader with strong project management skills. |
-| Emmanuella Birato <br> ![Emmanuella Birato](https://github.com/emmanuella08.png?size=50) | Front-end developer with expertise in React and Redux. |
-| Mduduzi Sibiya <br> ![Mduduzi Sibiya](https://github.com/duzi-art.png?size=50) | Full-stack developer with experience in Django and React. |
-| Israel Bango <br> ![Israel Bango](https://github.com/Ibango7.png?size=50) | Back-end developer with expertise in Node.js and MongoDB. |
-| Sovaria Naidu <br> ![Sovaria Naidu](https://github.com/sovaria10.png?size=50) | UI/UX designer with experience in Adobe XD and Figma. |
+| Tiyego Khoza (Team Lead) <br> [![Tiyego Khoza](https://github.com/emito-k.png?size=50)](https://github.com/emito-k) <br> [![LinkedIn](https://img.shields.io/badge/-LinkedIn-blue?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/emito/) | A final year computer science student with interests in cybersecurity and technology. |
+| Emmanuella Birato <br> [![Emmanuella Birato](https://github.com/emmanuella08.png?size=50)](https://github.com/emmanuella08) <br> [![LinkedIn](https://img.shields.io/badge/-LinkedIn-blue?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/emmanuella-birato/) | Front-end developer with expertise in React and Redux. |
+| Mduduzi Sibiya <br> [![Mduduzi Sibiya](https://github.com/duzi-art.png?size=50)](https://github.com/duzi-art) <br> [![LinkedIn](https://img.shields.io/badge/-LinkedIn-blue?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/mduduzi-sibiya-4302a6183/) | Full-stack developer with experience in Django and React. |
+| Israel Bango <br> [![Israel Bango](https://github.com/Ibango7.png?size=50)](https://github.com/Ibango7) <br> [![LinkedIn](https://img.shields.io/badge/-LinkedIn-blue?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/israel-bango-26b1551a4/) | Back-end developer with expertise in Node.js and MongoDB. |
+| Sovaria Naidu <br> [![Sovaria Naidu](https://github.com/sovaria10.png?size=50)](https://github.com/sovaria10) <br> [![LinkedIn](https://img.shields.io/badge/-LinkedIn-blue?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/sovaria-naidu-06a417156/) | UI/UX designer with experience in Adobe XD and Figma. |
+
+In this updated version, each team member's name now has two clickable icons: one for their GitHub account and one for their LinkedIn account. Clicking on the GitHub icon will redirect to their GitHub account, while clicking on the LinkedIn icon will redirect to their LinkedIn account.
