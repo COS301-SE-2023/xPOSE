@@ -1,0 +1,7 @@
+{
+  "name": "xpose",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
