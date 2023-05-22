@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Blank
+      Events
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,12 +9,52 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
+      <ion-title size="large">Home</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+  <div id="header-container">
+    <ion-toolbar>
+      <ion-searchbar placeholder="Search events" animated class="custom-searchbar"></ion-searchbar>
+    </ion-toolbar>
+    <ion-toolbar>
+      <ion-button expand="block" routerLink="/create-event" animated class="custom-event-button">Create Event</ion-button>
+    </ion-toolbar>
   </div>
+  
+  <div class="event-container">
+    <ion-card *ngFor="let event of events" class="event-card">
+      <img [src]="event.image" alt="Event Image" />
+      <ion-card-header>
+        <ion-card-title>{{ event.title }}</ion-card-title>
+        <ion-card-subtitle>{{ event.subtitle }}</ion-card-subtitle>
+      </ion-card-header>
+
+      <ion-card-content>
+        {{ event.description }}
+      </ion-card-content>
+    </ion-card>
+  </div>
+  
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar position="fixed">
+    <ion-tabs>
+      <ion-tab-bar slot="bottom">
+        <ion-tab-button tab="home">
+          <ion-icon name="home"></ion-icon>
+          <ion-label>Home</ion-label>
+        </ion-tab-button>
+        <ion-tab-button tab="events">
+          <ion-icon name="calendar"></ion-icon>
+          <ion-label>Events</ion-label>
+        </ion-tab-button>
+        <ion-tab-button tab="profile">
+          <ion-icon name="person"></ion-icon>
+          <ion-label>Profile</ion-label>
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs>
+  </ion-toolbar>
+</ion-footer>
