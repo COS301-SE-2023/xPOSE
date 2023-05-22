@@ -1,0 +1,42 @@
+ion-title{
+    text-align: center;
+}
+
+div{
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+    margin-top: 15px;
+}
+
+form{
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center;
+}
+
+ion-item{
+    margin-bottom: 35px;
+}
+
+ion-button{
+    padding: 5px;
+}
+
+ion-input{
+    width: 95%; 
+    margin-bottom: 25px; 
+    margin-top: 5px;
+}
+
+ion-textarea{
+    width: 95%; 
+    margin-bottom: 25px; 
+    margin-top: 5px;
+}
+
+#createEventBtn{
+    width: 95%;
+}

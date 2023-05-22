@@ -1,26 +1,26 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title style="text-align: center;">Create Event</ion-title>
+    <ion-title>Create Event</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; margin-top: 15px;">
-    <form style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+  <div>
+    <form>
       <!-- <ion-input label="Email" label-placement="floating" fill="outline" placeholder="Email" style="margin-bottom: 10px; width: 350px;"></ion-input>
       <ion-input label="Password" label-placement="floating" type="password" fill="outline" placeholder="Password" style="margin-top: 10px; width: 350px; margin-bottom: 10px;"></ion-input>
       <ion-button style="width: 350px;">Login</ion-button> -->
-      <ion-item style="margin-bottom: 35px;">
-        <ion-button color="light" size="large" style="padding: 5px;">Public</ion-button>
-        <ion-button color="light" size="large" style="padding: 5px;">Private</ion-button>
+      <ion-item>
+        <ion-button color="light" size="large">Public</ion-button>
+        <ion-button color="light" size="large">Private</ion-button>
       </ion-item>
       
-      <ion-input label="Event Name" label-placement="floating" fill="outline" placeholder="eventName" style="width: 350px; margin-bottom: 25px; margin-top: 5px;"></ion-input>
-      <ion-textarea label="Event Description" labelPlacement="floating" fill="solid" placeholder="eventDescription" style="width: 350px; margin-bottom: 25px; margin-top: 5px;"></ion-textarea>
+      <ion-input label="Event Name" label-placement="floating" fill="outline" placeholder="eventName"></ion-input>
+      <ion-textarea label="Event Description" labelPlacement="floating" fill="solid" placeholder="eventDescription"></ion-textarea>
 
-      <ion-input type="file" label="Upload Cover Page Image" label-placement="floating" fill="outline" placeholder="img" style="width: 350px; margin-bottom: 25px; margin-top: 5px;"></ion-input>
+      <ion-input type="file" label="Upload Cover Page Image" label-placement="floating" fill="outline" placeholder="img"></ion-input>
 
-      <ion-button color="success" style="width: 350px;">Create Event</ion-button>
+      <ion-button id="createEventBtn" color="success">Create Event</ion-button>
     </form>
   </div>
 </ion-content>
