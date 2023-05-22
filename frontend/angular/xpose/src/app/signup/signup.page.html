@@ -5,10 +5,10 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <form>
-    <ion-input label="Name" label-placement="floating" fill="outline" placeholder="Name"></ion-input>
-    <ion-input label="Email" label-placement="floating" fill="outline" placeholder="Email"></ion-input>
-    <ion-input label="Password" label-placement="floating" type="password" fill="outline" placeholder="Password"></ion-input>
-    <ion-button color="success">Sign Up</ion-button>
+  <form (ngSubmit)="onSubmit()">
+    <ion-input label="Name" label-placement="floating" fill="outline" placeholder="Name" [(ngModel)]="name"></ion-input>
+    <ion-input label="Email" label-placement="floating" fill="outline" placeholder="Email" [(ngModel)]="email"></ion-input>
+    <ion-input label="Password" label-placement="floating" type="password" fill="outline" placeholder="Password" [(ngModel)]="password"></ion-input>
+    <ion-button color="success" type="submit">Sign Up</ion-button>
   </form>
 </ion-content>
