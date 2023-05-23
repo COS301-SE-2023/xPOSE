@@ -6,7 +6,7 @@
 
 <ion-content [fullscreen]="true">
   <div>
-    <form (ngSubmit)="onSubmit()">
+    <form>
       <!-- <ion-input label="Email" label-placement="floating" fill="outline" placeholder="Email" style="margin-bottom: 10px; width: 350px;"></ion-input>
       <ion-input label="Password" label-placement="floating" type="password" fill="outline" placeholder="Password" style="margin-top: 10px; width: 350px; margin-bottom: 10px;"></ion-input>
       <ion-button style="width: 350px;">Login</ion-button> -->
@@ -15,12 +15,17 @@
         <ion-button color="light" size="large">Private</ion-button>
       </ion-item>
       
-      <ion-input label="Event Name" label-placement="floating" fill="outline" placeholder="eventName" [(ngModel)]="eventName"></ion-input>
-      <ion-textarea label="Event Description" labelPlacement="floating" fill="solid" placeholder="eventDescription" [(ngModel)]="eventDesc"></ion-textarea>
+      <ion-input label="Event Name" label-placement="floating" fill="outline" placeholder="eventName"></ion-input>
+      <ion-textarea label="Event Description" labelPlacement="floating" fill="solid" placeholder="eventDescription"></ion-textarea>
 
-      <ion-input type="file" label="Upload Cover Page Image" label-placement="floating" fill="outline" placeholder="img" (change)="onFileSelected($event)"></ion-input>
+      <ion-input type="file" label="Upload Cover Page Image" label-placement="floating" fill="outline" placeholder="img"></ion-input>
 
       <ion-button id="createEventBtn" color="success">Create Event</ion-button>
     </form>
   </div>
 </ion-content>
+
+<!-- (ngSubmit)="onSubmit()"
+[(ngModel)]="eventName"
+[(ngModel)]="eventDesc"
+(change)="onFileSelected($event)" -->
