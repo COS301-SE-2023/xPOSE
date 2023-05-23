@@ -1,2 +1,2 @@
-Event Name: Test Event
-Event Description: This is a test event
+Event Name: sdaf
+Event Description: sadgsfag
