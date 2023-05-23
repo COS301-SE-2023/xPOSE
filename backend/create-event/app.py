@@ -12,13 +12,18 @@ def create_event():
         event_desc = request.form.get('eventDesc')
         cover_image = request.files['coverImage']
 
+        # Create "images" directory if it doesn't exist
+        images_dir = os.path.join(os.getcwd(), 'images')
+        if not os.path.exists(images_dir):
+            os.makedirs(images_dir)
+
         # Save event data to text file
         event_data = f"Event Name: {event_name}\nEvent Description: {event_desc}"
         with open('event_data.txt', 'w') as file:
             file.write(event_data)
 
-        # Save image file to the same directory
-        image_path = os.path.join(app.root_path, cover_image.filename)
+        # Save image file in the "images" directory
+        image_path = os.path.join(images_dir, cover_image.filename)
         cover_image.save(image_path)
 
         # Return success response
@@ -38,4 +43,4 @@ def create_event():
         return jsonify(response), 500
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
