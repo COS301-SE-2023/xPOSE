@@ -4,24 +4,105 @@
   position: absolute;
   left: 0;
   right: 0;
-  top: 50%;
+  top: 13%;
   transform: translateY(-50%);
+ 
 }
 
 #container strong {
   font-size: 20px;
   line-height: 26px;
+  
 }
 
 #container p {
   font-size: 16px;
   line-height: 22px;
 
-  color: #8c8c8c;
-
+  color: #ffffff;
+  
   margin: 0;
 }
 
 #container a {
   text-decoration: none;
 }
+#header-container {
+  padding: 20px;
+  --background-color: #e8e8e8;
+  --ion-toolbar-background: #ffffff;
+}
+.custom-searchbar {
+  --background: #ffffff;        /* Background color */
+  --border-color: #f2cfcf;          /* Border color */
+  --placeholder-color: #000000;     /* Placeholder text color */
+  --color: #333;                 /* Text color */
+  --searchbar-icon-color: #666;  /* Search icon color */
+  --searchbar-cancel-icon-color: #666; /* Cancel icon color */
+  --border-radius: 200px;
+}
+
+ion-content {
+  --ion-background-color: #ffffff; /* Replace with your desired background color */
+}
+.event-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  
+}
+.event-container {
+  flex: 1; /* Use flexbox to allow the content container to take up remaining space */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; /* Position the event cards at the bottom */
+  padding: 20px;
+}
+
+.event-card {
+  width: 95%;
+  background-color: #e8e8e8;
+  border-radius: 10px;
+  padding: 30%;
+  margin: 4%;
+  
+}
+
+.event-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #000;
+  --margin-bottom: 10px;
+
+}
+
+.event-date {
+  font-size: 16px;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.event-location {
+  font-size: 16px;
+  color: #333;
+}
+
+
+.custom-event-button {
+  --background: #3bb03b;        /* Background color */
+  --border-color: #f2cfcf;          /* Border color */
+  --placeholder-color: #000000;     /* Placeholder text color */
+  --color: #333;                 /* Text color */
+  --searchbar-icon-color: #666;  /* Search icon color */
+  --searchbar-cancel-icon-color: #666; /* Cancel icon color */
+  --border-radius: 200px;
+  
+  
+}
+
+
+
+
+
+
