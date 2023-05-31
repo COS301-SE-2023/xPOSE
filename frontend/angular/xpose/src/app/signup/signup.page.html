@@ -1,13 +1,14 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>signup</ion-title>
+    <ion-title>Sign Up</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">signup</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <form (ngSubmit)="onSubmit()">
+    <ion-input label="Name" label-placement="floating" fill="outline" placeholder="Name" [(ngModel)]="name"></ion-input>
+    <ion-input label="Email" label-placement="floating" fill="outline" placeholder="Email" [(ngModel)]="email"></ion-input>
+    <ion-input label="Password" label-placement="floating" type="password" fill="outline" placeholder="Password" [(ngModel)]="password"></ion-input>
+    <ion-button color="success" type="submit">Sign Up</ion-button>
+  </form>
 </ion-content>
