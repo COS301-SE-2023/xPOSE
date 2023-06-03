@@ -39,6 +39,9 @@ ion-button {
 }
 
 ion-card {
+  border-radius: 20px;
+
+
   .button-style {
     --background: #93e9be;
     --background-hover: #9ce0be;
@@ -47,7 +50,7 @@ ion-card {
   
     --color: blue;
   
-    --border-radius: 0;
+    --border-radius: 20px;
     --border-color: #000;
     --border-style: solid;
     --border-width: 1px;
