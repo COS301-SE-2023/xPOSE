@@ -13,11 +13,13 @@ export class HomePage {
       title: 'Title',
       subtitle: 'Subtitle 1',
       description: 'Description 1',
+      button: 'Join event'
     },
     {
       title: 'Title 2',
       subtitle: 'Subtitle 2',
       description: 'Description 2',
+      button: 'join event'
     },
   ];
 }
