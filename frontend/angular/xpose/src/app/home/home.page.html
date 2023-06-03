@@ -1,41 +1,36 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
+  <ion-toolbar class="custom-toolbar">
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
     <ion-title>
-      Events
+      xPOSE
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+<ion-menu side="end" content-id="main-content">
+  <ion-header>
     <ion-toolbar>
-      <ion-title size="large">Home</ion-title>
+      <ion-title>Menu</ion-title>
     </ion-toolbar>
   </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item>Option 1</ion-item>
+      <ion-item>Option 2</ion-item>
+      <ion-item>Option 3</ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
 
-  <div id="header-container">
-    <ion-toolbar>
-      <ion-searchbar placeholder="Search events" animated class="custom-searchbar"></ion-searchbar>
-    </ion-toolbar>
-    <ion-toolbar>
-      <ion-button expand="block" routerLink="/create-event" animated class="custom-event-button">Create Event</ion-button>
-    </ion-toolbar>
+<ion-content [fullscreen]="true" id="main-content">
+  <div class="button-container">
+    <div class="button-wrapper">
+      <ion-button fill="clear">HOME</ion-button>
+      <ion-button fill="clear">CREATE EVENT</ion-button>
+    </div>
   </div>
-  
-  <div class="event-container">
-    <ion-card *ngFor="let event of events" class="event-card">
-      <img [src]="event.image" alt="Event Image" />
-      <ion-card-header>
-        <ion-card-title>{{ event.title }}</ion-card-title>
-        <ion-card-subtitle>{{ event.subtitle }}</ion-card-subtitle>
-      </ion-card-header>
-
-      <ion-card-content>
-        {{ event.description }}
-      </ion-card-content>
-    </ion-card>
-  </div>
-  
 </ion-content>
 
 <ion-footer>
@@ -43,15 +38,19 @@
     <ion-tabs>
       <ion-tab-bar slot="bottom">
         <ion-tab-button tab="home">
-          <ion-icon name="home"></ion-icon>
+          <ion-icon name="home-outline"></ion-icon>
           <ion-label>Home</ion-label>
         </ion-tab-button>
-        <ion-tab-button tab="events">
-          <ion-icon name="calendar"></ion-icon>
-          <ion-label>Events</ion-label>
+        <ion-tab-button tab="create-event">
+          <ion-icon name="add-circle-outline"></ion-icon>
+          <ion-label>My Event</ion-label>
+        </ion-tab-button>
+        <ion-tab-button tab="notifications">
+          <ion-icon name="notifications-outline"></ion-icon>
+          <ion-label>Notifications</ion-label>
         </ion-tab-button>
         <ion-tab-button tab="profile">
-          <ion-icon name="person"></ion-icon>
+          <ion-icon name="person-outline"></ion-icon>
           <ion-label>Profile</ion-label>
         </ion-tab-button>
       </ion-tab-bar>

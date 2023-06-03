@@ -1,108 +1,43 @@
-#container {
-  text-align: center;
+// app.component.scss
 
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 13%;
-  transform: translateY(-50%);
- 
-}
-
-#container strong {
+ion-toolbar.custom-toolbar {
+  --background: #ffffff;
+  color: #000000;
   font-size: 20px;
-  line-height: 26px;
-  
+  /* Add more custom styles as needed */
+  --min-height: 85px;
 }
 
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-
-  color: #ffffff;
-  
-  margin: 0;
+ion-content#main-content {
+  --background: #f0f0f0;
+  /* Add more custom styles as needed */
 }
 
-#container a {
-  text-decoration: none;
-}
-#header-container {
-  padding: 20px;
-  --background-color: #e8e8e8;
-  --ion-toolbar-background: #ffffff;
-}
-.custom-searchbar {
-  --background: #ffffff;        /* Background color */
-  --border-color: #f2cfcf;          /* Border color */
-  --placeholder-color: #000000;     /* Placeholder text color */
-  --color: #333;                 /* Text color */
-  --searchbar-icon-color: #666;  /* Search icon color */
-  --searchbar-cancel-icon-color: #666; /* Cancel icon color */
-  --border-radius: 200px;
-}
+ion-button {
 
-ion-content {
-  --ion-background-color: #ffffff; /* Replace with your desired background color */
-}
-.event-cards {
-  display: flex;
-  flex-wrap: wrap;
+  display:flex;
   justify-content: center;
-  
+  align-items: center;  
+
+  // --background: #93e9be;
+  // --background-hover: #9ce0be;
+  // --background-activated: #88f4be;
+  // --background-focused: #88f4be;
+
+  --color: rgb(0, 0, 0);
+  font-size: 23px;
+
+  --ripple-color: deeppink;
+
+  --padding-top: 25px;
+  --padding-bottom: 25px;
 }
-.event-container {
-  flex: 1; /* Use flexbox to allow the content container to take up remaining space */
+.button-wrapper {
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end; /* Position the event cards at the bottom */
-  padding: 20px;
+  justify-content: center;
+  align-items: center;
 }
 
-.event-card {
-  width: 95%;
-  background-color: #e8e8e8;
-  border-radius: 10px;
-  padding: 30%;
-  margin: 4%;
-  
+.button-wrapper ion-button {
+  margin: 0 10px;
 }
-
-.event-title {
-  font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 10px;
-  color: #000;
-  --margin-bottom: 10px;
-
-}
-
-.event-date {
-  font-size: 16px;
-  margin-bottom: 5px;
-  color: #333;
-}
-
-.event-location {
-  font-size: 16px;
-  color: #333;
-}
-
-
-.custom-event-button {
-  --background: #3bb03b;        /* Background color */
-  --border-color: #f2cfcf;          /* Border color */
-  --placeholder-color: #000000;     /* Placeholder text color */
-  --color: #333;                 /* Text color */
-  --searchbar-icon-color: #666;  /* Search icon color */
-  --searchbar-cancel-icon-color: #666; /* Cancel icon color */
-  --border-radius: 200px;
-  
-  
-}
-
-
-
-
-
-
