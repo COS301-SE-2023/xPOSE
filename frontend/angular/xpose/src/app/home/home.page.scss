@@ -5,7 +5,7 @@ ion-toolbar.custom-toolbar {
   color: #000000;
   font-size: 20px;
   /* Add more custom styles as needed */
-  --min-height: 85px;
+  --min-height: 70px;
 }
 
 ion-content#main-content {
@@ -19,18 +19,14 @@ ion-button {
   justify-content: center;
   align-items: center;  
 
-  // --background: #93e9be;
-  // --background-hover: #9ce0be;
-  // --background-activated: #88f4be;
-  // --background-focused: #88f4be;
 
   --color: rgb(0, 0, 0);
-  font-size: 23px;
+  font-size: 20px;
 
   --ripple-color: deeppink;
 
   --padding-top: 25px;
-  --padding-bottom: 25px;
+  --padding-bottom: 29px;
 }
 .button-wrapper {
   display: flex;
@@ -39,5 +35,5 @@ ion-button {
 }
 
 .button-wrapper ion-button {
-  margin: 0 10px;
+  margin: 5px;
 }
