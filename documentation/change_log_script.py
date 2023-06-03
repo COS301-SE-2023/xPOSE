@@ -12,10 +12,11 @@ def add_change_log(markdown_file, document_name, changes_made):
 
 # Function to commit and push changes to Git
 def commit_and_push_changes(markdown_file, document_name):
+    commit_message = input("Enter the commit message: ")
     try:
         subprocess.run(["git", "pull"])
         subprocess.run(["git", "add", markdown_file])
-        subprocess.run(["git", "commit", "-m", f"Update {document_name}"])
+        subprocess.run(["git", "commit", "-m", f"Updated {document_name} - {commit_message}"])
         subprocess.run(["git", "push"])
         print("Changes committed and pushed successfully!")
     except subprocess.CalledProcessError as e:
