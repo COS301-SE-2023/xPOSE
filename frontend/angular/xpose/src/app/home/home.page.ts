@@ -19,7 +19,9 @@ export class HomePage {
       title: 'Title 2',
       subtitle: 'Subtitle 2',
       description: 'Description 2',
-      button: 'join event'
-    },
+      button: 'Join event'
+    }
   ];
+
+  constructor() { }
 }
