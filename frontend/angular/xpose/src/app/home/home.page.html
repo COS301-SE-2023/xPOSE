@@ -9,6 +9,7 @@
   </ion-toolbar>
 </ion-header>
 
+<!-- menu  -->
 <ion-menu side="end" content-id="main-content">
   <ion-header>
     <ion-toolbar>
@@ -31,6 +32,19 @@
       <ion-button fill="clear">CREATE EVENT</ion-button>
     </div>
   </div>
+
+  <ion-card color="light" *ngFor="let card of cards">
+    <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
+    <ion-card-header>
+      <ion-card-title>{{ card.title }}</ion-card-title>
+      <ion-card-subtitle>{{ card.subtitle }}</ion-card-subtitle>
+    </ion-card-header>
+  
+    <ion-card-content>
+      {{ card.description }}
+    </ion-card-content>
+  </ion-card>
+
 </ion-content>
 
 <ion-footer>
