@@ -1,13 +1,25 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>login</ion-title>
+    <ion-title class="centered-title">Login</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">login</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div>
+    <form>      
+      <ion-input label="Username" label-placement="floating" fill="outline" placeholder="Username" name="username"></ion-input>
+      <ion-input label="Password" label-placement="floating" fill="outline" placeholder="Password" name="password"></ion-input>
+      <ion-note id="forgotPassword" slot="end" color="primary" class="ion-margin-top">
+        <a>Forgot Password?</a>
+      </ion-note>
+
+      <ion-button id="submitBtn" type="submit" class="custom-btn">Login</ion-button>
+      <ion-button id="submitBtn" type="submit" class="custom-btn">Login with Google</ion-button>
+      <ion-button id="submitBtn" type="submit" class="custom-btn">Login with Facebook</ion-button>
+
+    </form>
+    <div class="no-account-link">
+      <p>No account? <a>Click here</a></p>
+    </div>
+  </div>
 </ion-content>
