@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
 
 @Component({
-  selector: 'app-signup',
-  templateUrl: './signup.page.html',
-  styleUrls: ['./signup.page.scss'],
+	selector: "app-signup",
+	templateUrl: "./signup.page.html",
+	styleUrls: ["./signup.page.scss"],
 })
 export class SignupPage implements OnInit {
 
@@ -18,21 +18,21 @@ export class SignupPage implements OnInit {
   }
 
   onSubmit() {
-    const formData = {
-      name: this.name,
-      email: this.email,
-      password: this.password
-    };
+  	const formData = {
+  		name: this.name,
+  		email: this.email,
+  		password: this.password
+  	};
 
-    this.http.post('https://example.com/api/signup', formData).subscribe(
-      response => {
-        console.log('API response:', response);
-        // Handle successful API response
-      },
-      error => {
-        console.error('API error:', error);
-        // Handle API error
-      }
-    );
+  	this.http.post("https://example.com/api/signup", formData).subscribe(
+  		response => {
+  			console.log("API response:", response);
+  			// Handle successful API response
+  		},
+  		error => {
+  			console.error("API error:", error);
+  			// Handle API error
+  		}
+  	);
   }
 }

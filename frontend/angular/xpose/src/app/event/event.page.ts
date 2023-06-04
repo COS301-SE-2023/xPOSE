@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 
 @Component({
-  selector: 'app-event',
-  templateUrl: './event.page.html',
-  styleUrls: ['./event.page.scss'],
+	selector: "app-event",
+	templateUrl: "./event.page.html",
+	styleUrls: ["./event.page.scss"],
 })
 export class EventPage implements OnInit {
 
-  constructor() { }
+	constructor() { }
 
-  ngOnInit() {
-  }
+	ngOnInit() {
+	}
 
 }
