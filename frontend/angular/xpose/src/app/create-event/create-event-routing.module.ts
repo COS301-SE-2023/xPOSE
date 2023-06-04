@@ -13,10 +13,10 @@ const routes: Routes = [
 
 @NgModule({
 	imports: [RouterModule.forChild(routes),
-		HttpClientModule
+	HttpClientModule
 	],
 	exports: [RouterModule,
-		HttpClientModule
+	HttpClientModule
 	],
-})
+	})
 export class CreateEventPageRoutingModule {}
