@@ -1,4 +1,4 @@
-name: Frontend Lint
+name: Frontend Linter
 
 on:
   push:
@@ -8,6 +8,7 @@ on:
 
 jobs:
   lint:
+    name: Lint
     runs-on: ubuntu-latest
 
     steps:
@@ -21,6 +22,8 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+        working-directory: frontend/angular/xpose  # Update the working directory path
 
-      - name: Run ESLint
-        run: npx eslint frontend/angular/xpose --ext .js,.ts
+      - name: Lint with ESLint
+        run: npx eslint .
+        working-directory: frontend/angular/xpose  # Update the working directory path
