@@ -1,0 +1,29 @@
+name: Frontend Linter
+
+on:
+  push:
+    branches:
+      - main
+      - development
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: frontend/angular/xpose  # Update the working directory path
+
+      - name: Lint with ESLint
+        run: npx eslint .
+        working-directory: frontend/angular/xpose  # Update the working directory path
