@@ -1,26 +1,41 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Create Event</ion-title>
+    <ion-title class="centered-title"><ion-icon name="arrow-back-outline" class="left-arrow"></ion-icon>
+      Create Event
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <div>
-    <form (ngSubmit)="onSubmit()">
+    <form>
       <!-- <ion-input label="Email" label-placement="floating" fill="outline" placeholder="Email" style="margin-bottom: 10px; width: 350px;"></ion-input>
       <ion-input label="Password" label-placement="floating" type="password" fill="outline" placeholder="Password" style="margin-top: 10px; width: 350px; margin-bottom: 10px;"></ion-input>
       <ion-button style="width: 350px;">Login</ion-button> -->
       <ion-item>
-        <ion-button color="light" size="large">Public</ion-button>
-        <ion-button color="light" size="large">Private</ion-button>
+        <ion-button size="medium" class="custom-btn">Public</ion-button>
+        <ion-button size="medium" class="custom-btn">Private</ion-button>
       </ion-item>
       
-      <ion-input label="Event Name" label-placement="floating" fill="outline" placeholder="Event Name" [(ngModel)]="eventName" name="eventName"></ion-input>
-      <ion-textarea label="Event Description" labelPlacement="floating" fill="solid" placeholder="Event Description" [(ngModel)]="eventDesc" name="eventDescription"></ion-textarea>
+      <ion-input type="file" label="Upload Cover Page Image" label-placement="floating" fill="outline" placeholder="img"></ion-input>
+      
+      <ion-input label="Event Name" label-placement="floating" fill="outline" placeholder="Event Name" name="eventName"></ion-input>
+      <ion-textarea label="Event Description" labelPlacement="floating" fill="solid" placeholder="Event Description" name="eventDescription"></ion-textarea>
+      <ion-input label="Location" label-placement="floating" fill="outline" placeholder="Location" name="location"></ion-input>
 
-      <ion-input type="file" label="Upload Cover Page Image" label-placement="floating" fill="outline" placeholder="img" (change)="onFileSelected($event)"></ion-input>
+      <!--start date-->
+      <ion-datetime-button datetime="datetime"></ion-datetime-button>
 
-      <ion-button id="createEventBtn" color="success" type="submit">Create Event</ion-button>
+      <!--end date-->
+      <ion-datetime-button datetime="datetime"></ion-datetime-button>
+
+      <ion-modal [keepContentsMounted]="true">
+        <ng-template>
+          <ion-datetime id="datetime"></ion-datetime>
+        </ng-template>
+      </ion-modal>
+
+      <ion-button id="submitBtn" type="submit" class="custom-btn">Create Event</ion-button>
     </form>
   </div>
 </ion-content>
