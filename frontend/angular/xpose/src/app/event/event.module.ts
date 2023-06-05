@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { EventPageRoutingModule } from './event-routing.module';
+// import { EventPageRoutingModule } from './event-routing.module';
 
 import { EventPage } from './event.page';
 
@@ -13,7 +13,7 @@ import { EventPage } from './event.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    EventPageRoutingModule
+    // EventPageRoutingModule
   ],
   declarations: [EventPage]
 })
