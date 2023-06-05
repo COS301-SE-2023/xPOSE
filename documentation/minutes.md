@@ -3,3 +3,4 @@
 | Date       | Changes Made                            |
 |------------|-----------------------------------------|
 | 2023-06-04 | Updated minutes up to current date |
+| 2023-06-05 | updated minutes |
