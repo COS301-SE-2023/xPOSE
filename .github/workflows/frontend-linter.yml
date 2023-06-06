@@ -2,9 +2,9 @@ name: Frontend Linter
 
 on:
   push:
-    branches:
-      - main
-      - development
+#     branches:
+#       - main
+#       - development
 
 jobs:
   lint:
