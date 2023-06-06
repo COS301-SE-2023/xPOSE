@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "xpose-4f48c": {
+      "hosting": {
+        "app": [
+          "xpose-4f48c"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "xpose-4f48c"
+  }
+}
