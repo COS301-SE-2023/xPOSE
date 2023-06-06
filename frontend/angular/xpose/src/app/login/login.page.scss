@@ -1,61 +1,98 @@
-.centered-title{
+ion-toolbar{
+    --background: rgba(241, 0, 128, 0.55);
+}
+
+.centered-title {
     display: block;
     text-align: center;
     margin: 0 auto;
-    color: white
-}
-
-.custom-btn{
+    color: white;
+  }
+  
+  .custom-btn {
     --ion-color-primary: #353535;
     --border-color: rgba(189, 0, 255, 0.37);
     --border-style: solid;
     --border-width: 2px;
     --box-shadow: 0 2px 6px 0 rgb(189, 0, 255, 0.37);
-}
-
-ion-content{
+  }
+  
+  ion-content {
     --background: rgba(94, 35, 144, 0.19);
-}
-
-div{
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
-    justify-content: center; 
+  }
+  
+  div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     margin-top: 15px;
-}
-
-form{
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 285px;
     padding-top: 20px;
-}
-
-ion-toolbar{
-    --background: rgba(241, 0, 128, 0.55);
-}
-
-ion-item{
-    margin-bottom: 20px;
-    --background: rgba(94, 35, 144, 0.19);
-}
-
-ion-button{
-    padding: 5px;
-}
-
-ion-input{
-    width: 285px; 
-    margin-bottom: 15px; 
-    height: 40px;
-    margin-left: 30px;
-}
-
-#submitBtn{
-    width: 295px;
-    height: 50px;
-    margin-top: 15px;
-    margin-left: 25px;
-}
-
-#forgotPassword{
-    margin-left: 200px;
-}
+  }
+  
+  ion-input,
+  #submitBtn {
+    width: 100%;
+    margin-bottom: 5px;
+    max-width: 285px;
+  }
+  
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+  }
+  
+  @media (min-width: 768px) {
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+    }
+  
+    form {
+      max-width: 400px;
+    }
+  
+    ion-input,
+    #submitBtn {
+      max-width: 400px;
+    }
+  }
+  
+  .custom-btn {
+    margin-top: 10px;
+  }
+  
+  @media (min-width: 768px) {
+    .custom-btn {
+      display: block;
+      width: 100%;
+    }
+  }
+  
+  .no-account-link {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  @media (min-width: 768px) {
+    .no-account-link {
+      margin-top: 30px;
+    }
+  }
+  
+  .no-account-link a {
+    color: blue;
+    text-decoration: underline;
+  }
+  
