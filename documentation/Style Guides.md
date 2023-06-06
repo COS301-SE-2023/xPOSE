@@ -3,3 +3,4 @@
 | Date       | Changes Made                            |
 |------------|-----------------------------------------|
 | 2023-06-06 | created the file |
+| 2023-06-06 | added file structure and git strategy and the repo on the doc |
