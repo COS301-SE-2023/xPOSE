@@ -1,8 +1,7 @@
 import { Component } from "@angular/core";
 import { Firestore, addDoc, collection, collectionData } from "@angular/fire/firestore";
-import {Event} from "./interface/event";
-import { getAuth } from "@angular/fire/auth";
-import { Observable } from "rxjs";
+// import { getAuth } from "@angular/fire/auth";
+// import { Observable } from "rxjs";
 
 
 @Component({
