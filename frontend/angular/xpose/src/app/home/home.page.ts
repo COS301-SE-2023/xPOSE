@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { Firestore, addDoc, collection, collectionData } from "@angular/fire/firestore";
+// import { Firestore, addDoc, collection, collectionData } from "@angular/fire/firestore";
 // import { getAuth } from "@angular/fire/auth";
 // import { Observable } from "rxjs";
 
@@ -29,9 +29,9 @@ export class HomePage {
   	}
   ];
 
-  constructor(private afs: Firestore) {
-		console.log("this.afs: "+ this.afs);
-   }
+//   constructor(private afs: Firestore) {
+// 		console.log("this.afs: "+ this.afs);
+//    }
 
    /*
    addEvent(event: Event){
