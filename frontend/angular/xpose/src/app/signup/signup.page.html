@@ -6,13 +6,13 @@
 
 <ion-content [fullscreen]="true">
   <div class="container">
-    <form>
-      <ion-input label="Username" label-placement="floating" fill="outline" placeholder="Username" name="username"></ion-input>
-      <ion-input label="Email" label-placement="floating" fill="outline" placeholder="Email" name="email"></ion-input>
-      <ion-input label="Password" label-placement="floating" fill="outline" placeholder="Password" name="password"></ion-input>
-      <ion-input label="Confirm Password" label-placement="floating" fill="outline" placeholder="Confirm Password" name="confirm_password"></ion-input>
+    <form [formGroup]="signUpForm">
+      <ion-input label="Username" label-placement="floating" fill="outline" placeholder="Username" name="username" formControlName="username"></ion-input>
+      <ion-input label="Email" label-placement="floating" fill="outline" placeholder="Email" name="email" formControlName="email"></ion-input>
+      <ion-input label="Password" label-placement="floating" fill="outline" placeholder="Password" name="password" formControlName="password"></ion-input>
+      <ion-input label="Confirm Password" label-placement="floating" fill="outline" placeholder="Confirm Password" name="confirm_password" formControlName="conf-password"></ion-input>
 
-      <ion-button id="submitBtn" type="submit" class="custom-btn">Sign Up</ion-button>
+      <ion-button id="submitBtn" type="submit" class="custom-btn" (click)="signUp()">Sign Up</ion-button>
     </form>
   </div>
 </ion-content>

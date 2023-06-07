@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
-import { Firestore, addDoc, collection, collectionData } from "@angular/fire/firestore";
-// import { getAuth } from "@angular/fire/auth";
-// import { Observable } from "rxjs";
+import { AngularFirestore } from "@angular/fire/compat/firestore";
+import { AuthService } from "../shared/services/auth.service";
+
 
 
 @Component({
@@ -29,8 +29,26 @@ export class HomePage {
   	}
   ];
 
-  constructor(private afs: Firestore) {
-		console.log("this.afs: "+ this.afs);
+  constructor(
+	private afs: AngularFirestore,
+	public authService: AuthService) {
+	 // perform simplem query to check firebase connection
+	 const collectionRef = this.afs.collection('Users');
+	 collectionRef.get().subscribe((snapshot) => {
+	   console.log('Firebase connection is successful!');
+	   /*snapshot.docs.forEach((doc) =>{
+		console.log(doc.ref);
+	   });*/  
+	 
+	 }, (error) => {
+	   console.error('Firebase connection failed:', error);
+	 });
+   }
+
+   signOut(){
+	console.log("Signing out...");
+	this.authService.signOut();
+	// console.log(this.authService.signOut());
    }
 
    /*

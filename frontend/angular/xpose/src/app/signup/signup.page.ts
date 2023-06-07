@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+
+import { AuthService } from "../shared/services/auth.service";
 
 @Component({
 	selector: "app-signup",
@@ -7,9 +9,25 @@ import { HttpClient } from "@angular/common/http";
 	styleUrls: ["./signup.page.scss"],
 	})
 export class SignupPage implements OnInit {
+	signUpForm: FormGroup;
+	constructor(
+		public authService: AuthService,
+		private formBuilder: FormBuilder,
+		) {
+			this.signUpForm = this.formBuilder.group({
+				email: ["", [Validators.required, Validators.email]],
+				password: ["", [Validators.required]]
+			 });
 
-	constructor() { /* TODO document why this constructor is empty */  }
+		}
 
+		signUp() {
+			const email = this.signUpForm.get("email")?.value;
+			const password = this.signUpForm.get("password")?.value;
+			console.log("Email: ", email);
+			console.log("password: ", password);
+			this.authService.signUp(email, password);
+		}
 	ngOnInit() {
 		// TODO document why this method 'ngOnInit' is empty
   
