@@ -33,16 +33,16 @@ export class HomePage {
 	private afs: AngularFirestore,
 	public authService: AuthService) {
 	 // perform simplem query to check firebase connection
-	 const collectionRef = this.afs.collection('Users');
-	 collectionRef.get().subscribe((snapshot) => {
-	   console.log('Firebase connection is successful!');
+	//  const collectionRef = this.afs.collection('Users');
+	//  collectionRef.get().subscribe((snapshot) => {
+	//    console.log('Firebase connection is successful!');
 	   /*snapshot.docs.forEach((doc) =>{
 		console.log(doc.ref);
 	   });*/  
 	 
-	 }, (error) => {
-	   console.error('Firebase connection failed:', error);
-	 });
+	//  }, (error) => {
+	//    console.error('Firebase connection failed:', error);
+	//  });
    }
 
    signOut(){
@@ -50,22 +50,4 @@ export class HomePage {
 	this.authService.signOut();
 	// console.log(this.authService.signOut());
    }
-
-   /*
-   addEvent(event: Event){
-		// add an event
-		event.event_name = "Party testing";
-		event.location = "Pretoria";
-		event.visibility = true;
-		// const user = getAuth().currentUser;
-		console.log("this.afs: "+ this.afs);
-		// console.log("Authenticated user is: " + userId);
-		addDoc(collection(this.afs, 'Events'), event);
-   }*/
-
-   /*
-   getEvents(): Observable<Event>{
-	let eventsRef = collection(this.afs, " Events");
-	return collectionData(eventsRef, {idField: 'id'}) as Observable<Event>;
-   }*/
 }

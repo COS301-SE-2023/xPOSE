@@ -26,8 +26,8 @@ export class LoginPage implements OnInit {
 	signIn() {
 		const email = this.loginForm.get("email")?.value;
 		const password = this.loginForm.get("password")?.value;
-		console.log("Email: ", email);
-		console.log("password: ", password);
+		// console.log("Email: ", email);
+		// console.log("password: ", password);
 		this.authService.signIn(email, password);
 	}
 

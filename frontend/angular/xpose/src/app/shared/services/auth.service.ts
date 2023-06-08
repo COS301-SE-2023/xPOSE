@@ -11,7 +11,7 @@ import { GoogleAuthProvider, FacebookAuthProvider } from "firebase/auth";
 export class AuthService {
 
   userData: any;
-
+  isLoggedIn: boolean = false;
   constructor(
     public afs: AngularFirestore,  // inject firestore
     public afAuth: AngularFireAuth, // inject firebase Auth services
@@ -22,9 +22,11 @@ export class AuthService {
     this.afAuth.authState.subscribe(user => {
       if (user) {
         this.userData = user;
+        this.isLoggedIn = true;
         localStorage.setItem('user', JSON.stringify(this.userData));
         console.log(JSON.parse(localStorage.getItem('user')!));
       } else {
+        this.isLoggedIn = false;
         localStorage.setItem('user', 'null');
         console.log(JSON.parse(localStorage.getItem('user')!));
       }
@@ -50,18 +52,28 @@ export class AuthService {
   }
 
   // Sign up with email/password
-  signUp(email: string, password: string): Promise<void> {
+  signUp(email: string, password: string, username: string): Promise<void> {
     return this.afAuth
       .createUserWithEmailAndPassword(email, password)
       .then((result) => {
         // send verification email and return promise
         // this.sendVerificationMail();
-        this.setUserData(result.user);
-        window.alert(email+  " signed up successfully");
-        this.router.navigate(['/home']);
+        const u = result.user;
+        if (result.user && u) {
+          u.updateProfile({
+            displayName: username
+          });
+          console.log("USERNAME BEING STORED:: " + u.displayName);
+          console.log("USERNAME BEING STORED: " + result.user.displayName);
+          this.setUserData(result.user);
+          console.log(email + " signed up successfully");
+          this.router.navigate(['/login']);
+        }
+       
       })
       .catch((error) => {
         window.alert(error.message);
+        this.router.navigate(['/signup']);
       });
   }
 
@@ -87,22 +99,22 @@ export class AuthService {
   }
 
   // Returns true if the user is logged in and verified
-  get isLoggedIn(): boolean {
-    const user = JSON.parse(localStorage.getItem('user')!);
-    return user !== null; //&& user.emailVerified !== false;
-  }
+  // get isLoggedIn(): boolean {
+  //   const user = JSON.parse(localStorage.getItem('user')!);
+  //   return (user !== null)?true:false; //&& user.emailVerified !== false;
+  // }
 
   // Sign in with Google
   signInWithGoogle(): Promise<void> {
     return this.authLogin(new GoogleAuthProvider()).then((res: any) => {
-      this.router.navigate(['home']);
+      this.router.navigate(['/home']);
     });
   }
 
   // Sign in with Facebook
   signInWithFacebook(): Promise<void> {
     return this.authLogin(new FacebookAuthProvider()).then((res: any) => {
-      this.router.navigate(['home']);
+      this.router.navigate(['/home']);
     });
   }
 
@@ -111,8 +123,9 @@ export class AuthService {
     return this.afAuth
       .signInWithPopup(provider)
       .then((result) => {
-        this.router.navigate(['home']);
         this.setUserData(result.user);
+        this.router.navigate(['/home']);
+       
       })
       .catch((error) => {
         window.alert(error);

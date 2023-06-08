@@ -16,7 +16,8 @@ export class SignupPage implements OnInit {
 		) {
 			this.signUpForm = this.formBuilder.group({
 				email: ["", [Validators.required, Validators.email]],
-				password: ["", [Validators.required]]
+				password: ["", [Validators.required]],
+				username: ["", [Validators.required]]
 			 });
 
 		}
@@ -24,9 +25,11 @@ export class SignupPage implements OnInit {
 		signUp() {
 			const email = this.signUpForm.get("email")?.value;
 			const password = this.signUpForm.get("password")?.value;
+			const username = this.signUpForm.get("username")?.value;
 			console.log("Email: ", email);
 			console.log("password: ", password);
-			this.authService.signUp(email, password);
+			console.log("username: ", username);
+			this.authService.signUp(email, password, username);
 		}
 	ngOnInit() {
 		// TODO document why this method 'ngOnInit' is empty
