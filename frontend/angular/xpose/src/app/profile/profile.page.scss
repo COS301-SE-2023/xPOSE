@@ -1,0 +1,33 @@
+.profile_div{
+    width: 100%;
+    background: #ff4bf6;
+    height: 150px;
+
+    .first_div{
+        padding-top: 80px;
+        .username{
+            font-size: 20px;
+            font-weight: 600;
+            color: #fff;
+         
+            padding-inline-start: 50%;
+        }  
+        .edit_div{
+            
+            font-size: 21px;
+            font-weight: 60;
+            color: #fff;
+            padding-top: 10px;
+            padding-inline-start: 44%;
+        }
+
+    }
+    .img{
+        padding-top: 10px;
+        padding-inline-start: 40%;
+    }
+
+
+}
+
+body { background-color: rgb(255, 255, 255); }

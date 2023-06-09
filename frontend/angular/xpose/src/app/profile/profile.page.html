@@ -1,13 +1,19 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>profile</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content>
+<div class="profile_div">
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">profile</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class="user_div" *ngIf="user">
+    <img [src]="user.photoURL">
+
+    <div class="first_div">
+      <ion-label class="username">{{user.displayName}}</ion-label>
+      
+      <ion-button class="edit_div">edit profile</ion-button>
+    </div>
+    
+  </div>
+  
+
+</div>
+
+
 </ion-content>

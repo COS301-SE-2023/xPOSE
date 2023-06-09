@@ -1,15 +1,28 @@
-import { Component, OnInit } from "@angular/core";
+// profile.page.ts
+
+import { Component } from '@angular/core';
 
 @Component({
-	selector: "app-profile",
-	templateUrl: "./profile.page.html",
-	styleUrls: ["./profile.page.scss"],
+  selector: 'app-profile',
+  templateUrl: 'profile.page.html',
+  styleUrls: ['profile.page.scss'],
 })
-export class ProfilePage implements OnInit {
+export class ProfilePage {
+  user: {
+    photoURL: string;
+    displayName: string;
+    email: string;
+  };
 
-	constructor() { }
+  constructor() {
+    this.user = {
+      photoURL: 'avatar.jpg',
+      displayName: 'John Doe',
+      email: 'johndoe@example.com',
+    };
+  }
 
-	ngOnInit() {
-	}
-
+  logout() {
+    // Add your logout logic here
+  }
 }
