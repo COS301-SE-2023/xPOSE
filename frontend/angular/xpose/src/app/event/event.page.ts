@@ -1,4 +1,3 @@
-// event.page.ts
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,13 +6,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./event.page.scss']
 })
 export class EventPage implements OnInit {
-  event!: {
+  event: {
     title: string,
     description: string,
     date: string,
     location: string,
     linkUrl: string,
     linkText: string
+  } = {
+    title: '',
+    description: '',
+    date: '',
+    location: '',
+    linkUrl: '',
+    linkText: ''
   };
 
   ngOnInit(): void {

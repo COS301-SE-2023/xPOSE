@@ -1,6 +1,10 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title class="centered-title"><ion-icon name="arrow-back-outline" class="left-arrow"></ion-icon>
+    <ion-title class="centered-title">
+      <ion-button fill="clear" class="left-arrow-btn" (click)="goBack()">
+        <ion-icon name="arrow-back-outline" class="left-arrow"></ion-icon>
+      <!-- <ion-icon name="arrow-back-outline" class="left-arrow"></ion-icon> -->
+      </ion-button>
       Create Event
     </ion-title>
   </ion-toolbar>
