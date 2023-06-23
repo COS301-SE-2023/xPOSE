@@ -9,6 +9,15 @@
     justify-content: center;
     padding: 20px;
   }
+  .tabs{
+    margin-top: 200px;
+  }
+
+  .card-image {
+    width: 100%;  /* Adjust as needed */
+    height: 200px;  /* Adjust as needed */
+    object-fit: cover; /* Maintain aspect ratio and cover the entire area */
+  }
   
   .cover-page {
     width: 100%;

@@ -19,7 +19,7 @@ export class ProfilePage {
       displayName: 'John Doe',
       email: 'johndoe@example.com',
     };
-    this.user.photoURL = 'avatar.jpg';
+    this.user.photoURL = '/.assets/images/youth.jpg';
   }
 
   logout() {

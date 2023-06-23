@@ -15,7 +15,7 @@
 // }
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-event',
   templateUrl: './event.page.html',
@@ -24,7 +24,7 @@ import { ActivatedRoute } from '@angular/router';
 export class EventPage {
   event: { title: string, date: string, location: string, description: string };
 
-  constructor(private activatedRoute: ActivatedRoute) {
+  constructor(private activatedRoute: ActivatedRoute, private router: Router) {
     // Mocked event data
     this.event = {
       title: 'Sample Event',
@@ -40,4 +40,25 @@ export class EventPage {
     // Call API or perform necessary logic to fetch event details
     // Assign the fetched data to this.event
   }
+
+  onEvent() {
+    this.router.navigate(['/create-event']);
+  }
+
+  onNotifications() {
+    this.router.navigate(['/notification']);
+  }
+
+  onProfile() {
+    this.router.navigate(['/profile']);
+  }
+
+  onJoinedEvent() {
+    this.router.navigate(['/joined-event']);
+  }
+
+  onHome() {
+    this.router.navigate(['/home']);
+  }
+
 }

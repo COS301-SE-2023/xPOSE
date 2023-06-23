@@ -13,6 +13,12 @@ ion-content#main-content {
   /* Add more custom styles as needed */
 }
 
+.logo-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
 ion-button {
 
   display:flex;
@@ -62,6 +68,12 @@ ion-card {
     --padding-top: 10px;
     --padding-bottom: 10px;
   }
+  .card-image {
+    width: 100%;  /* Adjust as needed */
+    height: 200px;  /* Adjust as needed */
+    object-fit: cover; /* Maintain aspect ratio and cover the entire area */
+  }
+  
   
 
   

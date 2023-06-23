@@ -16,4 +16,27 @@ export class CreateEventPage implements OnInit {
 	goBack(){
 		this.router.navigate(["/home"]);
 	}
+	redirectToEventPage() {
+		this.router.navigate(['/event']);
+	  }
+	  onEvent() {
+		this.router.navigate(['/create-event']);
+	  }
+	
+	  onNotifications() {
+		this.router.navigate(['/notification']);
+	  }
+	
+	  onProfile() {
+		this.router.navigate(['/profile']);
+	  }
+	
+	  onJoinedEvent() {
+		this.router.navigate(['/joined-event']);
+	  }
+	
+	  onHome() {
+		this.router.navigate(['/home']);
+	  }
+	
 }

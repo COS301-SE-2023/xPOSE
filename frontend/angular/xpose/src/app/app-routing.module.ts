@@ -42,13 +42,26 @@ const routes: Routes = [
   {
 	path: "event",
 	loadChildren: () => import("./event/event.module").then(m => m.EventPageModule)
-  },  {
+  },
+  {
     path: 'notification',
     loadChildren: () => import('./notification/notification.module').then( m => m.NotificationPageModule)
   },
   {
     path: 'joined-event',
     loadChildren: () => import('./joined-event/joined-event.module').then( m => m.JoinedEventPageModule)
+  },
+  {
+    path: 'message-board',
+    loadChildren: () => import('./message-board/message-board.module').then( m => m.MessageBoardPageModule)
+  },
+  {
+    path: 'details',
+    loadChildren: () => import('./details/details.module').then( m => m.DetailsPageModule)
+  },
+  {
+    path: 'posts',
+    loadChildren: () => import('./posts/posts.module').then( m => m.PostsPageModule)
   },
 
 
