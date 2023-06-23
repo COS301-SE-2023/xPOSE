@@ -35,13 +35,16 @@ export class HomePage {
 	this.router.navigate(['/create-event']);
   }
   onNotifications(){
-	this.router.navigate(['/notifications']);
+	this.router.navigate(['/notification']);
   }
   onProfile(){
    	this.router.navigate(['/profile']);
   }  
   onJoinedEvent(){
 	this.router.navigate(['/join-event']);
+  }
+  onHome(){
+	this.router.navigate(['/home']);
   }
 }
 
