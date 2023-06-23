@@ -1,20 +1,70 @@
-/* my-events.page.scss */
-ion-header {
-    ion-toolbar {
-      --ion-toolbar-background: #3880ff;
-      --ion-toolbar-color: #ffffff;
-    }
+/*
+  Place your styles here to customize the appearance of the Event page
+*/
+
+.event-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
   }
   
-  ion-searchbar {
-    margin: 16px;
+  .cover-page {
+    width: 100%;
+    height: 200px;
+    background-color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   
-  ion-list {
-    margin: 16px;
+  .cover-page img {
+    max-width: 100%;
+    max-height: 100%;
   }
   
-  ion-button {
-    margin: 16px;
+  .tabs-container {
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+  .tabs-container ion-tab-button {
+    --color: #ff9f9f;
+    --background: #f0f0f0;
+  }
+  
+  .posts-tab {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .posts-tab ion-searchbar {
+    margin-bottom: 20px;
+  }
+  
+  .message-board-tab {
+    padding: 20px;
+  }
+  
+  .details-tab {
+    padding: 20px;
+  }
+  
+  .details-tab .event-code {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .details-tab .qr-code {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .details-tab .event-description {
+    margin-top: 20px;
   }
   

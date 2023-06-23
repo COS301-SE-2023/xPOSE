@@ -1,0 +1,30 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Notifications</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Notifications</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-list>
+    <!-- Example notification item -->
+    <ion-item>
+      <ion-icon name="person-add"></ion-icon>
+      <ion-label>
+        <h2>Friend Request</h2>
+        <p>You have received a friend request from John Doe.</p>
+      </ion-label>
+      <ion-buttons slot="end">
+        <ion-button fill="clear" (click)="acceptRequest()">Accept</ion-button>
+        <ion-button fill="clear" (click)="rejectRequest()">Reject</ion-button>
+      </ion-buttons>
+    </ion-item>
+
+    <!-- Add more notification items as needed -->
+  </ion-list>
+</ion-content>

@@ -1,36 +1,43 @@
-import { Component, OnInit } from '@angular/core';
+// import { Component, OnInit } from '@angular/core';
+
+// @Component({
+//   selector: 'app-event',
+//   templateUrl: './event.page.html',
+//   styleUrls: ['./event.page.scss'],
+// })
+// export class EventPage implements OnInit {
+
+//   constructor() { }
+
+//   ngOnInit() {
+//   }
+
+// }
+import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-event-page',
+  selector: 'app-event',
   templateUrl: './event.page.html',
-  styleUrls: ['./event.page.scss']
+  styleUrls: ['./event.page.scss'],
 })
-export class EventPage implements OnInit {
-  event: {
-    title: string,
-    description: string,
-    date: string,
-    location: string,
-    linkUrl: string,
-    linkText: string
-  } = {
-    title: '',
-    description: '',
-    date: '',
-    location: '',
-    linkUrl: '',
-    linkText: ''
-  };
+export class EventPage {
+  event: { title: string, date: string, location: string, description: string };
 
-  ngOnInit(): void {
-    // Initialize event data
+  constructor(private activatedRoute: ActivatedRoute) {
+    // Mocked event data
     this.event = {
       title: 'Sample Event',
-      description: 'This is a sample event.',
-      date: '2023-06-10',
+      date: 'June 30, 2023',
       location: 'Sample Location',
-      linkUrl: 'https://example.com',
-      linkText: 'Register Now'
+      description: 'This is a sample event description.'
     };
+  }
+
+  ionViewWillEnter() {
+    // Fetch event data based on the route parameter
+    const eventId = this.activatedRoute.snapshot.paramMap.get('id');
+    // Call API or perform necessary logic to fetch event details
+    // Assign the fetched data to this.event
   }
 }

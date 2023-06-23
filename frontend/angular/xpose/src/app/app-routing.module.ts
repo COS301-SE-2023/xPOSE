@@ -24,10 +24,6 @@ const routes: Routes = [
 	  loadChildren: () => import("./create-event/create-event.module").then(m => m.CreateEventPageModule)
 	},
 	{
-	  path: "event",
-	  loadChildren: () => import("./event/event.module").then(m => m.EventPageModule)
-	},
-	{
 	  path: "profile",
 	  loadChildren: () => import("./profile/profile.module").then(m => m.ProfilePageModule)
 	},
@@ -36,9 +32,6 @@ const routes: Routes = [
 	  loadChildren: () => import("./settings/settings.module").then(m => m.SettingsPageModule)
 	},
   {
-    path: 'notifications',
-    loadChildren: () => import('./notifications/notifications.module').then( m => m.NotificationsPageModule)
-  },  {
     path: 'footer',
     loadChildren: () => import('./footer/footer.module').then( m => m.FooterPageModule)
   },
@@ -46,14 +39,19 @@ const routes: Routes = [
     path: 'header',
     loadChildren: () => import('./header/header.module').then( m => m.HeaderPageModule)
   },
+  {
+	path: "event",
+	loadChildren: () => import("./event/event.module").then(m => m.EventPageModule)
+  },  {
+    path: 'notification',
+    loadChildren: () => import('./notification/notification.module').then( m => m.NotificationPageModule)
+  },
 
 
   ];
   
   @NgModule({
-	imports: [
-	  RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
-	],
+	imports: [RouterModule.forRoot(routes)],
 	exports: [RouterModule]
   })
   export class AppRoutingModule { }
