@@ -1,6 +1,6 @@
 import { Injectable, NgZone } from "@angular/core";
 import { Router } from "@angular/router";
-import { User } from "../services/user";
+  import { User } from "../services/user";
 import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { AngularFirestore, AngularFirestoreDocument } from "@angular/fire/compat/firestore";
 import { GoogleAuthProvider, FacebookAuthProvider } from "firebase/auth";
@@ -58,13 +58,9 @@ export class AuthService {
       .then((result) => {
         // send verification email and return promise
         // this.sendVerificationMail();
-        const u = result.user;
-        if (result.user && u) {
-          u.updateProfile({
-            displayName: username
-          });
-          console.log("USERNAME BEING STORED:: " + u.displayName);
-          console.log("USERNAME BEING STORED: " + result.user.displayName);
+        if (result.user) {
+          // console.log("USERNAME BEING STORED:: " + u.displayName);
+          // console.log("USERNAME BEING STORED: " + result.user.displayName);
           this.setUserData(result.user);
           console.log(email + " signed up successfully");
           this.router.navigate(['/login']);
