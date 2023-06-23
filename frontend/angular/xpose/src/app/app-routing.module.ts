@@ -46,6 +46,10 @@ const routes: Routes = [
     path: 'notification',
     loadChildren: () => import('./notification/notification.module').then( m => m.NotificationPageModule)
   },
+  {
+    path: 'joined-event',
+    loadChildren: () => import('./joined-event/joined-event.module').then( m => m.JoinedEventPageModule)
+  },
 
 
   ];

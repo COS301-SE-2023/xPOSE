@@ -1,74 +1,75 @@
-.left-arrow{
+.left-arrow {
     color: white;
     float: left;
-}
-
-.centered-title{
+  }
+  
+  .centered-title {
     display: block;
     text-align: center;
     margin: 0 auto;
-    color: white
-}
-
-.custom-btn{
+    color: white;
+  }
+  
+  .custom-btn {
     --ion-color-primary: #353535;
     --border-color: rgba(189, 0, 255, 0.37);
     --border-style: solid;
     --border-width: 2px;
-    --box-shadow: 0 2px 6px 0 rgb(189, 0, 255, 0.37);
-}
-
-ion-content{
+    --box-shadow: 0 2px 6px 0 rgba(189, 0, 255, 0.37);
+  }
+  
+  ion-content {
     --background: rgba(94, 35, 144, 0.19);
-}
-
-div{
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
-    justify-content: center; 
-    margin-top: 15px;
-}
-
-form{
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
+  }
+  
+  div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
-}
-
-ion-toolbar{
+    margin-top: 15px;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  ion-toolbar {
     --background: rgba(241, 0, 128, 0.55);
-}
-
-ion-item{
+  }
+  
+  ion-item {
     margin-bottom: 20px;
     --background: rgba(94, 35, 144, 0.19);
-}
-
-ion-button{
+  }
+  
+  ion-button {
     padding: 5px;
-}
-
-ion-input{
-    width: 95%; 
-    margin-bottom: 15px; 
+  }
+  
+  ion-input {
+    width: 95%;
+    margin-bottom: 15px;
     height: 40px;
-}
-
-ion-textarea{
-    width: 95%; 
-    margin-bottom: 25px; 
+  }
+  
+  ion-textarea {
+    width: 95%;
+    margin-bottom: 25px;
     margin-top: 5px;
     height: 55px;
-}
-
-#submitBtn{
+  }
+  
+  #submitBtn {
     width: 95%;
     height: 50px;
     margin-top: 15px;
-}
-
-ion-datetime-button{
-    margin-bottom: 5px;;
-}
+  }
+  
+  ion-datetime-button {
+    margin-bottom: 5px;
+  }
+  

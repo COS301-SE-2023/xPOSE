@@ -26,6 +26,30 @@
     </ion-item>
 
     <!-- Add more notification items as needed -->
+    <!-- Event Invitation notification item -->
+    <ion-item>
+      <ion-icon name="calendar"></ion-icon>
+      <ion-label>
+        <h2>Event Invitation</h2>
+        <p>You have been invited to join an event: Music Concert</p>
+      </ion-label>
+      <ion-buttons slot="end">
+        <ion-button fill="clear" (click)="acceptInvitation()">Accept</ion-button>
+        <ion-button fill="clear" (click)="rejectInvitation()">Reject</ion-button>
+      </ion-buttons>
+    </ion-item>
+
+     <!-- Image Report notification item -->
+     <ion-item>
+      <ion-icon name="warning"></ion-icon>
+      <ion-label>
+        <h2>Image Report</h2>
+        <p>An image you posted has been reported for inappropriate content.</p>
+      </ion-label>
+      <ion-buttons slot="end">
+        <ion-button fill="clear" (click)="viewReport()">View Report</ion-button>
+      </ion-buttons>
+    </ion-item>
   </ion-list>
 </ion-content>
 

@@ -1,21 +1,38 @@
-<!-- <ion-header [translucent]="true">
+<ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>footer</ion-title>
+    <ion-title>Joined Events</ion-title>
   </ion-toolbar>
-</ion-header> -->
+</ion-header>
+<ion-header>
+  
+ 
+</ion-header>
 
-<!-- <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">footer</ion-title>
-    </ion-toolbar>
-  </ion-header>
-</ion-content> -->
+<ion-content [fullscreen]="true">
+  <ion-toolbar>
+    <ion-searchbar placeholder="Search"></ion-searchbar>
+  </ion-toolbar>
+  <ion-segment [(ngModel)]="filterType">
+    <ion-segment-button value="private">
+      Private Events
+    </ion-segment-button>
+    <ion-segment-button value="public">
+      Public Events
+    </ion-segment-button>
+  </ion-segment>
+
+  <!-- Add your joined events content here -->
+  <ion-list *ngIf="joinedEvents">
+    <ion-item *ngFor="let event of filteredEvents">
+      <!-- Display event details here -->
+    </ion-item>
+  </ion-list>
+</ion-content>
 <ion-footer>
   <ion-toolbar position="fixed">
     <ion-tabs>
       <ion-tab-bar slot="bottom">
-        <ion-tab-button tab="home" >
+        <ion-tab-button tab="home" (click)="onHome" >
           <ion-icon name="home-outline"></ion-icon>
           <ion-label>Home</ion-label>
         </ion-tab-button>

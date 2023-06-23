@@ -1,0 +1,20 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
+import { IonicModule } from '@ionic/angular';
+
+import { JoinedEventPageRoutingModule } from './joined-event-routing.module';
+
+import { JoinedEventPage } from './joined-event.page';
+
+@NgModule({
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    JoinedEventPageRoutingModule
+  ],
+  declarations: [JoinedEventPage]
+})
+export class JoinedEventPageModule {}

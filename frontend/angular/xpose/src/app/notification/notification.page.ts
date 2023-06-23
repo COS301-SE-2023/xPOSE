@@ -30,10 +30,18 @@ export class NotificationPage implements OnInit {
        this.router.navigate(['/profile']);
     }  
     onJoinedEvent(){
-    this.router.navigate(['/join-event']);
+    this.router.navigate(['/joined-event']);
     }
     onHome(){
       this.router.navigate(['/home']);
       }
-
+    rejectInvitation(){
+      //
+    }
+    acceptInvitation(){
+      //
+    }
+    viewReport(){
+      //
+    }
 }

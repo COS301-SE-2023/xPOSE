@@ -43,10 +43,10 @@ ion-card {
 
 
   .button-style {
-    --background: #93e9be;
-    --background-hover: #9ce0be;
-    --background-activated: #88f4be;
-    --background-focused: #88f4be;
+    --background: #e993d6;
+    --background-hover: #e09cda;
+    --background-activated: #e993d6;
+    --background-focused: #e993d6;
   
     --color: blue;
   
@@ -55,7 +55,7 @@ ion-card {
     --border-style: solid;
     --border-width: 1px;
   
-    --box-shadow: 0 2px 6px 0 rgb(0, 0, 0, 0.25);
+    --box-shadow: 0 2px 6px 0 rgba(253, 0, 241, 0.25);
   
     --ripple-color: deeppink;
   
