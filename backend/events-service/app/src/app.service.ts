@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import admin =  require('firebase-admin');
+import { admin } from './firebase.admin';
 import { Event } from './entities/event.entity';
 import { CreateEventDto } from './dto/create-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';

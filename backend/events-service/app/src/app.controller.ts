@@ -36,7 +36,7 @@ export class AppController {
     return this.appService.deleteEvent(eventId);
   }
 
-  @Get()
+  @Get('hello')
   getHello(): string {
     return this.appService.getHello();
   }
