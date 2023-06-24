@@ -2,4 +2,5 @@ frontend/angular/xpose/node_modules/
 frontend/angular/xpose/.angular
 # Exclude environment files
 frontend/angular/xpose/src/environments/
-backend/events-service/node_modules/
+backend/*/*/node_modules/
+
