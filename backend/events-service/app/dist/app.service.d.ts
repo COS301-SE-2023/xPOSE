@@ -8,4 +8,5 @@ export declare class AppService {
     getEventById(eventId: string): Promise<Event | null>;
     updateEvent(eventId: string, eventDto: UpdateEventDto): Promise<boolean>;
     deleteEvent(eventId: string): Promise<boolean>;
+    uploadImage(file: Express.Multer.File): Promise<string>;
 }

@@ -1,4 +1,5 @@
 export interface Event {
+    id: string;
     name: string;
     description: string;
     location: string;
@@ -6,4 +7,5 @@ export interface Event {
     startDate: Date;
     endDate: Date;
     imageUrl: string;
+    userId: string;
 }

@@ -6,4 +6,5 @@ export class CreateEventDto {
     startDate: Date;
     endDate: Date;
     imageUrl: string;
-}
+    userId: string; // New property for user ID
+  }

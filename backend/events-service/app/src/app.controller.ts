@@ -1,8 +1,19 @@
 import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common';
+import { admin } from './firebase.admin';
+import multer from 'multer';
+import { getStorage, ref, getDownloadURL } from 'firebase/storage';
 import { AppService } from './app.service';
 import { Event } from './entities/event.entity';
 import { CreateEventDto } from './dto/create-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
+
+// Itialized Cloud Storage and get a reference to the storage service, which is used to create references in your storage bucket and upload files:
+const storage = getStorage();
+
+// Setting up multer as middleware to grab photo uploads
+const upload = multer({
+  storage: multer.memoryStorage(),
+});
 
 @Controller('events')
 export class AppController {

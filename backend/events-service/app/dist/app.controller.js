@@ -14,9 +14,15 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppController = void 0;
 const common_1 = require("@nestjs/common");
+const multer_1 = require("multer");
+const storage_1 = require("firebase/storage");
 const app_service_1 = require("./app.service");
 const create_event_dto_1 = require("./dto/create-event.dto");
 const update_event_dto_1 = require("./dto/update-event.dto");
+const storage = (0, storage_1.getStorage)();
+const upload = (0, multer_1.default)({
+    storage: multer_1.default.memoryStorage(),
+});
 let AppController = exports.AppController = class AppController {
     constructor(appService) {
         this.appService = appService;
