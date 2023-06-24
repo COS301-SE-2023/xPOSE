@@ -1,0 +1,69 @@
+import { v4 as uuidv4 } from 'uuid';
+
+let users = [];
+
+export const getUsers = (req, res) => {
+    res.send(users);
+}
+
+export const getUser = (req, res) => {
+    const { id } = req.params;
+    const foundUser =  users.find((user) => user.id === id);
+    res.send(foundUser);
+}
+
+export const createUser = (req, res) => {
+    const user = req.body;
+    const userWithId = {...user, id: uuidv4() };
+    users.push(userWithId);
+    res.send(`User with the name ${user.name} added to the DB`);
+}
+
+export const updateUser = (req, res) => {
+    const { id } = req.params;
+    const {name, lastname, age } = req.body;
+    const user = users.find((user) => user.id == id);
+
+    if(name) user.name = name;
+    if(lastname) user.lastname = lastname;
+    if(age) user.age = age;    
+
+    res.send(`User with the id ${id} has been updated`);
+
+}
+
+export const deleteUser = (req, res) => {
+    const { id } = req.params;
+    users = users.filter((user) => user.id != id);
+    res.send(`User with the id ${id} deleted from the database`);
+}
+
+export const getFriends = (req, res) =>{
+    res.send("List of friends!");
+}
+
+export const getFriend = (req, res) => {
+    const { requestId } = req.params 
+    res.send(`specified friend id ${requestId}`);
+}
+
+export const sendFriendRequest = (req, res) => {
+    const {requestId} = req.params;
+    res.status(200).json({ message: `Friend request sent successfully to user with id ${requestId}` });
+}
+
+export const removeFriend = (req, res) =>{
+    const {requestId} = req.params;
+    res.status(200).json({ message: `Friend with id ${requestId} removed`});
+}
+
+export const acceptFriendRequest = (req, res) =>{
+    const {requestId} = req.params;
+
+    res.status(200).json({ message:`Friend with ${requestId} accepted`});
+}
+
+export const rejectFriendRequest = (req, res) =>{
+    const {requestId} = req.params;
+    res.status(200).json({ message:`Friend with ${requestId} rejected`});
+}
