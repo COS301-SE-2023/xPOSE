@@ -3,7 +3,7 @@ import bodyParser from  'body-parser';
 import userRoute from './routes/users.js';
 
 const app = express();
-const PORT = 5000;
+const PORT = 8002;
 
 // initialize body-parser middleware
 app.use(bodyParser.json()); // will be using Json  data

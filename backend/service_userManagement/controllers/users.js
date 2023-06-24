@@ -7,8 +7,8 @@ export const getUsers = (req, res) => {
 }
 
 export const getUser = (req, res) => {
-    const { id } = req.params;
-    const foundUser =  users.find((user) => user.id === id);
+    const { userId } = req.params;
+    const foundUser =  users.find((user) => user.id === userId);
     res.send(foundUser);
 }
 
@@ -20,9 +20,9 @@ export const createUser = (req, res) => {
 }
 
 export const updateUser = (req, res) => {
-    const { id } = req.params;
+    const { userId } = req.params;
     const {name, lastname, age } = req.body;
-    const user = users.find((user) => user.id == id);
+    const user = users.find((user) => user.id == userId);
 
     if(name) user.name = name;
     if(lastname) user.lastname = lastname;
@@ -33,9 +33,9 @@ export const updateUser = (req, res) => {
 }
 
 export const deleteUser = (req, res) => {
-    const { id } = req.params;
-    users = users.filter((user) => user.id != id);
-    res.send(`User with the id ${id} deleted from the database`);
+    const { userId } = req.params;
+    users = users.filter((user) => user.id != userId);
+    res.send(`User with the id ${userId} deleted from the database`);
 }
 
 export const getFriends = (req, res) =>{
