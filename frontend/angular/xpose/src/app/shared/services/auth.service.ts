@@ -1,6 +1,6 @@
 import { Injectable, NgZone } from "@angular/core";
 import { Router } from "@angular/router";
-  import { User } from "../services/user";
+import { User } from "../services/user";
 import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { AngularFirestore, AngularFirestoreDocument } from "@angular/fire/compat/firestore";
 import { GoogleAuthProvider, FacebookAuthProvider } from "firebase/auth";
@@ -53,24 +53,30 @@ export class AuthService {
 
   // Sign up with email/password
   signUp(email: string, password: string, username: string): Promise<void> {
-    return this.afAuth
-      .createUserWithEmailAndPassword(email, password)
-      .then((result) => {
-        // send verification email and return promise
-        // this.sendVerificationMail();
-        if (result.user) {
-          // console.log("USERNAME BEING STORED:: " + u.displayName);
-          // console.log("USERNAME BEING STORED: " + result.user.displayName);
-          this.setUserData(result.user);
-          console.log(email + " signed up successfully");
-          this.router.navigate(['/login']);
-        }
-       
-      })
-      .catch((error) => {
-        window.alert(error.message);
-        this.router.navigate(['/signup']);
-      });
+      return this.afAuth
+    .createUserWithEmailAndPassword(email, password)
+    .then((result) => {
+      if (result.user) {
+        return result.user.updateProfile({ displayName: username })
+          .then(() => {
+            this.setUserData(result.user);
+            console.log(email + " signed up successfully");
+            this.router.navigate(['/login']);
+          })
+          .catch((error) => {
+            window.alert(error.message);
+            this.router.navigate(['/signup']);
+            return Promise.reject(error); // Return a rejected promise in case of error
+          });
+      } else {
+        return Promise.reject(new Error("User object not available")); // Return a rejected promise if user object is not available
+      }
+    })
+    .catch((error) => {
+      window.alert(error.message);
+      this.router.navigate(['/signup']);
+      return Promise.reject(error); // Return a rejected promise for any other error
+    });
   }
 
   // Send email verification when a new user signs up
@@ -135,7 +141,8 @@ export class AuthService {
       email: user.email,
       displayName: user.displayName,
       photoURL: user.photoURL,
-      emailVerified: user.emailVerified
+      emailVerified: user.emailVerified,
+      friendIds: []
     };
     return userRef.set(userData, { merge: true });
   }
