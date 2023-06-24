@@ -21,7 +21,10 @@ export class AuthService {
     // save user data in local storage
     this.afAuth.authState.subscribe(user => {
       if (user) {
-        this.userData = user;
+        const userData = {
+          uid: user.uid
+        };
+        this.userData = userData;
         this.isLoggedIn = true;
         localStorage.setItem('user', JSON.stringify(this.userData));
         console.log(JSON.parse(localStorage.getItem('user')!));
