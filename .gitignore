@@ -5,3 +5,5 @@ frontend/angular/xpose/src/environments/
 #exclude backend node modules
 backend/events/node_modules/
 backend/service_userManagement/node_modules/
+#exclude credentials files (Firebase) usermanagement services
+backend/service_userManagement/DB/credentials/serviceAccountKey.json
