@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 const admin = require('firebase-admin');
 const fs = require('fs');
 const uploadImageToFirebase = require('./firebase-storage.service');
+const generateUniqueCode = require('./code-generator');
+const qr = require('qrcode');
 
 // Initialize Firebase Admin SDK
 const serviceAccount = require('./permissions.json');
@@ -33,29 +35,40 @@ app.get('/status', (req, res) => {
 // Create event route
 app.post('/events', upload.single('image'), async (req, res) => {
     try {
-      const { name, description, location, userId, startDate, endDate } = req.body;
+      const { name, description, location, userId, startDate, endDate, privacySetting } = req.body;
       const file = req.file;
        
-    const imageUrl = await uploadImageToFirebase(userId, file);        
+      const imageUrl = await uploadImageToFirebase(userId, file);        
 
       // Generate a unique file name
       const fileName = `${userId}_${Date.now()}_${file.originalname}`;
-  
+    
       // Upload the file to the image uploader API
-    //   const uploadUrl = 'http://localhost:8003/upload';
-    //   const formData = new FormData();
-    //   formData.append('userId', userId);
-    //   formData.append('file', fs.createReadStream(file.path));
-  
-    //   const headers = formData.getHeaders ? formData.getHeaders() : { 'Content-Type': 'multipart/form-data' };
-  
-    //   const { data: { url: imageUrl } } = await axios.post(uploadUrl, formData, {
-    //     headers,
-    //   });
+      //   const uploadUrl = 'http://localhost:8003/upload';
+      //   const formData = new FormData();
+      //   formData.append('userId', userId);
+      //   formData.append('file', fs.createReadStream(file.path));
+    
+      //   const headers = formData.getHeaders ? formData.getHeaders() : { 'Content-Type': 'multipart/form-data' };
+    
+      //   const { data: { url: imageUrl } } = await axios.post(uploadUrl, formData, {
+      //     headers,
+      //   });
   
       // Save the event in Firebase Firestore
       const db = admin.firestore();
       const eventsRef = db.collection('events');
+      const eventCode = generateUniqueCode();
+      // qr.toFile(`./qr-codes/${eventCode}.png`, eventCode, { width: 500 });
+      // const qrCodeUrl = uploadImageToFirebase(userId, { path: `./qr-codes/${eventCode}.png`, originalname: `${eventCode}.png` }})
+      // .then((url) => {
+      //   return url;
+      // })
+      // .catch((error) => {
+      //   console.error('Error uploading QR code:', error);
+      // });
+
+      
       const event = {
         name,
         description,
@@ -65,6 +78,8 @@ app.post('/events', upload.single('image'), async (req, res) => {
         endDate: new Date(endDate),
         imageUrl,
         userId,
+        privacySetting,
+        eventCode
       };
   
       const { id } = await eventsRef.add(event);

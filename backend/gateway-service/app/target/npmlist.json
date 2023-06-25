@@ -1,0 +1,1 @@
+{"version":"1.0.0","name":"app","dependencies":{"cors":{"version":"2.8.5"},"express":{"version":"4.18.2"},"http-proxy-middleware":{"version":"2.0.6"}}}
