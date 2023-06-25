@@ -1,8 +1,7 @@
 import { Component } from "@angular/core";
-import { Router } from "@angular/router";
-// import { Firestore, addDoc, collection, collectionData } from "@angular/fire/firestore";
-// import { getAuth } from "@angular/fire/auth";
-// import { Observable } from "rxjs";
+import { AngularFirestore } from "@angular/fire/compat/firestore";
+import { AuthService } from "../shared/services/auth.service";
+
 
 
 @Component({
@@ -42,42 +41,25 @@ export class HomePage {
 
   ];
 
-  onEvent(){
-	this.router.navigate(['/create-event']);
-  }
-  onNotifications(){
-	this.router.navigate(['/notification']);
-  }
-  onProfile(){
-   	this.router.navigate(['/profile']);
-  }  
-  onJoinedEvent(){
-	this.router.navigate(['/joined-event']);
-  }
-  onHome(){
-	this.router.navigate(['/home']);
-  }
+  constructor(
+	private afs: AngularFirestore,
+	public authService: AuthService) {
+	 // perform simplem query to check firebase connection
+	//  const collectionRef = this.afs.collection('Users');
+	//  collectionRef.get().subscribe((snapshot) => {
+	//    console.log('Firebase connection is successful!');
+	   /*snapshot.docs.forEach((doc) =>{
+		console.log(doc.ref);
+	   });*/  
+	 
+	//  }, (error) => {
+	//    console.error('Firebase connection failed:', error);
+	//  });
+   }
+
+   signOut(){
+	console.log("Signing out...");
+	this.authService.signOut();
+	// console.log(this.authService.signOut());
+   }
 }
-
-//   constructor(private afs: Firestore) {
-// 		console.log("this.afs: "+ this.afs);
-//    }
-
-   /*
-   addEvent(event: Event){
-		// add an event
-		event.event_name = "Party testing";
-		event.location = "Pretoria";
-		event.visibility = true;
-		// const user = getAuth().currentUser;
-		console.log("this.afs: "+ this.afs);
-		// console.log("Authenticated user is: " + userId);
-		addDoc(collection(this.afs, 'Events'), event);
-   }*/
-
-   /*
-   getEvents(): Observable<Event>{
-	let eventsRef = collection(this.afs, " Events");
-	return collectionData(eventsRef, {idField: 'id'}) as Observable<Event>;
-   }*/
-

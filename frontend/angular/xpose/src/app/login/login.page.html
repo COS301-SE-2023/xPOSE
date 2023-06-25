@@ -6,16 +6,28 @@
 
 <ion-content [fullscreen]="true">
   <div class="container">
-    <form>
-      <ion-input label="Username" label-placement="floating" fill="outline" placeholder="Username" name="username"></ion-input>
-      <ion-input label="Password" label-placement="floating" fill="outline" placeholder="Password" name="password"></ion-input>
+    <form [formGroup]="loginForm">
+      <ion-input 
+        label="Email" 
+        label-placement="floating" 
+        fill="outline" 
+        placeholder="email" 
+        formControlName="email"></ion-input>
+
+      <ion-input 
+      label="Password" 
+      label-placement="floating" 
+      fill="outline"
+       placeholder="Password"
+       formControlName="password"></ion-input>
+
       <ion-note id="forgotPassword" slot="end" color="primary" class="ion-margin-top">
         <a>Forgot Password?</a>
       </ion-note>
 
-      <ion-button id="submitBtn" type="submit" class="custom-btn">Login</ion-button>
-      <ion-button id="submitBtn" type="submit" class="custom-btn">Login with Google</ion-button>
-      <ion-button id="submitBtn" type="submit" class="custom-btn">Login with Facebook</ion-button>
+      <ion-button id="login-button" type="submit" class="custom-btn" (click)="signIn()">Login</ion-button>
+      <ion-button id="google-button" type="submit" class="custom-btn" (click)="signInWithGoogle()">Login with Google</ion-button>
+      <ion-button id="Facebook-button" type="submit" class="custom-btn" (click)="signInWithFacebook()">Login with Facebook</ion-button>
     </form>
     <div class="no-account-link">
       <p>No account? <a>Click here</a></p>
