@@ -1,0 +1,6 @@
+{
+    "/events": "http://localhost:8004",
+    "/images": "http://localhost:8003",
+    "/users": "http://localhost:8002"
+}
+  
