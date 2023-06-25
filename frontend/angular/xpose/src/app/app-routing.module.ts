@@ -5,10 +5,9 @@ import { AuthGuard } from "./shared/guard/auth.guard";
 
 
 const routes: Routes = [
-	// { path: "", redirectTo: "/login", pathMatch: "full"},
 	{
-		path: "home",
-		loadChildren: () => import("./home/home.module").then( m => m.HomePageModule), canActivate: [AuthGuard]
+	  path: "home",
+	  loadChildren: () => import("./home/home.module").then(m => m.HomePageModule)
 	},
 	{
 	  path: "",
@@ -37,43 +36,45 @@ const routes: Routes = [
 	},
   {
     path: 'footer',
-    loadChildren: () => import('./footer/footer.module').then( m => m.FooterPageModule)
+    loadChildren: () => import('./footer/footer.module').then(m => m.FooterPageModule)
   },
   {
     path: 'header',
-    loadChildren: () => import('./header/header.module').then( m => m.HeaderPageModule)
+    loadChildren: () => import('./header/header.module').then(m => m.HeaderPageModule)
   },
   {
-	path: "event",
-	loadChildren: () => import("./event/event.module").then(m => m.EventPageModule)
+    path: 'event',
+    loadChildren: () => import('./event/event.module').then(m => m.EventPageModule)
   },
   {
     path: 'notification',
-    loadChildren: () => import('./notification/notification.module').then( m => m.NotificationPageModule)
+    loadChildren: () => import('./notification/notification.module').then(m => m.NotificationPageModule)
   },
   {
     path: 'joined-event',
-    loadChildren: () => import('./joined-event/joined-event.module').then( m => m.JoinedEventPageModule)
+    loadChildren: () => import('./joined-event/joined-event.module').then(m => m.JoinedEventPageModule)
   },
   {
-    path: 'message-board',
-    loadChildren: () => import('./message-board/message-board.module').then( m => m.MessageBoardPageModule)
-  },
-  {
-    path: 'details',
-    loadChildren: () => import('./details/details.module').then( m => m.DetailsPageModule)
-  },
-  {
-    path: 'posts',
-    loadChildren: () => import('./posts/posts.module').then( m => m.PostsPageModule)
-  },
+    path: '',
+    children: [
+      {
+        path: 'posts',
+        loadChildren: () => import('./posts/posts.module').then(m => m.PostsPageModule)
+      },
+      {
+        path: 'message-board',
+        loadChildren: () => import('./message-board/message-board.module').then(m => m.MessageBoardPageModule)
+      },
+      {
+        path: 'details',
+        loadChildren: () => import('./details/details.module').then(m => m.DetailsPageModule)
+      }
+    ]
+  }
+];
 
-
-  ];
-  
-  @NgModule({
-	imports: [RouterModule.forRoot(routes)],
-	exports: [RouterModule]
-  })
-  export class AppRoutingModule { }
-  
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
