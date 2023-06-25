@@ -48,10 +48,25 @@ export class HomePage {
 	},
 
   ];
-
-   signOut(){
-	console.log("Signing out...");
-	this.authService.signOut();
-	// console.log(this.authService.signOut());
+  
+	onEvent(){
+		this.router.navigate(['/create-event']);
+	}
+	onNotifications(){
+		this.router.navigate(['/notification']);
+	}
+	onProfile(){
+		this.router.navigate(['/profile']);
+	}  
+	onJoinedEvent(){
+		this.router.navigate(['/joined-event']);
+	}
+	onHome(){
+		this.router.navigate(['/home']);
+	}
+	signOut(){
+		console.log("Signing out...");
+		this.authService.signOut();
+		// console.log(this.authService.signOut());
    }
 }
