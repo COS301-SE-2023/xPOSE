@@ -12,7 +12,14 @@ import { AuthService } from "../shared/services/auth.service";
 
 
 export class HomePage {
-	constructor(private router: Router) {}
+	constructor(
+		private afs: AngularFirestore,
+		public authService: AuthService,
+		private router: Router) {
+	
+	   }
+
+
   events: any[] = [];
 
   cards = [
@@ -40,22 +47,6 @@ export class HomePage {
 	},
 
   ];
-
-  constructor(
-	private afs: AngularFirestore,
-	public authService: AuthService) {
-	 // perform simplem query to check firebase connection
-	//  const collectionRef = this.afs.collection('Users');
-	//  collectionRef.get().subscribe((snapshot) => {
-	//    console.log('Firebase connection is successful!');
-	   /*snapshot.docs.forEach((doc) =>{
-		console.log(doc.ref);
-	   });*/  
-	 
-	//  }, (error) => {
-	//    console.error('Firebase connection failed:', error);
-	//  });
-   }
 
    signOut(){
 	console.log("Signing out...");
