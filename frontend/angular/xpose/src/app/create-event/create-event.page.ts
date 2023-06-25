@@ -24,7 +24,7 @@ export class CreateEventPage implements OnInit {
 	//   };
 	  route: any;
 
-	constructor(private http: HttpClient, private router: Router, private service: Service) { }
+	constructor(private http: HttpClient, private router: Router) { }
 
 	ngOnInit(): void {
 	}
