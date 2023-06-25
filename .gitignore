@@ -2,4 +2,10 @@ frontend/angular/xpose/node_modules/
 frontend/angular/xpose/.angular
 # Exclude environment files
 frontend/angular/xpose/src/environments/
-backend/events-service/node_modules/
+#exclude backend node modules
+backend/*/node_modules/
+#exclude backend node modules
+backend/events/node_modules/
+backend/service_userManagement/node_modules/
+#exclude credentials files (Firebase) usermanagement services
+backend/service_userManagement/DB/credentials/serviceAccountKey.json

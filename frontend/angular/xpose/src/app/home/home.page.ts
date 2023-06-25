@@ -1,8 +1,8 @@
 import { Component } from "@angular/core";
+import { AngularFirestore } from "@angular/fire/compat/firestore";
+import { AuthService } from "../shared/services/auth.service";
 import { Router } from "@angular/router";
-// import { Firestore, addDoc, collection, collectionData } from "@angular/fire/firestore";
-// import { getAuth } from "@angular/fire/auth";
-// import { Observable } from "rxjs";
+
 
 
 @Component({
@@ -13,7 +13,14 @@ import { Router } from "@angular/router";
 
 
 export class HomePage {
-	constructor(private router: Router) {}
+	constructor(
+		private afs: AngularFirestore,
+		public authService: AuthService,
+		private router: Router) {
+	
+	   }
+
+
   events: any[] = [];
 
   cards = [
@@ -41,43 +48,25 @@ export class HomePage {
 	},
 
   ];
-
-  onEvent(){
-	this.router.navigate(['/create-event']);
-  }
-  onNotifications(){
-	this.router.navigate(['/notification']);
-  }
-  onProfile(){
-   	this.router.navigate(['/profile']);
-  }  
-  onJoinedEvent(){
-	this.router.navigate(['/joined-event']);
-  }
-  onHome(){
-	this.router.navigate(['/home']);
-  }
+  
+	onEvent(){
+		this.router.navigate(['/create-event']);
+	}
+	onNotifications(){
+		this.router.navigate(['/notification']);
+	}
+	onProfile(){
+		this.router.navigate(['/profile']);
+	}  
+	onJoinedEvent(){
+		this.router.navigate(['/joined-event']);
+	}
+	onHome(){
+		this.router.navigate(['/home']);
+	}
+	signOut(){
+		console.log("Signing out...");
+		this.authService.signOut();
+		// console.log(this.authService.signOut());
+   }
 }
-
-//   constructor(private afs: Firestore) {
-// 		console.log("this.afs: "+ this.afs);
-//    }
-
-   /*
-   addEvent(event: Event){
-		// add an event
-		event.event_name = "Party testing";
-		event.location = "Pretoria";
-		event.visibility = true;
-		// const user = getAuth().currentUser;
-		console.log("this.afs: "+ this.afs);
-		// console.log("Authenticated user is: " + userId);
-		addDoc(collection(this.afs, 'Events'), event);
-   }*/
-
-   /*
-   getEvents(): Observable<Event>{
-	let eventsRef = collection(this.afs, " Events");
-	return collectionData(eventsRef, {idField: 'id'}) as Observable<Event>;
-   }*/
-
