@@ -11,6 +11,7 @@ import { AuthService } from "../shared/services/auth.service";
 	
 export class SignupPage implements OnInit {
 	signUpForm: FormGroup;
+	router: any;
 	constructor(
 		public authService: AuthService,
 		private formBuilder: FormBuilder,
@@ -31,6 +32,7 @@ export class SignupPage implements OnInit {
 			console.log("password: ", password);
 			console.log("username: ", username);
 			this.authService.signUp(email, password, username);
+			this.router.navigate(['/login']);
 		}
 	ngOnInit() {
 		// TODO document why this method 'ngOnInit' is empty
