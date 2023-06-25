@@ -241,7 +241,7 @@ export const sendFriendRequest = async (req, res) => {
     }
 }
 
-export const removeFriend = async (req, res) =>{
+export const removeFriend = async (req, res) => {
     try {
         const { userId, requestId } = req.params;
 
@@ -263,11 +263,6 @@ export const removeFriend = async (req, res) =>{
         console.error('Error removing friend:', error);
         res.status(500).json({ error: 'An error occurred while removing friend' });
     }
-
-
-
-    // const {requestId} = req.params;
-    // res.status(200).json({ message: `Friend with id ${requestId} removed`});
 }
 
 export const acceptFriendRequest = async (req, res) =>{
