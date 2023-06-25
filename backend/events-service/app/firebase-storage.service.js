@@ -1,3 +1,15 @@
+// const multer = require('multer');
+const admin = require('firebase-admin');
+const fs = require('fs');
+
+// Initialize Firebase Admin SDK
+// const serviceAccount = require('./permissions.json');
+// admin.initializeApp({
+//   credential: admin.credential.cert(serviceAccount),
+//   databaseURL: 'https://xpose-4f48c-default-rtdb.firebaseio.com',
+//   storageBucket: 'gs://xpose-4f48c.appspot.com',
+// });
+
 // Function to upload image to Firebase Storage and return the imageURL
 async function uploadImageToFirebase(userId, file) {
     return new Promise((resolve, reject) => {

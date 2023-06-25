@@ -36,8 +36,7 @@ app.post('/events', upload.single('image'), async (req, res) => {
       const { name, description, location, userId, startDate, endDate } = req.body;
       const file = req.file;
        
-    //   const imageUrl = uploadImageToFirebase(file, userId);
-        
+    const imageUrl = await uploadImageToFirebase(userId, file);        
 
       // Generate a unique file name
       const fileName = `${userId}_${Date.now()}_${file.originalname}`;
@@ -64,7 +63,7 @@ app.post('/events', upload.single('image'), async (req, res) => {
         owner: userId,
         startDate: new Date(startDate),
         endDate: new Date(endDate),
-        imageUrl: 'https://placeholder.com/150',
+        imageUrl,
         userId,
       };
   
