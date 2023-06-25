@@ -204,7 +204,7 @@ export const getFriend = async (req, res) => {
   
         const friendData = friendDoc.data();
         res.status(200).json({ friend: friendData });
-        
+
       } catch (error) {
         console.error('Error getting friend:', error);
         res.status(500).json({ error: 'An error occurred while getting friend' });
@@ -235,15 +235,39 @@ export const sendFriendRequest = async (req, res) => {
         // Add the friend request to the recipient's FriendRequests collection
         await admin.firestore().collection('Users').doc(requestId).collection('FriendRequests').doc(userId).set(friendRequest);
         res.status(200).json({ message: `Friend request sent successfully to user with id ${requestId}` });
-    }catch(error){
+    } catch(error){
         console.error('Error sending friend request:', error);
         res.status(500).json({ error: 'An error occurred while sending friend request' });  
     }
 }
 
-export const removeFriend = (req, res) =>{
-    const {requestId} = req.params;
-    res.status(200).json({ message: `Friend with id ${requestId} removed`});
+export const removeFriend = async (req, res) =>{
+    try {
+        const { userId, requestId } = req.params;
+
+        // Remove the friendIds from both users
+        await admin.firestore().collection('Users').doc(userId).update({
+            friendIds: admin.firestore.FieldValue.arrayRemove(requestId)
+        });
+
+        await admin.firestore().collection('Users').doc(requestId).update({
+            friendIds: admin.firestore.FieldValue.arrayRemove(userId)
+        });
+
+        // Remove the friend requests subcollections
+        await admin.firestore().collection('Users').doc(userId).collection('FriendRequests').doc(requestId).delete();
+        await admin.firestore().collection('Users').doc(requestId).collection('FriendRequests').doc(userId).delete();
+
+        res.status(200).json({ message: `Friend with id ${requestId} removed`});
+    } catch (error) {
+        console.error('Error removing friend:', error);
+        res.status(500).json({ error: 'An error occurred while removing friend' });
+    }
+
+
+
+    // const {requestId} = req.params;
+    // res.status(200).json({ message: `Friend with id ${requestId} removed`});
 }
 
 export const acceptFriendRequest = async (req, res) =>{
@@ -311,7 +335,51 @@ export const acceptFriendRequest = async (req, res) =>{
     }
 }
 
-export const rejectFriendRequest = (req, res) =>{
-    const {requestId} = req.params;
-    res.status(200).json({ message:`Friend with ${requestId} rejected`});
+export const rejectFriendRequest = async (req, res) => {
+    try {
+        const { userId, requestId } = req.params;
+        // Check if the user document exists
+        const userDoc = await admin.firestore().collection('Users').doc(userId).get();
+        if (!userDoc.exists) {
+          return res.status(404).json({ error: 'User not found' });
+        }
+    
+        // Check if the friend request document exists
+        const friendRequestDoc = await admin
+          .firestore()
+          .collection('Users')
+          .doc(requestId)
+          .collection('FriendRequests')
+          .doc(userId)
+          .get();
+    
+        if (!friendRequestDoc.exists) {
+          return res.status(404).json({ error: 'Friend request not found' });
+        }
+    
+        // Delete the friend request document
+        await admin
+          .firestore()
+          .collection('Users')
+          .doc(requestId)
+          .collection('FriendRequests')
+          .doc(userId)
+          .delete();
+
+        // Remove requestId from the friendIds array in the sender's document
+            await admin.firestore().collection('Users').doc(userId).update({
+                friendIds: admin.firestore.FieldValue.arrayRemove(requestId)
+        });
+
+        // Remove userId from the friendIds array in the recipient's document
+           await admin.firestore().collection('Users').doc(requestId).update({
+            friendIds: admin.firestore.FieldValue.arrayRemove(userId)
+        });
+
+        res.status(200).json({ message: `Friend request from user with ID ${userId} rejected` });
+     
+    } catch (error) {
+        console.error('Error rejecting friend request:', error);
+        res.status(500).json({ error: 'An error occurred while rejecting friend request' });
+      }
 }
