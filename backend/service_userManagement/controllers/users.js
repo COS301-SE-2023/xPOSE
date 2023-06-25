@@ -20,41 +20,113 @@ export const getUsers = async (req, res) => {
         console.error('Error retrieving users: ', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
-
-
-    res.send(users);
 }
 
 export const getUser = (req, res) => {
     const { userId } = req.params;
-    const foundUser =  users.find((user) => user.id === userId);
-    res.send(foundUser);
+    const userRef = admin.firestore().collection('Users').doc(userId);
+    
+    try{
+        userRef.get()
+        .then((doc) => {
+            if (doc.exists) {
+                const userData = doc.data();
+                res.status(200).json(userData);
+            }else {
+                res.status(404).json({error: "User not found"});
+            }
+        })
+        .catch((error) => {
+            console.error('Error retrieving user: ', error);
+            res.status(500).json({ error: 'Internal Server Error' });
+        });
+
+    } catch(error){
+        console.error('Error retrieving user: ', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
 }
 
-export const createUser = (req, res) => {
-    const user = req.body;
-    const userWithId = {...user, id: uuidv4() };
-    users.push(userWithId);
-    res.send(`User with the name ${user.name} added to the DB`);
+export const createUser = async (req, res) => {
+    try {
+        // get user data from the request body
+        const { displayName, email, password, emailVerified, friendIds, photoURL } = req.body;
+
+        const uid = uuidv4();
+
+        const user = {
+            displayName,
+            email,
+            emailVerified,
+            friendIds,
+            photoURL,
+            uid,
+          };
+
+          // Create the user in Firebase Authentication
+        await admin.auth().createUser({
+            uid,
+            email,
+            password,
+        });
+
+        // add user document to the firestore
+        await admin.firestore().collection('Users').doc(uid).set(user);
+        res.send(`User with the name ${displayName} added to the DB`);
+
+    } catch(error){
+        console.error('Error creating user: ', error);
+        res.status(500).json({ error: 'Error ocurred while creating user' });
+    }
 }
 
-export const updateUser = (req, res) => {
-    const { userId } = req.params;
-    const {name, lastname, age } = req.body;
-    const user = users.find((user) => user.id == userId);
+export const updateUser = async (req, res) => {
 
-    if(name) user.name = name;
-    if(lastname) user.lastname = lastname;
-    if(age) user.age = age;    
+    try {
+        const { userId } = req.params;
+        const { displayName, photoURL } = req.body;
 
-    res.send(`User with the id ${id} has been updated`);
+         // Retrieve the user document from the Users collection
+        const userRef = admin.firestore().collection('Users').doc(userId);
+        const userDoc = await userRef.get();
 
+        // if there's no such user
+        if (!userDoc.exists) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+         // Update the user document fields based on the provided values
+        const updatedFields = {};
+        if (displayName) updatedFields.displayName = displayName;
+        if (photoURL) updatedFields.photoURL = photoURL;
+        
+        // Update the user document with the new values
+        await userRef.update(updatedFields);
+
+        res.status(200).send(`User with the id ${userId} has been updated`);
+
+    } catch(error) {
+        console.error('Error updating user: ', error);
+        res.status(500).json({ error: 'An Error ocurred while updating the user' });
+    }
 }
 
-export const deleteUser = (req, res) => {
-    const { userId } = req.params;
-    users = users.filter((user) => user.id != userId);
-    res.send(`User with the id ${userId} deleted from the database`);
+export const deleteUser = async (req, res) => {
+    try {
+        const {userId} = req.params;
+
+        // Delete the user account from Firebase Authentication
+        await admin.auth().deleteUser(userId);
+
+        //delete the user document from the Users collection
+        await admin.firestore().collection('Users').doc(userId).delete();
+       
+        res.status(200).send(`User with the id ${userId} deleted from DB successfuly`);
+
+    } catch(error) {
+        console.error('Error deleting user:', error);
+        res.status(500).json({ error: 'An error occurred while deleting the user' });
+    }
 }
 
 export const getFriends = (req, res) =>{
@@ -66,9 +138,34 @@ export const getFriend = (req, res) => {
     res.send(`specified friend id ${requestId}`);
 }
 
-export const sendFriendRequest = (req, res) => {
-    const {requestId} = req.params;
-    res.status(200).json({ message: `Friend request sent successfully to user with id ${requestId}` });
+export const sendFriendRequest = async (req, res) => {
+
+    try{
+        const {userId, requestId} = req.params;
+
+        // Get the sender and recipient user documents
+        const senderDoc = await admin.firestore().collection('Users').doc(userId).get();
+        const recipientDoc = await admin.firestore().collection('Users').doc(requestId).get();
+
+        // Check if sender and recipient exist
+        if (!senderDoc.exists || !recipientDoc.exists) {
+            return res.status(404).json({ error: 'Sender or recipient not found' });
+        }
+
+        // Create  friend request object
+        const friendRequest = {
+            senderId: userId,
+            recipientId: requestId,
+            status: 'pending',
+        };
+
+        // Add the friend request to the recipient's FriendRequests collection
+        await admin.firestore().collection('Users').doc(requestId).collection('FriendRequests').add(friendRequest);
+        res.status(200).json({ message: `Friend request sent successfully to user with id ${requestId}` });
+    }catch(error){
+        console.error('Error sending friend request:', error);
+        res.status(500).json({ error: 'An error occurred while sending friend request' });  
+    }
 }
 
 export const removeFriend = (req, res) =>{
