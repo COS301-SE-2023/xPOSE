@@ -18,22 +18,23 @@ import { AppComponent } from "./app.component";
 import { AppRoutingModule } from "./app-routing.module";
 
 @NgModule({
-	declarations: [AppComponent],
-	imports: [BrowserModule,
-		IonicModule.forRoot(), 
-		AppRoutingModule,
-		provideFirebaseApp(() => initializeApp(environment.firebase)), 
-		// provideAnalytics(() => getAnalytics()), 
-		provideAuth(() => getAuth()), 
-		provideDatabase(() => getDatabase()), 
-		provideFirestore(() => getFirestore()), 
-		// provideFunctions(() => getFunctions()), 
-		// provideMessaging(() => getMessaging()), 
-		// providePerformance(() => getPerformance()), 
-		// provideRemoteConfig(() => getRemoteConfig()), 
-		provideStorage(() => getStorage())],
-	providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-		/*ScreenTrackingService,UserTrackingService*/],
-	bootstrap: [AppComponent],
+  declarations: [AppComponent],
+  imports: [
+    FormsModule,
+    BrowserModule,
+    IonicModule.forRoot(),
+    AppRoutingModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule,
+    AngularFirestoreModule,
+    AngularFireStorageModule,
+    AngularFireDatabaseModule,
+  ],
+
+  providers: [
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    AuthService /*ScreenTrackingService,UserTrackingService*/,
+  ],
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

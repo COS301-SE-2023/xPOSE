@@ -8,6 +8,7 @@ import { AuthService } from "../shared/services/auth.service";
 	templateUrl: "./signup.page.html",
 	styleUrls: ["./signup.page.scss"],
 	})
+	
 export class SignupPage implements OnInit {
 	signUpForm: FormGroup;
 	constructor(
