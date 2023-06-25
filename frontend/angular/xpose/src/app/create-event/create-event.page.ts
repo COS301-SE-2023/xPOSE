@@ -10,18 +10,18 @@ import { Service } from "../services/service";
 	})
 export class CreateEventPage implements OnInit {
 
-	createEvent: Event = {
-		userId: 0,
-		eventName: ' ',
-		coverImage: ' ',
-		eventStartDate: ' ',
-		eventStartTime: ' ',
-		eventEndDate: ' ',
-		eventEndTime: ' ',
-		eventLocation: ' ',
-		eventDescription: ' ',
-		eventPrivacySetting: ' '
-	  };
+	// createEvent: Event = {
+	// 	userId: 0,
+	// 	eventName: ' ',
+	// 	coverImage: ' ',
+	// 	eventStartDate: ' ',
+	// 	eventStartTime: ' ',
+	// 	eventEndDate: ' ',
+	// 	eventEndTime: ' ',
+	// 	eventLocation: ' ',
+	// 	eventDescription: ' ',
+	// 	eventPrivacySetting: ' '
+	//   };
 	  route: any;
 
 	constructor(private http: HttpClient, private router: Router, private service: Service) { }
@@ -29,14 +29,14 @@ export class CreateEventPage implements OnInit {
 	ngOnInit(): void {
 	}
 
-	CreateEvent(){
-		this.service.CreateEvent(this.createEvent)
-		.subscribe({
-		  next: (event) => {
-			this.router.navigate(['/home']);
-		  }
-		});
-	  }
+	// CreateEvent(){
+	// 	this.service.CreateEvent(this.createEvent)
+	// 	.subscribe({
+	// 	  next: (event) => {
+	// 		this.router.navigate(['/home']);
+	// 	  }
+	// 	});
+	//   }
 
 	goBack(){
 		this.router.navigate(["/home"]);
