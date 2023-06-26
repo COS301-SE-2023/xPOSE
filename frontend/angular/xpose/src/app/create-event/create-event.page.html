@@ -21,31 +21,42 @@
         <!-- <ion-button size="medium" class="custom-btn">Public</ion-button>
         <ion-button size="medium" class="custom-btn">Private</ion-button> -->
         <ion-radio-group value="privacy" name="eventPrivacySetting" [(ngModel)]="createEvent.eventPrivacySetting">
-          <ion-radio value="everyone">Everyone</ion-radio><br />
-          <ion-radio value="only_friends">Only Friends</ion-radio><br />
-          <ion-radio value="only_me">Only Me</ion-radio><br />
+          <ion-radio value="everyone">Everyone</ion-radio>
+          <ion-radio value="only_friends">Only Friends</ion-radio>
+          <ion-radio value="only_me">Only Me</ion-radio>
         </ion-radio-group>
       </ion-item>
       
-      <input type="file" accept="image/*" (change)="onFileSelected($event)" name="coverImage" id="coverImage">
-      <label for="coverImage">Upload Cover Page Image</label>
-      
-      
-      <ion-input label="Event Name" label-placement="floating" fill="outline" placeholder="Event Name" name="eventName" name="eventName" [(ngModel)]="createEvent.eventName"></ion-input>
-      <ion-textarea label="Event Description" labelPlacement="floating" fill="solid" placeholder="Event Description" name="eventDescription" name="eventDescription" [(ngModel)]="createEvent.eventDescription"></ion-textarea>
-      <ion-input label="Location" label-placement="floating" fill="outline" placeholder="Location" name="location" [(ngModel)]="createEvent.eventLocation" name="eventLocation"></ion-input>
+      <div class="input-container">
+        <input type="file" accept="image/*" (change)="onFileSelected($event)" name="coverImage" id="coverImage">
+        <!-- <label for="coverImage">Upload Cover Page Image</label> -->
+      </div>
 
-      <!--start date-->
-      <ion-datetime-button datetime="datetime" [(ngModel)]="createEvent.eventStartDate" name="eventStartDate"></ion-datetime-button>
+      <ion-input label="Event Name" label-placement="floating" fill="outline" placeholder="Event Name" name="eventName" [(ngModel)]="createEvent.eventName"></ion-input>
 
-      <!--end date-->
-      <ion-datetime-button datetime="datetime" [(ngModel)]="createEvent.eventEndDate" name="eventEndDate"></ion-datetime-button>
+      <ion-textarea label="Event Description" labelPlacement="floating" fill="solid" placeholder="Event Description" name="eventDescription" [(ngModel)]="createEvent.eventDescription"></ion-textarea>
 
-      <ion-modal [keepContentsMounted]="true">
-        <ng-template>
-          <ion-datetime id="datetime"></ion-datetime>
-        </ng-template>
-      </ion-modal>
+      <ion-input label="Location" label-placement="floating" fill="outline" placeholder="Location" name="location" [(ngModel)]="createEvent.eventLocation"></ion-input>
+
+      <!-- Start date -->
+      <ion-item>
+        <ion-label>Start Date</ion-label>
+        <ion-input
+          type="date"
+          [(ngModel)]="createEvent.eventStartDate"
+          name="eventStartDate"
+        ></ion-input>
+      </ion-item>
+
+      <!-- End date -->
+      <ion-item>
+        <ion-label>End Date</ion-label>
+        <ion-input
+          type="date"
+          [(ngModel)]="createEvent.eventEndDate"
+          name="eventEndDate"
+        ></ion-input>
+      </ion-item>
 
       <ion-button id="submitBtn" type="submit" class="custom-btn" (click)="redirectToEventPage()">Create Event</ion-button>
 
