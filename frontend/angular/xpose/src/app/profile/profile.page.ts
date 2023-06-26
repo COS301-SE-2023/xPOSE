@@ -13,6 +13,8 @@ export class ProfilePage {
     displayName: string;
     email: string;
   };
+  selectedTab: any;
+  tabs: any;
 
   constructor (
     private router: Router,
@@ -25,6 +27,11 @@ export class ProfilePage {
       email: 'johndoe@example.com',
     };
     this.user.photoURL = '/.assets/images/images.jpg';
+  }
+
+  setCurrentTab() {
+    this.selectedTab = this.tabs?.getSelected();
+    console.log(this.selectedTab);
   }
 
   logout() {

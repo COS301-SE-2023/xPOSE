@@ -6,8 +6,22 @@ import { ProfilePage } from "./profile.page";
 const routes: Routes = [
 	{
 		path: "",
-		component: ProfilePage
-	}
+		component: ProfilePage,
+    children : [
+    {
+      path: 'friends',
+      loadChildren: () => import('./friends/friends.module').then( m => m.FriendsPageModule)
+    },
+    {
+      path: 'events',
+      loadChildren: () => import('./events/events.module').then( m => m.EventsPageModule)
+    },
+    {
+      path: 'pictures',
+      loadChildren: () => import('./pictures/pictures.module').then( m => m.PicturesPageModule)
+    },
+  ]
+  },
 ];
 
 @NgModule({
