@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { RouteReuseStrategy } from "@angular/router";
-
+import { HttpClientModule } from '@angular/common/http';
 import { IonicModule, IonicRouteStrategy } from "@ionic/angular";
 
 import { FormsModule } from "@angular/forms";
@@ -16,10 +16,15 @@ import { AngularFireDatabaseModule } from "@angular/fire/compat/database";
 import { environment } from "../environments/environments";
 import { AppComponent } from "./app.component";
 import { AppRoutingModule } from "./app-routing.module";
+<<<<<<< HEAD
+import { CreateEventPage } from "./create-event/create-event.page";
+=======
 import { NgxMasonryModule } from 'ngx-masonry';
+>>>>>>> cdecd063e0390f97b4634fe59b003c9901f6eff6
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent],
   imports: [
     FormsModule,
     BrowserModule,
@@ -30,7 +35,11 @@ import { NgxMasonryModule } from 'ngx-masonry';
     AngularFirestoreModule,
     AngularFireStorageModule,
     AngularFireDatabaseModule,
+<<<<<<< HEAD
+    HttpClientModule
+=======
     NgxMasonryModule,
+>>>>>>> cdecd063e0390f97b4634fe59b003c9901f6eff6
   ],
 
   providers: [
