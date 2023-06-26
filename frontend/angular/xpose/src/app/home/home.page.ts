@@ -2,6 +2,7 @@ import { Component } from "@angular/core";
 import { AngularFirestore } from "@angular/fire/compat/firestore";
 import { AuthService } from "../shared/services/auth.service";
 import { Router } from "@angular/router";
+import { HttpClient } from "@angular/common/http";
 
 
 
@@ -16,11 +17,35 @@ export class HomePage {
 	constructor(
 		private afs: AngularFirestore,
 		public authService: AuthService,
-		private router: Router) {
+		private router: Router,
+		private http: HttpClient
+		) {
 	
 	   }
 
+	   // get events from firebase and display
+	   
+  getEventsFromAPI() {
+    this.http.get<Event[]>("https://localhost:8000/e/events").subscribe((events: Event[]) => {
+      this.events = events;
+      this.populateCards();
+    });
+  }
+  
 
+ populateCards() {
+    if (this.events.length === 0) {
+      this.cards = []; // Empty the cards list when there are no events
+    } else {
+      this.cards = this.events.map(event => ({
+        title: event.eventName,
+        subtitle: event.eventDescription,
+        description: event.eventLocation,
+        button: "Join event",
+        imageURL: event.imageUrl
+      }));
+    }
+  }
   events: any[] = [];
 
   cards = [
