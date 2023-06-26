@@ -113,7 +113,7 @@ signIn(email: string, password: string): Promise<void> {
 
   // Sign up with email/password
   signUp(email: string, password: string, username: string): Promise<void> {
-<<<<<<< HEAD
+
       return this.afAuth
     .createUserWithEmailAndPassword(email, password)
     .then((result) => {
@@ -159,7 +159,7 @@ signIn(email: string, password: string): Promise<void> {
       // this.router.navigate(['/signup']);
       return Promise.reject(error); // Return a rejected promise for any other error
     });
-=======
+
     return this.afAuth
       .createUserWithEmailAndPassword(email, password)
       .then((result) => {
@@ -185,7 +185,7 @@ signIn(email: string, password: string): Promise<void> {
         this.router.navigate(['/signup']);
         return Promise.reject(error); // Return a rejected promise for any other error
       });
->>>>>>> d1b605b544715c3f5d1750c164d911b048daabbe
+
   }
   
 
