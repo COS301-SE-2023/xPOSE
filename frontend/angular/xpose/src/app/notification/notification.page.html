@@ -11,6 +11,16 @@
     </ion-toolbar>
   </ion-header>
 
+
+    <div *ngIf="message;">
+      <h1>{{ message.notification.title }}</h1>
+      <h2>{{ message.notification.body }}</h2>
+    </div>
+    <div *ngIf="!message;">
+      No Notifications
+    </div>
+
+
   <ion-list>
     <!-- Example notification item -->
     <ion-item>
@@ -23,6 +33,7 @@
         <ion-button fill="clear" (click)="acceptRequest()">Accept</ion-button>
         <ion-button fill="clear" (click)="rejectRequest()">Reject</ion-button>
       </ion-buttons>
+      
     </ion-item>
 
     <!-- Add more notification items as needed -->

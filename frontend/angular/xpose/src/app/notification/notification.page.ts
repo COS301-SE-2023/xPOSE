@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
+import {getMessaging, getToken, onMessage} from "firebase/messaging";
+import { environment } from "../../../src/environments/environment";
+
+
+// import { AngularFirestoreModule } from "@angular/fire/compat/firestore";
 
 @Component({
   selector: 'app-notification',
@@ -7,12 +12,40 @@ import { Router } from "@angular/router";
   styleUrls: ['./notification.page.scss'],
 })
 export class NotificationPage implements OnInit {
+
+  title = 'notification??';
+  message:any = null;
   constructor(private router: Router) { }
   // constructor() { }
 
   ngOnInit() {
+    this.requestPermission();
+    this.listen();
   }
 
+  requestPermission() {
+    const messaging = getMessaging();
+    getToken(messaging, { vapidKey: environment.firebase.vapidKey}).then(
+       (currentToken) => {
+         if (currentToken) {
+           console.log("Hurraaa!!! we got the token.....");
+           console.log(currentToken);
+         } else {
+           console.log('No registration token available. Request permission to generate one.');
+         }
+     }).catch((err) => {
+        console.log('An error occurred while retrieving token. ', err);
+    });
+  }
+
+  listen() {
+    const messaging = getMessaging();
+    onMessage(messaging, (payload) => {
+      console.log('Message received. ', payload);
+      this.message=payload;
+    });
+  }
+  
   acceptRequest() {
     // Handle accept request logic here
   }

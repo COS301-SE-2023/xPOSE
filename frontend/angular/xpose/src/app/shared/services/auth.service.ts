@@ -4,6 +4,10 @@ import { User } from "../services/user";
 import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { AngularFirestore, AngularFirestoreDocument } from "@angular/fire/compat/firestore";
 import { GoogleAuthProvider, FacebookAuthProvider } from "firebase/auth";
+import {getMessaging, getToken} from "firebase/messaging";
+import { environment } from "../../../environments/environment";
+
+
 
 @Injectable({
   providedIn: "root"
@@ -37,7 +41,7 @@ export class AuthService {
   }
 
   // sign in with email/password
-  signIn(email: string, password: string): Promise<void> {
+  /*signIn(email: string, password: string): Promise<void> {
     return this.afAuth
       .signInWithEmailAndPassword(email, password)
       .then((result) => {
@@ -45,14 +49,67 @@ export class AuthService {
         this.afAuth.authState.subscribe((user) => {
           if (user) {
             console.log("User has been logged in");
+            
             this.router.navigate(['/home']);
           }
         });
+        
       })
       .catch((error) => {
         window.alert(error.message);
       });
-  }
+  }*/
+
+  // sign in with email/password
+signIn(email: string, password: string): Promise<void> {
+  return this.afAuth
+    .signInWithEmailAndPassword(email, password)
+    .then((result) => {
+      this.setUserData(result.user);
+
+      // Obtain the current FCM token
+      const messaging = getMessaging();
+      getToken(messaging, { vapidKey: environment.firebase.vapidKey })
+        .then((currentToken) => {
+          if (currentToken) {
+            // Check if the token has changed
+            const userRef = this.afs.collection('Users').doc(result.user!.uid);
+            userRef.get().subscribe((userSnapshot) => {
+              const userData = userSnapshot.data() as any;
+              const storedToken = userData?.fcmToken;
+
+              if (storedToken !== currentToken) {
+                // Update the token in the database
+                userRef.set({ fcmToken: currentToken }, { merge: true })
+                  .then(() => {
+                    console.log('FCM token updated for user: ', result.user!.uid);
+                  })
+                  .catch((error) => {
+                    console.log('Error updating FCM token: ', error);
+                  });
+              }
+            });
+          } else {
+            console.log('No registration token available. Request permission to generate one.');
+          }
+
+          this.afAuth.authState.subscribe((user) => {
+            if (user) {
+              console.log("User has been logged in");
+              this.router.navigate(['/home']);
+            }
+          });
+        })
+        .catch((error) => {
+          console.log('An error occurred while retrieving token. ', error);
+        });
+    })
+    .catch((error) => {
+      window.alert(error.message);
+    });
+}
+
+
 
   // Sign up with email/password
   signUp(email: string, password: string, username: string): Promise<void> {
@@ -64,11 +121,32 @@ export class AuthService {
           .then(() => {
             this.setUserData(result.user);
             console.log(email + " signed up successfully");
-            this.router.navigate(['/login']);
+
+            // Obtain FCM token for pushe notifications
+            const messaging = getMessaging();
+            return getToken(messaging, { vapidKey: environment.firebase.vapidKey })
+              .then((currentToken) => {
+                if (currentToken) {
+                  // Save the FCM token in your database
+                  const userRef = this.afs.collection('Users').doc(result.user!.uid);
+                  userRef.set({ fcmToken: currentToken }, { merge: true })
+                    .then(() => {
+                      console.log('FCM token saved for user: ', result.user!.uid);
+                    })
+                    .catch((error) => {
+                      console.log('Error saving FCM token: ', error);
+                    });
+                } else {
+                  console.log('No registration token available. Request permission to generate one.');
+                }
+              })
+              .catch((error) => {
+                console.log('An error occurred while retrieving token. ', error);
+              });
           })
           .catch((error) => {
             window.alert(error.message);
-            this.router.navigate(['/signup']);
+            // this.router.navigate(['/signup']);
             return Promise.reject(error); // Return a rejected promise in case of error
           });
       } else {
@@ -77,7 +155,7 @@ export class AuthService {
     })
     .catch((error) => {
       window.alert(error.message);
-      this.router.navigate(['/signup']);
+      // this.router.navigate(['/signup']);
       return Promise.reject(error); // Return a rejected promise for any other error
     });
   }
