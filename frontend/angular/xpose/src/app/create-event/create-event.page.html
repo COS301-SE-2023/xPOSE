@@ -1,12 +1,13 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title class="centered-title">
-      <ion-button fill="clear" class="left-arrow-btn" (click)="goBack()">
-        <ion-icon name="arrow-back-outline" class="left-arrow"></ion-icon>
-      <!-- <ion-icon name="arrow-back-outline" class="left-arrow"></ion-icon> -->
-      </ion-button>
-      Create Event
-    </ion-title>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/home"></ion-back-button>
+      </ion-buttons>
+      <ion-title>
+        Create Event
+      </ion-title>
+    </ion-toolbar>
   </ion-toolbar>
 </ion-header>
 

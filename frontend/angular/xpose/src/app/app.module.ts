@@ -16,7 +16,11 @@ import { AngularFireDatabaseModule } from "@angular/fire/compat/database";
 import { environment } from "../environments/environments";
 import { AppComponent } from "./app.component";
 import { AppRoutingModule } from "./app-routing.module";
+<<<<<<< HEAD
 import { CreateEventPage } from "./create-event/create-event.page";
+=======
+import { NgxMasonryModule } from 'ngx-masonry';
+>>>>>>> cdecd063e0390f97b4634fe59b003c9901f6eff6
 
 @NgModule({
   declarations: [
@@ -31,7 +35,11 @@ import { CreateEventPage } from "./create-event/create-event.page";
     AngularFirestoreModule,
     AngularFireStorageModule,
     AngularFireDatabaseModule,
+<<<<<<< HEAD
     HttpClientModule
+=======
+    NgxMasonryModule,
+>>>>>>> cdecd063e0390f97b4634fe59b003c9901f6eff6
   ],
 
   providers: [

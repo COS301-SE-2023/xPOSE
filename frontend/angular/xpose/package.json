@@ -30,6 +30,8 @@
     "@ionic/angular": "^7.0.0",
     "cors": "^2.8.5",
     "ionicons": "^7.0.0",
+    "masonry-layout": "^4.2.2",
+    "ngx-masonry": "^14.0.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"

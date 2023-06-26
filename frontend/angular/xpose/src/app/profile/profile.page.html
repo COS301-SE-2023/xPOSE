@@ -14,17 +14,15 @@
 
       <div class="first_div">
         <ion-label class="username">{{ user.displayName }}</ion-label>
-        <ion-button class="edit_div">Edit Profile</ion-button>
       </div>
+      <ion-button class="edit_div">Edit Profile</ion-button>
     </div>
   </div>
 </ion-content>
 
 <ion-footer>
-  <ion-toolbar position="fixed">
-    <ion-tabs>
-      <!-- Tab buttons here -->
-    </ion-tabs>
-    <ion-button (click)="logout()" expand="full" color="danger">Logout</ion-button>
-  </ion-toolbar>
+  <ion-tabs>
+    <!-- Tab buttons here -->
+  </ion-tabs>
+  <ion-button (click)="logout()" expand="full" color="danger">Logout</ion-button>
 </ion-footer>
