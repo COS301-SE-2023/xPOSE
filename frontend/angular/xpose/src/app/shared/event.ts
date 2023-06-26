@@ -1,10 +1,11 @@
 export interface Event {
-    userId: Number;
-    eventName: String;
-    coverImage: String;
-    //eventStartDate: String;
-    //eventEndDate: String;
-    eventLocation: String;
-    eventDescription: String;
-    eventPrivacySetting: String;
-}
+    userId: number;
+    eventName: string;
+    coverImage: File | null;
+    eventStartDate: string;
+    eventEndDate: string;
+    eventLocation: string;
+    eventDescription: string;
+    eventPrivacySetting: string;
+  }
+  

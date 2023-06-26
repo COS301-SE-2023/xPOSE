@@ -14,9 +14,9 @@ export class CreateEventPage implements OnInit {
 	createEvent: Event = {
 		userId: 0,
 		eventName: ' ',
-		coverImage: ' ',
-		//eventStartDate: ' ',
-		//eventEndDate: ' ',
+		coverImage: null,
+		eventStartDate: ' ',
+		eventEndDate: ' ',
 		eventLocation: ' ',
 		eventDescription: ' ',
 		eventPrivacySetting: ' '
@@ -28,7 +28,25 @@ export class CreateEventPage implements OnInit {
 	ngOnInit(): void {
 	}
 
+	onFileSelected(event: any) {
+		const file: File = event.target.files[0];
+		this.createEvent.coverImage = file;
+		// You can perform further operations with the selected file, such as uploading it to a server or displaying a preview.
+		// Remember to update your component's property (e.g., createEvent.coverImage) with the selected file or file data.
+	  }
+
 	CreateEvent(){
+		const formData: FormData = new FormData();
+		formData.append('userId', this.createEvent.userId.toString());
+		formData.append('eventName', this.createEvent.eventName);
+		if (this.createEvent.coverImage) {
+			formData.append('coverImage', this.createEvent.coverImage, this.createEvent.coverImage.name);
+		  }
+		formData.append('eventStartDate', this.createEvent.eventStartDate);
+		formData.append('eventEndDate', this.createEvent.eventEndDate);
+		formData.append('eventLocation', this.createEvent.eventLocation);
+		formData.append('eventDescription', this.createEvent.eventDescription);
+		formData.append('eventPrivacySetting', this.createEvent.eventPrivacySetting);
 		this.service.CreateEvent(this.createEvent)
 		.subscribe({
 		  next: (event) => {

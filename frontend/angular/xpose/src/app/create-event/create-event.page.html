@@ -27,23 +27,25 @@
         </ion-radio-group>
       </ion-item>
       
-      <ion-input type="file" label="Upload Cover Page Image" label-placement="floating" fill="outline" placeholder="img" name="coverImg"></ion-input>
+      <input type="file" accept="image/*" (change)="onFileSelected($event)" name="coverImage" id="coverImage">
+      <label for="coverImage">Upload Cover Page Image</label>
+      
       
       <ion-input label="Event Name" label-placement="floating" fill="outline" placeholder="Event Name" name="eventName" name="eventName" [(ngModel)]="createEvent.eventName"></ion-input>
       <ion-textarea label="Event Description" labelPlacement="floating" fill="solid" placeholder="Event Description" name="eventDescription" name="eventDescription" [(ngModel)]="createEvent.eventDescription"></ion-textarea>
       <ion-input label="Location" label-placement="floating" fill="outline" placeholder="Location" name="location" [(ngModel)]="createEvent.eventLocation" name="eventLocation"></ion-input>
 
-      <!--start date
+      <!--start date-->
       <ion-datetime-button datetime="datetime" [(ngModel)]="createEvent.eventStartDate" name="eventStartDate"></ion-datetime-button>
 
-      <!--end date
+      <!--end date-->
       <ion-datetime-button datetime="datetime" [(ngModel)]="createEvent.eventEndDate" name="eventEndDate"></ion-datetime-button>
 
       <ion-modal [keepContentsMounted]="true">
         <ng-template>
           <ion-datetime id="datetime"></ion-datetime>
         </ng-template>
-      </ion-modal>-->
+      </ion-modal>
 
       <ion-button id="submitBtn" type="submit" class="custom-btn" (click)="redirectToEventPage()">Create Event</ion-button>
 
