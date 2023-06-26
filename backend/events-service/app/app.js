@@ -9,7 +9,6 @@ const generateUniqueCode = require('./code-generator');
 // const qr = require('qrcode');
 const cors = require('cors');
 
-
 // Initialize Firebase Admin SDK
 const serviceAccount = require('./permissions.json');
 admin.initializeApp({
