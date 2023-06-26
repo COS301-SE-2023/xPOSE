@@ -13,39 +13,16 @@
       <img [src]="user.photoURL">
 
       <div class="first_div">
-        <ion-label class="username">{{user.displayName}}</ion-label>
-        <ion-button class="edit_div">Edit Profile</ion-button>
+        <ion-label class="username">{{ user.displayName }}</ion-label>
       </div>
+      <ion-button class="edit_div">Edit Profile</ion-button>
     </div>
   </div>
 </ion-content>
 
 <ion-footer>
-  <ion-toolbar position="fixed">
-    <ion-tabs>
-      <ion-tab-bar slot="bottom">
-        <ion-tab-button tab="home" >
-          <ion-icon name="home-outline" (click)="onHome()"></ion-icon>
-          <ion-label>Home</ion-label>
-        </ion-tab-button>
-        <ion-tab-button tab="joined-events" (click)="onJoinedEvent()">
-          <ion-icon name="people-outline"></ion-icon>
-          <ion-label>Joined Events</ion-label>
-        </ion-tab-button>
-        <ion-tab-button tab="create-event" (click)="onEvent()">
-          <ion-icon name="add-circle-outline"></ion-icon>
-          <ion-label>Create Event</ion-label>
-        </ion-tab-button>
-        <ion-tab-button tab="notifications" (click)="onNotifications()">
-          <ion-icon name="notifications-outline"></ion-icon>
-          <ion-label>Notifications</ion-label>
-        </ion-tab-button>
-        <ion-tab-button tab="profile" (click)="onProfile()">
-          <ion-icon name="person-outline"></ion-icon>
-          <ion-label>Profile</ion-label>
-        </ion-tab-button>
-      </ion-tab-bar>
-    </ion-tabs>
-    <ion-button (click)="logout()" expand="full" color="danger">Logout</ion-button>
-  </ion-toolbar>
+  <ion-tabs>
+    <!-- Tab buttons here -->
+  </ion-tabs>
+  <ion-button (click)="logout()" expand="full" color="danger">Logout</ion-button>
 </ion-footer>

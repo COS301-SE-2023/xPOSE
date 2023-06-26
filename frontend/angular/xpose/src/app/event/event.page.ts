@@ -1,21 +1,8 @@
-// import { Component, OnInit } from '@angular/core';
-
-// @Component({
-//   selector: 'app-event',
-//   templateUrl: './event.page.html',
-//   styleUrls: ['./event.page.scss'],
-// })
-// export class EventPage implements OnInit {
-
-//   constructor() { }
-
-//   ngOnInit() {
-//   }
-
-// }
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
+import { IonTabs } from '@ionic/angular';
+
 @Component({
   selector: 'app-event',
   templateUrl: './event.page.html',
@@ -23,6 +10,9 @@ import { Router } from '@angular/router';
 })
 export class EventPage {
   event: { title: string, date: string, location: string, description: string };
+
+  @ViewChild('eventTabs', { static: false }) tabs: IonTabs | undefined;
+  selectedTab: any;
 
   constructor(private activatedRoute: ActivatedRoute, private router: Router) {
     // Mocked event data
@@ -39,6 +29,11 @@ export class EventPage {
     const eventId = this.activatedRoute.snapshot.paramMap.get('id');
     // Call API or perform necessary logic to fetch event details
     // Assign the fetched data to this.event
+  }
+
+  setCurrentTab() {
+    this.selectedTab = this.tabs?.getSelected();
+    console.log(this.selectedTab);
   }
 
   onEvent() {
@@ -60,5 +55,4 @@ export class EventPage {
   onHome() {
     this.router.navigate(['/home']);
   }
-
 }

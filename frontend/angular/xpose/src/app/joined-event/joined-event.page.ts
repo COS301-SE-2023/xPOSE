@@ -11,8 +11,8 @@ export class JoinedEventPage implements OnInit {
   filteredEvents: any[] = []; // Initialize as an empty array
   filterType: string = 'private'; // Default filter type
 
-  // constructor() {}
   constructor(private router: Router) {}
+
   ngOnInit() {
     this.loadJoinedEvents();
   }
@@ -21,10 +21,10 @@ export class JoinedEventPage implements OnInit {
     // Call your event service method to fetch joined events
     // Example code:
     this.joinedEvents = [
-      { id: 1, name: 'Private Event 1', type: 'private' },
-      { id: 2, name: 'Private Event 2', type: 'private' },
-      { id: 3, name: 'Public Event 1', type: 'public' },
-      { id: 4, name: 'Public Event 2', type: 'public' },
+      { id: 1, name: 'Private Event 1', type: 'private', image: 'assets/images/download.jpg' },
+      { id: 2, name: 'Private Event 2', type: 'private', image: 'assets/images/download.jpg' },
+      { id: 3, name: 'Public Event 1', type: 'public', image: 'assets/images/download.jpg' },
+      { id: 4, name: 'Public Event 2', type: 'public', image: 'assets/images/download.jpg' },
     ];
     this.applyFilter(); // Apply the initial filter
   }
@@ -38,6 +38,7 @@ export class JoinedEventPage implements OnInit {
       this.filteredEvents = this.joinedEvents; // No filter applied
     }
   }
+
   onEvent() {
     this.router.navigate(['/create-event']);
   }

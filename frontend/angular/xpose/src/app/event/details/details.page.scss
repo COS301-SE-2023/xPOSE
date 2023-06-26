@@ -1,0 +1,34 @@
+.h2{
+    color: rgb(247, 0, 255);
+    font-size: 15px;
+    font-weight: bold;
+}
+ion-button{
+    color: rgb(178, 174, 179);
+    background-color: antiquewhite;
+    --background: rgb(255, 255, 255);
+    border: 1px solid rgb(156, 146, 156);
+    --ion-color-base: rgb(250, 120, 255);
+    .ion-color-danger {
+        --ion-color-base: var(--ion-color-danger, #dd44eb) !important;
+        --ion-color-base-rgb: var(--ion-color-danger-rgb, 235, 68, 90) !important;
+        --ion-color-contrast: var(--ion-color-danger-contrast, #fff) !important;
+        --ion-color-contrast-rgb: var(--ion-color-danger-contrast-rgb, 255, 255, 255) !important;
+        --ion-color-shade: var(--ion-color-danger-shade, #e7e7e7) !important;
+        --ion-color-tint: var(--ion-color-danger-tint, #ed576b) !important;
+    }
+}
+ion-card{
+    --background: rgb(255, 255, 255);
+    --ion-color-base: rgb(250, 120, 255);
+   
+}
+.qrcode{
+    width: 20%; 
+    height: auto; 
+}
+ion-toolbar {
+    --background: #ffffff; /* Set the toolbar background color */
+    color: rgb(0, 0, 0); /* Set the toolbar text color */
+    text-align: center;
+  }

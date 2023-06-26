@@ -53,28 +53,36 @@ export class NotificationPage implements OnInit {
   rejectRequest() {
     // Handle reject request logic here
   }
-  onEvent(){
+
+  onEvent() {
     this.router.navigate(['/create-event']);
-    }
-    onNotifications(){
+  }
+
+  onNotifications() {
     this.router.navigate(['/notification']);
-    }
-    onProfile(){
-       this.router.navigate(['/profile']);
-    }  
-    onJoinedEvent(){
+  }
+
+  onProfile() {
+    this.router.navigate(['/profile']);
+  }
+
+  onJoinedEvent() {
     this.router.navigate(['/joined-event']);
-    }
-    onHome(){
-      this.router.navigate(['/home']);
-      }
-    rejectInvitation(){
-      //
-    }
-    acceptInvitation(){
-      //
-    }
-    viewReport(){
-      //
-    }
+  }
+
+  onHome() {
+    this.router.navigate(['/home']);
+  }
+
+  rejectInvitation() {
+    // Handle reject invitation logic here
+  }
+
+  acceptInvitation() {
+    // Handle accept invitation logic here
+  }
+
+  viewReport() {
+    // Handle view report logic here
+  }
 }
