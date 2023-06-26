@@ -7,7 +7,9 @@ import { IonicModule, ModalController } from '@ionic/angular';
 import { EventModal } from '../event-modal/event-modal';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-
+import { AngularFireAuth } from "@angular/fire/compat/auth";
+import { Observable } from "rxjs";
+import { map } from "rxjs/operators";
 @Component({
 	selector: "app-create-event",
 	templateUrl: "./create-event.page.html",
@@ -27,7 +29,11 @@ export class CreateEventPage implements OnInit {
 	  };
 	  route: any;
 
-	constructor(private http: HttpClient, private router: Router,private service: Service, private modalController: ModalController) { }
+	constructor(private http: HttpClient,
+		private router: Router,
+		private service: Service,
+		private modalController: ModalController,
+		private afAuth: AngularFireAuth) { }
 
 	ngOnInit(): void {
 	}
@@ -39,34 +45,58 @@ export class CreateEventPage implements OnInit {
 		// Remember to update your component's property (e.g., createEvent.coverImage) with the selected file or file data.
 	  }
 
-	  CreateEvent() {
-		const formData: FormData = new FormData();
-		formData.append('userId', this.createEvent.userId.toString());
-		formData.append('eventName', this.createEvent.eventName);
-		if (this.createEvent.coverImage) {
-		  formData.append('coverImage', this.createEvent.coverImage, this.createEvent.coverImage.name);
-		}
-		formData.append('eventStartDate', this.createEvent.eventStartDate);
-		formData.append('eventEndDate', this.createEvent.eventEndDate);
-		formData.append('eventLocation', this.createEvent.eventLocation);
-		formData.append('eventDescription', this.createEvent.eventDescription);
-		formData.append('eventPrivacySetting', this.createEvent.eventPrivacySetting);
-	  
-		// REfactor this to be done in the service class for better decoupling
-		const url = 'http://localhost:8000/e/events';
-	  
-		this.http.post(url, formData)
-		  .subscribe({
-			next: (response) => {
-			  // Handle the response from the server
-			  this.router.navigate(['/home']);
-			},
-			error: (error) => {
-			  // Handle any errors that occurred during the request
-			  console.error(error);
-			  // Display an error message to the user or perform any necessary error handling
+	  getCurrentUserId(): Observable<string> {
+		return this.afAuth.authState.pipe(
+		  map((user) => {
+			if (user) {
+			  return user.uid;
+			} else {
+				// throw error
+			  console.log('No user is currently logged in.');
+			  return '';
 			}
-		  });
+		  })
+		);
+	  }
+	  
+
+	  CreateEvent() {
+		this.getCurrentUserId().subscribe((userId) => {
+			if(userId){
+				// this.createEvent.userId = parseInt(userId);
+				const formData: FormData = new FormData();
+				formData.append('userId', userId);
+				formData.append('eventName', this.createEvent.eventName);
+				if (this.createEvent.coverImage) {
+				  formData.append('coverImage', this.createEvent.coverImage, this.createEvent.coverImage.name);
+				}
+				formData.append('eventStartDate', this.createEvent.eventStartDate);
+				formData.append('eventEndDate', this.createEvent.eventEndDate);
+				formData.append('eventLocation', this.createEvent.eventLocation);
+				formData.append('eventDescription', this.createEvent.eventDescription);
+				formData.append('eventPrivacySetting', this.createEvent.eventPrivacySetting);
+			  
+				// REfactor this to be done in the service class for better decoupling
+				const url = 'http://localhost:8000/e/events';
+			  
+				this.http.post(url, formData)
+				  .subscribe({
+					next: (response) => {
+					  // Handle the response from the server
+					  this.router.navigate(['/home']);
+					},
+					error: (error) => {
+					  // Handle any errors that occurred during the request
+					  console.error(error);
+					  // Display an error message to the user or perform any necessary error handling
+					}
+				  });
+			}
+			else {
+				console.log("No user is currently logged in.");
+				// ! throw error
+			}
+		});
 	  }
 	  
 

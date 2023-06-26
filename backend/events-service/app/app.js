@@ -61,7 +61,7 @@ app.post('/events', upload.single('coverImage'), async (req, res) => {
     const db = admin.firestore();
     const eventsRef = db.collection('events');
     const eventCode = generateUniqueCode();
-    
+    const userRef = db.collection('Users').doc(userId);
     const event = {
       eventName,
       eventDescription,
@@ -73,8 +73,10 @@ app.post('/events', upload.single('coverImage'), async (req, res) => {
       eventPrivacySetting,
       eventCode
     };
-
+    
     const { id } = await eventsRef.add(event);
+    // add event id to user's subcollection of created events
+    // await userRef.collection('joinedEvents').doc(id).set({});
 
     console.log('Event created:', id);
     // Return the created event
@@ -156,8 +158,10 @@ app.post('/events/:eventId/participants', async (req, res) => {
 
     const db = admin.firestore();
     const eventRef = db.collection('events').doc(eventId);
+    const userRef = db.collection('Users').doc(userId);
 
     await eventRef.collection('participants').doc(userId).set({});
+    await userRef.collection('joinedEvents').doc(eventId).set({});
 
     res.json({ message: 'Participant added successfully' });
   } catch (error) {
@@ -194,8 +198,12 @@ app.post('/events/:eventId/chats', async (req, res) => {
 
     const db = admin.firestore();
     const eventRef = db.collection('events').doc(eventId);
+    const userRef = db.collection('Users').doc(userId);
 
-    await eventRef.collection('chats').add({ userId, message });
+    // get user displayName
+    const userSnapshot = await userRef.get();
+    const { displayName } = userSnapshot.data();
+    await eventRef.collection('chats').add({ userId, displayName, message });
 
     res.json({ message: 'Chat message added successfully' });
   } catch (error) {
