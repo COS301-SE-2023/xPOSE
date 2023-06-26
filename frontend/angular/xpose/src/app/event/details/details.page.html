@@ -1,0 +1,50 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>{{ eventName }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">{{ eventName }}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>Date</ion-card-subtitle>
+      <ion-card-title>{{ eventDate | date }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-card-subtitle>Location</ion-card-subtitle>
+      <ion-card-title>{{ eventLocation }}</ion-card-title>
+    </ion-card-content>
+  </ion-card>
+  
+  <!-- QR Code -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>QR Code</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <!-- Display your QR code here -->
+      <img src="./assets/images/qrcode.png" alt="QR Code" class="qrcode" />
+    </ion-card-content>
+  </ion-card>
+  
+  <!-- Participants -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Participants</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let participant of participants">
+          <ion-label class="h2">{{ participant.name }}</ion-label>
+          <ion-button (click)="removeParticipant(participant)" color="danger">Remove</ion-button>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

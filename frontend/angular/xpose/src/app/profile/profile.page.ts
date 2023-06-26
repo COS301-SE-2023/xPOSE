@@ -20,11 +20,11 @@ export class ProfilePage {
     ) {
 
     this.user = {
-      photoURL: 'avatar.jpg',
+      photoURL: '/.assets/images/images.jpg',
       displayName: 'John Doe',
       email: 'johndoe@example.com',
     };
-    this.user.photoURL = '/.assets/images/youth.jpg';
+    this.user.photoURL = '/.assets/images/images.jpg';
   }
 
   logout() {
