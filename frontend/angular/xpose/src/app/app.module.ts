@@ -6,6 +6,7 @@ import { IonicModule, IonicRouteStrategy } from "@ionic/angular";
 
 import { FormsModule } from "@angular/forms";
 import { AuthService } from "./shared/services/auth.service";
+import { AuthGuard } from './shared/guard/auth.guard';
 
 //firebase services and environmnet file
 import { AngularFireModule } from "@angular/fire/compat";
@@ -42,7 +43,8 @@ import { NgxMasonryModule } from 'ngx-masonry';
 
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    AuthService /*ScreenTrackingService,UserTrackingService*/,
+    AuthService,
+    AuthGuard /*ScreenTrackingService,UserTrackingService*/,
   ],
   bootstrap: [AppComponent],
 })
