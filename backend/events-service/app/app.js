@@ -48,7 +48,7 @@ app.post('/events', upload.single('coverImage'), async (req, res) => {
     console.log('Event end date:', eventEndDate);
     console.log('Event privacy setting:', eventPrivacySetting);
     console.log('User ID:', userId);
-    
+    console.log('File:', req.file)
     
     const file = req.file;
      
