@@ -20,7 +20,7 @@ Object.entries(routes).forEach(([path, target]) => {
 });
 
 // Start the server
-const port = 3000;
+const port = 8000;
 app.listen(port, () => {
   console.log(`Gateway API server is running on port ${port}`);
 });
