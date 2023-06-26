@@ -1,12 +1,14 @@
 const express = require('express');
-const axios = require('axios');
+// const axios = require('axios');
 const multer = require('multer');
 const bodyParser = require('body-parser');
 const admin = require('firebase-admin');
 const fs = require('fs');
 const uploadImageToFirebase = require('./firebase-storage.service');
 const generateUniqueCode = require('./code-generator');
-const qr = require('qrcode');
+// const qr = require('qrcode');
+const cors = require('cors');
+
 
 // Initialize Firebase Admin SDK
 const serviceAccount = require('./permissions.json');
@@ -20,6 +22,7 @@ admin.initializeApp({
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
 
 // Configure Multer for file upload
 const upload = multer({ dest: 'uploads/' });
@@ -28,86 +31,77 @@ const upload = multer({ dest: 'uploads/' });
 
 // Hello world route
 app.get('/status', (req, res) => {
+  console.log('Received request from:', req.ip);
   res.send('Hello World!');
 });
 
 // Create event route
-// Create event route
-app.post('/events', upload.single('image'), async (req, res) => {
-    try {
-      const { name, description, location, userId, startDate, endDate, privacySetting } = req.body;
-      const file = req.file;
-       
-      const imageUrl = await uploadImageToFirebase(userId, file);        
+app.post('/events', upload.single('coverImage'), async (req, res) => {
+  console.log('Processing event creation');
+  
+  try {
+    const { eventName, eventDescription, eventLocation, userId, eventStartDate, eventEndDate, eventPrivacySetting } = req.body;
+    
+    console.log('Event name:', eventName);
+    console.log('Event description:', eventDescription);
+    console.log('Event location:', eventLocation);
+    console.log('Event start date:', eventStartDate);
+    console.log('Event end date:', eventEndDate);
+    console.log('Event privacy setting:', eventPrivacySetting);
+    console.log('User ID:', userId);
+    
+    
+    const file = req.file;
+     
+    const imageUrl = await uploadImageToFirebase(userId, file);        
 
-      // Generate a unique file name
-      const fileName = `${userId}_${Date.now()}_${file.originalname}`;
-    
-      // Upload the file to the image uploader API
-      //   const uploadUrl = 'http://localhost:8003/upload';
-      //   const formData = new FormData();
-      //   formData.append('userId', userId);
-      //   formData.append('file', fs.createReadStream(file.path));
-    
-      //   const headers = formData.getHeaders ? formData.getHeaders() : { 'Content-Type': 'multipart/form-data' };
-    
-      //   const { data: { url: imageUrl } } = await axios.post(uploadUrl, formData, {
-      //     headers,
-      //   });
-  
-      // Save the event in Firebase Firestore
-      const db = admin.firestore();
-      const eventsRef = db.collection('events');
-      const eventCode = generateUniqueCode();
-      // qr.toFile(`./qr-codes/${eventCode}.png`, eventCode, { width: 500 });
-      // const qrCodeUrl = uploadImageToFirebase(userId, { path: `./qr-codes/${eventCode}.png`, originalname: `${eventCode}.png` }})
-      // .then((url) => {
-      //   return url;
-      // })
-      // .catch((error) => {
-      //   console.error('Error uploading QR code:', error);
-      // });
+    // Generate a unique file name
+    const fileName = `${userId}_${Date.now()}_${file.originalname}`;
 
-      
-      const event = {
-        name,
-        description,
-        location,
-        owner: userId,
-        startDate: new Date(startDate),
-        endDate: new Date(endDate),
-        imageUrl,
-        userId,
-        privacySetting,
-        eventCode
-      };
-  
-      const { id } = await eventsRef.add(event);
-  
-      // Return the created event
-      res.json({ id, ...event });
-    } catch (error) {
-      console.error('Error creating event:', error);
-      res.status(500).json({ error: 'Error creating event' });
-    }
-  });
-  
+    // Save the event in Firebase Firestore
+    const db = admin.firestore();
+    const eventsRef = db.collection('events');
+    const eventCode = generateUniqueCode();
+    
+    const event = {
+      eventName,
+      eventDescription,
+      eventLocation,
+      eventCreator: userId,
+      eventStartDate: new Date(eventStartDate),
+      eventEndDate: new Date(eventEndDate),
+      imageUrl,
+      eventPrivacySetting,
+      eventCode
+    };
+
+    const { id } = await eventsRef.add(event);
+
+    console.log('Event created:', id);
+    // Return the created event
+    res.json({ id, ...event });
+  } catch (error) {
+    console.error('Error creating event:', error);
+    res.status(500).json({ error: 'Error creating event' });
+  }
+});
 
 // Update event route
 app.put('/events/:eventId', async (req, res) => {
+  console.log('Processing event update');
   try {
     const { eventId } = req.params;
-    const { name, description, location, startDate, endDate } = req.body;
+    const { eventName, eventDescription, eventLocation, eventStartDate, eventEndDate } = req.body;
 
     const db = admin.firestore();
     const eventRef = db.collection('events').doc(eventId);
 
     await eventRef.update({
-      name,
-      description,
-      location,
-      startDate: new Date(startDate),
-      endDate: new Date(endDate),
+      eventName,
+      eventDescription,
+      eventLocation,
+      eventStartDate: new Date(eventStartDate),
+      eventEndDate: new Date(eventEndDate),
     });
 
     res.json({ message: 'Event updated successfully' });
@@ -119,23 +113,26 @@ app.put('/events/:eventId', async (req, res) => {
 
 // Get all events route
 app.get('/events', async (req, res) => {
-    try {
-        const db = admin.firestore();
-        const eventsRef = db.collection('events');
-        const snapshot = await eventsRef.get();
-        const events = [];
-        snapshot.forEach((doc) => {
-            events.push({ id: doc.id, ...doc.data() });
-        });
-        res.json(events);
-    } catch (error) {
-        console.error('Error getting events:', error);
-        res.status(500).json({ error: 'Error getting events' });
-    }
+  console.log('Processing event retrieval');
+
+  try {
+    const db = admin.firestore();
+    const eventsRef = db.collection('events');
+    const snapshot = await eventsRef.get();
+    const events = [];
+    snapshot.forEach((doc) => {
+      events.push({ id: doc.id, ...doc.data() });
+    });
+    res.json(events);
+  } catch (error) {
+    console.error('Error getting events:', error);
+    res.status(500).json({ error: 'Error getting events' });
+  }
 });
 
 // Delete event route
 app.delete('/events/:eventId', async (req, res) => {
+  console.log('Processing event deletion');
   try {
     const { eventId } = req.params;
 
@@ -153,6 +150,7 @@ app.delete('/events/:eventId', async (req, res) => {
 
 // Add participant to event route
 app.post('/events/:eventId/participants', async (req, res) => {
+  console.log('Processing adding participant to event');
   try {
     const { eventId } = req.params;
     const { userId } = req.body;
@@ -171,6 +169,7 @@ app.post('/events/:eventId/participants', async (req, res) => {
 
 // Add post to event route
 app.post('/events/:eventId/posts', async (req, res) => {
+  console.log('Processing adding post to event');
   try {
     const { eventId } = req.params;
     const { userId, content } = req.body;
@@ -189,6 +188,7 @@ app.post('/events/:eventId/posts', async (req, res) => {
 
 // Add chat message to event route
 app.post('/events/:eventId/chats', async (req, res) => {
+  console.log('Processing adding chat message to event');
   try {
     const { eventId } = req.params;
     const { userId, message } = req.body;
