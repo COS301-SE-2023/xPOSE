@@ -7,7 +7,7 @@ import { map, Observable, Subject } from 'rxjs';
 })
 export class Service {
 
-  apiUrl = 'http://localhost:3000/'
+  apiUrl = 'http://localhost:8000/'
 
   httpOptions ={
     headers: new HttpHeaders({

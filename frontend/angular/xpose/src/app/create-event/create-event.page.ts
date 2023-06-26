@@ -39,25 +39,36 @@ export class CreateEventPage implements OnInit {
 		// Remember to update your component's property (e.g., createEvent.coverImage) with the selected file or file data.
 	  }
 
-	CreateEvent(){
+	  CreateEvent() {
 		const formData: FormData = new FormData();
 		formData.append('userId', this.createEvent.userId.toString());
 		formData.append('eventName', this.createEvent.eventName);
 		if (this.createEvent.coverImage) {
-			formData.append('coverImage', this.createEvent.coverImage, this.createEvent.coverImage.name);
-		  }
+		  formData.append('coverImage', this.createEvent.coverImage, this.createEvent.coverImage.name);
+		}
 		formData.append('eventStartDate', this.createEvent.eventStartDate);
 		formData.append('eventEndDate', this.createEvent.eventEndDate);
 		formData.append('eventLocation', this.createEvent.eventLocation);
 		formData.append('eventDescription', this.createEvent.eventDescription);
 		formData.append('eventPrivacySetting', this.createEvent.eventPrivacySetting);
-		this.service.CreateEvent(this.createEvent)
-		.subscribe({
-		  next: (event) => {
-			this.router.navigate(['/home']);
-		  }
-		});
+	  
+		// REfactor this to be done in the service class for better decoupling
+		const url = 'http://localhost:8000/e/events';
+	  
+		this.http.post(url, formData)
+		  .subscribe({
+			next: (response) => {
+			  // Handle the response from the server
+			  this.router.navigate(['/home']);
+			},
+			error: (error) => {
+			  // Handle any errors that occurred during the request
+			  console.error(error);
+			  // Display an error message to the user or perform any necessary error handling
+			}
+		  });
 	  }
+	  
 
 	goBack(){
 		this.router.navigate(["/home"]);

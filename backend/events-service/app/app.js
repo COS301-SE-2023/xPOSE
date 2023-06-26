@@ -40,7 +40,7 @@ app.post('/events', upload.single('coverImage'), async (req, res) => {
   
   try {
     const { eventName, eventDescription, eventLocation, userId, eventStartDate, eventEndDate, eventPrivacySetting } = req.body;
-    
+    console.log('Request body:', req.body);
     console.log('Event name:', eventName);
     console.log('Event description:', eventDescription);
     console.log('Event location:', eventLocation);
