@@ -2,10 +2,8 @@ export interface Event {
     userId: Number;
     eventName: String;
     coverImage: String;
-    eventStartDate: Date;
-    eventStartTime: Number;
-    eventEndDate: Date;
-    eventEndTime: Number;
+    //eventStartDate: String;
+    //eventEndDate: String;
     eventLocation: String;
     eventDescription: String;
     eventPrivacySetting: String;

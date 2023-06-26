@@ -7,7 +7,7 @@ import { map, Observable, Subject } from 'rxjs';
 })
 export class Service {
 
-  apiUrl = 'http://localhost:5116/api/'
+  apiUrl = 'http://localhost:3000/'
 
   httpOptions ={
     headers: new HttpHeaders({
@@ -20,7 +20,7 @@ export class Service {
 
 
   CreateEvent(event:any): Observable<any>{
-    return this.httpClient.post(`${this.apiUrl}Event/createEvent`, event,this.httpOptions)
+    return this.httpClient.post(`${this.apiUrl}e/events`, event,this.httpOptions)
     .pipe(map(result => result))
   }
 }
