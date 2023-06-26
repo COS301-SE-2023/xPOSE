@@ -2,11 +2,13 @@ import { NgModule } from "@angular/core";
 import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
 
 import { AuthGuard } from "./shared/guard/auth.guard";
+import { SendFriendRequestsComponent } from "./send-friend-requests/send-friend-requests.component";
 
 const routes: Routes = [
   {
     path: "home",
-    loadChildren: () => import("./home/home.module").then(m => m.HomePageModule), canActivate:[AuthGuard]
+    loadChildren: () => import("./home/home.module").then(m => m.HomePageModule)
+    // , canActivate:[AuthGuard]
   },
   {
     path: "",
@@ -56,6 +58,9 @@ const routes: Routes = [
   {
     path: "post-details",
     loadChildren: () => import("./post-details/post-details.module").then(m => m.PostDetailsPageModule)
+  },
+  { 
+    path: 'send-friend-requests', component: SendFriendRequestsComponent 
   }
 ];
 

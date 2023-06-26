@@ -3,6 +3,10 @@ import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
 import { Service } from "../service/service";
 import { Event } from '../shared/event';
+import { IonicModule, ModalController } from '@ionic/angular';
+import { EventModal } from '../event-modal/event-modal';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
 	selector: "app-create-event",
@@ -23,7 +27,7 @@ export class CreateEventPage implements OnInit {
 	  };
 	  route: any;
 
-	constructor(private http: HttpClient, private router: Router,private service: Service) { }
+	constructor(private http: HttpClient, private router: Router,private service: Service, private modalController: ModalController) { }
 
 	ngOnInit(): void {
 	}
@@ -59,27 +63,35 @@ export class CreateEventPage implements OnInit {
 		this.router.navigate(["/home"]);
 	}
 
-	redirectToEventPage() {
-		this.router.navigate(['/event']);
-	  }
-	  onEvent() {
-		this.router.navigate(['/create-event']);
-	  }
+	onEvent() {
+	this.router.navigate(['/create-event']);
+	}
+
+	onNotifications() {
+	this.router.navigate(['/notification']);
+	}
+
+	onProfile() {
+	this.router.navigate(['/profile']);
+	}
+
+	onJoinedEvent() {
+	this.router.navigate(['/joined-event']);
+	}
+
+	onHome() {
+	this.router.navigate(['/home']);
+	}
+
+	async openEventModal() {
+	const modal = await this.modalController.create({
+		component: EventModal,
+	//   componentProps: {
+	// 	totalPrice: this.getTotalPrice()
+	//   }
+	});
 	
-	  onNotifications() {
-		this.router.navigate(['/notification']);
-	  }
-	
-	  onProfile() {
-		this.router.navigate(['/profile']);
-	  }
-	
-	  onJoinedEvent() {
-		this.router.navigate(['/joined-event']);
-	  }
-	
-	  onHome() {
-		this.router.navigate(['/home']);
-	  }
+	await modal.present();
+	}
 	
 }
