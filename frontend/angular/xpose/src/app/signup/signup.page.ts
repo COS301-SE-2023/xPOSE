@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
-
+import { Router } from "@angular/router";
 import { AuthService } from "../shared/services/auth.service";
 
 @Component({
@@ -11,10 +11,10 @@ import { AuthService } from "../shared/services/auth.service";
 	
 export class SignupPage implements OnInit {
 	signUpForm: FormGroup;
-	router: any;
 	constructor(
 		public authService: AuthService,
 		private formBuilder: FormBuilder,
+		private router: Router
 		) {
 			this.signUpForm = this.formBuilder.group({
 				email: ["", [Validators.required, Validators.email]],
@@ -32,7 +32,7 @@ export class SignupPage implements OnInit {
 			console.log("password: ", password);
 			console.log("username: ", username);
 			this.authService.signUp(email, password, username);
-			this.router.navigate(['/login']);
+			this.router.navigate(['/login'], { replaceUrl: true })
 		}
 	ngOnInit() {
 		// TODO document why this method 'ngOnInit' is empty
