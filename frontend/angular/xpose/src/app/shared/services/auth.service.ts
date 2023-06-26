@@ -160,32 +160,6 @@ signIn(email: string, password: string): Promise<void> {
       return Promise.reject(error); // Return a rejected promise for any other error
     });
 
-    return this.afAuth
-      .createUserWithEmailAndPassword(email, password)
-      .then((result) => {
-        if (result.user) {
-          return result.user
-            .updateProfile({ displayName: username })
-            .then(() => {
-              this.setUserData(result.user);
-              console.log(email + " signed up successfully");
-              this.router.navigateByUrl('/login')
-            })
-            .catch((error) => {
-              window.alert(error.message);
-              this.router.navigate(['/login']);
-              return Promise.reject(error); // Return a rejected promise in case of error
-            });
-        } else {
-          return Promise.reject(new Error("User object not available")); // Return a rejected promise if user object is not available
-        }
-      })
-      .catch((error) => {
-        window.alert(error.message);
-        this.router.navigate(['/signup']);
-        return Promise.reject(error); // Return a rejected promise for any other error
-      });
-
   }
   
 
