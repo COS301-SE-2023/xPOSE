@@ -4,8 +4,6 @@ import {getMessaging, getToken, onMessage} from "firebase/messaging";
 import { environment } from "../../environments/environments";
 
 
-// import { AngularFirestoreModule } from "@angular/fire/compat/firestore";
-
 @Component({
   selector: 'app-notification',
   templateUrl: './notification.page.html',
@@ -14,15 +12,33 @@ import { environment } from "../../environments/environments";
 export class NotificationPage implements OnInit {
 
   title = 'notification??';
-  message:any = null;
+  messages: any[] = []; // Array to store message payloads
   constructor(private router: Router) { }
   // constructor() { }
 
   ngOnInit() {
     this.requestPermission();
     this.listen();
+    this.loadMessages();
   }
 
+  loadMessages() {
+    const storedMessages = localStorage.getItem('messages');
+    this.messages = storedMessages ? JSON.parse(storedMessages) : [];
+  }
+
+  saveMessages() {
+    localStorage.setItem('messages', JSON.stringify(this.messages));
+    // console.log('Messages saved to local storage');
+  }
+
+  clearMessages() {
+    localStorage.removeItem('messages');
+    this.messages = [];
+    console.log('Messages cleared from local storage');
+  }
+
+  
   requestPermission() {
     const messaging = getMessaging();
     getToken(messaging, { vapidKey: environment.firebase.vapidKey}).then(
@@ -42,7 +58,10 @@ export class NotificationPage implements OnInit {
     const messaging = getMessaging();
     onMessage(messaging, (payload) => {
       console.log('Message received. ', payload);
-      this.message=payload;
+      this.messages.push(payload); // Save the payload in the messages array
+      this.saveMessages();
+      
+      // this.message=payload;
     });
   }
   

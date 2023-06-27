@@ -1,8 +1,10 @@
 import { v4 as uuidv4 } from 'uuid';
 import admin from "firebase-admin";
+import { messaging } from "../index.js";
 
 
 let users = [];
+// const messaging = admin.messaging();
 
 export const getUsers = async (req, res) => {
     try {
@@ -229,12 +231,34 @@ export const sendFriendRequest = async (req, res) => {
         const friendRequest = {
             senderId: userId,
             recipientId: requestId,
-            status: 'pending',
+            status: 'pending'
         };
 
         // Add the friend request to the recipient's FriendRequests collection
         await admin.firestore().collection('Users').doc(requestId).collection('FriendRequests').doc(userId).set(friendRequest);
         res.status(200).json({ message: `Friend request sent successfully to user with id ${requestId}` });
+        
+        // send friend request notification 
+        const recipientData = recipientDoc.data();
+        const fcmToken = recipientData.fcmToken;
+        const message = {
+            notification: {
+              title: ' ',
+              body: 'New friend request from ' + recipientData.displayName,
+            },
+            token: fcmToken
+          };
+
+          messaging
+            .send(message)
+            .then((response) => {
+                console.log('notification sent successfully:', response);
+            })
+            .catch((error) => {
+                console.error('Error sending message:', error);
+            });
+
+
     } catch(error){
         console.error('Error sending friend request:', error);
         res.status(500).json({ error: 'An error occurred while sending friend request' });  
