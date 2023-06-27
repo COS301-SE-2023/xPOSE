@@ -239,8 +239,8 @@ export const sendFriendRequest = async (req, res) => {
         res.status(200).json({ message: `Friend request sent successfully to user with id ${requestId}` });
         
         // send friend request notification 
-        const recipientData = recipientDoc.data();
-        const fcmToken = recipientData.fcmToken;
+        const senderData = senderDoc.data();
+        const fcmToken = senderData.fcmToken;
         const message = {
             notification: {
               title: ' ',
