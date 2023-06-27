@@ -10,7 +10,7 @@
 Our technology stack still isn't finalized and we're still researching
 | Technology | Description | Testing |
 | :--- | :--- | :--- |
-| ![Django](https://img.icons8.com/color/48/000000/django.png) | **Django** is a high-level Python web framework for rapid development and clean design. It follows the Model-View-Controller architectural pattern. | Django Unit Testing |
+| ![Django](https://img.icons8.com/color/48/000000/django.png) | **Django** is a high-level Python web framework for rapi development and clean design. It follows the Model-View-Controller architectural pattern. | Django Unit Testing |
 | ![Angular](https://img.icons8.com/color/48/000000/angularjs.png) | **Angular** is a TypeScript-based open-source front-end web application platform led by the Angular Team at Google. It is used for building single-page applications. | Karma, Jasmine |
 | ![Ionic](https://img.icons8.com/color/48/000000/ionic.png) | **Ionic** is a free and open-source framework for building cross-platform mobile applications. It is built on top of Angular and allows developers to use web technologies like HTML, CSS, and JavaScript to build apps for iOS, Android, and other mobile platforms. | Ionic Testing Utilities |
 | ![Nginx](https://img.icons8.com/color/48/000000/nginx.png) | **Nginx** is a popular open-source web server that can also be used as a reverse proxy, load balancer, and HTTP cache. It is known for its high performance, stability, and low resource consumption. | N/A |

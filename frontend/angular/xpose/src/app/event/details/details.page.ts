@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-details',
@@ -12,8 +13,21 @@ export class DetailsPage implements OnInit {
   eventDate!: Date;
   eventLocation!: string;
 
-  constructor() {
+  constructor(private route: ActivatedRoute) {
     this.participants = [];
+    
+    if (!this.route.snapshot.data['event']) {
+      // Redirect to home page if no event data is available
+      // this.navCtrl.navigateBack('/home');
+      return;
+    }
+
+    // Fetch event data based on the route parameter
+    const event = this.route.snapshot.data['event'];
+    // Assign the fetched data to the respective variables
+    console.log(event);
+
+    
   }
 
   ngOnInit() {

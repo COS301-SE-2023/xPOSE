@@ -15,8 +15,7 @@ export class SignupPage implements OnInit {
 	constructor(
 		public authService: AuthService,
 		private formBuilder: FormBuilder,
-		public ngZone: NgZone,
-		public router: Router
+		private router: Router
 		) {
 			this.signUpForm = this.formBuilder.group({
 				email: ["", [Validators.required, Validators.email]],
@@ -34,10 +33,6 @@ export class SignupPage implements OnInit {
 			console.log("password: ", password);
 			console.log("username: ", username);
 			this.authService.signUp(email, password, username);
-			setTimeout(() => {
-				this.router.navigateByUrl('/login');
-			  }, 100);
-			// this.router.navigate(['/login']);
 		}
 	ngOnInit() {
 		// TODO document why this method 'ngOnInit' is empty

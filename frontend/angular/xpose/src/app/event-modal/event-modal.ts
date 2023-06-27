@@ -13,13 +13,13 @@ import { Location } from "@angular/common";
   imports: [IonicModule, CommonModule, FormsModule]
 })
 export class EventModal {
-//   @Input() totalPrice: number | undefined;
+   @Input()id!: string;
 
   constructor(private modalController: ModalController, private router: Router, private location: Location) { }
 
   redirectToEventPage() {
-    this.router.navigate(["/event"]).then(() => {
-      this.location.replaceState("/event");
+    this.router.navigate(["/event/"+ this.id + "/"]).then(() => {
+      this.location.replaceState("/event/"+ this.id + "/");
       window.location.reload();
     });
   }

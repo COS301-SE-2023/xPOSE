@@ -5,7 +5,7 @@ import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { AngularFirestore, AngularFirestoreDocument } from "@angular/fire/compat/firestore";
 import { GoogleAuthProvider, FacebookAuthProvider } from "firebase/auth";
 import {getMessaging, getToken} from "firebase/messaging";
-import { environment } from "../../../environments/environment";
+import { environment } from "../../../environments/environments";
 
 
 

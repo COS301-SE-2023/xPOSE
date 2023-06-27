@@ -40,7 +40,7 @@ app.post('/events', upload.single('coverImage'), async (req, res) => {
   
   try {
     const { eventName, eventDescription, eventLocation, userId, eventStartDate, eventEndDate, eventPrivacySetting } = req.body;
-    
+    console.log('Request body:', req.body);
     console.log('Event name:', eventName);
     console.log('Event description:', eventDescription);
     console.log('Event location:', eventLocation);
@@ -61,7 +61,7 @@ app.post('/events', upload.single('coverImage'), async (req, res) => {
     const db = admin.firestore();
     const eventsRef = db.collection('events');
     const eventCode = generateUniqueCode();
-    
+    const userRef = db.collection('Users').doc(userId);
     const event = {
       eventName,
       eventDescription,
@@ -73,8 +73,10 @@ app.post('/events', upload.single('coverImage'), async (req, res) => {
       eventPrivacySetting,
       eventCode
     };
-
+    
     const { id } = await eventsRef.add(event);
+    // add event id to user's subcollection of created events
+    // await userRef.collection('joinedEvents').doc(id).set({});
 
     console.log('Event created:', id);
     // Return the created event
@@ -82,6 +84,30 @@ app.post('/events', upload.single('coverImage'), async (req, res) => {
   } catch (error) {
     console.error('Error creating event:', error);
     res.status(500).json({ error: 'Error creating event' });
+  }
+});
+
+// Get an event
+app.get('/events/:eventId', async (req, res) => {
+  console.log('Processing event retrieval');
+  try {
+    const { eventId } = req.params;
+    const db = admin.firestore();
+    const eventRef = db.collection('events').doc(eventId);
+    const doc = await eventRef.get();
+    if (!doc.exists) {
+      console.log('Event not found');
+      res.status(404).json({ error: 'Event not found' });
+    }
+    else {
+      const event = { id: doc.id, ...doc.data() };
+      console.log('Event retrieved:', event);
+      res.json(event);
+    }
+  }
+  catch (error) {
+    console.error('Error getting event:', error);
+    res.status(500).json({ error: 'Error getting event' });
   }
 });
 
@@ -156,8 +182,10 @@ app.post('/events/:eventId/participants', async (req, res) => {
 
     const db = admin.firestore();
     const eventRef = db.collection('events').doc(eventId);
+    const userRef = db.collection('Users').doc(userId);
 
     await eventRef.collection('participants').doc(userId).set({});
+    await userRef.collection('joinedEvents').doc(eventId).set({});
 
     res.json({ message: 'Participant added successfully' });
   } catch (error) {
@@ -194,8 +222,12 @@ app.post('/events/:eventId/chats', async (req, res) => {
 
     const db = admin.firestore();
     const eventRef = db.collection('events').doc(eventId);
+    const userRef = db.collection('Users').doc(userId);
 
-    await eventRef.collection('chats').add({ userId, message });
+    // get user displayName
+    const userSnapshot = await userRef.get();
+    const { displayName } = userSnapshot.data();
+    await eventRef.collection('chats').add({ userId, displayName, message });
 
     res.json({ message: 'Chat message added successfully' });
   } catch (error) {
