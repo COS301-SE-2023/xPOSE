@@ -47,6 +47,7 @@ export class HomePage {
         description: '📍 ' + event.eventLocation,
         button: "Join event",
         imageURL: event.imageUrl,
+		id: event.id
 		
       }));
     }
