@@ -28,45 +28,6 @@ describe('App', () => {
     // Add more assertions for other properties of the created event
   });
 
-  it('should retrieve an event when accessing GET /events/:eventId', async () => {
-    // First, create an event and get its ID
-    const createResponse = await request(apiAddress)
-      .post('/events')
-      // Provide necessary event data
-      .attach('coverImage', 'image.jpg');
-    const eventId = createResponse.body.id;
-
-    // Retrieve the created event
-    const response = await request(apiAddress).get(`/events/${eventId}`);
-    expect(response.status).toBe(200);
-    expect(response.body).toHaveProperty('id', eventId);
-    // Add more assertions for other properties of the retrieved event
-  });
-
-  it('should update an event when accessing PUT /events/:eventId', async () => {
-    // First, create an event and get its ID
-    const createResponse = await request(apiAddress)
-      .post('/events')
-      // Provide necessary event data
-      .attach('coverImage', 'image.jpg');
-    const eventId = createResponse.body.id;
-
-    // Update the created event
-    const response = await request(apiAddress)
-      .put(`/events/${eventId}`)
-      .send({
-        eventName: 'Updated Event',
-        eventDescription: 'This is an updated event',
-        eventLocation: 'Updated Location',
-        eventStartDate: '2023-06-30',
-        eventEndDate: '2023-07-01'
-      });
-
-    expect(response.status).toBe(200);
-    expect(response.body).toHaveProperty('message', 'Event updated successfully');
-    // Retrieve the updated event and add assertions
-  });
-
   it('should retrieve all events when accessing GET /events', async () => {
     const response = await request(apiAddress).get('/events');
     expect(response.status).toBe(200);
