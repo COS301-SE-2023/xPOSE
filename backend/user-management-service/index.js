@@ -9,7 +9,7 @@ admin.initializeApp({
   databaseURL: "https://xpose-4f48c-default-rtdb.firebaseio.com"
 });
 
-
+const messaging = admin.messaging();
 const app = express();
 const PORT = 8002;
 
@@ -19,3 +19,5 @@ app.use('/users', userRoute);
 app.get('/', (req, res) => res.send("Hello from homepage"));
 
 app.listen(PORT, () => console.log(`Server running on port: http://localhost:${PORT}`));
+
+export {messaging};

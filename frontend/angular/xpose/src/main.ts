@@ -11,7 +11,7 @@ import { AppModule } from "./app/app.module";
 
 // service worker registration 
 if ('serviceWorker' in navigator) {
-	navigator.serviceWorker.register('/firebase-messaging-sw.js')
+	navigator.serviceWorker.register('firebase-messaging-sw.js')
 	  .then((registration) => {
 		// Service worker registration successful
 		console.log('Service worker registered:', registration);
