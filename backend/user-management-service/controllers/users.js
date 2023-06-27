@@ -244,7 +244,7 @@ export const sendFriendRequest = async (req, res) => {
         const message = {
             notification: {
               title: ' ',
-              body: 'New friend request from ' + recipientData.displayName,
+              body: 'New friend request from ' + senderData.displayName,
             },
             token: fcmToken
           };
