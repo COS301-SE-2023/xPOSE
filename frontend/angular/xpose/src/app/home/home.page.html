@@ -38,12 +38,27 @@
     </div> -->
   </div>
 
+  <!-- If no cards are available -->
+  <div class="no-cards" *ngIf="cards.length === 0">
+    <ion-text>
+      <h1>No Events could be loaded...</h1>
+    </ion-text>
+  </div>
+
+
   <ion-card color="light" *ngFor="let card of cards">
     <img [src]="card.imageURL" alt="Card Image" class="card-image">
     <ion-card-header>
       <!-- <img [src]="card.imageURL" alt="Card Image"> -->
       <ion-card-title>{{ card.title }}</ion-card-title>
       <ion-card-subtitle>{{ card.subtitle }}</ion-card-subtitle>
+      <!-- content -->
+      <ion-card-content>
+        Here's a small text description for the card content. Nothing more, nothing less.
+      </ion-card-content>
+<!--     
+      <ion-button fill="clear">Action 1</ion-button>
+      <ion-button fill="clear">Action 2</ion-button> -->
     </ion-card-header>
   
     <ion-card-content >

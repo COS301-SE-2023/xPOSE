@@ -23,11 +23,15 @@ export class HomePage {
 	
 	   }
 
+	ngOnInit() {
+		this.getEventsFromAPI();
+	}
 	   // get events from firebase and display
 	   
   getEventsFromAPI() {
-    this.http.get<Event[]>("https://localhost:8000/e/events").subscribe((events: Event[]) => {
-      this.events = events;
+    this.http.get<Event[]>("http://localhost:8000/e/events").subscribe((events: Event[]) => {
+      console.log(events);
+		this.events = events;
       this.populateCards();
     });
   }
@@ -40,37 +44,38 @@ export class HomePage {
       this.cards = this.events.map(event => ({
         title: event.eventName,
         subtitle: event.eventDescription,
-        description: event.eventLocation,
+        description: '📍 ' + event.eventLocation,
         button: "Join event",
-        imageURL: event.imageUrl
+        imageURL: event.imageUrl,
+		
       }));
     }
   }
   events: any[] = [];
 
-  cards = [
-  	{
-  		title: "Youth Day",
-  		subtitle: "Celebrating Youth Day",
-  		description: "Everyone is invited to celebrate Youth Day with us. We will be having a braai and drinks.",
-  		button: "Join event",
-		imageURL: 'assets/images/youth.jpg'
-  	},
-  	{
-  		title: "Family Day",
-  		subtitle: "Friends and family are invited to join us for a day of fun and games.",
-  		description: "We will be having a braai and drinks. event will be held at the park.",
-  		button: "Join event",
-		imageURL: 'assets/images/image1.webp'
+  cards: any[] = [
+  	// {
+  	// 	title: "Youth Day",
+  	// 	subtitle: "Celebrating Youth Day",
+  	// 	description: "Everyone is invited to celebrate Youth Day with us. We will be having a braai and drinks.",
+  	// 	button: "Join event",
+	// 	imageURL: 'assets/images/youth.jpg'
+  	// },
+  	// {
+  	// 	title: "Family Day",
+  	// 	subtitle: "Friends and family are invited to join us for a day of fun and games.",
+  	// 	description: "We will be having a braai and drinks. event will be held at the park.",
+  	// 	button: "Join event",
+	// 	imageURL: 'assets/images/image1.webp'
 		
-  	},
-	  {
-		title: "Quinceanera",
-		subtitle: "Birthday celebration",
-		description: "Dont forget to bring your dancing shoes and your appetite. Gifts are welcome.",
-		button: "Join event",
-		imageURL: 'assets/images/image2.webp'
-	},
+  	// },
+	//   {
+	// 	title: "Quinceanera",
+	// 	subtitle: "Birthday celebration",
+	// 	description: "Dont forget to bring your dancing shoes and your appetite. Gifts are welcome.",
+	// 	button: "Join event",
+	// 	imageURL: 'assets/images/image2.webp'
+	// },
 
   ];
   
