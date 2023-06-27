@@ -235,6 +235,7 @@ signIn(email: string, password: string): Promise<void> {
   signOut(): Promise<void> {
     return this.afAuth.signOut().then(() => {
       localStorage.removeItem('user');
+      localStorage.removeItem('messages');
       this.router.navigate(['/login']);
     });
   }
