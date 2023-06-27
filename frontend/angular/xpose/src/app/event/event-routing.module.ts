@@ -10,7 +10,7 @@ const routes: Routes = [
     children : [
       {
         path: '',
-        redirectTo: '/event/posts',
+        redirectTo: 'posts',
         pathMatch: 'full'
       },  
       {

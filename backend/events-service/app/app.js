@@ -87,6 +87,30 @@ app.post('/events', upload.single('coverImage'), async (req, res) => {
   }
 });
 
+// Get an event
+app.get('/events/:eventId', async (req, res) => {
+  console.log('Processing event retrieval');
+  try {
+    const { eventId } = req.params;
+    const db = admin.firestore();
+    const eventRef = db.collection('events').doc(eventId);
+    const doc = await eventRef.get();
+    if (!doc.exists) {
+      console.log('Event not found');
+      res.status(404).json({ error: 'Event not found' });
+    }
+    else {
+      const event = { id: doc.id, ...doc.data() };
+      console.log('Event retrieved:', event);
+      res.json(event);
+    }
+  }
+  catch (error) {
+    console.error('Error getting event:', error);
+    res.status(500).json({ error: 'Error getting event' });
+  }
+});
+
 // Update event route
 app.put('/events/:eventId', async (req, res) => {
   console.log('Processing event update');

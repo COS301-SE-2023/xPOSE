@@ -44,7 +44,7 @@ const routes: Routes = [
     loadChildren: () => import("./header/header.module").then(m => m.HeaderPageModule)
   },
   {
-    path: "event",
+    path: "event/:id",
     loadChildren: () => import("./event/event.module").then(m => m.EventPageModule)
   },
   {
