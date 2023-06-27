@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Send Friend Requests
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- Check if the data is still loading -->
+  <div *ngIf="loading">
+    Please wait while data is being loaded...
+  </div>
+
+  <!-- Show the user cards when data is loaded -->
+  <ion-card *ngFor="let user of users">
+    <ion-card-header>
+      <ion-card-title>{{ user.displayName }}</ion-card-title>
+      <ion-card-subtitle>{{ user.email }}</ion-card-subtitle>
+    </ion-card-header>
+    <!-- Add any other properties you want to display -->
+    <ion-button expand="full" (click)="sendFriendRequest(user)">Send Friend Request</ion-button>
+  </ion-card>
+</ion-content>

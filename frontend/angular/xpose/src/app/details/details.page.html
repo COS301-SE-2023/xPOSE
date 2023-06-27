@@ -1,0 +1,24 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>{{ eventName }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">{{ eventName }}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>Date</ion-card-subtitle>
+      <ion-card-title>{{ eventDate | date }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-card-subtitle>Location</ion-card-subtitle>
+      <ion-card-title>{{ eventLocation }}</ion-card-title>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

@@ -1,13 +1,40 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>event</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Event Page</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">event</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <div class="cover-page">
+    <!-- Display the event's cover image -->
+    <ion-card class="cover-image">
+      <img src="./assets/images/images.jpg" alt="Event Cover Image" class="card-image" />
+    </ion-card>
+
+    <ion-tabs #tabs (ionTabsDidChange)="setCurrentTab()" class="tabs">
+      <!-- Tab buttons -->
+      <ion-tab-bar slot="top" class="tabarea">
+        <!-- Posts tab -->
+        <ion-tab-button tab="posts">
+          <ion-icon [name]="selectedTab == 'posts' ? 'images' : 'images-outline'"></ion-icon>
+          <ion-label>Posts</ion-label>
+        </ion-tab-button>
+
+        <!-- Message Board tab -->
+        <ion-tab-button tab="message-board">
+          <ion-icon [name]="selectedTab == 'message-board' ? 'chatbox' : 'chatbox-outline'"></ion-icon>
+          <ion-label>Message Board</ion-label>
+        </ion-tab-button>
+
+        <!-- Details tab -->
+        <ion-tab-button tab="details">
+          <ion-icon [name]="selectedTab == 'details' ? 'information-circle' : 'information-circle-outline'"></ion-icon>
+          <ion-label>Details</ion-label>
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs>
+  </div>
 </ion-content>

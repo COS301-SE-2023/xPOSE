@@ -1,2 +1,14 @@
 frontend/angular/xpose/node_modules/
 frontend/angular/xpose/.angular
+# Exclude environment files
+frontend/angular/xpose/src/environments/
+frontend/angular/xpose/www
+#exclude backend node modules
+backend/*/node_modules/
+#exclude backend node modules
+backend/events/node_modules/
+backend/user-management-service/node_modules/
+#exclude credentials files (Firebase) usermanagement services
+backend/user-management-service/DB/credentials/serviceAccountKey.json
+#worker script for FCM pushed notifications
+firebase-messaging-sw.js

@@ -1,17 +1,31 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { NgModule } from "@angular/core";
+import { Routes, RouterModule } from "@angular/router";
 
-import { ProfilePage } from './profile.page';
+import { ProfilePage } from "./profile.page";
 
 const routes: Routes = [
-  {
-    path: '',
-    component: ProfilePage
-  }
+	{
+		path: "",
+		component: ProfilePage,
+    children : [
+    {
+      path: 'friends',
+      loadChildren: () => import('./friends/friends.module').then( m => m.FriendsPageModule)
+    },
+    {
+      path: 'events',
+      loadChildren: () => import('./events/events.module').then( m => m.EventsPageModule)
+    },
+    {
+      path: 'pictures',
+      loadChildren: () => import('./pictures/pictures.module').then( m => m.PicturesPageModule)
+    },
+  ]
+  },
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
+	imports: [RouterModule.forChild(routes)],
+	exports: [RouterModule],
 })
 export class ProfilePageRoutingModule {}

@@ -1,13 +1,18 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>signup</ion-title>
+    <ion-title class="centered-title">Sign Up</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">signup</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class="container">
+    <form [formGroup]="signUpForm">
+      <ion-input label="Username" label-placement="floating" fill="outline" placeholder="Username" name="username" formControlName="username"></ion-input>
+      <ion-input label="Email" label-placement="floating" fill="outline" placeholder="Email" name="email" formControlName="email"></ion-input>
+      <ion-input type="password" label="Password" label-placement="floating" fill="outline" placeholder="Password" name="password" formControlName="password"></ion-input>
+      <ion-input type="password" label="Confirm Password" label-placement="floating" fill="outline" placeholder="Confirm Password" name="confirm_password" formControlName="conf-password"></ion-input>
+
+      <ion-button id="submitBtn" type="submit" class="custom-btn" (click)="signUp()">Sign Up</ion-button>
+    </form>
+  </div>
 </ion-content>
