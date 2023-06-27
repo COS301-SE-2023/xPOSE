@@ -35,8 +35,7 @@ export class CreateEventPage implements OnInit {
 		private modalController: ModalController,
 		private afAuth: AngularFireAuth) { }
 
-	ngOnInit(): void {
-	}
+	ngOnInit(): void {}
 
 	onFileSelected(event: any) {
 		const file: File = event.target.files[0];
@@ -52,6 +51,8 @@ export class CreateEventPage implements OnInit {
 			  return user.uid;
 			} else {
 				// throw error
+				// some extra stuff
+				
 			  console.log('No user is currently logged in.');
 			  return '';
 			}
