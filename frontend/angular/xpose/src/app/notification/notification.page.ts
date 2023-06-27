@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import {getMessaging, getToken, onMessage} from "firebase/messaging";
-import { environment } from "../../environments/environment";
+import { environment } from "../../environments/environments";
 
 
 // import { AngularFirestoreModule } from "@angular/fire/compat/firestore";
