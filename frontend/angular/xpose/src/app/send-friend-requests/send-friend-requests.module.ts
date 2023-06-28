@@ -11,7 +11,8 @@ import { IonicModule } from '@ionic/angular';
   imports: [
     CommonModule,
     BrowserModule,
-    IonicModule
+    IonicModule,
+    SendFriendRequestsComponent
      /*HttpClientModule*/],
 })
 export class SendFriendRequestsModule {}
