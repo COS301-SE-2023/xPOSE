@@ -1,9 +1,8 @@
 import { v4 as uuidv4 } from 'uuid';
 import admin from "firebase-admin";
 import { messaging } from "../index.js";
-
-
 let users = [];
+
 // const messaging = admin.messaging();
 
 export const getUsers = async (req, res) => {
