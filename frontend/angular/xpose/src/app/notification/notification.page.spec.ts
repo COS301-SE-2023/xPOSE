@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NotificationPage } from './notification.page';
+import {async} from '@angular/core/testing';
 
 describe('NotificationPage', () => {
   let component: NotificationPage;

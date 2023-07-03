@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { IonicModule, ModalController } from '@ionic/angular';
-import { NgFor } from '@angular/common';
+import {NgFor, NgIf} from '@angular/common';
 import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -11,7 +11,7 @@ import { map } from 'rxjs/operators';
   templateUrl: './send-friend-requests.component.html',
   styleUrls: ['./send-friend-requests.component.scss'],
   standalone: true,
-  imports: [IonicModule, NgFor]
+    imports: [IonicModule, NgFor, NgIf]
 })
 export class SendFriendRequestsComponent implements OnInit {
   users: any[] = [];
