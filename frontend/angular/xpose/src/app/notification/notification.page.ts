@@ -17,9 +17,9 @@ export class NotificationPage implements OnInit {
   // constructor() { }
 
   ngOnInit() {
-    this.requestPermission();
-    this.listen();
-    this.loadMessages();
+    // this.requestPermission();
+    // this.listen();
+    // this.loadMessages();
   }
 
   loadMessages() {
@@ -39,31 +39,31 @@ export class NotificationPage implements OnInit {
   }
 
   
-  requestPermission() {
-    const messaging = getMessaging();
-    getToken(messaging, { vapidKey: environment.firebase.vapidKey}).then(
-       (currentToken) => {
-         if (currentToken) {
-           console.log("Hurraaa!!! we got the token.....");
-           console.log(currentToken);
-         } else {
-           console.log('No registration token available. Request permission to generate one.');
-         }
-     }).catch((err) => {
-        console.log('An error occurred while retrieving token. ', err);
-    });
-  }
-
-  listen() {
-    const messaging = getMessaging();
-    onMessage(messaging, (payload) => {
-      console.log('Message received. ', payload);
-      this.messages.push(payload); // Save the payload in the messages array
-      this.saveMessages();
-      
-      // this.message=payload;
-    });
-  }
+  // requestPermission() {
+  //   const messaging = getMessaging();
+  //   getToken(messaging, { vapidKey: environment.firebase.vapidKey}).then(
+  //      (currentToken) => {
+  //        if (currentToken) {
+  //          console.log("Hurraaa!!! we got the token.....");
+  //          console.log(currentToken);
+  //        } else {
+  //          console.log('No registration token available. Request permission to generate one.');
+  //        }
+  //    }).catch((err) => {
+  //       console.log('An error occurred while retrieving token. ', err);
+  //   });
+  // }
+  //
+  // listen() {
+  //   const messaging = getMessaging();
+  //   onMessage(messaging, (payload) => {
+  //     console.log('Message received. ', payload);
+  //     this.messages.push(payload); // Save the payload in the messages array
+  //     this.saveMessages();
+  //
+  //     // this.message=payload;
+  //   });
+  // }
   
   acceptRequest() {
     // Handle accept request logic here
