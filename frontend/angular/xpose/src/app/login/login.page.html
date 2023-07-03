@@ -4,8 +4,15 @@
   </ion-toolbar>
 </ion-header>
 
+
 <ion-content [fullscreen]="true">
+
   <div class="container">
+    <div class="button-container">
+      <ion-button id="google-button" type="submit" class="custom-bt" (click)="signInWithGoogle()">G</ion-button>
+<!--      <p> or </p>-->
+      <ion-button id="Facebook-button" type="submit" class="custom-bt" (click)="signInWithFacebook()">F</ion-button>
+    </div>
     <form [formGroup]="loginForm">
       <ion-input 
         label="Email" 
@@ -21,14 +28,10 @@
       fill="outline"
        placeholder="Password"
        formControlName="password"></ion-input>
-
+      <ion-button id="login-button" type="submit" class="custom-btn" (click)="signIn()">Login</ion-button>
       <ion-note id="forgotPassword" slot="end" color="primary" class="ion-margin-top">
         <a>Forgot Password?</a>
       </ion-note>
-
-      <ion-button id="login-button" type="submit" class="custom-btn" (click)="signIn()">Login</ion-button>
-      <ion-button id="google-button" type="submit" class="custom-btn" (click)="signInWithGoogle()">Login with Google</ion-button>
-      <ion-button id="Facebook-button" type="submit" class="custom-btn" (click)="signInWithFacebook()">Login with Facebook</ion-button>
     </form>
     <div class="no-account-link">
       <p>No account? <a href="/signup">Click here</a></p>
