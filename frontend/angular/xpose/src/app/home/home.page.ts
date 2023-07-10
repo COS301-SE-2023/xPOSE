@@ -38,19 +38,23 @@ export class HomePage {
   
 
  populateCards() {
-    if (this.events.length === 0) {
-      this.cards = []; // Empty the cards list when there are no events
-    } else {
-      this.cards = this.events.map(event => ({
-        title: event.eventName,
-        subtitle: event.eventDescription,
-        description: '📍 ' + event.eventLocation,
-        button: "Join event",
-        imageURL: event.imageUrl,
-		id: event.id
-		
-      }));
-    }
+	if (this.events.length === 0) {
+		this.cards = []; // Empty the cards list when there are no events
+	  } else {
+		this.cards = this.events.map(event => ({
+		  title: event.eventName,
+		  subtitle: event.eventDescription,
+		  description: '' + event.eventLocation,
+		  button: "Join event",
+		  imageURL: event.imageUrl,
+		  id: event.id,
+		  // Add event listener to the button
+		  buttonClick: function() {
+			// Redirect to event details page
+			window.location.href = "/event?id=" + event.id;
+		  }
+		}));
+	  }
   }
   events: any[] = [];
 
@@ -80,6 +84,12 @@ export class HomePage {
 
   ];
   
+	viewEvent() {
+		this.router.navigate(['/event']);
+	}
+	eventDetails() {
+		this.router.navigate(['/event']);
+	}
 	onEvent(){
 		this.router.navigate(['/create-event']);
 	}
