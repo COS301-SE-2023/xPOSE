@@ -88,7 +88,7 @@ export class HomePage {
 		this.router.navigate(['/event']);
 	}
 	eventDetails() {
-		this.router.navigate(['/event']);
+		this.router.navigate(['/view-event']);
 	}
 	onEvent(){
 		this.router.navigate(['/create-event']);
