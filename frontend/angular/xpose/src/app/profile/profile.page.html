@@ -22,7 +22,7 @@
   <ion-tabs #tabs (ionTabsDidChange)="setCurrentTab()" class="tabs">
     <ion-tab-bar slot="bottom">
       <ion-tab-button tab="friends">
-        <ion-icon [name]="selectedTab == 'friends' ? 'images' : 'images-outline'"></ion-icon>
+        <ion-icon [name]="selectedTab == 'friends' ? 'people' : 'people-outline'"></ion-icon>
         <ion-label>Friends</ion-label>
       </ion-tab-button>
       <ion-tab-button tab="events">
@@ -38,5 +38,5 @@
 </ion-content>
 
 <ion-footer>
-  <ion-button (click)="logout()" expand="full" color="danger">Logout</ion-button>
+  <ion-button (click)="logout()" expand="full" class="pink-button">Logout</ion-button>
 </ion-footer>
