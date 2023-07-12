@@ -17,9 +17,9 @@ ion-img{
     
 }
 ion-button{
-    margin-top: 100px;
-    color:rgb(255, 140, 0);
-    background: antiquewhite;
+    --margin-top: 100px;
+    --color:rgb(255, 255, 255);
+    --background: rgb(255, 0, 157);
 }
 .h1{
     font-size: 20px;
