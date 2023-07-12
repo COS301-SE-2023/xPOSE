@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import { MessageBoardPage } from './message-board.page';
 
 describe('MessageBoardPage', () => {

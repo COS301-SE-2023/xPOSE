@@ -1,9 +1,8 @@
 import { v4 as uuidv4 } from 'uuid';
 import admin from "firebase-admin";
 import { messaging } from "../index.js";
-
-
 let users = [];
+
 // const messaging = admin.messaging();
 
 export const getUsers = async (req, res) => {
@@ -213,57 +212,104 @@ export const getFriend = async (req, res) => {
       }
 }
 
-export const sendFriendRequest = async (req, res) => {
+// export const sendFriendRequest = async (req, res) => {
 
-    try{
-        const {userId, requestId} = req.params;
+//     try{
+//         const {userId, requestId} = req.params;
 
-        // Get the sender and recipient user documents
-        const senderDoc = await admin.firestore().collection('Users').doc(userId).get();
-        const recipientDoc = await admin.firestore().collection('Users').doc(requestId).get();
+//         // Get the sender and recipient user documents
+//         const senderDoc = await admin.firestore().collection('Users').doc(userId).get();
+//         const recipientDoc = await admin.firestore().collection('Users').doc(requestId).get();
 
-        // Check if sender and recipient exist
-        if (!senderDoc.exists || !recipientDoc.exists) {
-            return res.status(404).json({ error: 'Sender or recipient not found' });
-        }
+//         // Check if sender and recipient exist
+//         if (!senderDoc.exists || !recipientDoc.exists) {
+//             return res.status(404).json({ error: 'Sender or recipient not found' });
+//         }
 
-        // Create  friend request object
-        const friendRequest = {
-            senderId: userId,
-            recipientId: requestId,
-            status: 'pending'
-        };
+//         // Create  friend request object
+//         const friendRequest = {
+//             senderId: userId,
+//             recipientId: requestId,
+//             status: 'pending'
+//         };
 
-        // Add the friend request to the recipient's FriendRequests collection
-        await admin.firestore().collection('Users').doc(requestId).collection('FriendRequests').doc(userId).set(friendRequest);
-        res.status(200).json({ message: `Friend request sent successfully to user with id ${requestId}` });
+//         // Add the friend request to the recipient's FriendRequests collection
+//         await admin.firestore().collection('Users').doc(requestId).collection('FriendRequests').doc(userId).set(friendRequest);
+//         res.status(200).json({ message: `Friend request sent successfully to user with id ${requestId}` });
         
-        // send friend request notification 
-        const senderData = senderDoc.data();
-        const fcmToken = senderData.fcmToken;
-        const message = {
-            notification: {
-              title: ' ',
-              body: 'New friend request from ' + senderData.displayName,
-            },
-            token: fcmToken
-          };
+//         // send friend request notification 
+//         const senderData = senderDoc.data();
+//         const fcmToken = senderData.fcmToken;
+//         const message = {
+//             notification: {
+//               title: ' ',
+//               body: 'New friend request from ' + senderData.displayName,
+//             },
+//             token: fcmToken
+//           };
 
-          messaging
-            .send(message)
-            .then((response) => {
-                console.log('notification sent successfully:', response);
-            })
-            .catch((error) => {
-                console.error('Error sending message:', error);
-            });
+//           messaging
+//             .send(message)
+//             .then((response) => {
+//                 console.log('notification sent successfully:', response);
+//             })
+//             .catch((error) => {
+//                 console.error('Error sending message:', error);
+//             });
 
 
-    } catch(error){
-        console.error('Error sending friend request:', error);
-        res.status(500).json({ error: 'An error occurred while sending friend request' });  
+//     } catch(error){
+//         console.error('Error sending friend request:', error);
+//         res.status(500).json({ error: 'An error occurred while sending friend request' });  
+//     }
+// }
+
+
+export const sendFriendRequest = async (req, res) => {
+    try {
+      const { userId, requestId } = req.params;
+  
+      // Get the sender and recipient user documents
+      const senderDoc = await admin.firestore().collection('Users').doc(userId).get();
+      const recipientDoc = await admin.firestore().collection('Users').doc(requestId).get();
+  
+      // Check if sender and recipient exist
+      if (!senderDoc.exists || !recipientDoc.exists) {
+        return res.status(404).json({ error: 'Sender or recipient not found' });
+      }
+  
+      // Create friend request object
+      const friendRequest = {
+        senderId: userId,
+        recipientId: requestId,
+        status: 'pending'
+      };
+  
+      // Add the friend request to the recipient's FriendRequests collection
+      await admin.firestore().collection('Users').doc(requestId).collection('FriendRequests').doc(userId).set(friendRequest);
+  
+      // Send friend request notification
+      const senderData = senderDoc.data();
+      const fcmToken = senderData.fcmToken;
+      const message = {
+        notification: {
+          title: 'New Friend Request',
+          body: `You have received a new friend request from ${senderData.displayName}`,
+        },
+        token: fcmToken
+      };
+  
+      await messaging.send(message); // Await the messaging send operation
+  
+      res.status(200).json({ message: `Friend request sent successfully to user with id ${requestId}` });
+    } catch (error) {
+      console.error('Error sending friend request:', error);
+      res.status(500).json({ error: 'An error occurred while sending friend request' });
     }
-}
+  };
+  
+
+
 
 export const removeFriend = async (req, res) => {
     try {

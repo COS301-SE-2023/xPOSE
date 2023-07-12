@@ -3,17 +3,13 @@
     <ion-buttons slot="end">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-   
-
     <ion-title>
       <img src="assets/icon/Xp.jpeg" alt="Logo" class="logo-image">
       xPOSE
     </ion-title>
-
   </ion-toolbar>
 </ion-header>
 
-<!-- menu  -->
 <ion-menu side="end" content-id="main-content">
   <ion-header>
     <ion-toolbar>
@@ -32,61 +28,45 @@
 <ion-content [fullscreen]="true" id="main-content">
   <div class="button-container">
     <ion-searchbar placeholder="Search"></ion-searchbar>
-    <!-- <div class="button-wrapper">
-      <ion-button fill="clear">HOME</ion-button>
-      <ion-button fill="clear">CREATE EVENT</ion-button>
-    </div> -->
   </div>
 
-  <!-- If no cards are available -->
   <div class="no-cards" *ngIf="cards.length === 0">
     <ion-text>
       <h1>No Events could be loaded...</h1>
     </ion-text>
   </div>
 
-
-  <ion-card color="light" *ngFor="let card of cards">
+  <ion-card (click)="viewEvent()" *ngFor="let card of cards">
     <img [src]="card.imageURL" alt="Card Image" class="card-image">
-    <ion-card-header>
-      <!-- <img [src]="card.imageURL" alt="Card Image"> -->
-      <ion-card-title>{{ card.title }}</ion-card-title>
-      <ion-card-subtitle>{{ card.subtitle }}</ion-card-subtitle>
-      <!-- content -->
+    <ion-card-header class="card-title">
+      <ion-card-title class="header">{{ card.title }}</ion-card-title>
       <ion-card-content>
-        Here's a small text description for the card content. Nothing more, nothing less.
+          {{card.subtitle}}
       </ion-card-content>
-<!--     
-      <ion-button fill="clear">Action 1</ion-button>
-      <ion-button fill="clear">Action 2</ion-button> -->
     </ion-card-header>
-  
-    <ion-card-content >
+    <ion-card-content>
+      <ion-icon name="location"></ion-icon>
       {{ card.description }}
     </ion-card-content>
-
-    <ion-button class="button-style">
-      {{ card.button }}
-     
+    <ion-button class="button-style"  (click)="	eventDetails()">
+      <!-- {{ card.button }} -->
+      View event
     </ion-button>
-
-
   </ion-card>
-
 </ion-content>
 
 <ion-footer>
   <ion-toolbar position="fixed">
     <ion-tabs>
       <ion-tab-bar slot="bottom">
-        <ion-tab-button tab="home" >
+        <ion-tab-button tab="home">
           <ion-icon name="home-outline"></ion-icon>
           <ion-label>Home</ion-label>
         </ion-tab-button>
-      <ion-tab-button tab="joined-events" (click)="onJoinedEvent()">
-        <ion-icon name="people-outline"></ion-icon>
-        <ion-label>Joined Events</ion-label>
-      </ion-tab-button>
+        <ion-tab-button tab="joined-events" (click)="onJoinedEvent()">
+          <ion-icon name="people-outline"></ion-icon>
+          <ion-label>Joined Events</ion-label>
+        </ion-tab-button>
         <ion-tab-button tab="create-event" (click)="onEvent()">
           <ion-icon name="add-circle-outline"></ion-icon>
           <ion-label>Create Event</ion-label>
