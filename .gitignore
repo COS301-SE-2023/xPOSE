@@ -4,7 +4,6 @@ frontend/angular/xpose/.angular
 frontend/angular/xpose/src/environments/
 frontend/angular/xpose/www
 #exclude backend node modules
-#exclude backend node modules
 backend/events/node_modules/
 backend/user-management-service/node_modules/
 #exclude credentials files (Firebase) usermanagement services
