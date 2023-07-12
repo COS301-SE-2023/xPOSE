@@ -1,0 +1,26 @@
+name: Users Management Service Continuous Integration
+
+on:
+    push:
+        branches: [main, development]
+
+jobs:
+    build-and-test:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v2
+
+            - name: Set up NodeJS
+              uses: actions/setup-node@v1
+              with:
+                node-version: 16
+            
+            - name: Install dependencies for user management service
+              working-directory: backend/user-management-service
+              run: npm install
+
+            - name: Run tests for user management service
+              working-directory: backend/user-management-service/
+              run: npm test
+            
