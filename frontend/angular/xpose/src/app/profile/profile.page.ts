@@ -18,15 +18,14 @@ export class ProfilePage {
 
   constructor (
     private router: Router,
-	  public authService: AuthService
-    ) {
-
+    public authService: AuthService
+  ) {
     this.user = {
-      photoURL: '/.assets/images/images.jpg',
+      photoURL: './assets/images/profile picture.jpg',
       displayName: 'John Doe',
       email: 'johndoe@example.com',
     };
-    this.user.photoURL = '/.assets/images/images.jpg';
+    this.user.photoURL = './assets/images/profile picture.jpg'; // Updated profile picture URL
   }
 
   setCurrentTab() {
@@ -57,6 +56,7 @@ export class ProfilePage {
   onHome() {
     this.router.navigate(['/home']);
   }
+
   editProfile() {
     // Add logic to navigate to the edit profile page
     this.router.navigate(['/edit-profile']);

@@ -72,7 +72,7 @@
 
 .user_div img {
   width: 200px;
-  height: 150px;
+  
   border-radius: 50%;
   margin-bottom: 20px;
 }
@@ -92,6 +92,12 @@
   // --color: #fff; /* Set the text color for the Edit Profile button */
   margin-top: 80px;
 }
+
+.pink-button {
+  --background: #ff43d6; /* Set the background color for the pink button */
+  --color: white; /* Set the text color for the pink button */
+}
+
 
 ion-toolbar {
   --background: #ff43d6; /* Set the toolbar background color */
