@@ -59,10 +59,14 @@ app.get('/events', async (req, res) => {
   }
 });
 
-// Get a single event by ID
-app.get('/events/:id', async (req, res) => {
+// Get a single event by code
+app.get('/events/:code', async (req, res) => {
   try {
-    const event = await Event.findByPk(req.params.id);
+    const event = await Event.findOne({
+        where: {
+            code: req.params.code
+    }});
+
     if (event) {
       res.json(event);
     } else {
@@ -75,7 +79,7 @@ app.get('/events/:id', async (req, res) => {
 });
 
 // Update an event
-app.put('/events/:id', async (req, res) => {
+app.put('/events/:code', async (req, res) => {
   try {
     const event = await Event.findByPk(req.params.id);
     if (event) {
@@ -91,9 +95,13 @@ app.put('/events/:id', async (req, res) => {
 });
 
 // Delete an event
-app.delete('/events/:id', async (req, res) => {
+app.delete('/events/:code', async (req, res) => {
   try {
-    const event = await Event.findByPk(req.params.id);
+    const event = await Event.findOne({
+        where: {
+            code: req.params.code
+    }});
+
     if (event) {
       await event.destroy();
       res.sendStatus(204);
@@ -107,7 +115,7 @@ app.delete('/events/:id', async (req, res) => {
 });
 
 // Start the server
-sequelize.sync({ force: true }) // Replace `force: true` with `force: false` in production
+sequelize.sync({ force: false }) // Replace `force: true` with `force: false` in production
   .then(() => {
     app.listen(3000, () => {
       console.log('Server started on port 3000');
