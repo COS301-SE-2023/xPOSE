@@ -1,10 +1,7 @@
+const { v4: uuidv4 } = require('uuid');
+
 function generateUniqueCode() {
-    const timestamp = Date.now().toString(36); // Convert current timestamp to base-36 string
-    const randomString = Math.random().toString(36).substr(2, 5); // Generate a random alphanumeric string
-  
-    const uniqueCode = timestamp + randomString; // Combine the timestamp and random string
-  
-    return uniqueCode;
+    return uuidv4();
 }
 
 class EventBuilder {
