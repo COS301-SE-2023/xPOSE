@@ -1,27 +1,12 @@
-<!-- <ion-content [fullscreen]="true">
-  <ngx-masonry [options]="masonryOptions">
-    <div class="grid-item" *ngFor="let post of posts">
-      <img src="./assets/images/download.jpg" alt="Post Image" class="post-image" (click)="openPost(post)" />
-      <img src="./assets/images/download.jpg" alt="Post Image" class="post-image" (click)="openPost(post)" />
-    </div>
-  </ngx-masonry>
-</ion-content> -->
-<!-- <ion-content [fullscreen]="true">
-  <div class="grid-container">
-    <div class="grid-item" *ngFor="let post of posts">
-      <div class="post-images">
-        <img *ngFor="let image of post.images"  [src]="image" alt="Post Image" class="post-image" (click)="openPost(post)" />
-      </div>
-    </div>
-  </div>
-</ion-content> -->
 <div class="post-image">
-  <div [innerHtml]="msg" *ngIf="msg" style="color: red;"></div>
-  <div *ngFor="let image of uploadedImages">
+  <!-- <div [innerHtml]="msg" *ngIf="msg" style="color: red;"></div> -->
+  <!-- <div *ngFor="let image of uploadedImages">
     <img [src]="getSafeImageUrl(image)" alt="Uploaded Image" class="uploaded-image">
-  </div>
+  </div> -->
   <p>
-    <input type="file" #fileInput multiple style="display: none;" (change)="selectFiles($event)">
-    <button (click)="fileInput.click()">Upload</button>
+    <!-- <input type="file" #fileInput multiple style="display: none;" (change)="selectFiles($event)"> -->
+    <img [src]="url">
+    <input type="file" class="d-none"  (change)="onFileSelected($event)" #imageInput/>
+    <!-- <button (click)="fileInput.click()">Upload</button> -->
   </p>
 </div>
