@@ -1,5 +1,5 @@
 const express = require('express');
-const {sequelize} = require('./data-access/sequelize');
+const { sequelize, User, Event } = require('./data-access/sequelize');
 const { Op } = require('sequelize');
 const uploadImageToFirebase = require('./data-access/firebase.repository');
 const multer = require('multer');
@@ -19,8 +19,16 @@ app.post('/events',  upload.single('image'), async (req, res) => {
         const imageFile = req.file;
         let image_url = await uploadImageToFirebase(req.body.uid, imageFile);
 
+        // find the user with the uid and get the id
+        const user = await User.findOne({
+            where: {
+                uid: req.body.uid
+            }
+        });
+
+        // Build the event object
         const event = eventBuilder.withTitle(req.body.title)
-        .withOwnwerId(req.body.uid)
+        .withOwnwerId(user.id)
         .withCode(generateUniqueCode())
         .withDescription(req.body.description)
         .withLatitude(req.body.latitude)
