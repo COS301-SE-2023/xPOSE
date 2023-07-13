@@ -3,17 +3,17 @@ class PostBuilder {
         this.post = {};
     }
 
-    setUid(uid) {
+    withUid(uid) {
         this.post.uid = uid;
         return this;
     }
 
-    setTimestamp(timestamp) {
+    withTimestamp(timestamp) {
         this.post.timestamp = timestamp;
         return this;
     }
 
-    setImage(imageUrl, data) {
+    withImage(imageUrl) {
         this.post.image = {
             image_url: imageUrl,
             // data: data,
@@ -21,12 +21,12 @@ class PostBuilder {
         return this;
     }
 
-    setComments(comments) {
+    withComments(comments) {
         this.post.comments = comments;
         return this;
     }
 
-    setLikes(likes) {
+    withLikes(likes) {
         this.post.likes = likes;
         return this;
     }

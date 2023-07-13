@@ -3,17 +3,17 @@ class CommentBuilder {
         this.comment = {};
     }
   
-    setUid(uid) {
+    withUid(uid) {
         this.comment.uid = uid;
         return this;
     }
   
-    setMessage(message) {
+    withMessage(message) {
         this.comment.message = message;
         return this;
     }
   
-    setTimestamp(timestamp) {
+    withTimestamp(timestamp) {
         this.comment.timestamp = timestamp;
         return this;
     }

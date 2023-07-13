@@ -3,12 +3,12 @@ class LikeBuilder {
         this.like = {};
     }
 
-    setUid(uid) {
+    withUid(uid) {
         this.like.uid = uid;
         return this;
     }
 
-    setTimestamp(timestamp) {
+    withTimestamp(timestamp) {
         this.like.timestamp = timestamp;
         return this;
     }
