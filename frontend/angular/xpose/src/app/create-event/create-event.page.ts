@@ -28,6 +28,7 @@ export class CreateEventPage implements OnInit {
 		eventPrivacySetting: ' '
 	  };
 	  route: any;
+	  buttonClicked = false;
 
 	constructor(private http: HttpClient,
 		private router: Router,
@@ -64,6 +65,7 @@ export class CreateEventPage implements OnInit {
 	  CreateEvent() {
 		this.getCurrentUserId().subscribe((userId) => {
 			if(userId){
+				this.buttonClicked = true;
 				// this.createEvent.userId = parseInt(userId);
 				const formData: FormData = new FormData();
 				formData.append('userId', userId);
