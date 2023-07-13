@@ -29,6 +29,7 @@ export class CreateEventPage implements OnInit {
 	  };
 	  route: any;
 	  buttonClicked = false;
+	  loading = false;
 
 	constructor(private http: HttpClient,
 		private router: Router,
@@ -66,6 +67,7 @@ export class CreateEventPage implements OnInit {
 		this.getCurrentUserId().subscribe((userId) => {
 			if(userId){
 				this.buttonClicked = true;
+				this.loading = true;
 				// this.createEvent.userId = parseInt(userId);
 				const formData: FormData = new FormData();
 				formData.append('userId', userId);
@@ -93,6 +95,7 @@ export class CreateEventPage implements OnInit {
 					error: (error) => {
 					  // Handle any errors that occurred during the request
 					  console.error(error);
+					  this.loading = false;
 					  // Display an error message to the user or perform any necessary error handling
 					}
 				  });
