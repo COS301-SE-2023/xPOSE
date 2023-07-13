@@ -5,23 +5,8 @@ function generateUniqueCode() {
 }
 
 class EventBuilder {
-    constructor(eventData) {
-        if(eventData) {
-            this.eventData = eventData;
-        }
-        else {
-            this.eventData = {
-                title: null,
-                description: null,
-                latitude: null,
-                longitude: null,
-                image_url: null,
-                owner_id_fk: null,
-                privacy_setting: null,
-                code: null,
-                timestamp: null,
-            };
-        }
+    constructor() {
+        this.eventData = {};
     }
     
     withTitle(title) {

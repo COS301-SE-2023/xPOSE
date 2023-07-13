@@ -27,6 +27,7 @@ app.post('/events',  upload.single('image'), async (req, res) => {
         });
 
         // Build the event object
+        console.log(req.body);
         const event = eventBuilder.withTitle(req.body.title)
         .withOwnwerId(user.id)
         .withCode(generateUniqueCode())
@@ -79,19 +80,64 @@ app.get('/events/:code', async (req, res) => {
 });
 
 // Update an event
-app.put('/events/:code', async (req, res) => {
-  try {
-    const event = await Event.findByPk(req.params.id);
-    if (event) {
-      await event.update(req.body);
-      res.json(event);
-    } else {
-      res.status(404).json({ error: 'Event not found' });
+app.put('/events/:code', upload.single('image'), async (req, res) => {
+    try {
+        // if there's no uid, throw an error
+        if(req.body.uid === null || req.body.uid === undefined) {
+            res.status(400).json({ error: 'No uid provided' });
+            // throw new Error('No uid provided');
+        }
+
+        const user = await User.findOne({
+            where: {
+                uid: req.body.uid
+            }
+        })
+
+        // if user doesn't exist throw error
+        if(user === null || user === undefined) {
+            res.status({error: 'User does not exist'});
+        }
+
+        const event = await Event.findOne({ where: {
+            code: req.params.code
+        }});
+
+        if(event === null || event === undefined) {
+            res.status(404).json({ error: 'Event not found' });
+        }
+        
+        // find the user with the uid and get the id
+        if(user.id !== event.owner_id_fk) {
+            res.status(400).json({ error: 'User does not own this event' });
+        }
+
+        // update the event
+        const eventBuilder = new EventBuilder();
+
+        if(req.body.file) {
+            const image_url = await uploadImageToFirebase(req.body.uid, req.body.file);
+            eventBuilder.withImageUrl(image_url);
+        }
+        else {
+            eventBuilder.withImageUrl(event.image_url);
+        }
+
+        eventBuilder.withTitle(req.body.title)
+        .withDescription(req.body.description)
+        .withLatitude(req.body.latitude)
+        .withLongitude(req.body.longitude)
+        .withPrivacySetting(req.body.privacy_setting)
+        .build();
+
+        await event.update(req.body);
+        res.json(event);
+        
+    } catch (error) {
+        console.error(error);
+
+        res.status(500).json({ error: `Failed to update the event` });
     }
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Failed to update the event' });
-  }
 });
 
 // Delete an event
