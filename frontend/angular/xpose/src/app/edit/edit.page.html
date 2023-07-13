@@ -1,13 +1,26 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>Edit</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Edit</ion-title>
-    </ion-toolbar>
+<ion-header>
+	<ion-toolbar>
+	  <ion-buttons slot="start">
+		<ion-back-button defaultHref="/profile"></ion-back-button>
+	  </ion-buttons>
+	  <ion-title>Edit Profile</ion-title>
+	</ion-toolbar>
   </ion-header>
-</ion-content>
+  
+  <ion-content>
+	<ion-list>
+	  <ion-item>
+		<ion-label position="stacked">Username</ion-label>
+		<ion-input type="text" [(ngModel)]="username"></ion-input>
+	  </ion-item>
+  
+	  <ion-item>
+		<ion-label position="stacked">Email</ion-label>
+		<ion-input type="email" [(ngModel)]="email"></ion-input>
+	  </ion-item>
+  
+	 
+	  <ion-button expand="full" (click)="saveProfile()">Save</ion-button>
+	</ion-list>
+  </ion-content>
+  

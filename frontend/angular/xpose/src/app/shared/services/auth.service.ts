@@ -59,7 +59,7 @@ export class AuthService {
         window.alert(error.message);
       });
   }*/
-
+  
   // sign in with email/password
   signIn(email: string, password: string): Promise<void> {
     return this.afAuth
