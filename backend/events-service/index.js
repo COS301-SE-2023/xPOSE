@@ -30,6 +30,9 @@ app.post('/events',  upload.single('image'), async (req, res) => {
         .withTimestamp(Date.now())
         .build();
 
+        // Save the event to the database
+        await Event.create(event);
+
         res.json(event);
     } catch (error) {
         console.error(error);
