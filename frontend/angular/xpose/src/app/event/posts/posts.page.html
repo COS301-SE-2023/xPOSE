@@ -15,10 +15,13 @@
     </div>
   </div>
 </ion-content> -->
-<div style="text-align:center">
-	<div [innerHtml]='msg' *ngIf="msg" style="color: red;"></div>
-	<div><img [src]="url" *ngIf="url"></div>
-	<p>
-		<input type="file" (change)="selectFile($event)">
-	</p>
+<div class="post-image">
+  <div [innerHtml]="msg" *ngIf="msg" style="color: red;"></div>
+  <div *ngFor="let image of uploadedImages">
+    <img [src]="getSafeImageUrl(image)" alt="Uploaded Image" class="uploaded-image">
+  </div>
+  <p>
+    <input type="file" #fileInput multiple style="display: none;" (change)="selectFiles($event)">
+    <button (click)="fileInput.click()">Upload</button>
+  </p>
 </div>
