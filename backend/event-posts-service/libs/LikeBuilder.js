@@ -1,4 +1,4 @@
-class LikeBuilder {
+export class LikeBuilder {
     constructor() {
         this.like = {};
     }

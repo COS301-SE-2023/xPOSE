@@ -1,4 +1,4 @@
-class PostBuilder {
+export class PostBuilder {
     constructor() {
         this.post = {};
     }
@@ -21,13 +21,13 @@ class PostBuilder {
         return this;
     }
 
-    withComments(comments) {
-        this.post.comments = comments;
+    withComments() {
+        this.post.comments = [];
         return this;
     }
 
-    withLikes(likes) {
-        this.post.likes = likes;
+    withLikes() {
+        this.post.likes = [];
         return this;
     }
 

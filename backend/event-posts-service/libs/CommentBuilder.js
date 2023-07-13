@@ -1,4 +1,4 @@
-class CommentBuilder {
+export class CommentBuilder {
     constructor() {
         this.comment = {};
     }
