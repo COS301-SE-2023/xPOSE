@@ -48,6 +48,18 @@ async function uploadImageToFirebase(uid, file) {
               createdAt: admin.firestore.FieldValue.serverTimestamp()
             };
     
+            const post = {
+              timestamp: admin.firestore.FieldValue.serverTimestamp(),
+              uid,
+              image: {
+                image_url: url[0],
+                // data,T
+              },
+              comments: [],
+              likes: [],
+            };
+            
+
             await imageRef.set(image);
     
             // Resolve with the file URL
