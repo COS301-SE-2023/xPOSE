@@ -5,8 +5,6 @@ on:
     branches:
       - main
       - development
-    paths:
-      - 'backend/user-management-service/**'
 
 jobs:
   build-and-test:
