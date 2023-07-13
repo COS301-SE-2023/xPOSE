@@ -1,48 +1,65 @@
-ion-content {
-    --background: #ffffff; /* Set the background color */
+ion-content#main-content {
+  --background: #f0f0f0;
+  /* Add more custom styles as needed */
+}
+
+.logo-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+ion-button {
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  --color: rgb(0, 0, 0);
+  font-size: 20px;
+  --ripple-color: deeppink;
+  --padding-top: 25px;
+  --padding-bottom: 29px;
+}
+.button-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button-wrapper ion-button {
+  margin: 5px;
+}
+
+ion-card {
+  border-radius: 0px;
+  background-color: #ffffff;
+  color: #000000;
+  margin-bottom: 20px;
+
+  .button-style {
+    --color: #ffffff;
+    --background: #c8bfcf;
+    --border-radius: 0px;
+    --box-shadow: none;
+    --padding-top: 10px;
+    --padding-bottom: 10px;
+    --padding-start: 10px;
+    --padding-end: 10px;
+    --margin-top: 10px;
+    --margin-bottom: 10px;
+    --margin-start: 10px;
+    --margin-end: 10px;
   }
-  
-  ion-toolbar {
-    --background: #ff43d6; /* Set the toolbar background color */
-    color: white; /* Set the toolbar text color */
+  .card-image {
+    width: 100%;  /* Adjust as needed */
+    height: 200px;  /* Adjust as needed */
+    object-fit: cover; /* Maintain aspect ratio and cover the entire area */
   }
-  
-  ion-title {
-    font-size: 1.5rem; /* Set the title font size */
+  .card-title {
+    font-size: 20px;
+    // font-weight: bold;
+    color: #000000;
+  } 
+  .header {
+    color: #000000;
   }
-  
-  ion-searchbar {
-    --background: #ffffff; /* Set the search bar background color */
-  }
-  
-//   ion-segment-button {
-//     color: #ffffff; /* Set the segment button text color */
-//   }
-  
-  ion-list {
-    margin-top: 20px; /* Add top margin to the list */
-  }
-  
-//   ion-item {
-//     --background: #ffffff; /* Set the item background color */
-//     padding: 15px; /* Add padding to the item */
-//     border-radius: 5px; /* Add border radius to the item */
-//     margin-bottom: 10px; /* Add bottom margin to the item */
-//   }
-  
-//   ion-label {
-//     font-weight: bold; /* Set the label font weight */
-//   }
-  
-//   ion-footer {
-//     --background: #353535; /* Set the footer background color */
-//   }
-  
-//   ion-tab-button {
-//     --color: #ffffff; /* Set the tab button color */
-//   }
-  
-//   ion-tab-button.active {
-//     font-weight: bold; /* Set the active tab button font weight */
-//   }
-  
+}
