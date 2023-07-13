@@ -7,47 +7,36 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['./posts.page.scss'],
 })
 export class PostsPage {
-  posts: any[] = []; // Replace with your actual posts data
-  selectedImage: string = ''; // Assign initial value of an empty string
-
-  slideOptions = {
-    initialSlide: 0,
-    speed: 400,
-  };
-
   constructor(private navCtrl: NavController) {
-    // Initialize your posts data or fetch it from an API
-    this.posts = [
-      {
-        images: ['./assets/images/download.jpg', './assets/images/download.jpg', './assets/images/download.jpg'],
-        likes: 10,
-      },
-      // Add more posts if needed
-    ];
   }
 
-  openImageModal(imageUrl: string) {
-    // Implement your logic to open the image modal or perform any other action
-    console.log('Image clicked:', imageUrl);
-    this.selectedImage = imageUrl;
-  }
 
-  closeImageModal() {
-    // Implement your logic to close the image modal or perform any other action
-    console.log('Close clicked');
-    this.selectedImage = '';
-  }
-
-  openPost(post: any) {
-    // Implement your logic to handle opening the post
-    console.log('Post clicked:', post);
-    // Example: Navigate to a post details page
-    // You can replace this with your own implementation
-    this.navCtrl.navigateForward('post-details', { state: { post } });
-  }
-
-  masonryOptions = {
-    // Specify your masonry options here
-    // For example, columnWidth, gutter, etc.
-  };
+  // This method will be called when user clicks on any image
+  //url; //Angular 8
+	url: any; //Angular 11, for stricter type
+	msg = "";
+	
+	//selectFile(event) { //Angular 8
+	selectFile(event: any) { //Angular 11, for stricter type
+		if(!event.target.files[0] || event.target.files[0].length == 0) {
+			this.msg = 'You must select an image';
+			return;
+		}
+		
+		var mimeType = event.target.files[0].type;
+		
+		if (mimeType.match(/image\/*/) == null) {
+			this.msg = "Only images are supported";
+			return;
+		}
+		
+		var reader = new FileReader();
+		reader.readAsDataURL(event.target.files[0]);
+		
+		reader.onload = (_event) => {
+			this.msg = "";
+			this.url = reader.result; 
+		}
+	}
+  
 }
