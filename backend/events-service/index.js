@@ -163,8 +163,8 @@ app.delete('/events/:code', async (req, res) => {
 // Start the server
 sequelize.sync({ force: false }) // Replace `force: true` with `force: false` in production
   .then(() => {
-    app.listen(3000, () => {
-      console.log('Server started on port 3000');
+    app.listen(8004, () => {
+      console.log('Server started on port 8004');
     });
   })
   .catch((error) => {
