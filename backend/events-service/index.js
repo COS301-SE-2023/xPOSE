@@ -4,7 +4,7 @@ const { Op } = require('sequelize');
 const uploadImageToFirebase = require('./data-access/firebase.repository');
 const multer = require('multer');
 const upload = multer({ dest: 'uploads/' });
-
+const { generateUniqueCode, EventBuilder } = require('./libs/Events');
 
 // Initialize Express app
 const cors = require('cors');
@@ -15,39 +15,20 @@ app.use(cors());
 // Create an event
 app.post('/events',  upload.single('image'), async (req, res) => {
     try {
-        console.log(req.file);
-        // Generate unique event code
-        const eventCode = generateUniqueCode();
-        console.log(`eventCode: ${eventCode}`);
-
-        // Generate unique timestamp
-        const timestamp = generateUniqueTimestamp();
-        console.log(`timestamp: ${timestamp}`);
-
-        // Extract the image file from the request
+        const eventBuilder = new EventBuilder();
         const imageFile = req.file;
-        console.log(`imageFile: ${imageFile}`);
+        let image_url = await uploadImageToFirebase(req.body.uid, imageFile);
 
-        // Remove image file metadata
-        // if (imageFile) {
-        //   delete imageFile.data;
-        // }
-
-        console.log(`image meta data removed`);
-  
-        // Upload image to Firebase Storage
-        let imageUrl = await uploadImageToFirebase(req.body.owner_id_fk, imageFile);
-        console.log(`imageUrl: ${imageUrl}`);
-
-        // Create the event
-        const event = await Event.create({
-            ...req.body,
-            code: eventCode,
-            timestamp,
-            image_url: imageUrl,
-        });
-
-        console.log(`event: ${event}`);
+        const event = eventBuilder.withTitle(req.body.title)
+        .withOwnwerId(req.body.uid)
+        .withCode(generateUniqueCode())
+        .withDescription(req.body.description)
+        .withLatitude(req.body.latitude)
+        .withLongitude(req.body.longitude)
+        .withImageUrl(image_url)
+        .withPrivacySetting(req.body.privacy_setting)
+        .withTimestamp(Date.now())
+        .build();
 
         res.json(event);
     } catch (error) {
@@ -55,23 +36,6 @@ app.post('/events',  upload.single('image'), async (req, res) => {
         res.status(500).json({ error: 'Failed to create an event' });
     }
 });
-  
-function generateUniqueCode() {
-    const timestamp = Date.now().toString(36); // Convert current timestamp to base-36 string
-    const randomString = Math.random().toString(36).substr(2, 5); // Generate a random alphanumeric string
-  
-    const uniqueCode = timestamp + randomString; // Combine the timestamp and random string
-  
-    return uniqueCode;
-  }
-  
-// Helper function to generate a unique timestamp
-function generateUniqueTimestamp() {
-    // Generate a timestamp with millisecond precision
-    const timestamp = Date.now();
-  
-    return timestamp;
-  }
 
 // Get all events
 app.get('/events', async (req, res) => {
