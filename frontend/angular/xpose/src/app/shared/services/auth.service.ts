@@ -6,8 +6,6 @@ import { AngularFirestore, AngularFirestoreDocument } from "@angular/fire/compat
 import { GoogleAuthProvider, FacebookAuthProvider } from "firebase/auth";
 import {getMessaging, getToken} from "firebase/messaging";
 import { environment } from "../../../environments/environment";
-import { HttpClient } from "@angular/common/http";
-import { HttpHeaders } from '@angular/common/http';
 
 
 
@@ -22,8 +20,7 @@ export class AuthService {
       public afs: AngularFirestore,  // inject firestore
       public afAuth: AngularFireAuth, // inject firebase Auth services
       public router: Router,
-      public ngZone: NgZone, // remove outside scope warning
-      private http: HttpClient // inject HttpClient for making HTTP requests
+      public ngZone: NgZone // remove outside scope warning
   ) {
     // save user data in local storage
     this.afAuth.authState.subscribe(user => {
@@ -72,7 +69,7 @@ export class AuthService {
 
           // Obtain the current FCM token
           const messaging = getMessaging();
-          getToken(messaging, { vapidKey: environment.firebase.vapidKey })
+          getToken(messaging, { vapidKey: environment.firebase.vpapiKey })
               .then((currentToken) => {
                 if (currentToken) {
                   // Check if the token has changed
@@ -115,41 +112,9 @@ export class AuthService {
 
 
   // Sign up with email/password
-  signUp(email: string, password: string, username: string): Promise<any> {
+  signUp(email: string, password: string, username: string): Promise<void> {
 
-    const signUpData = {
-      displayName: username,
-      email: email,
-      password: password,
-      emailVerified: false,
-      bio:" Default bio",
-      fcmTokens: [],
-      photoObject:{}
-    };
-    
-    // console.log("User data:::::", signUpData);
-    const requestBody = JSON.stringify(signUpData);
-    // console.log("User data stringified:::::", requestBody);
-
-    const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    return this.http.post<any>("http://localhost:8000/u/users", requestBody, {headers})
-    .toPromise()
-    .then((response) => {
-      console.log("signed up successfully",response);
-      // Handle success response here
-      this.router.navigate(['/home']);
-    })
-    .catch((error) => {
-      // Handle error response here
-      // window.alert(error.message);
-      console.log("Error:", error);
-      // console.log("Response body:", error.error);
-      return Promise.reject(error);
-    });
-
-
-
-    /*return this.afAuth
+    return this.afAuth
         .createUserWithEmailAndPassword(email, password)
         .then((result) => {
           if (result.user) {
@@ -160,7 +125,7 @@ export class AuthService {
 
                   // Obtain FCM token for pushe notifications
                   const messaging = getMessaging();
-                  return getToken(messaging, { vapidKey: environment.firebase.vapidKey })
+                  return getToken(messaging, { vapidKey: environment.firebase.vpapiKey })
 
                       .then((currentToken) => {
                         if (currentToken) {
@@ -194,7 +159,7 @@ export class AuthService {
           window.alert(error.message);
           // this.router.navigate(['/signup']);
           return Promise.reject(error); // Return a rejected promise for any other error
-        });*/
+        });
 
   }
 
