@@ -111,7 +111,10 @@ app.delete('/events/:event_id/posts/:postId', async (req, res) => {
   }
 });
 
+
+const PORT = 8005;
+
 // Start the server
-app.listen(8005, () => {
-  console.log('Server started on port 3000');
+app.listen(PORT, () => {
+  console.log(`Server started on port ${PORT}`);
 });
