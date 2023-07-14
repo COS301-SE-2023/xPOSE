@@ -47,6 +47,8 @@ export class HomePage {
 		  description: '' + event.description,
 		  button: "Join event",
 		  image_url: event.image_url,
+		  longitude: event.longitude,
+		  latitude: event.latitude,
 		  id: event.code,
 		  created_at: event.createdAt,
 		  // Add event listener to the button
