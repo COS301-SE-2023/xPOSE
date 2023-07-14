@@ -1,1 +1,4 @@
+permissions.json
 node_modules/
+uploads/
+.env
