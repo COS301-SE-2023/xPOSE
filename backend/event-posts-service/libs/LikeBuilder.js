@@ -1,4 +1,4 @@
-export class LikeBuilder {
+class LikeBuilder {
     constructor() {
         this.like = {};
     }
@@ -17,3 +17,5 @@ export class LikeBuilder {
         return this.like;
     }
 }
+
+module.exports = LikeBuilder;
