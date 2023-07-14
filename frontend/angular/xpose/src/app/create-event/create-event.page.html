@@ -1,17 +1,15 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-toolbar>
+  <ion-toolbar class="custom-toolbar">
       <ion-buttons slot="start">
         <ion-back-button defaultHref="/home"></ion-back-button>
       </ion-buttons>
       <ion-title>
         Create Event
       </ion-title>
-    </ion-toolbar>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" id="main-content">
   <div>
     <form #form="ngForm" (ngSubmit)="CreateEvent()">
       <!-- <ion-input label="Email" label-placement="floating" fill="outline" placeholder="Email" style="margin-bottom: 10px; width: 350px;"></ion-input>

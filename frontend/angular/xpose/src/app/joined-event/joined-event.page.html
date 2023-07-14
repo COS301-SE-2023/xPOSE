@@ -1,14 +1,14 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
+  <ion-toolbar class="custom-toolbar">
     <ion-title>Joined Events</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-header></ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-toolbar>
-    <ion-searchbar placeholder="Search"></ion-searchbar>
-  </ion-toolbar>
+<ion-content [fullscreen]="true" id="main-content">
+  
+  <ion-searchbar placeholder="Search"></ion-searchbar>
+
   <ion-segment [(ngModel)]="filterType">
     <ion-segment-button value="private">
       Private Events
@@ -17,13 +17,6 @@
       Public Events
     </ion-segment-button>
   </ion-segment>
-
-  <!-- <ion-list *ngIf="joinedEvents"> -->
-    <!-- <ion-item *ngFor="let event of filteredEvents"> -->
-      <!-- <ion-label>{{ event.title }}</ion-label> -->
-      <!-- Display other event details here -->
-    <!-- </ion-item> -->
-  <!-- </ion-list> -->
 
   <ion-list *ngIf="filterType === 'private'">
     <!-- Mock Private Events -->

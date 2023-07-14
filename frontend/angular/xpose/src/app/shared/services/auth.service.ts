@@ -59,7 +59,7 @@ export class AuthService {
         window.alert(error.message);
       });
   }*/
-  
+
   // sign in with email/password
   signIn(email: string, password: string): Promise<void> {
     return this.afAuth
@@ -69,7 +69,7 @@ export class AuthService {
 
           // Obtain the current FCM token
           const messaging = getMessaging();
-          getToken(messaging, { vapidKey: environment.firebase.vapidKey })
+          getToken(messaging, { vapidKey: environment.firebase.vpapiKey })
               .then((currentToken) => {
                 if (currentToken) {
                   // Check if the token has changed
@@ -125,7 +125,7 @@ export class AuthService {
 
                   // Obtain FCM token for pushe notifications
                   const messaging = getMessaging();
-                  return getToken(messaging, { vapidKey: environment.firebase.vapidKey })
+                  return getToken(messaging, { vapidKey: environment.firebase.vpapiKey })
 
                       .then((currentToken) => {
                         if (currentToken) {
