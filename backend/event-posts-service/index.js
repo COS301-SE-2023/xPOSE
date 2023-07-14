@@ -4,9 +4,9 @@ const admin = require('firebase-admin');
 const uploadImageToFirebase = require('./data-access/firebase.repository');
 const app = express();
 const upload = multer({ dest: 'uploads/' });
-const { PostBuilder } = require('./libs/PostBuilder');
-const { CommentBuilder } = require('./libs/CommentBuilder');
-const { LikeBuilder } = require('./libs/LikeBuilder');
+const PostBuilder  = require('./libs/PostBuilder');
+const CommentBuilder  = require('./libs/CommentBuilder');
+const LikeBuilder  = require('./libs/LikeBuilder');
 
 // Firestore and Storage references
 const db = admin.firestore();
