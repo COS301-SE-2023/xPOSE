@@ -1,13 +1,17 @@
 .left-arrow {
-    color: white;
+    color: rgb(0, 0, 0);
     float: left;
+  }
+  
+  ion-content#main-content {
+    --background: #ffffff;
   }
   
   .centered-title {
     display: block;
     text-align: center;
     margin: 0 auto;
-    color: white;
+    color: rgb(0, 0, 0);
   }
   
   .custom-btn {
@@ -43,8 +47,9 @@
   
   ion-item {
     margin-bottom: 20px;
-    --background: rgba(94, 35, 144, 0.19);
+    --background: rgba(0, 0, 0, 0.19);
     width: 95%;
+    color: #000;
   }
 
   ion-radio{
@@ -59,6 +64,7 @@
     width: 95%;
     margin-bottom: 15px;
     height: 40px;
+    color: #000000
   }
 
   input{
@@ -83,15 +89,18 @@
   ion-datetime-button {
     margin-bottom: 5px;
   }
-  ion-toolbar {
-    --background: #ff43d6; /* Set the toolbar background color */
-    color: white; /* Set the toolbar text color */
+  ion-toolbar.custom-toolbar {
+    --background: #ffffff;
+    color: #000000;
+    font-size: 20px;
+    /* Add more custom styles as needed */
+    --min-height: 70px;
   }
-
+  
   .input-container {
     display: flex;
     align-items: center;
-    border: 1px solid #ccc;
+    border: 1px solid #000000;
     padding: 5px;
     border-radius: 4px;
     margin-bottom: 25px;

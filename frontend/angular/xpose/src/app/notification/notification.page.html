@@ -1,6 +1,12 @@
-<div>
-  <!-- Other content outside of ion-content -->
-</div>
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Notifications</ion-title>
+  </ion-toolbar>
+</ion-header>
+
 
 <ion-content>
   <ion-grid>
@@ -26,6 +32,7 @@
       </ion-col>
     </ion-row>
     <ion-row *ngIf="messages.length === 0">
+      
       <ion-col size="12" class="empty-message-container ion-text-center ion-align-items-center">
         <div class="empty-message">
           No Notifications
@@ -110,7 +117,7 @@
   </ion-list>
 </ion-content> -->
 
-<!-- <ion-footer>
+<ion-footer>
   <ion-toolbar position="fixed">
     <ion-tabs>
       <ion-tab-bar slot="bottom">
@@ -137,4 +144,4 @@
       </ion-tab-bar>
     </ion-tabs>
   </ion-toolbar>
-</ion-footer> -->
+</ion-footer>
