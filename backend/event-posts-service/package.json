@@ -1,7 +1,7 @@
 {
-  "name": "user-management-service",
+  "name": "event-posts-service",
   "version": "1.0.0",
-  "description": "",
+  "description": "Event posting service for the event management system",
   "main": "index.js",
   "scripts": {
     "start": "node .",
