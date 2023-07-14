@@ -27,7 +27,7 @@
 
 <ion-content [fullscreen]="true" id="main-content">
   <div class="button-container">
-    <ion-searchbar placeholder="Search"></ion-searchbar>
+    <ion-searchbar placeholder="Search" (click)="search()"></ion-searchbar>
   </div>
 
   <div class="no-cards" *ngIf="cards.length === 0">
