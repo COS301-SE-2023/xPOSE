@@ -1,4 +1,4 @@
-export class PostBuilder {
+class PostBuilder {
     constructor() {
         this.post = {};
     }
@@ -35,4 +35,5 @@ export class PostBuilder {
         return this.post;
     }
 }
-  
+
+module.exports = PostBuilder;

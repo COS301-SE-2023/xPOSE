@@ -1,4 +1,4 @@
-export class CommentBuilder {
+class CommentBuilder {
     constructor() {
         this.comment = {};
     }
@@ -22,3 +22,5 @@ export class CommentBuilder {
         return this.comment;
     }
 }
+
+module.exports = CommentBuilder;
