@@ -22,15 +22,6 @@
     margin-left: 13px;
   }
   
-  ion-toolbar {
-    --background: #ff43d6; /* Set the toolbar background color */
-    color: white; /* Set the toolbar text color */
-  }
-  
-  ion-label {
-    font-size: 12px;
-  }
-  
   ion-tab-bar {
     --border-top-width: 0px;
   }
@@ -55,4 +46,31 @@ ion-item{
   --box-shadow: 0 0 0 0;
   --box-shadow: none;
   border: solid 1px #ffcefb;
+}
+/* app.component.scss */
+
+ion-toolbar.custom-toolbar {
+  --background: #ffffff;
+  color: #000000;
+  font-size: 20px;
+  /* Add more custom styles as needed */
+  --min-height: 70px;
+}
+
+
+ion-footer {
+  background: #ffffff;
+}
+ion-tab-button{
+  background: #ffffff;
+  border: #ea00ff;
+  border-color: #ea00ff;
+}
+ion-label{
+  color: #000000;
+}
+
+ion-content .main-content{
+  --background: #ffffff;
+  background-color: #ffffff;
 }
