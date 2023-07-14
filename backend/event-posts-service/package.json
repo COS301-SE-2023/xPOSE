@@ -1,9 +1,8 @@
 {
-  "name": "user-management-service",
+  "name": "event-posts-service",
   "version": "1.0.0",
-  "description": "",
+  "description": "Event posting service for the event management system",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "start": "node .",
     "start:dev": "nodemon index.js",
@@ -15,7 +14,8 @@
   "dependencies": {
     "@angular/core": "^16.1.4",
     "express": "^4.18.2",
-    "firebase-admin": "^11.9.0",
+    "firebase-admin": "^11.10.1",
+    "multer": "^1.4.5-lts.1",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
