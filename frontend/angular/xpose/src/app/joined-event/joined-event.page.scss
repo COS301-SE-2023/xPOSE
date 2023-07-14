@@ -1,7 +1,10 @@
 ion-content#main-content {
-  --background: #f0f0f0;
+  --background: #ffffff;
+  --ion-background-color: #ffffff;
   /* Add more custom styles as needed */
 }
+
+
 
 .logo-image {
   width: 50px;
@@ -62,4 +65,40 @@ ion-card {
   .header {
     color: #000000;
   }
+}
+ion-toolbar.custom-toolbar {
+  --background: #ffffff;
+  color: #000000;
+  font-size: 20px;
+  /* Add more custom styles as needed */
+  --min-height: 70px;
+}
+ion-tabs {
+  background: #ffffff;
+}
+ion-footer {
+  background: #ffffff;
+}
+ion-tab-button{
+  background: #ffffff;
+  border: #ea00ff;
+  border-color: #ea00ff;
+}
+ion-icon{
+  color: #000000;
+  padding-top: 5px;
+}
+ion-label{
+  color: #000000;
+}
+.big{
+  // font-size: 50px;
+  color: deeppink;
+  
+}
+ion-segment-button{
+  color: #000000;
+}
+ion-searchbar{
+  color: #000000;
 }

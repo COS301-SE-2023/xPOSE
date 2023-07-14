@@ -1,5 +1,5 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
+  <ion-toolbar class="custom-toolbar">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
@@ -8,17 +8,18 @@
 </ion-header>
 
 
-  <div class="profile_div">
+  <div class="profile_div" >
     <div class="user_div" *ngIf="user">
       <img [src]="user.photoURL">
 
       <div class="first_div">
         <ion-label class="username">{{ user.displayName }}</ion-label>
       </div>
-      <ion-button class="edit_div">Edit Profile</ion-button>
+      <ion-button class="edit_div" routerLink="/edit">Edit Profile</ion-button>
+      
     </div>
   </div>
-  <ion-content>
+  <ion-content id="main-content">
   <ion-tabs #tabs (ionTabsDidChange)="setCurrentTab()" class="tabs">
     <ion-tab-bar slot="bottom">
       <ion-tab-button tab="friends">

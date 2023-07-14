@@ -18,7 +18,7 @@ ion-img{
 }
 ion-button{
     --margin-top: 100px;
-    --color:rgb(255, 255, 255);
+    --color:rgb(0, 0, 0);
     --background: rgb(255, 0, 157);
 }
 .h1{
@@ -26,8 +26,15 @@ ion-button{
     font-weight: 600;
     margin-top: 10px;
     margin-bottom: 10px;
+    color: #000;
 }
 ion-card{
     margin-top: 50px;
     margin-bottom: 50px;
+    background-color: rgb(255, 255, 255);
+    color: #000;
 }
+ion-content {
+    --background: #ffffff;
+  
+  }

@@ -61,9 +61,14 @@ const routes: Routes = [
   },
   { 
     path: 'send-friend-requests', component: SendFriendRequestsComponent 
-  },  {
+  },
+  {
     path: 'view-event',
     loadChildren: () => import('./view-event/view-event.module').then( m => m.ViewEventPageModule)
+  },
+  {
+    path: 'edit',
+    loadChildren: () => import('./edit/edit.module').then( m => m.EditPageModule)
   }
 
 ];

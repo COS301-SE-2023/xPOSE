@@ -72,7 +72,6 @@
 
 .user_div img {
   width: 200px;
-  
   border-radius: 50%;
   margin-bottom: 20px;
 }
@@ -99,10 +98,17 @@
 }
 
 
-ion-toolbar {
-  --background: #ff43d6; /* Set the toolbar background color */
-  color: white; /* Set the toolbar text color */
+ion-toolbar.custom-toolbar {
+  --background: #ffffff;
+  color: #000000;
+  font-size: 20px;
+  /* Add more custom styles as needed */
+  --min-height: 70px;
 }
 ion-label{
   --text-align: center;
+}
+ion-content#main-content {
+  --background: #ffffff;
+
 }
