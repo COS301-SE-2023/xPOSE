@@ -64,7 +64,11 @@ export class HomePage {
   cards: any[] = [
 
   ];
-  
+
+	search(){
+	//search logic here 
+	
+	}
 	viewEvent() {
 		this.router.navigate(['/event']);
 	}
