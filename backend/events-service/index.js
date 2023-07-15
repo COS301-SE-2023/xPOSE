@@ -17,32 +17,34 @@ app.use(cors());
 app.post('/events', upload.single('image'), async (req, res) => {
     try {
         // if user doesn't exist, then create them if they exist in firebase
-        
         const eventBuilder = new EventBuilder();
-        const imageFile = req.file;
-        let image_url = await uploadImageToFirebase(req.body.uid, imageFile);
+        let image_url = await uploadImageToFirebase(req.body.uid, req.file);
 
         // find the user with the uid and get the id
-        const user = await User.findOne({
+        let user = await User.findOne({
             where: {
                 uid: req.body.uid
             }
         });
 
+        if(user === undefined || user === null) {
+            user = await User.create({ uid: req.body.uid });
+        }
+
         // Build the event object
         console.log(req.body);
         const event = eventBuilder.withTitle(req.body.title)
-        .withOwnwerId(user.id)
-        .withCode(generateUniqueCode())
-        .withDescription(req.body.description)
-        .withLatitude(req.body.latitude)
-        .withLongitude(req.body.longitude)
-        .withStartDate(req.body.start_date)
-        .withEndDate(req.body.end_date)
-        .withImageUrl(image_url)
-        .withPrivacySetting(req.body.privacy_setting)
-        .withTimestamp(Date.now())
-        .build();
+            .withOwnerId(user.id)
+            .withCode(generateUniqueCode())
+            .withDescription(req.body.description)
+            .withLatitude(req.body.latitude)
+            .withLongitude(req.body.longitude)
+            .withStartDate(req.body.start_date)
+            .withEndDate(req.body.end_date)
+            .withImageUrl(image_url)
+            .withPrivacySetting(req.body.privacy_setting)
+            .withTimestamp(Date.now())
+            .build();
 
         // Save the event to the database
         await Event.create(event);
