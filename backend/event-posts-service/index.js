@@ -12,8 +12,8 @@ const LikeBuilder  = require('./libs/LikeBuilder');
 const db = admin.firestore();
 const storage = admin.storage().bucket();
 
-// POST /events/:event_id/posts - Create a new post for an event
-app.post('/events/:event_id/posts', upload.single('image'), async (req, res) => {
+// Create a new post for an event
+app.post('/:event_id', upload.single('image'), async (req, res) => {
   try {
     const { event_id } = req.params;
 
@@ -23,6 +23,8 @@ app.post('/events/:event_id/posts', upload.single('image'), async (req, res) => 
         return res.status(404).json({ error: 'Event not found' });
     }
     // const { settings } = await db.collection('Event-Posts').doc(event_id).get();
+    // ! NOTE IS THAT A SETTING COULD BE WHETHER OR NOT AN EVENT CAN BE UPDATED
+
     const { uid } = req.body;
 
     const postBuilder = new PostBuilder();
@@ -45,10 +47,10 @@ app.post('/events/:event_id/posts', upload.single('image'), async (req, res) => 
   }
 });
 
-// POST /events/:event_id/posts/:postId/comments - Add a comment to a post
-app.post('/events/:event_id/posts/:postId/comments', async (req, res) => {
+// Add a comment to a post
+app.post('/:event_id/:post_id', async (req, res) => {
   try {
-    const { event_id, postId } = req.params;
+    const { event_id, post_id } = req.params;
     const { uid, message, timestamp } = req.body;
 
     // Store the comment in Firestore
@@ -57,7 +59,7 @@ app.post('/events/:event_id/posts/:postId/comments', async (req, res) => {
       .collection('Event-Posts')
       .doc(event_id)
       .collection('posts')
-      .doc(postId)
+      .doc(post_id)
       .collection('comments')
       .add(comment);
 
@@ -68,10 +70,10 @@ app.post('/events/:event_id/posts/:postId/comments', async (req, res) => {
   }
 });
 
-// POST /events/:event_id/posts/:postId/likes - Add a like to a post
-app.post('/events/:event_id/posts/:postId/likes', async (req, res) => {
+// Add a like to a post
+app.post('/:event_id/:post_id/like', async (req, res) => {
   try {
-    const { event_id, postId } = req.params;
+    const { event_id, post_id } = req.params;
     const { uid, timestamp } = req.body;
 
     // Store the like in Firestore
@@ -80,7 +82,7 @@ app.post('/events/:event_id/posts/:postId/likes', async (req, res) => {
       .collection('Event-Posts')
       .doc(event_id)
       .collection('posts')
-      .doc(postId)
+      .doc(post_id)
       .collection('likes')
       .add(like);
 
@@ -91,30 +93,50 @@ app.post('/events/:event_id/posts/:postId/likes', async (req, res) => {
   }
 });
 
-// DELETE /events/:event_id/posts/:postId - Delete a post
-app.delete('/events/:event_id/posts/:postId', async (req, res) => {
-  try {
-    const { event_id, postId } = req.params;
-
-    // Delete the post from Firestore
-    await db
-      .collection('Event-Posts')
-      .doc(event_id)
-      .collection('posts')
-      .doc(postId)
-      .delete();
-
-    res.status(200).json({ message: 'Post deleted successfully' });
-  } catch (err) {
-    console.error('Error deleting post:', err);
-    res.status(500).json({ error: 'Failed to delete post' });
-  }
+// Remove a like from a post
+app.delete('/:event_id/:post_id/like', async (req, res) => {
+    res.status(500).json({ error: 'Not available' });
 });
 
+// Add comment to post
+app.post('/:event_id/:post_id/comments', async (req, res) => {
+    res.status(500).json({ error: 'Not available' });
+});
+
+// Get comments
+app.get('/:event_id/:post_id/comments', async (req, res) => {
+    res.status(500).json({ error: 'Not available' });
+});
+
+// delete a post
+app.delete('/:event_id/:post_id', async (req, res) => {
+    try {
+        const { event_id, post_id } = req.params;
+
+        // Delete the post from Firestore
+        await db
+        .collection('Event-Posts')
+        .doc(event_id)
+        .collection('posts')
+        .doc(post_id)
+        .delete();
+
+        res.status(200).json({ message: 'Post deleted successfully' });
+    } catch (err) {
+        console.error('Error deleting post:', err);
+        res.status(500).json({ error: 'Failed to delete post' });
+    }
+});
+
+// GET POSTS FOR EVENT
+app.get('/:event_id', async (req, res) => {
+    // Get all the posts, along with the number of likes for each post
+    res.status(500).json({ error: 'Not available' });
+});
 
 const PORT = 8005;
 
 // Start the server
 app.listen(PORT, () => {
-  console.log(`Server started on port ${PORT}`);
+    console.log(`Server started on port ${PORT}`);
 });
