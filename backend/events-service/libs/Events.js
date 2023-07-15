@@ -43,6 +43,15 @@ class EventBuilder {
         this.eventData.privacy_setting = privacySetting;
         return this;
     }
+
+    withStartDate(startDate) {
+        this.eventData.start_date = startDate;
+        return this;
+    }
+
+    withEndDate(endDate) {
+        this.eventData.end_date = endDate;
+    }
     
     withCode(code) {
         this.eventData.code = code;
