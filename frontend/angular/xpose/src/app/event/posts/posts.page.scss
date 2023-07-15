@@ -1,10 +1,22 @@
-.masonry-item {
-  margin-bottom: 10px;
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
 }
 
-.post-image {
-  width: 50%;
+.card-row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.card {
+  width: 45%;
+  margin-bottom: 20px;
+}
+
+.card-img {
+  width: 100%;
   height: auto;
-  object-fit: cover;
-  cursor: pointer;
 }

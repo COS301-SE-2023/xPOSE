@@ -85,6 +85,9 @@ export class JoinedEventPage implements OnInit {
   //   }
   
   }
+  eventDetails() {
+		this.router.navigate(['/view-event']);
+	}
 
   onEvent() {
     this.router.navigate(['/create-event']);
