@@ -112,8 +112,8 @@ const EventJoinRequest = sequelize.define('eventJoinRequest', {
 });
 
 // Associations
-User.hasMany(Event, { foreignKey: 'owner_id_fk', onDelete: 'CASCADE' });
-Event.belongsTo(User, { foreignKey: 'owner_id_fk', onDelete: 'CASCADE' });
+User.hasMany(Event, { foreignKey: 'owner_id_fk', as: 'owner', onDelete: 'CASCADE' });
+Event.belongsTo(User, { foreignKey: 'owner_id_fk', as: 'owner', onDelete: 'CASCADE' });
 
 User.belongsToMany(Event, {
   through: EventParticipant,

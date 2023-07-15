@@ -58,14 +58,28 @@ app.post('/events', upload.single('image'), async (req, res) => {
 
 // Get all events
 app.get('/events', async (req, res) => {
-  try {
-    const events = await Event.findAll();
-    res.json(events);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Failed to retrieve events' });
-  }
-});
+    try {
+        const events = await Event.findAll({
+            include: {
+                model: User,
+                attributes: ['uid'], 
+                as: 'owner',
+            },
+        });
+
+        // Transform the events to replace 'owner_id_fk' with 'uid'
+        const transformedEvents = events.map(event => {
+            const { owner_id_fk, ...eventData } = event.toJSON();
+            eventData.owner = event.owner.uid;
+            return eventData;
+        });
+
+        res.json(transformedEvents);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Failed to retrieve events' });
+    }
+  });
 
 // Get a single event by code
 app.get('/events/:code', async (req, res) => {
