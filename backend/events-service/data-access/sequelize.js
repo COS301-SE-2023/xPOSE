@@ -57,6 +57,14 @@ const Event = sequelize.define('event', {
     type: Sequelize.DATE,
     allowNull: false,
   },
+  start_date: {
+    type: Sequelize.DATE,
+    allowNull: false
+  },
+  end_date: {
+    type: Sequelize.DATE,
+    allowNull: false
+  }
 });
 
 const EventParticipant = sequelize.define('eventParticipant', {
