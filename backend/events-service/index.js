@@ -5,6 +5,7 @@ const uploadImageToFirebase = require('./data-access/firebase.repository');
 const multer = require('multer');
 const upload = multer({ dest: 'uploads/' });
 const { generateUniqueCode, EventBuilder } = require('./libs/Events');
+const admin = require('firebase-admin');
 
 // Initialize Express app
 const cors = require('cors');
@@ -13,8 +14,10 @@ app.use(express.json());
 app.use(cors());
 
 // Create an event
-app.post('/events',  upload.single('image'), async (req, res) => {
+app.post('/events', upload.single('image'), async (req, res) => {
     try {
+        // if user doesn't exist, then create them if they exist in firebase
+        
         const eventBuilder = new EventBuilder();
         const imageFile = req.file;
         let image_url = await uploadImageToFirebase(req.body.uid, imageFile);
@@ -34,6 +37,8 @@ app.post('/events',  upload.single('image'), async (req, res) => {
         .withDescription(req.body.description)
         .withLatitude(req.body.latitude)
         .withLongitude(req.body.longitude)
+        .withStartDate(req.body.start_date)
+        .withEndDate(req.body.end_date)
         .withImageUrl(image_url)
         .withPrivacySetting(req.body.privacy_setting)
         .withTimestamp(Date.now())
@@ -107,28 +112,30 @@ app.put('/events/:code', upload.single('image'), async (req, res) => {
             res.status(404).json({ error: 'Event not found' });
         }
         
-        // find the user with the uid and get the id
-        if(user.id !== event.owner_id_fk) {
-            res.status(400).json({ error: 'User does not own this event' });
-        }
+        console.log(event);
 
-        // update the event
-        const eventBuilder = new EventBuilder();
+        // // find the user with the uid and get the id
+        // if(user.id !== event.owner_id_fk) {
+        //     res.status(400).json({ error: 'User does not own this event' });
+        // }
 
-        if(req.body.file) {
-            const image_url = await uploadImageToFirebase(req.body.uid, req.body.file);
-            eventBuilder.withImageUrl(image_url);
-        }
-        else {
-            eventBuilder.withImageUrl(event.image_url);
-        }
+        // // update the event
+        // const eventBuilder = new EventBuilder();
 
-        eventBuilder.withTitle(req.body.title)
-        .withDescription(req.body.description)
-        .withLatitude(req.body.latitude)
-        .withLongitude(req.body.longitude)
-        .withPrivacySetting(req.body.privacy_setting)
-        .build();
+        // if(req.body.file) {
+        //     const image_url = await uploadImageToFirebase(req.body.uid, req.body.file);
+        //     eventBuilder.withImageUrl(image_url);
+        // }
+        // else {
+        //     eventBuilder.withImageUrl(event.image_url);
+        // }
+
+        // eventBuilder.withTitle(req.body.title)
+        // .withDescription(req.body.description)
+        // .withLatitude(req.body.latitude)
+        // .withLongitude(req.body.longitude)
+        // .withPrivacySetting(req.body.privacy_setting)
+        // .build();
 
         await event.update(req.body);
         res.json(event);
@@ -160,13 +167,40 @@ app.delete('/events/:code', async (req, res) => {
   }
 });
 
+// invite user
+app.post('/events/invite/:uid', async (req, res) => {
+    res.status(500).json({ error: 'Not ready'});
+});
+
+// response from invited user
+app.put('/events/invite/:code', async (req, res) => {
+    res.status
+})
+
+// user requesting to join
+app.post('/events/request/:uid', async (req, res) => {
+    res.status(500).json({ error: 'Not ready'});
+});
+
+// response to the user request to join
+app.put('/events/request/:code', async (req, res) => {
+    // some rabbitmq action here
+    res.status(500).json({ error: 'Not ready' });
+});
+
+// remove user
+app.delete('/events/remove/:uid', async (req, res) => {
+    res.status(500).json({ error: 'Not ready' });
+});
+
 // Start the server
-sequelize.sync({ force: false }) // Replace `force: true` with `force: false` in production
-  .then(() => {
+sequelize
+.sync({ force: false }) // Replace `force: true` with `force: false` in production
+.then(() => {
     app.listen(8004, () => {
-      console.log('Server started on port 8004');
+        console.log('Server started on port 8004');
     });
-  })
-  .catch((error) => {
+})
+.catch((error) => {
     console.error('Failed to start the server:', error);
 });
