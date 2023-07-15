@@ -83,21 +83,29 @@ app.get('/events', async (req, res) => {
 
 // Get a single event by code
 app.get('/events/:code', async (req, res) => {
-  try {
-    const event = await Event.findOne({
-        where: {
-            code: req.params.code
-    }});
+    try {
+        const event = await Event.findOne({
+            where: {
+                code: req.params.code
+            },
+            include: {
+                model: User,
+                attributes: ['uid'],
+                as: 'owner'
+            }
+        });
 
-    if (event) {
-      res.json(event);
-    } else {
-      res.status(404).json({ error: 'Event not found' });
+        if (event) {
+            const { owner_id_fk, ...eventData } = event.toJSON();
+            eventData.owner = event.owner.uid;
+            res.json(eventData);
+        } else {
+            res.status(404).json({ error: 'Event not found' });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Failed to retrieve the event' });
     }
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Failed to retrieve the event' });
-  }
 });
 
 // Update an event
