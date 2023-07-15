@@ -10,87 +10,88 @@ const LikeBuilder  = require('./libs/LikeBuilder');
 
 // Firestore and Storage references
 const db = admin.firestore();
-const storage = admin.storage().bucket();
+// const storage = admin.storage().bucket();
 
 // Create a new post for an event
 app.post('/:event_id', upload.single('image'), async (req, res) => {
-  try {
-    const { event_id } = req.params;
+    try {
+        const { event_id } = req.params;
 
-    // Check if the event exists
-    const event = await db.collection('Event-Posts').doc(event_id).get();
-    if (!event.exists) {
-        return res.status(404).json({ error: 'Event not found' });
+        // Check if the event exists
+        const event = await db.collection('Event-Posts').doc(event_id).get();
+        if (!event.exists) {
+            return res.status(404).json({ error: 'Event not found' });
+        }
+        // const { settings } = await db.collection('Event-Posts').doc(event_id).get();
+        // ! NOTE IS THAT A SETTING COULD BE WHETHER OR NOT AN EVENT CAN BE UPDATED
+
+        const { uid } = req.body;
+
+        const postBuilder = new PostBuilder();
+        postBuilder
+        .withUid(uid)
+        .withTimestamp(admin.firestore.Timestamp.now())
+        .withComments()
+        .withLikes();
+
+        // Upload the image to Firebase Storage
+        const file = req.file;
+        const post_id = await uploadImageToFirebase(event_id, postBuilder, file);
+
+        res.status(201).json({ 
+            post_id,
+            message: 'Post created successfully'
+        });
+    } catch (err) {
+        console.error('Error creating post:', err);
+        res.status(500).json({ error: 'Failed to create post' });
     }
-    // const { settings } = await db.collection('Event-Posts').doc(event_id).get();
-    // ! NOTE IS THAT A SETTING COULD BE WHETHER OR NOT AN EVENT CAN BE UPDATED
-
-    const { uid } = req.body;
-
-    const postBuilder = new PostBuilder();
-    postBuilder
-    .withUid(uid)
-    .withTimestamp(admin.firestore.Timestamp.now())
-    .withComments()
-    .withLikes();
-
-    // Upload the image to Firebase Storage
-    const file = req.file;
-    const post_id = await uploadImageToFirebase(event_id, postBuilder, file);
-
-    res.status(201).json({ 
-        post_id,
-        message: 'Post created successfully' });
-  } catch (err) {
-    console.error('Error creating post:', err);
-    res.status(500).json({ error: 'Failed to create post' });
-  }
 });
 
 // Add a comment to a post
 app.post('/:event_id/:post_id', async (req, res) => {
-  try {
-    const { event_id, post_id } = req.params;
-    const { uid, message, timestamp } = req.body;
+    try {
+        const { event_id, post_id } = req.params;
+        const { uid, message, timestamp } = req.body;
 
-    // Store the comment in Firestore
-    const comment = { uid, message, timestamp: new Date(timestamp) };
-    await db
-      .collection('Event-Posts')
-      .doc(event_id)
-      .collection('posts')
-      .doc(post_id)
-      .collection('comments')
-      .add(comment);
+        // Store the comment in Firestore
+        const comment = { uid, message, timestamp: new Date(timestamp) };
+        await db
+        .collection('Event-Posts')
+        .doc(event_id)
+        .collection('posts')
+        .doc(post_id)
+        .collection('comments')
+        .add(comment);
 
-    res.status(201).json({ message: 'Comment added successfully' });
-  } catch (err) {
-    console.error('Error adding comment:', err);
-    res.status(500).json({ error: 'Failed to add comment' });
-  }
+        res.status(201).json({ message: 'Comment added successfully' });
+    } catch (err) {
+        console.error('Error adding comment:', err);
+        res.status(500).json({ error: 'Failed to add comment' });
+    }
 });
 
 // Add a like to a post
 app.post('/:event_id/:post_id/like', async (req, res) => {
-  try {
-    const { event_id, post_id } = req.params;
-    const { uid, timestamp } = req.body;
+    try {
+        const { event_id, post_id } = req.params;
+        const { uid, timestamp } = req.body;
 
-    // Store the like in Firestore
-    const like = { uid, timestamp: new Date(timestamp) };
-    await db
-      .collection('Event-Posts')
-      .doc(event_id)
-      .collection('posts')
-      .doc(post_id)
-      .collection('likes')
-      .add(like);
+        // Store the like in Firestore
+        const like = { uid, timestamp: new Date(timestamp) };
+        await db
+        .collection('Event-Posts')
+        .doc(event_id)
+        .collection('posts')
+        .doc(post_id)
+        .collection('likes')
+        .add(like);
 
-    res.status(201).json({ message: 'Like added successfully' });
-  } catch (err) {
-    console.error('Error adding like:', err);
-    res.status(500).json({ error: 'Failed to add like' });
-  }
+        res.status(201).json({ message: 'Like added successfully' });
+    } catch (err) {
+        console.error('Error adding like:', err);
+        res.status(500).json({ error: 'Failed to add like' });
+    }
 });
 
 // Remove a like from a post
