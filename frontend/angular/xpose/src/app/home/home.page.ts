@@ -14,6 +14,7 @@ import { HttpClient } from "@angular/common/http";
 
 
 export class HomePage {
+	searchResults: { title: string; description: string; }[] | undefined;
 	constructor(
 		private afs: AngularFirestore,
 		public authService: AuthService,
@@ -66,7 +67,15 @@ export class HomePage {
   ];
 
 	search(){
-	//search logic here 
+		//search logic here 
+		console.log('Performing search for:', this.search);
+
+		// Simulating search results
+		this.searchResults = [
+			{ title: 'Result 1', description: 'Lorem ipsum dolor sit amet' },
+			{ title: 'Result 2', description: 'Consectetur adipiscing elit' },
+			{ title: 'Result 3', description: 'Sed do eiusmod tempor incididunt' },
+		];
 	
 	}
 	viewEvent() {
