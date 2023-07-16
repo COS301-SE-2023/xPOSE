@@ -5,7 +5,7 @@ const uploadImageToFirebase = require('./data-access/firebase.repository');
 const multer = require('multer');
 const upload = multer({ dest: 'uploads/' });
 const { generateUniqueCode, EventBuilder } = require('./libs/Events');
-// const admin = require('firebase-admin');
+const admin = require('firebase-admin');
 const bodyParser = require('body-parser');
 // Initialize Express app
 const cors = require('cors');
@@ -38,7 +38,15 @@ app.post('/events', upload.single('image'), async (req, res) => {
 
         // If user doesn't exist, create them
         if (!user) {
-            user = await User.create({ uid: uid });
+            const firestoreUserDoc = await admin.firestore().collection('Users').doc(uid).get();
+
+            if (firestoreUserDoc.exists) {
+              // Create the user in the Users table
+              user = await User.create({ uid: uid });
+            } else {
+              res.status(400).json({ error: 'Invalid user' });
+              return;
+            }
         }
 
         // Upload image to Firebase and get the image URL
@@ -99,7 +107,7 @@ app.get('/events', async (req, res) => {
         console.error(error);
         res.status(500).json({ error: 'Failed to retrieve events' });
     }
-  });
+});
 
 // Get a single event by code
 app.get('/events/:code', async (req, res) => {
@@ -236,10 +244,6 @@ app.delete('/events/:code', upload.none(), async (req, res) => {
 // Invite user
 app.post('/events/:code/invite/', upload.none(), async (req, res) => {
     try {
-        console.log(`Request headers: ${JSON.stringify(req.headers)}`);
-        console.log(`Request body: ${JSON.stringify(req.body)}`);
-        console.log(`Request params: ${JSON.stringify(req.params)}`);
-
         const { uid } = req.body;
         const { code } = req.params;
 
@@ -256,7 +260,7 @@ app.post('/events/:code/invite/', upload.none(), async (req, res) => {
             return;
         }
 
-        // Find the event with the provided eventId
+        // Find the event with the provided event code
         const event = await Event.findOne({
             where: {
                 code: code,
@@ -274,6 +278,7 @@ app.post('/events/:code/invite/', upload.none(), async (req, res) => {
             where: {
                 user_id_fk: user.id,
                 event_id_fk: event.id,
+                response: 'pending'
             },
         });
 
