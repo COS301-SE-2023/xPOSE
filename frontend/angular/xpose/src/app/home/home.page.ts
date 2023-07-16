@@ -3,6 +3,9 @@ import { AngularFirestore } from "@angular/fire/compat/firestore";
 import { AuthService } from "../shared/services/auth.service";
 import { Router } from "@angular/router";
 import { HttpClient } from "@angular/common/http";
+import { AngularFireAuth } from "@angular/fire/compat/auth";
+import { Observable, map } from "rxjs";
+import { get } from "http";
 
 
 
@@ -19,7 +22,8 @@ export class HomePage {
 		private afs: AngularFirestore,
 		public authService: AuthService,
 		private router: Router,
-		private http: HttpClient
+		private http: HttpClient,
+		private afAuth: AngularFireAuth
 		) {
 	
 	   }
@@ -30,13 +34,37 @@ export class HomePage {
 	   // get events from firebase and display
 	   
   getEventsFromAPI() {
-    this.http.get<Event[]>("http://localhost:8000/e/events").subscribe((events: Event[]) => {
-      console.log(events);
-		this.events = events;
-      this.populateCards();
-    });
+
+	this.getCurrentUserId().subscribe((uid) => {
+		if(uid){
+			console.log(`We got that ${uid}`);
+			this.http.get<Event[]>(`http://localhost:8000/e/events?uid=${uid}`).subscribe((events: Event[]) => {
+				console.log(events);
+				  this.events = events;
+				this.populateCards();
+			  });
+		}
+		else {
+			console.log("no user id");
+		}
+	});
   }
-  
+
+  getCurrentUserId(): Observable<string> {
+	return this.afAuth.authState.pipe(
+	  map((user) => {
+		if (user) {
+		  return user.uid;
+		} else {
+			// throw error
+			// some extra stuff
+			
+		  console.log('No user is currently logged in.');
+		  return '';
+		}
+	  })
+	);
+  }
 
  populateCards() {
 	if (this.events.length === 0) {
