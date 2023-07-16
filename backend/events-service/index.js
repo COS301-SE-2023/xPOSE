@@ -20,45 +20,54 @@ app.use(bodyParser.urlencoded({
 // Create an event
 app.post('/events', upload.single('image'), async (req, res) => {
     try {
-        console.log('-------------------------');
-        // const eventBuilder = new EventBuilder();
+        const { uid, title, description, latitude, longitude, start_date, end_date, privacy_setting } = req.body;
         const imageFile = req.file;
-        // let image_url = await uploadImageToFirebase(req.body.uid, imageFile);
-        console.log(imageFile);
-        console.log('-------------------------');
-        console.log(req.body);
-        // if user doesn't exist, then create them if they exist in firebase
-        const eventBuilder = new EventBuilder();
-        let image_url = await uploadImageToFirebase(req.body.uid, req.file);
 
-        // find the user with the uid and get the id
+        // Check if the required fields are provided
+        if (!uid || !title || !description || !latitude || !longitude || !start_date || !end_date || !privacy_setting) {
+            res.status(400).json({ error: 'Missing required fields' });
+            return;
+        }
+
+        // Find the user with the provided uid
         let user = await User.findOne({
             where: {
-                uid: req.body.uid
-            }
+                uid: uid,
+            },
         });
 
-        if(user === undefined || user === null) {
-            user = await User.create({ uid: req.body.uid });
+        // If user doesn't exist, create them
+        if (!user) {
+            user = await User.create({ uid: uid });
+        }
+
+        // Upload image to Firebase and get the image URL
+        let image_url = '';
+        if (imageFile) {
+            image_url = await uploadImageToFirebase(uid, imageFile);
         }
 
         // Build the event object
-        console.log(req.body);
-        const event = eventBuilder.withTitle(req.body.title)
-            .withOwnerId(user.id)
-            .withCode(generateUniqueCode())
-            .withDescription(req.body.description)
-            .withLatitude(req.body.latitude)
-            .withLongitude(req.body.longitude)
-            .withStartDate(req.body.start_date)
-            .withEndDate(req.body.end_date)
-            .withImageUrl(image_url)
-            .withPrivacySetting(req.body.privacy_setting)
-            .withTimestamp(Date.now())
-            .build();
+        const event = await Event.create({
+            title: title,
+            description: description,
+            latitude: latitude,
+            longitude: longitude,
+            start_date: start_date,
+            end_date: end_date,
+            privacy_setting: privacy_setting,
+            image_url: image_url,
+            timestamp: Date.now(),
+            owner_id_fk: user.id,
+            code: generateUniqueCode(),
+        });
 
-        // Save the event to the database
-        await Event.create(event);
+        // Add the owner as a participant to the event
+        await EventParticipant.create({
+            user_id_fk: user.id,
+            event_id_fk: event.id,
+            timestamp: Date.now(),
+        });
 
         res.json(event);
     } catch (error) {
