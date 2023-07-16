@@ -1,8 +1,12 @@
 import { v4 as uuidv4 } from 'uuid';
 import admin from "firebase-admin";
 import { messaging } from "../index.js";
+import User from '../DB/models/user.table.js';
+import initializeSQLDB from '../DB/index.js';
+
 let users = [];
 
+initializeSQLDB();
 // const messaging = admin.messaging();
 
 export const getUsers = async (req, res) => {
@@ -51,7 +55,16 @@ export const getUser = (req, res) => {
 export const createUser = async (req, res) => {
     try {
         // get user data from the request body
-        const { displayName, email, password, emailVerified, friendIds, photoURL } = req.body;
+        console.log('req.body:', req.body);
+
+        const { 
+          displayName,
+          email, 
+          password, 
+          emailVerified, 
+          bio,
+          fcmTokens, 
+          photoObject } = req.body;
 
         const uid = uuidv4();
 
@@ -59,21 +72,31 @@ export const createUser = async (req, res) => {
             displayName,
             email,
             emailVerified,
-            friendIds,
-            photoURL,
+            bio,
+            fcmTokens,
+            photoObject,
             uid,
           };
 
-          // Create the user in Firebase Authentication
+        // Create the user in Firebase Authentication
         await admin.auth().createUser({
             uid,
             email,
             password,
         });
 
-        // add user document to the firestore
-        await admin.firestore().collection('Users').doc(uid).set(user);
-        res.send(`User with the name ${displayName} added to the DB`);
+      console.log('User', user);
+
+      // add user document to the firestore
+      await admin.firestore().collection('Users').doc(uid).set(user);
+        
+      // add user reference in the sql database
+      await User.create({
+        firebase_doc_ref: uid
+      });
+      
+      
+      res.send({message: `User with the name ${displayName} added to the DB`});
 
     } catch(error){
         console.error('Error creating user: ', error);

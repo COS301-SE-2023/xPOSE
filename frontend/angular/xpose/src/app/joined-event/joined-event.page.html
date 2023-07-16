@@ -1,14 +1,14 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
+  <ion-toolbar class="custom-toolbar">
     <ion-title>Joined Events</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-header></ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-toolbar>
-    <ion-searchbar placeholder="Search"></ion-searchbar>
-  </ion-toolbar>
+<ion-content [fullscreen]="true" id="main-content">
+
+  <ion-searchbar placeholder="Search"></ion-searchbar>
+
   <ion-segment [(ngModel)]="filterType">
     <ion-segment-button value="private">
       Private Events
@@ -18,32 +18,48 @@
     </ion-segment-button>
   </ion-segment>
 
-  <!-- <ion-list *ngIf="joinedEvents"> -->
-    <!-- <ion-item *ngFor="let event of filteredEvents"> -->
-      <!-- <ion-label>{{ event.title }}</ion-label> -->
-      <!-- Display other event details here -->
-    <!-- </ion-item> -->
-  <!-- </ion-list> -->
-
   <ion-list *ngIf="filterType === 'private'">
     <!-- Mock Private Events -->
-    <ion-item>
-      <ion-label>Private Event 1</ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>Private Event 2</ion-label>
-    </ion-item>
+    <ion-card  *ngFor="let card of cards">
+      <img [src]="card.image_url" alt="Card Image" class="card-image">
+      <ion-card-header class="card-title">
+        <ion-card-title class="header">{{ card.title }}</ion-card-title>
+        <ion-card-content>
+            {{card.longitude}} {{card.latitude}}
+        </ion-card-content>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-icon name="location"></ion-icon>
+        {{ card.description }}
+      </ion-card-content>
+      <ion-button class="button-style"  (click)="	eventDetails()">
+        <!-- {{ card.button }} -->
+        View event
+      </ion-button>
+    </ion-card>
   </ion-list>
 
   <ion-list *ngIf="filterType === 'public'">
     <!-- Mock Public Events -->
-    <ion-item>
-      <ion-label>Public Event 1</ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>Public Event 2</ion-label>
-    </ion-item>
+    <ion-card  *ngFor="let card of cards">
+      <img [src]="card.image_url" alt="Card Image" class="card-image">
+      <ion-card-header class="card-title">
+        <ion-card-title class="header">{{ card.title }}</ion-card-title>
+        <ion-card-content>
+            {{card.longitude}} {{card.latitude}}
+        </ion-card-content>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-icon name="location"></ion-icon>
+        {{ card.description }}
+      </ion-card-content>
+      <ion-button class="button-style"  (click)="	eventDetails()">
+        <!-- {{ card.button }} -->
+        View event
+      </ion-button>
+    </ion-card>
   </ion-list>
+
 </ion-content>
 
 <ion-footer>
