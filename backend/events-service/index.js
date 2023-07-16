@@ -1,11 +1,11 @@
 const express = require('express');
 const { sequelize, User, Event, EventInvitation, EventParticipant } = require('./data-access/sequelize');
-const { Op } = require('sequelize');
+// const { Op } = require('sequelize');
 const uploadImageToFirebase = require('./data-access/firebase.repository');
 const multer = require('multer');
 const upload = multer({ dest: 'uploads/' });
 const { generateUniqueCode, EventBuilder } = require('./libs/Events');
-const admin = require('firebase-admin');
+// const admin = require('firebase-admin');
 const bodyParser = require('body-parser');
 // Initialize Express app
 const cors = require('cors');
@@ -354,18 +354,102 @@ app.put('/events/:code/invite', upload.none(), async (req, res) => {
 });
   
 // user requesting to join
-app.post('/events/request/:uid', async (req, res) => {
-    res.status(500).json({ error: 'Not ready'});
+app.post('/events/:code/request', upload.none(), async (req, res) => {
+
 });
+  
 
 // response to the user request to join
-app.put('/events/request/:code', async (req, res) => {
-    // some rabbitmq action here
-    res.status(500).json({ error: 'Not ready' });
+app.put('/events/:code/request', async (req, res) => {
+    try {
+        const { uid, request_id, response } = req.body;
+
+        // Check if required fields are present in the request body
+        if (!uid || !request_id || !response) {
+            res.status(400).json({ error: 'Invalid request. Required fields are missing.' });
+            return;
+        }
+
+        // Check if the response is valid
+        if (response !== 'accepted' && response !== 'rejected') {
+            res.status(400).json({ error: 'Invalid response. Response must be either "accepted" or "rejected".' });
+            return;
+        }
+
+        // Find the user
+        const user = await User.findOne({
+            where: {
+                uid: uid,
+            },
+        });
+
+        // If user doesn't exist, throw an error
+        if (!user) {
+            res.status(404).json({ error: 'User not found' });
+            return;
+        }
+
+        // Find the event
+        const event = await Event.findOne({
+            where: {
+                code: req.params.code,
+            },
+        });
+
+        // If event doesn't exist, throw an error
+        if (!event) {
+            res.status(404).json({ error: 'Event not found' });
+            return;
+        }
+
+        // Check if the user is the event owner or already a participant
+        const isOwner = user.id === event.owner_id_fk;
+        const isParticipant = await event.hasParticipant(user);
+
+        if (isOwner || isParticipant) {
+            res.status(400).json({ error: 'User cannot request to join their own event or if already a participant' });
+            return;
+        }
+
+        // Check if the request is already sent and its response is pending
+        const existingRequest = await EventJoinRequest.findOne({
+            where: {
+                id: request_id,
+                response: 'pending',
+            },
+        });
+
+        if (existingRequest) {
+            res.status(400).json({ error: 'Request is already sent and awaiting response' });
+            return;
+        }
+
+        // Create a new request
+        const joinRequest = await EventJoinRequest.create({
+            user_id_fk: user.id,
+            event_id_fk: event.id,
+            response: response,
+            timestamp: new Date(),
+        });
+
+        // If the response is "accepted", add the user to the event participants
+        if (response === 'accepted') {
+            await EventParticipant.create({
+                user_id_fk: user.id,
+                event_id_fk: event.id,
+                timestamp: new Date(),
+            });
+        }
+
+        res.json(joinRequest);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Failed to process the request to join the event' });
+    }
 });
 
 // remove user
-app.delete('/events/remove/:uid', async (req, res) => {
+app.delete('/events/:code/remove', async (req, res) => {
     res.status(500).json({ error: 'Not ready' });
 });
 
