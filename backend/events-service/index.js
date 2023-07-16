@@ -5,7 +5,7 @@ const uploadImageToFirebase = require('./data-access/firebase.repository');
 const multer = require('multer');
 const upload = multer({ dest: 'uploads/' });
 const { generateUniqueCode, EventBuilder } = require('./libs/Events');
-// const admin = require('firebase-admin');
+const admin = require('firebase-admin');
 const bodyParser = require('body-parser');
 // Initialize Express app
 const cors = require('cors');
@@ -20,45 +20,68 @@ app.use(bodyParser.urlencoded({
 // Create an event
 app.post('/events', upload.single('image'), async (req, res) => {
     try {
-        console.log('-------------------------');
-        // const eventBuilder = new EventBuilder();
+        const { uid, title, description, latitude, longitude, start_date, end_date, privacy_setting } = req.body;
         const imageFile = req.file;
-        // let image_url = await uploadImageToFirebase(req.body.uid, imageFile);
-        console.log(imageFile);
-        console.log('-------------------------');
-        console.log(req.body);
-        // if user doesn't exist, then create them if they exist in firebase
-        const eventBuilder = new EventBuilder();
-        let image_url = await uploadImageToFirebase(req.body.uid, req.file);
 
-        // find the user with the uid and get the id
+        // Check if the required fields are provided
+        if (!uid || !title || !description || !latitude || !longitude || !start_date || !end_date || !privacy_setting) {
+            res.status(400).json({ error: 'Missing required fields' });
+            return;
+        }
+
+        // Find the user with the provided uid
         let user = await User.findOne({
             where: {
-                uid: req.body.uid
-            }
+                uid: uid,
+            },
         });
 
-        if(user === undefined || user === null) {
-            user = await User.create({ uid: req.body.uid });
+        // If user doesn't exist, create them
+        if (!user) {
+            const firestoreUserDoc = await admin.firestore().collection('Users').doc(uid).get();
+
+            if (firestoreUserDoc.exists) {
+              // Create the user in the Users table
+              user = await User.create({ uid: uid });
+            } else {
+              res.status(400).json({ error: 'Invalid user' });
+              return;
+            }
+        }
+
+        // Upload image to Firebase and get the image URL
+        let image_url = '';
+        if (imageFile) {
+            image_url = await uploadImageToFirebase(uid, imageFile);
         }
 
         // Build the event object
-        console.log(req.body);
-        const event = eventBuilder.withTitle(req.body.title)
-            .withOwnerId(user.id)
-            .withCode(generateUniqueCode())
-            .withDescription(req.body.description)
-            .withLatitude(req.body.latitude)
-            .withLongitude(req.body.longitude)
-            .withStartDate(req.body.start_date)
-            .withEndDate(req.body.end_date)
-            .withImageUrl(image_url)
-            .withPrivacySetting(req.body.privacy_setting)
-            .withTimestamp(Date.now())
-            .build();
+        const event = await Event.create({
+            title: title,
+            description: description,
+            latitude: latitude,
+            longitude: longitude,
+            start_date: start_date,
+            end_date: end_date,
+            privacy_setting: privacy_setting,
+            image_url: image_url,
+            timestamp: Date.now(),
+            owner_id_fk: user.id,
+            code: generateUniqueCode(),
+        });
 
-        // Save the event to the database
-        await Event.create(event);
+        // Add the owner as a participant to the event
+        await EventParticipant.create({
+            user_id_fk: user.id,
+            event_id_fk: event.id,
+            timestamp: Date.now(),
+        });
+
+        // Create Event-Chat document in Firestore with the same id as the event
+        await admin.firestore().collection('Event-Chats').doc(event.code.toString()).set({});
+
+        // Create Event-Post document in Firestore with the same id as the event
+        await admin.firestore().collection('Event-Posts').doc(event.code.toString()).set({});
 
         res.json(event);
     } catch (error) {
@@ -68,8 +91,35 @@ app.post('/events', upload.single('image'), async (req, res) => {
 });
 
 // Get all events
-app.get('/events', async (req, res) => {
+app.get('/events', upload.none(), async (req, res) => {
     try {
+        const { uid } = req.body;
+
+        if(!uid) {
+            res.status(400).json({ error: 'Missing required fields' });
+            return;
+        }
+
+        // Find the user with the provided uid
+        let user = await User.findOne({
+            where: {
+                uid: uid,
+            },
+        });
+
+        // If user doesn't exist, create them
+        if (!user) {
+            const firestoreUserDoc = await admin.firestore().collection('Users').doc(uid).get();
+
+            if (firestoreUserDoc.exists) {
+                // Create the user in the Users table
+                user = await User.create({ uid: uid });
+            } else {
+                res.status(400).json({ error: 'Invalid user' });
+                return;
+            }
+        }
+
         const events = await Event.findAll({
             include: {
                 model: User,
@@ -79,22 +129,94 @@ app.get('/events', async (req, res) => {
         });
 
         // Transform the events to replace 'owner_id_fk' with 'uid'
-        const transformedEvents = events.map(event => {
-            const { owner_id_fk, ...eventData } = event.toJSON();
-            eventData.owner = event.owner.uid;
-            return eventData;
-        });
+        const transformedEvents = [];
+        for (let i = 0; i < events.length; i++) {
+          const event = events[i];
+          const { owner_id_fk, ...eventData } = event.toJSON();
+        
+          // Check if user is the owner
+          if (user.id === owner_id_fk) {
+            eventData.user_event_position = 'owner';
+          } else {
+            let participant = await EventParticipant.findOne({
+              where: {
+                user_id_fk: user.id,
+                event_id_fk: event.id,
+              },
+            });
+        
+            if (participant) {
+              eventData.user_event_position = 'participant';
+            } else {
+              let joinRequest = await EventJoinRequest.findOne({
+                where: {
+                  user_id_fk: user.id,
+                  event_id_fk: event.id,
+                  response: 'pending',
+                },
+              });
+        
+              if (joinRequest) {
+                eventData.user_event_position = 'requested';
+              } else {
+                let invitation = await EventInvitation.findOne({
+                  where: {
+                    user_id_fk: user.id,
+                    event_id_fk: event.id,
+                    response: 'pending',
+                  },
+                });
+        
+                if (invitation) {
+                  eventData.user_event_position = 'invited';
+                } else {
+                  eventData.user_event_position = 'none';
+                }
+              }
+            }
+          }
+        
+          eventData.owner = event.owner.uid;
+          transformedEvents.push(eventData);
+        }
 
         res.json(transformedEvents);
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Failed to retrieve events' });
     }
-  });
+});
 
 // Get a single event by code
-app.get('/events/:code', async (req, res) => {
+app.get('/events/:code', upload.none(), async (req, res) => {
     try {
+        const { uid } = req.body;
+
+        if(!uid) {
+            res.status(400).json({ error: 'Missing required fields' });
+            return;
+        }
+
+        // Find the user with the provided uid
+        let user = await User.findOne({
+            where: {
+                uid: uid,
+            },
+        });
+
+        // If user doesn't exist, create them
+        if (!user) {
+            const firestoreUserDoc = await admin.firestore().collection('Users').doc(uid).get();
+
+            if (firestoreUserDoc.exists) {
+                // Create the user in the Users table
+                user = await User.create({ uid: uid });
+            } else {
+                res.status(400).json({ error: 'Invalid user' });
+                return;
+            }
+        }
+
         const event = await Event.findOne({
             where: {
                 code: req.params.code
@@ -108,6 +230,49 @@ app.get('/events/:code', async (req, res) => {
 
         if (event) {
             const { owner_id_fk, ...eventData } = event.toJSON();
+        
+          // Check if user is the owner
+          if (user.id === owner_id_fk) {
+            eventData.user_event_position = 'owner';
+          } else {
+            let participant = await EventParticipant.findOne({
+              where: {
+                user_id_fk: user.id,
+                event_id_fk: event.id,
+              },
+            });
+        
+            if (participant) {
+              eventData.user_event_position = 'participant';
+            } else {
+              let joinRequest = await EventJoinRequest.findOne({
+                where: {
+                  user_id_fk: user.id,
+                  event_id_fk: event.id,
+                  response: 'pending',
+                },
+              });
+        
+              if (joinRequest) {
+                eventData.user_event_position = 'requested';
+              } else {
+                let invitation = await EventInvitation.findOne({
+                  where: {
+                    user_id_fk: user.id,
+                    event_id_fk: event.id,
+                    response: 'pending',
+                  },
+                });
+        
+                if (invitation) {
+                  eventData.user_event_position = 'invited';
+                } else {
+                  eventData.user_event_position = 'none';
+                }
+              }
+            }
+          }
+
             eventData.owner = event.owner.uid;
             res.json(eventData);
         } else {
@@ -227,10 +392,6 @@ app.delete('/events/:code', upload.none(), async (req, res) => {
 // Invite user
 app.post('/events/:code/invite/', upload.none(), async (req, res) => {
     try {
-        console.log(`Request headers: ${JSON.stringify(req.headers)}`);
-        console.log(`Request body: ${JSON.stringify(req.body)}`);
-        console.log(`Request params: ${JSON.stringify(req.params)}`);
-
         const { uid } = req.body;
         const { code } = req.params;
 
@@ -247,7 +408,7 @@ app.post('/events/:code/invite/', upload.none(), async (req, res) => {
             return;
         }
 
-        // Find the event with the provided eventId
+        // Find the event with the provided event code
         const event = await Event.findOne({
             where: {
                 code: code,
@@ -265,6 +426,7 @@ app.post('/events/:code/invite/', upload.none(), async (req, res) => {
             where: {
                 user_id_fk: user.id,
                 event_id_fk: event.id,
+                response: 'pending'
             },
         });
 
@@ -478,17 +640,14 @@ app.put('/events/:code/request', upload.none(), async (req, res) => {
             },
         });
 
-        if (existingRequest) {
-            res.status(400).json({ error: 'Request is already sent and awaiting response' });
+        if (!existingRequest) {
+            res.status(404).json({ error: 'Request does not exist' });
             return;
         }
 
-        // Create a new request
-        const joinRequest = await EventJoinRequest.create({
-            user_id_fk: user.id,
-            event_id_fk: event.id,
+        // Update the request with the response
+        const joinRequest = await existingRequest.update({
             response: response,
-            timestamp: new Date(),
         });
 
         // If the response is "accepted", add the user to the event participants
