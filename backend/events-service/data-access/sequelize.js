@@ -42,7 +42,7 @@ const Event = sequelize.define('event', {
     allowNull: false,
   },
   image_url: {
-    type: Sequelize.STRING,
+    type: Sequelize.TEXT,
     allowNull: false,
   },
   privacy_setting: {
