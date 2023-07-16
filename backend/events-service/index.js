@@ -77,6 +77,12 @@ app.post('/events', upload.single('image'), async (req, res) => {
             timestamp: Date.now(),
         });
 
+        // Create Event-Chat document in Firestore with the same id as the event
+        await admin.firestore().collection('Event-Chats').doc(event.code.toString()).set({});
+
+        // Create Event-Post document in Firestore with the same id as the event
+        await admin.firestore().collection('Event-Posts').doc(event.code.toString()).set({});
+
         res.json(event);
     } catch (error) {
         console.error(error);
