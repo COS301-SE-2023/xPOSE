@@ -1,5 +1,5 @@
 const express = require('express');
-const { sequelize, User, Event, EventInvitation, EventParticipant } = require('./data-access/sequelize');
+const { sequelize, User, Event, EventInvitation, EventParticipant, EventJoinRequest} = require('./data-access/sequelize');
 // const { Op } = require('sequelize');
 const uploadImageToFirebase = require('./data-access/firebase.repository');
 const multer = require('multer');
@@ -355,12 +355,66 @@ app.put('/events/:code/invite', upload.none(), async (req, res) => {
   
 // user requesting to join
 app.post('/events/:code/request', upload.none(), async (req, res) => {
+    try {
+        const { uid } = req.body;
+        const { code } = req.params;
 
+        // Find the user with the provided uid
+        const user = await User.findOne({
+            where: {
+                uid: uid,
+            },
+        });
+
+        // If user doesn't exist, throw an error
+        if (!user) {
+            res.status(404).json({ error: 'User not found' });
+            return;
+        }
+
+        // Find the event with the provided code
+        const event = await Event.findOne({
+            where: {
+                code: code,
+            },
+        });
+
+        // If event doesn't exist, throw an error
+        if (!event) {
+            res.status(404).json({ error: 'Event not found' });
+            return;
+        }
+
+        // Check if the user has already sent a join request for the event
+        const existingRequest = await EventJoinRequest.findOne({
+            where: {
+                user_id_fk: user.id,
+                event_id_fk: event.id,
+            },
+        });
+
+        if (existingRequest) {
+            res.status(400).json({ error: 'User has already sent a join request for the event' });
+            return;
+        }
+
+        // Create a new join request
+        const joinRequest = await EventJoinRequest.create({
+            user_id_fk: user.id,
+            event_id_fk: event.id,
+            response: 'pending',
+            timestamp: new Date(),
+        });
+
+        res.json(joinRequest);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Failed to process the join request' });
+    }
 });
-  
 
 // response to the user request to join
-app.put('/events/:code/request', async (req, res) => {
+app.put('/events/:code/request', upload.none(), async (req, res) => {
     try {
         const { uid, request_id, response } = req.body;
 
@@ -404,7 +458,12 @@ app.put('/events/:code/request', async (req, res) => {
 
         // Check if the user is the event owner or already a participant
         const isOwner = user.id === event.owner_id_fk;
-        const isParticipant = await event.hasParticipant(user);
+        const isParticipant = await EventParticipant.findOne({
+            where: {
+                user_id_fk: user.id,
+                event_id_fk: event.id,
+            },
+        });
 
         if (isOwner || isParticipant) {
             res.status(400).json({ error: 'User cannot request to join their own event or if already a participant' });
