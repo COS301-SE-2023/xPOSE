@@ -93,7 +93,7 @@ app.post('/events', upload.single('image'), async (req, res) => {
 // Get all events
 app.get('/events', upload.none(), async (req, res) => {
     try {
-        const { uid } = req.body;
+        const { uid } = req.query;
 
         if(!uid) {
             res.status(400).json({ error: 'Missing required fields' });
@@ -190,7 +190,7 @@ app.get('/events', upload.none(), async (req, res) => {
 // Get a single event by code
 app.get('/events/:code', upload.none(), async (req, res) => {
     try {
-        const { uid } = req.body;
+        const { uid } = req.query;
 
         if(!uid) {
             res.status(400).json({ error: 'Missing required fields' });
