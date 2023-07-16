@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-view-event',
@@ -11,13 +11,17 @@ export class ViewEventPage implements OnInit {
   isJoined: boolean = false; // Add the isJoined property
   events: any;
   eventpost: any;
+  event_id: any;
 
   constructor(private router: Router,
+              private route: ActivatedRoute,
               private http: HttpClient
               ) { }
   ngOnInit() {
-    this.getEventsFromAPI();
-    this.postEventsFromAPI();
+    this.event_id = this.route.snapshot.paramMap.get('id');
+    console.log(this.event_id);
+    // this.getEventsFromAPI();
+    // this.postEventsFromAPI();
   }
 
   getEventsFromAPI() {
