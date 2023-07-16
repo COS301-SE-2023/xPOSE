@@ -1,43 +1,59 @@
-<ion-header [translucent]="true">
+<!-- <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>view-event</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title class="event-title">Event Details</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-header [translucent]="true">
+  <ion-toolbar class="custom-toolbar">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="event-title">Event Details</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">view-event</ion-title>
+      <ion-title size="large" class="event-title">Event Details</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <ion-img src="./assets/icon/favicon.png"></ion-img>
+  <ion-img src="./assets/icon/favicon.png" class="event-image"></ion-img>
 
   <div class="ion-padding">
-    <h1 class="h1"> Event details </h1>
-    <h1 class="h1"> Owner </h1>
-      <p> Thabo Lilo</p>
-    <h1 class="h1"> Location </h1>
-      <p> 1234 street name</p>
-    <h1 class="h1"> Description </h1>
-      <p>The pilo kilo reli</p>
-
-    <ion-card>
-      <ion-card-header>
-        participants
-      </ion-card-header>
-     
+    <!-- Event Details Section -->
+    <h1 class="section-title">Event Details</h1>
+    <ion-card class="event-card">
       <ion-card-content>
-        <ion-item>
-          <ion-label>
-            <h2>username</h2>
-            <p>description</p>
-          </ion-label>
-        </ion-item>
-        </ion-card-content>
-        </ion-card>
-    
-    <ion-button expand="block" (click)="joinAndRedirect()" >Join </ion-button>
-        
+        <h2 class="event-subtitle">Owner</h2>
+        <p class="event-info">Thabo Lilo</p>
+
+        <h2 class="event-subtitle">Location</h2>
+        <p class="event-info">1234 Street Name</p>
+
+        <h2 class="event-subtitle">Description</h2>
+        <p class="event-info">The Pilo Kilo Reli</p>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Participants Section -->
+    <h1 class="section-title">Participants</h1>
+    <ion-card class="participant-card">
+      <ion-card-header>
+        Username
+      </ion-card-header>
+      <ion-card-content>
+        <h2 class="participant-name">John Doe</h2>
+        <p class="participant-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Join Button -->
+    <ion-button expand="block" (click)="joinAndRedirect()" class="join-button">Join Event</ion-button>
   </div>
 </ion-content>
