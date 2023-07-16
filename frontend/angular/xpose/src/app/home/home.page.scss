@@ -16,16 +16,6 @@ ion-toolbar.custom-toolbar {
   border-radius: 50%;
 }
 
-ion-button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  --color: rgb(255, 255, 255);
-  font-size: 20px;
-  --ripple-color: deeppink;
-  --padding-top: 25px;
-  --padding-bottom: 29px;
-}
 
 .button-wrapper {
   display: flex;
@@ -39,25 +29,64 @@ ion-button {
 
 ion-card {
   border-radius: 0px;
-  background-color: #5E2390;
-  color: #ffffff;
+  background-color: #5E2390; /* Dark purple background */
+  color: #ffffff; /* White text color */
   margin-bottom: 20px;
 }
 
+ion-title {
+  font-family: 'Pacifico', sans-serif;
+  font-size: 25px;
+}
+// ion-card .button-style {
+//   --color: #ffffff;
+//   --background: #ea00ff;
+//   --box-shadow: none;
+//   --padding-start: 10px;
+//   --padding-end: 10px;
+//   --margin-top: 10px;
+//   --margin-bottom: 10px;
+//   --margin-start: 10px;
+//   --margin-end: 10px;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   font-size: 20px;
+//   font-family: "Helvetica", sans-serif; /* Replace "Arial" with your preferred font or a web-safe font */
+//   --ripple-color: rgb(250, 160, 208);
+//   --padding-top: 25px;
+//   --padding-bottom: 29px;
+//   --border-radius: 10px;
+//   --box-shadow: #000000;
+// }
 ion-card .button-style {
   --color: #ffffff;
-  --background: #cc31f3;
-  --border-radius: 0px;
+  --background: linear-gradient(135deg, #ff0066, #ea00ff);
   --box-shadow: none;
-  --padding-top: 10px;
-  --padding-bottom: 10px;
-  --padding-start: 10px;
+  border: none;
+  --border-radius: 20px;
+  /* ... other CSS variables ... */
+    --padding-start: 10px;
   --padding-end: 10px;
   --margin-top: 10px;
   --margin-bottom: 10px;
   --margin-start: 10px;
   --margin-end: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  font-family: "Helvetica", sans-serif; /* Replace "Arial" with your preferred font or a web-safe font */
+  --ripple-color: rgb(250, 160, 208);
+  --padding-top: 25px;
+  --padding-bottom: 29px;
+  transition: background-color 0.3s ease-in-out;
 }
+
+ion-card .button-style:hover {
+  --background: linear-gradient(135deg, #ea00ff, #ff0066);
+}
+
 
 ion-card .card-image {
   width: 100%;
