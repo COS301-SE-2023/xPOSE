@@ -640,17 +640,14 @@ app.put('/events/:code/request', upload.none(), async (req, res) => {
             },
         });
 
-        if (existingRequest) {
-            res.status(400).json({ error: 'Request is already sent and awaiting response' });
+        if (!existingRequest) {
+            res.status(404).json({ error: 'Request does not exist' });
             return;
         }
 
-        // Create a new request
-        const joinRequest = await EventJoinRequest.create({
-            user_id_fk: user.id,
-            event_id_fk: event.id,
+        // Update the request with the response
+        const joinRequest = await existingRequest.update({
             response: response,
-            timestamp: new Date(),
         });
 
         // If the response is "accepted", add the user to the event participants
