@@ -34,13 +34,23 @@ class EventBuilder {
         return this;
     }
 
-    withOwnwerId(ownerId) {
+    withOwnerId(ownerId) {
         this.eventData.owner_id_fk = ownerId;
         return this;
     }
     
     withPrivacySetting(privacySetting) {
         this.eventData.privacy_setting = privacySetting;
+        return this;
+    }
+
+    withStartDate(startDate) {
+        this.eventData.start_date = startDate;
+        return this;
+    }
+
+    withEndDate(endDate) {
+        this.eventData.end_date = endDate;
         return this;
     }
     

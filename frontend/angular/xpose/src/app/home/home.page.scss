@@ -1,19 +1,14 @@
-// app.component.scss
-
-
+/* app.component.scss */
 
 ion-toolbar.custom-toolbar {
   --background: #ffffff;
   color: #000000;
   font-size: 20px;
-  /* Add more custom styles as needed */
   --min-height: 70px;
 }
 
-ion-content#main-content {
-  --background: #f0f0f0;
-  /* Add more custom styles as needed */
-}
+
+
 
 .logo-image {
   width: 50px;
@@ -22,15 +17,16 @@ ion-content#main-content {
 }
 
 ion-button {
-  display:flex;
+  display: flex;
   justify-content: center;
   align-items: center;
-  --color: rgb(0, 0, 0);
+  --color: rgb(255, 255, 255);
   font-size: 20px;
   --ripple-color: deeppink;
   --padding-top: 25px;
   --padding-bottom: 29px;
 }
+
 .button-wrapper {
   display: flex;
   justify-content: center;
@@ -43,35 +39,64 @@ ion-button {
 
 ion-card {
   border-radius: 0px;
-  background-color: #ffffff;
-  color: #000000;
+  background-color: #5E2390;
+  color: #ffffff;
   margin-bottom: 20px;
+}
 
-  .button-style {
-    --color: #ffffff;
-    --background: #c8bfcf;
-    --border-radius: 0px;
-    --box-shadow: none;
-    --padding-top: 10px;
-    --padding-bottom: 10px;
-    --padding-start: 10px;
-    --padding-end: 10px;
-    --margin-top: 10px;
-    --margin-bottom: 10px;
-    --margin-start: 10px;
-    --margin-end: 10px;
-  }
-  .card-image {
-    width: 100%;  /* Adjust as needed */
-    height: 200px;  /* Adjust as needed */
-    object-fit: cover; /* Maintain aspect ratio and cover the entire area */
-  }
-  .card-title {
-    font-size: 20px;
-    // font-weight: bold;
-    color: #000000;
-  } 
-  .header {
-    color: #000000;
-  }
+ion-card .button-style {
+  --color: #ffffff;
+  --background: #cc31f3;
+  --border-radius: 0px;
+  --box-shadow: none;
+  --padding-top: 10px;
+  --padding-bottom: 10px;
+  --padding-start: 10px;
+  --padding-end: 10px;
+  --margin-top: 10px;
+  --margin-bottom: 10px;
+  --margin-start: 10px;
+  --margin-end: 10px;
+}
+
+ion-card .card-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+ion-card .card-title {
+  font-size: 20px;
+  color: #ffffff;
+}
+
+ion-card .header {
+  color: #ffffff;
+}
+ion-tabs {
+  background: #ffffff;
+}
+ion-footer {
+  background: #ffffff;
+}
+ion-tab-button{
+  background: #ffffff;
+  border: #ea00ff;
+  border-color: #ea00ff;
+}
+ion-icon{
+  color: #000000;
+  padding-top: 5px;
+}
+ion-label{
+  color: #000000;
+}
+.big{
+  // font-size: 50px;
+  color: deeppink;
+  
+}
+ion-content .main-content{
+  --background: #ffffff;
+  background-color: #ffffff;
 }

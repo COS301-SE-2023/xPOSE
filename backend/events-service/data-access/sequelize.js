@@ -57,6 +57,14 @@ const Event = sequelize.define('event', {
     type: Sequelize.DATE,
     allowNull: false,
   },
+  start_date: {
+    type: Sequelize.DATE,
+    allowNull: false
+  },
+  end_date: {
+    type: Sequelize.DATE,
+    allowNull: false
+  }
 });
 
 const EventParticipant = sequelize.define('eventParticipant', {
@@ -104,8 +112,8 @@ const EventJoinRequest = sequelize.define('eventJoinRequest', {
 });
 
 // Associations
-User.hasMany(Event, { foreignKey: 'owner_id_fk', onDelete: 'CASCADE' });
-Event.belongsTo(User, { foreignKey: 'owner_id_fk', onDelete: 'CASCADE' });
+User.hasMany(Event, { foreignKey: 'owner_id_fk', as: 'owner', onDelete: 'CASCADE' });
+Event.belongsTo(User, { foreignKey: 'owner_id_fk', as: 'owner', onDelete: 'CASCADE' });
 
 User.belongsToMany(Event, {
   through: EventParticipant,
