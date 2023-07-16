@@ -10,12 +10,12 @@ const bodyParser = require('body-parser');
 // Initialize Express app
 const cors = require('cors');
 const app = express();
-app.use(express.json());
+// app.use(express.json());
 app.use(cors());
 // app.use(bodyParser());
-// app.use(bodyParser.urlencoded({
-//     extended: true
-// }));
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 
 // Create an event
 app.post('/events', upload.single('image'), async (req, res) => {
@@ -178,7 +178,7 @@ app.put('/events/:code', upload.single('image'), async (req, res) => {
   
 
 // Delete an event
-app.post('/events/delete/:code', async (req, res) => {
+app.delete('/events/:code', upload.none(), async (req, res) => {
     try {
         console.log('Deleting event:');
         console.log(req.body);
@@ -225,9 +225,12 @@ app.post('/events/delete/:code', async (req, res) => {
 });
 
 // Invite user
-app.post('/events/:code/invite/', async (req, res) => {
+app.post('/events/:code/invite/', upload.none(), async (req, res) => {
     try {
-        console.log(req.body);
+        console.log(`Request headers: ${JSON.stringify(req.headers)}`);
+        console.log(`Request body: ${JSON.stringify(req.body)}`);
+        console.log(`Request params: ${JSON.stringify(req.params)}`);
+
         const { uid } = req.body;
         const { code } = req.params;
 
