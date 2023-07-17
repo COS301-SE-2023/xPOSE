@@ -23,30 +23,30 @@ export class AuthService {
       public router: Router,
       public ngZone: NgZone // remove outside scope warning
   ) {
-    // save user data in local storage
-    this.afAuth.authState.subscribe(user => {
-      if (user) {
-        const userData = {
-          uid: user.uid
-        };
-        this.userData = userData;
-        this.isLoggedIn = true;
-        localStorage.setItem('user', JSON.stringify(this.userData));
-        console.log(JSON.parse(localStorage.getItem('user')!));
-      } else {
-        this.isLoggedIn = false;
-        localStorage.setItem('user', 'null');
-        console.log(JSON.parse(localStorage.getItem('user')!));
-      }
-    });
+    // // save user data in local storage
+    // this.afAuth.authState.subscribe(user => {
+    //   if (user) {
+    //     const userData = {
+    //       uid: user.uid
+    //     };
+    //     this.userData = userData;
+    //     this.isLoggedIn = true;
+    //     localStorage.setItem('user', JSON.stringify(this.userData));
+    //     console.log(JSON.parse(localStorage.getItem('user')!));
+    //   } else {
+    //     this.isLoggedIn = false;
+    //     localStorage.setItem('user', 'null');
+    //     console.log(JSON.parse(localStorage.getItem('user')!));
+    //   }
+    // });
   }
 
   // sign in with email/password
-  /*signIn(email: string, password: string): Promise<void> {
+  signIn(email: string, password: string): Promise<void> {
     return this.afAuth
       .signInWithEmailAndPassword(email, password)
       .then((result) => {
-        this.setUserData(result.user);
+        // this.setUserData(result.user);
         this.afAuth.authState.subscribe((user) => {
           if (user) {
             console.log("User has been logged in");
@@ -59,10 +59,10 @@ export class AuthService {
       .catch((error) => {
         window.alert(error.message);
       });
-  }*/
+  }
 
   // sign in with email/password
-  signIn(email: string, password: string): Promise<void> {
+  /*signIn(email: string, password: string): Promise<void> {
     return this.afAuth
         .signInWithEmailAndPassword(email, password)
         .then((result) => {
@@ -108,7 +108,7 @@ export class AuthService {
         .catch((error) => {
           window.alert(error.message);
         });
-  }
+  }*/
 
 
 
