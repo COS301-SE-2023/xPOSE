@@ -12,18 +12,35 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
-    <ion-title class="event-title">Event Details</ion-title>
+    <ion-title class="event-title">{{event.title}}</ion-title>
+
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
+      <ion-title size="large">Event Details</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-img src="{{event.image_url}}"></ion-img>
+
+  <div class="ion-padding">
+    <h1 class="h1"> Event details </h1>
+    <h1 class="h1"> Owner </h1>
+      <p>{{event.owner}}</p>
+    <h1 class="h1"> Location </h1>
+      <p>{{event.latitude}} {{event.longitude}}</p>
+    <h1 class="h1"> Description </h1>
+      <p>{{event.description}}</p>
+
+    <ion-card>
       <ion-title size="large" class="event-title">Event Details</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <ion-img src="./assets/icon/favicon.png" class="event-image"></ion-img>
+  <ion-img src="{{event.image_url}}" class="event-image"></ion-img>
 
   <div class="ion-padding">
     <!-- Event Details Section -->
@@ -31,13 +48,13 @@
     <ion-card class="event-card">
       <ion-card-content>
         <h2 class="event-subtitle">Owner</h2>
-        <p class="event-info">Thabo Lilo</p>
+        <p class="event-info">{{event.owner}}</p>
 
         <h2 class="event-subtitle">Location</h2>
-        <p class="event-info">1234 Street Name</p>
+        <p class="event-info">{{event.latitude}} {{event.longitude}}</p>
 
         <h2 class="event-subtitle">Description</h2>
-        <p class="event-info">The Pilo Kilo Reli</p>
+        <p class="event-info">{{event.description}}</p>
       </ion-card-content>
     </ion-card>
 
@@ -48,12 +65,13 @@
         Username
       </ion-card-header>
       <ion-card-content>
+
         <h2 class="participant-name">John Doe</h2>
         <p class="participant-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
       </ion-card-content>
     </ion-card>
 
     <!-- Join Button -->
-    <ion-button expand="block" (click)="joinAndRedirect()" class="join-button">Join Event</ion-button>
+    <ion-button expand="block" (click)="joinAndRedirect()" class="join-button">{{event.user_event_position}}</ion-button>
   </div>
 </ion-content>
