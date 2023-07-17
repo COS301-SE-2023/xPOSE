@@ -6,7 +6,8 @@ import { AngularFirestore, AngularFirestoreDocument } from "@angular/fire/compat
 import { GoogleAuthProvider, FacebookAuthProvider } from "firebase/auth";
 import {getMessaging, getToken} from "firebase/messaging";
 import { environment } from "../../../environments/environment";
-
+import { map } from "rxjs/operators";
+import { Observable } from "rxjs";
 
 
 @Injectable({
@@ -238,5 +239,20 @@ export class AuthService {
       localStorage.removeItem('user');
       this.router.navigate(['/login']);
     });
+  }
+
+  getCurrentUserId(): Observable<string> {
+    return this.afAuth.authState.pipe(
+      map((user) => {
+      if (user) {
+        return user.uid;
+      } else {
+        // throw error
+        // some extra stuff
+        console.log('No user is currently logged in.');
+        return '';
+      }
+      })
+    );
   }
 }
