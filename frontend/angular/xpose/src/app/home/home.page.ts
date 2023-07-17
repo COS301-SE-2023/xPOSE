@@ -3,6 +3,9 @@ import { AngularFirestore } from "@angular/fire/compat/firestore";
 import { AuthService } from "../shared/services/auth.service";
 import { Router } from "@angular/router";
 import { HttpClient } from "@angular/common/http";
+import { AngularFireAuth } from "@angular/fire/compat/auth";
+import { Observable, map } from "rxjs";
+import { get } from "http";
 
 
 
@@ -14,11 +17,14 @@ import { HttpClient } from "@angular/common/http";
 
 
 export class HomePage {
+	loading: boolean = true;
+	searchResults: { title: string; description: string; }[] | undefined;
 	constructor(
 		private afs: AngularFirestore,
 		public authService: AuthService,
 		private router: Router,
-		private http: HttpClient
+		private http: HttpClient,
+		private afAuth: AngularFireAuth
 		) {
 	
 	   }
@@ -29,13 +35,39 @@ export class HomePage {
 	   // get events from firebase and display
 	   
   getEventsFromAPI() {
-    this.http.get<Event[]>("http://localhost:8000/e/events").subscribe((events: Event[]) => {
-      console.log(events);
-		this.events = events;
-      this.populateCards();
-    });
+
+	this.getCurrentUserId().subscribe((uid) => {
+		if(uid){
+			console.log(`We got that ${uid}`);
+			this.http.get<Event[]>(`http://localhost:8000/e/events?uid=${uid}`).subscribe((events: Event[]) => {
+				console.log(events);
+				  this.events = events;
+				this.populateCards();
+			  });
+			  this.loading = false;
+		}
+		else {
+			console.log("no user id");
+			this.loading = false;
+		}
+	});
   }
-  
+
+  getCurrentUserId(): Observable<string> {
+	return this.afAuth.authState.pipe(
+	  map((user) => {
+		if (user) {
+		  return user.uid;
+		} else {
+			// throw error
+			// some extra stuff
+			
+		  console.log('No user is currently logged in.');
+		  return '';
+		}
+	  })
+	);
+  }
 
  populateCards() {
 	if (this.events.length === 0) {
@@ -51,10 +83,13 @@ export class HomePage {
 		  latitude: event.latitude,
 		  id: event.code,
 		  created_at: event.createdAt,
+		  start_date: event.start_date,
+		  end_date: event.end_date,
 		  // Add event listener to the button
 		  buttonClick: function() {
 			// Redirect to event details page
-			window.location.href = "/event?id=" + event.id;
+			console.log("Redirecting to event details page: ", event.id)
+			// window.location.href = "/view-event/" + event.id;
 		  }
 		}));
 	  }
@@ -64,12 +99,24 @@ export class HomePage {
   cards: any[] = [
 
   ];
-  
+
+	search(){
+		//search logic here 
+		console.log('Performing search for:', this.search);
+
+		// Simulating search results
+		this.searchResults = [
+			{ title: 'Result 1', description: 'Lorem ipsum dolor sit amet' },
+			{ title: 'Result 2', description: 'Consectetur adipiscing elit' },
+			{ title: 'Result 3', description: 'Sed do eiusmod tempor incididunt' },
+		];
+	
+	}
 	viewEvent() {
 		this.router.navigate(['/event']);
 	}
-	eventDetails() {
-		this.router.navigate(['/view-event']);
+	eventDetails(event_id: string) {
+		this.router.navigate(['/view-event', event_id]);
 	}
 	onEvent(){
 		this.router.navigate(['/create-event']);

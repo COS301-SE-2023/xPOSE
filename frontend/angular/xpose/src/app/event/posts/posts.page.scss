@@ -1,10 +1,27 @@
-.masonry-item {
-  margin-bottom: 10px;
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
 }
 
-.post-image {
-  width: 50%;
+.card-row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.card {
+  width: 45%;
+  margin-bottom: 20px;
+}
+
+.card-img {
+  width: 100%;
   height: auto;
-  object-fit: cover;
-  cursor: pointer;
+}
+.card-img {
+  width: 200px; /* Adjust the width as per your requirements */
+  height: 200px; /* Adjust the height as per your requirements */
+  object-fit: cover; /* Optional - ensures the image fits within the dimensions without stretching */
 }

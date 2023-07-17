@@ -1,12 +1,13 @@
-<div class="post-image">
-  <!-- <div [innerHtml]="msg" *ngIf="msg" style="color: red;"></div> -->
-  <!-- <div *ngFor="let image of uploadedImages">
-    <img [src]="getSafeImageUrl(image)" alt="Uploaded Image" class="uploaded-image">
-  </div> -->
-  <p>
-    <!-- <input type="file" #fileInput multiple style="display: none;" (change)="selectFiles($event)"> -->
-    <img [src]="url">
-    <input type="file" class="d-none"  (change)="onFileSelected($event)" #imageInput/>
-    <!-- <button (click)="fileInput.click()">Upload</button> -->
-  </p>
+<div class="card-container post-image">
+  <div class="card-row" *ngFor="let row of imageRows">
+    <div class="card" *ngFor="let image of row">
+      <div class="card-img">
+        <img [src]="image.url" alt="Uploaded Image" class="card-img">
+      </div>
+      <div class="card-content">
+        <p>This is the card content.</p>
+      </div>
+    </div>
+  </div>
+  <input type="file" class="d-none" (change)="onFileSelected($event)" #imageInput/>
 </div>
