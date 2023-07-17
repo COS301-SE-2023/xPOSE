@@ -28,6 +28,7 @@
     "@capacitor/keyboard": "5.0.2",
     "@capacitor/status-bar": "5.0.2",
     "@ionic/angular": "^7.0.0",
+    "@types/googlemaps": "^3.43.3",
     "cors": "^2.8.5",
     "ionicons": "^7.0.0",
     "masonry-layout": "^4.2.2",
