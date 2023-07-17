@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, map } from 'rxjs';
 // import { Loader } from '@googlemaps/js-api-loader';
 
+
 @Component({
   selector: 'app-view-event',
   templateUrl: './view-event.page.html',

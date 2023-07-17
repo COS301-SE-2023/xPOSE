@@ -126,7 +126,7 @@ export class AuthService {
 
                   // Obtain FCM token for pushe notifications
                   const messaging = getMessaging();
-                  return getToken(messaging, { vapidKey: environment.firebase.vapidKey })
+                  return getToken(messaging, { vapidKey: environment.firebase.vapiKey })
 
                       .then((currentToken) => {
                         if (currentToken) {
