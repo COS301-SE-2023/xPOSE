@@ -126,7 +126,7 @@ export class AuthService {
 
                   // Obtain FCM token for pushe notifications
                   const messaging = getMessaging();
-                  return getToken(messaging, { vapidKey: environment.firebase.vpapiKey })
+                  return getToken(messaging, { vapidKey: environment.firebase.vapidKey })
 
                       .then((currentToken) => {
                         if (currentToken) {
@@ -161,9 +161,7 @@ export class AuthService {
           // this.router.navigate(['/signup']);
           return Promise.reject(error); // Return a rejected promise for any other error
         });
-
   }
-
 
   // Send email verification when a new user signs up
   sendVerificationMail(): Promise<void> {
