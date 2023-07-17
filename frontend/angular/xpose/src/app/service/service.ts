@@ -23,4 +23,9 @@ export class Service {
     return this.httpClient.post(`${this.apiUrl}e/events`, event,this.httpOptions)
     .pipe(map(result => result))
   }
+
+  GetUser(uid: string):Observable<any> {
+    const url = `${this.apiUrl}u/users`;
+    return this.httpClient.get(url);
+  }
 }

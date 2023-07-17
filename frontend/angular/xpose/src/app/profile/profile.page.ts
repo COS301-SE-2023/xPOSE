@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from "../shared/services/auth.service";
+import { Service } from '../service/service';
 
 @Component({
   selector: 'app-profile',
@@ -18,7 +19,8 @@ export class ProfilePage {
 
   constructor (
     private router: Router,
-    public authService: AuthService
+    public authService: AuthService,
+    // public userService
   ) {
     this.user = {
       photoURL: './assets/images/profile picture.jpg',
