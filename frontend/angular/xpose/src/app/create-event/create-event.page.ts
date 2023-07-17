@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { AfterViewInit, Component, OnInit } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
 import { Service } from "../service/service";
@@ -15,7 +15,7 @@ import { map } from "rxjs/operators";
 	templateUrl: "./create-event.page.html",
 	styleUrls: ["./create-event.page.scss"],
 	})
-export class CreateEventPage implements OnInit {
+export class CreateEventPage implements OnInit, AfterViewInit {
 
 	createEvent: Event = {
 		uid: 0,
@@ -45,6 +45,12 @@ export class CreateEventPage implements OnInit {
 			this.map = null;
 			this.marker = null;
 		}
+	ngAfterViewInit(): void {
+		// throw new Error("Method not implemented.");
+		// this.displayMap();
+		// this.initAutocomplete();
+		this.initMap();
+	}
 
 	ngOnInit(): void {}
 
@@ -70,33 +76,113 @@ export class CreateEventPage implements OnInit {
 		  })
 		);
 	  }
+
+	  initMap(): void {
+		this.map = new google.maps.Map(document.getElementById('map') as HTMLElement, {
+			center: { lat: 1.3521, lng: 103.8198 },
+			zoom: 15,
+		});
+
+		this.map.addListener('click', (e) => {
+			this.placeMarker(e.latLng);
+		});
+
+		// Add autocomplete to search bar
+		const input = document.getElementById('locationInput') as HTMLInputElement;
+		const searchBox = new google.maps.places.SearchBox(input);
+		this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+		// Bias the SearchBox results towards current map's viewport.
+		this.map.addListener('bounds_changed', () => {
+			searchBox.setBounds(this.map!.getBounds() as google.maps.LatLngBounds);
+		});
+
+		// Update map and marker when a place is selected from the search bar
+		searchBox.addListener('places_changed', () => {
+			const places = searchBox.getPlaces();
+
+			if (places.length == 0) {
+				return;
+			}
+
+			// Clear out the old markers.
+			this.marker?.setMap(null);
+
+			// Set map center and marker position to the selected place.
+			if(places[0].geometry?.viewport)
+			
+			this.map?.setCenter(places[0].geometry.location);
+			this.placeMarker(places[0].geometry?.location);
+		});
+	  }
+
+	  placeMarker(location: any) {
+		if (this.marker) {
+		  this.marker.setMap(null);
+		}
+
+		this.marker = new google.maps.Marker({
+		  position: location,
+		  map: this.map || new google.maps.Map(document.getElementById('map') as HTMLElement, {}),
+		});
+		
+		this.createEvent.latitude = location.lat();
+		this.createEvent.longitude = location.lng();
+	  }
+
+	  initAutocomplete() {
+		const input = document.getElementById('locationInput') as HTMLInputElement;
+		const autocomplete = new google.maps.places.Autocomplete(input);
+		// Add listener to the input element
+		autocomplete.addListener('place_changed', () => {
+			const place = autocomplete.getPlace();
+			if (!place.geometry) {
+				// User entered the name of a Place that was not suggested and
+				// pressed the Enter key, or the Place Details request failed.
+				console.error('No details available for input: ' + place.name);
+				return;
+			}
+			// For each place, get the icon, name and location.
+			const bounds = new google.maps.LatLngBounds();
+			if (place.geometry.viewport) {
+				// Only geocodes have viewport.
+				bounds.union(place.geometry.viewport);
+			}
+			else {
+				bounds.extend(place.geometry.location);
+			}
+			this.createEvent.latitude = place.geometry.location.lat();
+			this.createEvent.longitude = place.geometry.location.lng();
+			this.displayMap();
+		});
+	  }
 	  
 	  displayMap() {
 		// code to display map
 		// console.log('Loading map');
-		// const mapContainer = document.getElementById('map');
-		// console.log(`map container ${mapContainer}`);
+		const mapContainer = document.getElementById('map');
+		console.log(`map container ${mapContainer}`);
 		
-		// if (mapContainer instanceof HTMLElement) {
-		//   console.log(`Loading map`);
-		//   const mapOptions: google.maps.MapOptions = {
-		// 	center: { lat: parseFloat(this.event.latitude), lng: parseFloat(this.event.longitude) },
-		// 	zoom: 14,
-		//   };
+		if (mapContainer instanceof HTMLElement) {
+		  console.log(`Loading map`);
+		  const mapOptions: google.maps.MapOptions = {
+			center: { lat: parseFloat(this.createEvent.latitude.toString()), lng: parseFloat(this.createEvent.longitude.toString()) },
+			zoom: 14,
+		  };
 		  
-		//   console.log(`Attributes showing ${this.event.latitude} ${this.event.longitude}`);
-		//   this.map = new google.maps.Map(mapContainer, mapOptions);
+		  console.log(`Attributes showing ${this.createEvent.latitude} ${this.createEvent.longitude}`);
+		  this.map = new google.maps.Map(mapContainer, mapOptions);
 		  
-		//   console.log(`Map loaded`);
-		//   this.marker = new google.maps.Marker({
-		// 	position: { lat: parseFloat(this.event.latitude), lng: parseFloat(this.event.longitude) },
-		// 	map: this.map,
-		// 	title: 'Event Location',
-		//   });
-		//   console.log(`Marker loaded`);
-		// } else {
-		//   console.error('Map container element not found');
-		// }
+		  console.log(`Map loaded`);
+		  this.marker = new google.maps.Marker({
+			position: { lat: parseFloat(this.createEvent.latitude.toString()), lng: parseFloat(this.createEvent.longitude.toString()) },
+			map: this.map,
+			title: 'Event Location',
+		  });
+		  console.log(`Marker loaded`);
+		} else {
+		  console.error('Map container element not found');
+		}
 	  }
 
 	  CreateEvent() {
