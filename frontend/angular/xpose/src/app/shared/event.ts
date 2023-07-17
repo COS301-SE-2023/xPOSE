@@ -1,11 +1,13 @@
 export interface Event {
-    userId: number;
-    eventName: string;
-    coverImage: File | null;
-    eventStartDate: string;
-    eventEndDate: string;
-    eventLocation: string;
-    eventDescription: string;
-    eventPrivacySetting: string;
+    uid: number;
+    title: string;
+    image: File | null;
+    start_date: string;
+    end_date: string;
+    location: string;
+    description: string;
+    privacy_setting: string;
+    latitude: number;
+    longitude: number;
   }
   
