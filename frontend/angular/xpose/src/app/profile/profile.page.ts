@@ -33,13 +33,13 @@ export class ProfilePage {
   ngOnInit(){
     this.authService.getCurrentUserId().subscribe((uid) => {
       if (uid) {
-
-       console.log(this.userService.GetUser(uid));
-        // this.http.get(`http://localhost:8000/e/events/${this.event_id}?uid=${uid}`).subscribe((data) => {
-        //   this.event = data;
-        //   console.log(data); 
-        // });
-
+        this.userService.GetUser(uid).subscribe((userData) => {
+          // console.log("User name: ", userData.displayName);
+          // console.log("User email: ", userData.email);
+          this.user.displayName = userData.displayName;
+          this.user.email = userData.email;
+          
+        });
       }
       else {
         console.log("profile page no user id");

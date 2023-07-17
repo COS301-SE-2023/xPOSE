@@ -25,7 +25,7 @@ export class Service {
   }
 
   GetUser(uid: string):Observable<any> {
-    const url = `${this.apiUrl}u/users`;
+    const url = `${this.apiUrl}u/users/${uid}`;
     return this.httpClient.get(url);
   }
 }
