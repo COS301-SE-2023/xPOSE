@@ -70,7 +70,7 @@ export class AuthService {
 
           // Obtain the current FCM token
           const messaging = getMessaging();
-          getToken(messaging, { vapidKey: environment.firebase.vpapiKey })
+          getToken(messaging, { vapidKey: environment.firebase.vapidKey })
               .then((currentToken) => {
                 if (currentToken) {
                   // Check if the token has changed
