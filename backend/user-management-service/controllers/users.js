@@ -1,12 +1,9 @@
 import { v4 as uuidv4 } from 'uuid';
 import admin from "firebase-admin";
-import { messaging } from "../index.js";
+import { messaging } from "../server.js";
 import User from '../DB/models/user.table.js';
-import initializeSQLDB from '../DB/index.js';
 
 let users = [];
-
-initializeSQLDB();
 // const messaging = admin.messaging();
 
 export const getUsers = async (req, res) => {
@@ -78,14 +75,14 @@ export const createUser = async (req, res) => {
             uid,
           };
 
-        // Create the user in Firebase Authentication
+        //Create the user in Firebase Authentication
         await admin.auth().createUser({
             uid,
             email,
             password,
         });
 
-      console.log('User', user);
+      // console.log('User', user);
 
       // add user document to the firestore
       await admin.firestore().collection('Users').doc(uid).set(user);
