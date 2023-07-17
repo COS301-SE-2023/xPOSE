@@ -1,26 +1,26 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>view-event</ion-title>
+    <ion-title>{{event.title}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">view-event</ion-title>
+      <ion-title size="large">Event Details</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <ion-img src="./assets/icon/favicon.png"></ion-img>
+  <ion-img src="{{event.image_url}}"></ion-img>
 
   <div class="ion-padding">
     <h1 class="h1"> Event details </h1>
     <h1 class="h1"> Owner </h1>
-      <p> Thabo Lilo</p>
+      <p>{{event.owner}}</p>
     <h1 class="h1"> Location </h1>
-      <p> 1234 street name</p>
+      <p>{{event.latitude}} {{event.longitude}}</p>
     <h1 class="h1"> Description </h1>
-      <p>The pilo kilo reli</p>
+      <p>{{event.description}}</p>
 
     <ion-card>
       <ion-card-header>
@@ -37,7 +37,9 @@
         </ion-card-content>
         </ion-card>
     
-    <ion-button expand="block" (click)="joinAndRedirect()" >Join </ion-button>
+    <ion-button expand="block" (click)="joinAndRedirect()" >
+      {{event.user_event_position}}
+    </ion-button>
         
   </div>
 </ion-content>
