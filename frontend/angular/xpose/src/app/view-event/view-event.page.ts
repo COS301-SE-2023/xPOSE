@@ -89,6 +89,12 @@ export class ViewEventPage implements OnInit, AfterViewInit {
       this.initMap();
     }
   
+    initAutcomplete() {
+      const input = document.getElementById('locationInput') as HTMLInputElement;
+      const autocomplete = new google.maps.places.Autocomplete(input);
+      
+    }
+
     initMap() {
       console.log('Loading map');
       const mapContainer = document.getElementById('map');
