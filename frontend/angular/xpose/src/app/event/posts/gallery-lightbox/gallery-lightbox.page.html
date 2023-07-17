@@ -1,0 +1,25 @@
+
+<div class="gallery-lightox-container">
+  <div class="gallery">
+    <div *ngFor="let item of galleryData; let i=index">
+      <img (click)="onPreviewImage(i)" [src]="item.imageSrc" [alt]="item.imageAlt" class="gallery-img" />
+    </div>
+  </div>  
+  <div class="lightbox">
+    <span *ngIf="showCount" class="count">{{currentIndex + 1}}/{{totalImageCount}}</span>
+      <button  *ngIf="previewImage" class="close-btn">
+        <i class="far fa-times"></i>
+      </button>
+      <button *ngIf="controls"  class="btn-lightbox-carousel btn-prev">
+        <i class="fas fa-arrrow-circle-left" icon-lightbox-carousel icon-prev></i>
+      </button>
+      <button *ngIf="controls" class="btn-lightbox-carousel btn-next">
+        <i class="fas fa-arrrow-circle-right" icon-lightbox-carousel icon-next></i>
+      </button>
+      
+      <div *ngIf="previewImage" class="lightbox-img">
+          <img [src]="currentLightboxImage.imageSrc" [alt]="currentLightboxImage.imageAlt" />
+      </div>
+
+  </div>
+</div>
