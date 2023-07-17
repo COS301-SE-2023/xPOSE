@@ -18,30 +18,39 @@ import { map } from "rxjs/operators";
 export class CreateEventPage implements OnInit {
 
 	createEvent: Event = {
-		userId: 0,
-		eventName: ' ',
-		coverImage: null,
-		eventStartDate: ' ',
-		eventEndDate: ' ',
-		eventLocation: ' ',
-		eventDescription: ' ',
-		eventPrivacySetting: ' '
+		uid: 0,
+		title: ' ',
+		image: null,
+		start_date: ' ',
+		end_date: ' ',
+		location: ' ',
+		description: ' ',
+		privacy_setting: ' ',
+		latitude: 0,
+		longitude: 0,
 	  };
 	  route: any;
 	  buttonClicked = false;
 	  loading = false;
 
+	  map: google.maps.Map | null;
+	  marker: google.maps.Marker | null;
+	
+
 	constructor(private http: HttpClient,
 		private router: Router,
 		private service: Service,
 		private modalController: ModalController,
-		private afAuth: AngularFireAuth) { }
+		private afAuth: AngularFireAuth) {
+			this.map = null;
+			this.marker = null;
+		}
 
 	ngOnInit(): void {}
 
 	onFileSelected(event: any) {
 		const file: File = event.target.files[0];
-		this.createEvent.coverImage = file;
+		this.createEvent.image = file;
 		// You can perform further operations with the selected file, such as uploading it to a server or displaying a preview.
 		// Remember to update your component's property (e.g., createEvent.coverImage) with the selected file or file data.
 	  }
@@ -62,6 +71,33 @@ export class CreateEventPage implements OnInit {
 		);
 	  }
 	  
+	  displayMap() {
+		// code to display map
+		// console.log('Loading map');
+		// const mapContainer = document.getElementById('map');
+		// console.log(`map container ${mapContainer}`);
+		
+		// if (mapContainer instanceof HTMLElement) {
+		//   console.log(`Loading map`);
+		//   const mapOptions: google.maps.MapOptions = {
+		// 	center: { lat: parseFloat(this.event.latitude), lng: parseFloat(this.event.longitude) },
+		// 	zoom: 14,
+		//   };
+		  
+		//   console.log(`Attributes showing ${this.event.latitude} ${this.event.longitude}`);
+		//   this.map = new google.maps.Map(mapContainer, mapOptions);
+		  
+		//   console.log(`Map loaded`);
+		//   this.marker = new google.maps.Marker({
+		// 	position: { lat: parseFloat(this.event.latitude), lng: parseFloat(this.event.longitude) },
+		// 	map: this.map,
+		// 	title: 'Event Location',
+		//   });
+		//   console.log(`Marker loaded`);
+		// } else {
+		//   console.error('Map container element not found');
+		// }
+	  }
 
 	  CreateEvent() {
 		this.getCurrentUserId().subscribe((userId) => {
@@ -70,16 +106,18 @@ export class CreateEventPage implements OnInit {
 				this.loading = true;
 				// this.createEvent.userId = parseInt(userId);
 				const formData: FormData = new FormData();
-				formData.append('userId', userId);
-				formData.append('eventName', this.createEvent.eventName);
-				if (this.createEvent.coverImage) {
-				  formData.append('coverImage', this.createEvent.coverImage, this.createEvent.coverImage.name);
+				formData.append('uid', userId);
+				formData.append('title', this.createEvent.title);
+				if (this.createEvent.image) {
+				  formData.append('image', this.createEvent.image, this.createEvent.image.name);
 				}
-				formData.append('eventStartDate', this.createEvent.eventStartDate);
-				formData.append('eventEndDate', this.createEvent.eventEndDate);
-				formData.append('eventLocation', this.createEvent.eventLocation);
-				formData.append('eventDescription', this.createEvent.eventDescription);
-				formData.append('eventPrivacySetting', this.createEvent.eventPrivacySetting);
+				formData.append('start_date', this.createEvent.start_date);
+				formData.append('end_date', this.createEvent.end_date);
+				formData.append('location', this.createEvent.location);
+				formData.append('description', this.createEvent.description);
+				formData.append('privacy_setting', this.createEvent.privacy_setting);
+				formData.append('latitude', this.createEvent.latitude.toString());
+				formData.append('longitude', this.createEvent.longitude.toString());
 			  
 				// REfactor this to be done in the service class for better decoupling
 				const url = 'http://localhost:8000/e/events';

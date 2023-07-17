@@ -18,31 +18,32 @@
       <ion-item>
         <!-- <ion-button size="medium" class="custom-btn">Public</ion-button>
         <ion-button size="medium" class="custom-btn">Private</ion-button> -->
-        <ion-radio-group value="privacy" name="eventPrivacySetting" [(ngModel)]="createEvent.eventPrivacySetting">
-          <ion-radio value="everyone">Everyone</ion-radio>
-          <ion-radio value="only_friends">Only Friends</ion-radio>
-          <ion-radio value="only_me">Only Me</ion-radio>
+        <ion-radio-group value="privacy" name="privacy_setting" [(ngModel)]="createEvent.privacy_setting">
+          <!-- <ion-radio value="everyone">Everyone</ion-radio> -->
+          <ion-radio value="public">Public</ion-radio>
+          <ion-radio value="private">Private</ion-radio>
         </ion-radio-group>
       </ion-item>
       
       <div class="input-container">
-        <input type="file" accept="image/*" (change)="onFileSelected($event)" name="coverImage" id="coverImage">
-        <!-- <label for="coverImage">Upload Cover Page Image</label> -->
+        <input type="file" accept="image/*" (change)="onFileSelected($event)" name="image" id="image">
+        <!-- <label for="image">Upload Cover Page Image</label> -->
       </div>
 
-      <ion-input label="Event Name" label-placement="floating" fill="outline" placeholder="Event Name" name="eventName" [(ngModel)]="createEvent.eventName"></ion-input>
+      <ion-input label="Event Name" label-placement="floating" fill="outline" placeholder="Event Name" name="title" [(ngModel)]="createEvent.title"></ion-input>
 
-      <ion-textarea label="Event Description" labelPlacement="floating" fill="solid" placeholder="Event Description" name="eventDescription" [(ngModel)]="createEvent.eventDescription"></ion-textarea>
+      <ion-textarea label="Event Description" labelPlacement="floating" fill="solid" placeholder="Event Description" name="description" [(ngModel)]="createEvent.description"></ion-textarea>
 
-      <ion-input label="Location" label-placement="floating" fill="outline" placeholder="Location" name="location" [(ngModel)]="createEvent.eventLocation"></ion-input>
+      <ion-input label="Location" label-placement="floating" fill="outline" placeholder="Location" name="location" [(ngModel)]="createEvent.location"></ion-input>
+      <div id="map"></div>
 
       <!-- Start date -->
       <ion-item>
         <ion-label>Start Date</ion-label>
         <ion-input
           type="date"
-          [(ngModel)]="createEvent.eventStartDate"
-          name="eventStartDate"
+          [(ngModel)]="createEvent.start_date"
+          name="start_date"
         ></ion-input>
       </ion-item>
 
@@ -51,8 +52,8 @@
         <ion-label>End Date</ion-label>
         <ion-input
           type="date"
-          [(ngModel)]="createEvent.eventEndDate"
-          name="eventEndDate"
+          [(ngModel)]="createEvent.end_date"
+          name="end_date"
         ></ion-input>
       </ion-item>
 
