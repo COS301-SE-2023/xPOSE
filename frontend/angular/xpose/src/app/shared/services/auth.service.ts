@@ -6,7 +6,8 @@ import { AngularFirestore, AngularFirestoreDocument } from "@angular/fire/compat
 import { GoogleAuthProvider, FacebookAuthProvider } from "firebase/auth";
 import {getMessaging, getToken} from "firebase/messaging";
 import { environment } from "../../../environments/environment";
-
+import { map } from "rxjs/operators";
+import { Observable } from "rxjs";
 
 
 @Injectable({
@@ -22,30 +23,30 @@ export class AuthService {
       public router: Router,
       public ngZone: NgZone // remove outside scope warning
   ) {
-    // save user data in local storage
-    this.afAuth.authState.subscribe(user => {
-      if (user) {
-        const userData = {
-          uid: user.uid
-        };
-        this.userData = userData;
-        this.isLoggedIn = true;
-        localStorage.setItem('user', JSON.stringify(this.userData));
-        console.log(JSON.parse(localStorage.getItem('user')!));
-      } else {
-        this.isLoggedIn = false;
-        localStorage.setItem('user', 'null');
-        console.log(JSON.parse(localStorage.getItem('user')!));
-      }
-    });
+    // // save user data in local storage
+    // this.afAuth.authState.subscribe(user => {
+    //   if (user) {
+    //     const userData = {
+    //       uid: user.uid
+    //     };
+    //     this.userData = userData;
+    //     this.isLoggedIn = true;
+    //     localStorage.setItem('user', JSON.stringify(this.userData));
+    //     console.log(JSON.parse(localStorage.getItem('user')!));
+    //   } else {
+    //     this.isLoggedIn = false;
+    //     localStorage.setItem('user', 'null');
+    //     console.log(JSON.parse(localStorage.getItem('user')!));
+    //   }
+    // });
   }
 
   // sign in with email/password
-  /*signIn(email: string, password: string): Promise<void> {
+  signIn(email: string, password: string): Promise<void> {
     return this.afAuth
       .signInWithEmailAndPassword(email, password)
       .then((result) => {
-        this.setUserData(result.user);
+        // this.setUserData(result.user);
         this.afAuth.authState.subscribe((user) => {
           if (user) {
             console.log("User has been logged in");
@@ -58,10 +59,10 @@ export class AuthService {
       .catch((error) => {
         window.alert(error.message);
       });
-  }*/
+  }
 
   // sign in with email/password
-  signIn(email: string, password: string): Promise<void> {
+  /*signIn(email: string, password: string): Promise<void> {
     return this.afAuth
         .signInWithEmailAndPassword(email, password)
         .then((result) => {
@@ -69,7 +70,7 @@ export class AuthService {
 
           // Obtain the current FCM token
           const messaging = getMessaging();
-          getToken(messaging, { vapidKey: environment.firebase.vpapiKey })
+          getToken(messaging, { vapidKey: environment.firebase.vapidKey })
               .then((currentToken) => {
                 if (currentToken) {
                   // Check if the token has changed
@@ -107,7 +108,7 @@ export class AuthService {
         .catch((error) => {
           window.alert(error.message);
         });
-  }
+  }*/
 
 
 
@@ -125,7 +126,7 @@ export class AuthService {
 
                   // Obtain FCM token for pushe notifications
                   const messaging = getMessaging();
-                  return getToken(messaging, { vapidKey: environment.firebase.vpapiKey })
+                  return getToken(messaging, { vapidKey: environment.firebase.vapidKey })
 
                       .then((currentToken) => {
                         if (currentToken) {
@@ -160,9 +161,7 @@ export class AuthService {
           // this.router.navigate(['/signup']);
           return Promise.reject(error); // Return a rejected promise for any other error
         });
-
   }
-
 
   // Send email verification when a new user signs up
   sendVerificationMail(): Promise<void> {
@@ -238,5 +237,20 @@ export class AuthService {
       localStorage.removeItem('user');
       this.router.navigate(['/login']);
     });
+  }
+
+  getCurrentUserId(): Observable<string> {
+    return this.afAuth.authState.pipe(
+      map((user) => {
+      if (user) {
+        return user.uid;
+      } else {
+        // throw error
+        // some extra stuff
+        console.log('No user is currently logged in.');
+        return '';
+      }
+      })
+    );
   }
 }

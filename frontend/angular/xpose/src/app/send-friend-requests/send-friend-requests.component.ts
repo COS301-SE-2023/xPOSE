@@ -40,8 +40,7 @@ export class SendFriendRequestsComponent implements OnInit {
       }
     );
   }
-
-
+  
   sendFriendRequest(user: any) {
     this.getCurrentUserId().subscribe(
       (userId) => {

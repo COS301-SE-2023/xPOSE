@@ -61,7 +61,6 @@ export class HomePage {
 		} else {
 			// throw error
 			// some extra stuff
-			
 		  console.log('No user is currently logged in.');
 		  return '';
 		}

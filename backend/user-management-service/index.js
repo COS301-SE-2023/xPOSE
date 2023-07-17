@@ -1,23 +1,47 @@
-import express from 'express';
-import bodyParser from  'body-parser';
-import userRoute from './routes/users.js';
-import admin from "firebase-admin";
-import serviceAccount from "./DB/credentials/serviceAccountKey.json" assert { type: "json" };
+import sequelize from './sqldb.js';
+import User from './DB/models/user.table.js';
+import Friendship from './DB/models/friendship.table.js';
+import FriendRequest from './DB/models/friend_request.table.js';
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://xpose-4f48c-default-rtdb.firebaseio.com"
-});
 
-const messaging = admin.messaging();
-const app = express();
-const PORT = 8002;
+const initializeSQLDB = async () => { 
+  try {
+    // create tables if they do not exist
+    sequelize.sync({});
+    console.log("Success");
+  } catch (err) {
+    if (err.name === 'SequelizeDatabaseError' && err.parent) {
+      const { code, errno, sqlState, sqlMessage, sql } = err.parent;
+      console.log('Foreign Key Error:');
+      console.log('Code:', code);
+      console.log('Errno:', errno);
+      console.log('SQL State:', sqlState);
+      console.log('Message:', sqlMessage);
+      console.log('SQL Query:', sql);
+    } else {  
+      console.log('An error occurred:', err);
+    }
+  }
+}
+// initializeSQLDB();
+export default initializeSQLDB;
 
-// initialize body-parser middleware
-app.use(bodyParser.json()); // will be using Json  data
-app.use('/users', userRoute);
-app.get('/', (req, res) => res.send("Hello from homepage"));
+/*sequelize.sync({})
+  .then(result => {
+    console.log(result);
+  })
+  .catch(err => {
+    if (err.name === 'SequelizeDatabaseError' && err.parent) {
+      const { code, errno, sqlState, sqlMessage, sql } = err.parent;
+      console.log('Foreign Key Error:');
+      console.log('Code:', code);
+      console.log('Errno:', errno);
+      console.log('SQL State:', sqlState);
+      console.log('Message:', sqlMessage);
+      console.log('SQL Query:', sql);
+    } else {
+      console.log('An error occurred:', err);
+    }
+  });*/
 
-app.listen(PORT, () => console.log(`Server running on port: http://localhost:${PORT}`));
 
-export {messaging};
