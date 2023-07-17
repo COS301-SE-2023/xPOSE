@@ -20,7 +20,7 @@ export class ProfilePage {
   constructor (
     private router: Router,
     public authService: AuthService,
-    // public userService
+    public userService: Service
   ) {
     this.user = {
       photoURL: './assets/images/profile picture.jpg',
@@ -28,6 +28,23 @@ export class ProfilePage {
       email: 'johndoe@example.com',
     };
     this.user.photoURL = './assets/images/profile picture.jpg'; // Updated profile picture URL
+  }
+
+  ngOnInit(){
+    this.authService.getCurrentUserId().subscribe((uid) => {
+      if (uid) {
+
+       console.log(this.userService.GetUser(uid));
+        // this.http.get(`http://localhost:8000/e/events/${this.event_id}?uid=${uid}`).subscribe((data) => {
+        //   this.event = data;
+        //   console.log(data); 
+        // });
+
+      }
+      else {
+        console.log("profile page no user id");
+      }
+    });
   }
 
   setCurrentTab() {
