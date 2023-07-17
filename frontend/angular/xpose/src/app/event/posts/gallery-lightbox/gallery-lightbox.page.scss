@@ -1,0 +1,55 @@
+:host{
+    display: block;
+    text-align: center;
+}
+.gallery-lightox-container {
+    position: relative;
+    display: inline-block;
+    padding: 25px;
+
+    .gallery {
+        line-height: 0;
+        column-count: 3;
+        column-gap: 30px;
+
+        .gallery-img {
+            width: 100%;
+            height: auto;
+            cursor: zoom-in;
+            border-radius: .35rem;
+            margin-bottom: 30px;
+            box-shadow: 0 1px 5px rgba(0,0,0,.21);
+
+        }
+
+    }
+    .lightbox{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        // background: rgba(143, 139, 139, 0.85);
+        .count {
+            position: relative;
+            top: 0;
+            left: 0;
+            width: 7%;
+            height: 10%;
+            color: #fff;
+            capacity: 1;
+            font-size: 18px;
+            display: flex   ;
+            justify-content: center;
+            align-items: center;
+            margin-left:5px ;
+
+
+        }
+    
+    }
+
+}
