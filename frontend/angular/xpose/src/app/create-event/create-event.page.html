@@ -34,8 +34,15 @@
 
       <ion-textarea label="Event Description" labelPlacement="floating" fill="solid" placeholder="Event Description" name="description" [(ngModel)]="createEvent.description"></ion-textarea>
 
-      <ion-input label="Location" label-placement="floating" fill="outline" placeholder="Location" name="location" [(ngModel)]="createEvent.location"></ion-input>
-      <div id="map"></div>
+      <div class="input-container">
+        <ion-input label="Location" label-placement="floating" fill="outline" placeholder="Location" name="location" [(ngModel)]="createEvent.location" id="locationInput"></ion-input>
+      </div>
+
+      <br>
+
+      <div class="input-container">
+        <div id="map"></div>
+      </div>
 
       <!-- Start date -->
       <ion-item>
@@ -66,3 +73,5 @@
   </div>
 </ion-content>
 <!--  (click)="redirectToEventPage()" -->
+
+
