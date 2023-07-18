@@ -4,9 +4,10 @@ import { HttpClient } from '@angular/common/http';
 import { CurrentEventDataService } from 'src/app/shared/current-event-data.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Observable, map } from 'rxjs';
+import { AngularFirestore, AngularFirestoreCollection, DocumentChangeAction } from '@angular/fire/compat/firestore';
 
 interface Message {
-  user: string;
+  uid: string;
   message: string;
   id?: string;
   timestamp?: Date;
@@ -21,19 +22,48 @@ export class MessageBoardPage implements OnInit {
   messages: Message[] = [];
   newMessage!: string;
   event_id: any;
+  messagesCollection: AngularFirestoreCollection<Message>;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private http: HttpClient,
     private currentEventDataService: CurrentEventDataService,
-		private afAuth: AngularFireAuth
-  ) { }
+		private afAuth: AngularFireAuth,
+    private afs: AngularFirestore
+  ) {
+    console.log(`Listening to Event-Chats/${this.currentEventDataService.code}/chats`);
+    this.messagesCollection = this.afs.collection<Message>(`Event-Chats/${this.currentEventDataService.code}/chats`);
+  }
 
   ngOnInit() {
-    this.event_id = this.route.snapshot.paramMap.get('id');
-    console.log("Hello it is ", this.event_id);
-    // alert('Hello ' + this.event_id + '!');
+    // retrieval initial messages from Firestore
+    this.retrieveMessages();
+
+    // Subscribe to real-time updates of the "chats" collection
+    this.messagesCollection.snapshotChanges().subscribe((actions: DocumentChangeAction<Message>[]) => {
+      actions.forEach((action: DocumentChangeAction<Message>) => {
+        const message = action.payload.doc.data();
+        const messageId = action.payload.doc.id;
+
+        if (action.type === 'added') {
+          // Add new message
+          this.messages.push({ id: messageId, ...message });
+        } else if (action.type === 'modified') {
+          // Update existing message
+          const index = this.messages.findIndex((m) => m.id === messageId);
+          if (index !== -1) {
+            this.messages[index] = { id: messageId, ...message };
+          }
+        } else if (action.type === 'removed') {
+          // Remove deleted message
+          const index = this.messages.findIndex((m) => m.id === messageId);
+          if (index !== -1) {
+            this.messages.splice(index, 1);
+          }
+        }
+      });
+    });
   }
 
   createMessage() {
@@ -41,11 +71,11 @@ export class MessageBoardPage implements OnInit {
       // Assume 'John' is the user who typed the message, you can replace it with the actual user information.
       this.getCurrentUserId().subscribe((uid) => {
         const message: Message = {
-          user: uid,
+          uid: uid,
           message: this.newMessage
         };
   
-        this.messages.push(message);
+        // this.messages.push(message);
         this.newMessage = '';
         const event_id = this.currentEventDataService.code;
         const formData: FormData = new FormData();
@@ -58,6 +88,12 @@ export class MessageBoardPage implements OnInit {
       });
       
     }
+  }
+
+  retrieveMessages() {
+    this.messagesCollection.valueChanges().subscribe((messages: Message[]) => {
+      this.messages = messages;
+    });
   }
 
   getCurrentUserId(): Observable<string> {
