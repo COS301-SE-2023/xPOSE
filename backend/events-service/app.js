@@ -6,7 +6,7 @@ const router = require('./router');
 const {sequelize} = require('./data-access/sequelize');
 const admin = require('firebase-admin');
 
-// app.use(cors);
+app.use(cors());
 app.use(bodyParser.urlencoded({
     extended: true
 }));
