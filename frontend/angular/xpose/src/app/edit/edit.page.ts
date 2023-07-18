@@ -8,21 +8,25 @@ import { AuthService } from "../shared/services/auth.service";
   styleUrls: ['./edit.page.scss'],
 })
 export class EditPage implements OnInit {
+  photoURL: string;
   username: string;
   email: string;
 
   constructor(
-    private router: Router,
+    public router: Router,
     public authService: AuthService
   ) {
-    this.email = ''; 
-    this. username= '';
+    this.photoURL= './assets/images/profile picture.jpg';
+    this.email = 'johndoe@example.com'; 
+    this. username= 'John Doe';
    }
+   
   saveProfile() {
     // Add logic to save the updated profile
     const updatedProfile = {
       username: this.username,
       email: this.email,
+      
       
     };
     // Call a service method to update the profile
@@ -33,6 +37,10 @@ export class EditPage implements OnInit {
   } 
 
   ngOnInit() {
+    
+    
+    
   }
 
 }
+
