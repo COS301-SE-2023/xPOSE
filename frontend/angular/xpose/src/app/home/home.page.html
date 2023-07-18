@@ -4,7 +4,7 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>
-      <img src="assets/icon/Xp.jpeg" alt="Logo" class="logo-image">
+      <!-- <img src="assets/icon/Xp.jpeg" alt="Logo" class="logo-image"> -->
       xPOSE
     </ion-title>
   </ion-toolbar>
@@ -30,6 +30,13 @@
     <ion-searchbar placeholder="Search" (click)="search()"></ion-searchbar>
   </div>
 
+  <div class="loading-container" *ngIf="loading">
+    <ion-spinner></ion-spinner>
+    <ion-text>
+      <h1>Loading events...</h1>
+    </ion-text>
+  </div>
+
   <div class="no-cards" *ngIf="cards.length === 0">
     <ion-text>
       <h1>No Events could be loaded...</h1>
@@ -48,9 +55,9 @@
       <ion-icon name="location"></ion-icon>
       {{ card.description }}
     </ion-card-content>
-    <ion-button class="button-style"  (click)="	eventDetails()">
+    <ion-button class="button-style"  (click)="eventDetails(card.id)">
       <!-- {{ card.button }} -->
-      View event
+      View
     </ion-button>
   </ion-card>
 </ion-content>

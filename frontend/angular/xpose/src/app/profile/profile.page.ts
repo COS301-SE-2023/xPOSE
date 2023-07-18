@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from "../shared/services/auth.service";
+import { Service } from '../service/service';
 
 @Component({
   selector: 'app-profile',
@@ -18,7 +19,8 @@ export class ProfilePage {
 
   constructor (
     private router: Router,
-    public authService: AuthService
+    public authService: AuthService,
+    public userService: Service
   ) {
     this.user = {
       photoURL: './assets/images/profile picture.jpg',
@@ -26,6 +28,23 @@ export class ProfilePage {
       email: 'johndoe@example.com',
     };
     this.user.photoURL = './assets/images/profile picture.jpg'; // Updated profile picture URL
+  }
+
+  ngOnInit(){
+    this.authService.getCurrentUserId().subscribe((uid) => {
+      if (uid) {
+        this.userService.GetUser(uid).subscribe((userData) => {
+          // console.log("User name: ", userData.displayName);
+          // console.log("User email: ", userData.email);
+          this.user.displayName = userData.displayName;
+          this.user.email = userData.email;
+          
+        });
+      }
+      else {
+        console.log("profile page no user id");
+      }
+    });
   }
 
   setCurrentTab() {

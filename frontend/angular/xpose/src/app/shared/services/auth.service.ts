@@ -6,24 +6,27 @@ import { AngularFirestore, AngularFirestoreDocument } from "@angular/fire/compat
 import { GoogleAuthProvider, FacebookAuthProvider } from "firebase/auth";
 import {getMessaging, getToken} from "firebase/messaging";
 import { environment } from "../../../environments/environment";
-
+import { HttpClient } from "@angular/common/http";
+import { HttpHeaders } from '@angular/common/http';
+import { map } from "rxjs";
+import { Observable } from "rxjs";
 
 
 @Injectable({
   providedIn: "root"
 })
 export class AuthService {
-
   userData: any;
   isLoggedIn: boolean = false;
   constructor(
       public afs: AngularFirestore,  // inject firestore
       public afAuth: AngularFireAuth, // inject firebase Auth services
       public router: Router,
-      public ngZone: NgZone // remove outside scope warning
+      public ngZone: NgZone, // remove outside scope warning
+      private http: HttpClient // inject HttpClient for making HTTP requests
   ) {
     // save user data in local storage
-    this.afAuth.authState.subscribe(user => {
+    /*this.afAuth.authState.subscribe(user => {
       if (user) {
         const userData = {
           uid: user.uid
@@ -37,15 +40,15 @@ export class AuthService {
         localStorage.setItem('user', 'null');
         console.log(JSON.parse(localStorage.getItem('user')!));
       }
-    });
+    });*/
   }
 
   // sign in with email/password
-  /*signIn(email: string, password: string): Promise<void> {
+  signIn(email: string, password: string): Promise<void> {
     return this.afAuth
       .signInWithEmailAndPassword(email, password)
       .then((result) => {
-        this.setUserData(result.user);
+        // this.setUserData(result.user);
         this.afAuth.authState.subscribe((user) => {
           if (user) {
             console.log("User has been logged in");
@@ -58,10 +61,10 @@ export class AuthService {
       .catch((error) => {
         window.alert(error.message);
       });
-  }*/
+  }
 
   // sign in with email/password
-  signIn(email: string, password: string): Promise<void> {
+  /*signIn(email: string, password: string): Promise<void> {
     return this.afAuth
         .signInWithEmailAndPassword(email, password)
         .then((result) => {
@@ -69,7 +72,7 @@ export class AuthService {
 
           // Obtain the current FCM token
           const messaging = getMessaging();
-          getToken(messaging, { vapidKey: environment.firebase.vpapiKey })
+          getToken(messaging, { vapidKey: environment.firebase.vapidKey })
               .then((currentToken) => {
                 if (currentToken) {
                   // Check if the token has changed
@@ -107,60 +110,41 @@ export class AuthService {
         .catch((error) => {
           window.alert(error.message);
         });
-  }
+  }*/
 
 
 
   // Sign up with email/password
-  signUp(email: string, password: string, username: string): Promise<void> {
+  signUp(email: string, password: string, username: string): Promise<any> {
+    const signUpData = {
+      displayName: username,
+      email: email,
+      password: password,
+      emailVerified: false,
+      bio:" Default bio",
+      fcmTokens: [],
+      photoObject:{}
+    };
+    
+    // console.log("User data:::::", signUpData);
+    const requestBody = JSON.stringify(signUpData);
+    // console.log("User data stringified:::::", requestBody);
 
-    return this.afAuth
-        .createUserWithEmailAndPassword(email, password)
-        .then((result) => {
-          if (result.user) {
-            return result.user.updateProfile({ displayName: username })
-                .then(() => {
-                  this.setUserData(result.user);
-                  console.log(email + " signed up successfully");
-
-                  // Obtain FCM token for pushe notifications
-                  const messaging = getMessaging();
-                  return getToken(messaging, { vapidKey: environment.firebase.vpapiKey })
-
-                      .then((currentToken) => {
-                        if (currentToken) {
-                          // Save the FCM token in your database
-                          const userRef = this.afs.collection('Users').doc(result.user!.uid);
-                          userRef.set({ fcmToken: currentToken }, { merge: true })
-                              .then(() => {
-                                console.log('FCM token saved for user: ', result.user!.uid);
-                              })
-                              .catch((error) => {
-                                console.log('Error saving FCM token: ', error);
-                              });
-                        } else {
-                          console.log('No registration token available. Request permission to generate one.');
-                        }
-                      })
-                      .catch((error) => {
-                        console.log('An error occurred while retrieving token. ', error);
-                      });
-                })
-                .catch((error) => {
-                  window.alert(error.message);
-                  // this.router.navigate(['/signup']);
-                  return Promise.reject(error); // Return a rejected promise in case of error
-                });
-          } else {
-            return Promise.reject(new Error("User object not available")); // Return a rejected promise if user object is not available
-          }
-        })
-        .catch((error) => {
-          window.alert(error.message);
-          // this.router.navigate(['/signup']);
-          return Promise.reject(error); // Return a rejected promise for any other error
-        });
-
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    return this.http.post<any>("http://localhost:8000/u/users", requestBody, {headers})
+    .toPromise()
+    .then((response) => {
+      console.log("signed up successfully",response);
+      // Handle success response here
+      this.router.navigate(['/home']);
+    })
+    .catch((error) => {
+      // Handle error response here
+      // window.alert(error.message);
+      console.log("Error:", error);
+      // console.log("Response body:", error.error);
+      return Promise.reject(error);
+    });
   }
 
 
@@ -231,6 +215,23 @@ export class AuthService {
     };
     return userRef.set(userData, { merge: true });
   }
+
+
+  getCurrentUserId(): Observable<string> {
+		return this.afAuth.authState.pipe(
+		  map((user) => {
+			if (user) {
+			  return user.uid;
+			} else {
+				// throw error
+				// some extra stuff
+			  console.log('No user is currently logged in.');
+			  return '';
+			}
+		  })
+		);
+	}
+	  
 
   // Sign out
   signOut(): Promise<void> {

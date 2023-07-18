@@ -6,6 +6,8 @@ import { PostsPageRoutingModule } from './posts-routing.module';
 import { PostsPage } from './posts.page';
 import { NgxMasonryModule } from 'ngx-masonry';
 
+import { GalleryLightboxPage } from './gallery-lightbox/gallery-lightbox.page';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -13,6 +15,9 @@ import { NgxMasonryModule } from 'ngx-masonry';
     PostsPageRoutingModule,
     NgxMasonryModule,
   ],
-  declarations: [PostsPage]
+  declarations: [
+    PostsPage,
+    GalleryLightboxPage
+  ],              
 })
 export class PostsPageModule { }

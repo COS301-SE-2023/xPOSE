@@ -6,7 +6,11 @@ const routes: Routes = [
   {
     path: '',
     component: PostsPage
+  },  {
+    path: 'gallery-lightbox',
+    loadChildren: () => import('./gallery-lightbox/gallery-lightbox.module').then( m => m.GalleryLightboxPageModule)
   }
+
 ];
 
 @NgModule({

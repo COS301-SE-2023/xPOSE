@@ -17,6 +17,7 @@ import { get } from "http";
 
 
 export class HomePage {
+	loading: boolean = true;
 	searchResults: { title: string; description: string; }[] | undefined;
 	constructor(
 		private afs: AngularFirestore,
@@ -43,9 +44,11 @@ export class HomePage {
 				  this.events = events;
 				this.populateCards();
 			  });
+			  this.loading = false;
 		}
 		else {
 			console.log("no user id");
+			this.loading = false;
 		}
 	});
   }
@@ -58,7 +61,6 @@ export class HomePage {
 		} else {
 			// throw error
 			// some extra stuff
-			
 		  console.log('No user is currently logged in.');
 		  return '';
 		}
@@ -80,10 +82,13 @@ export class HomePage {
 		  latitude: event.latitude,
 		  id: event.code,
 		  created_at: event.createdAt,
+		  start_date: event.start_date,
+		  end_date: event.end_date,
 		  // Add event listener to the button
 		  buttonClick: function() {
 			// Redirect to event details page
-			window.location.href = "/event?id=" + event.id;
+			console.log("Redirecting to event details page: ", event.id)
+			// window.location.href = "/view-event/" + event.id;
 		  }
 		}));
 	  }
@@ -109,8 +114,8 @@ export class HomePage {
 	viewEvent() {
 		this.router.navigate(['/event']);
 	}
-	eventDetails() {
-		this.router.navigate(['/view-event']);
+	eventDetails(event_id: string) {
+		this.router.navigate(['/view-event', event_id]);
 	}
 	onEvent(){
 		this.router.navigate(['/create-event']);

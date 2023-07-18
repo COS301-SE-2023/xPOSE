@@ -4,7 +4,7 @@
 
 
 import { Sequelize } from "sequelize";
-import sequelize from "../sqldb.js";
+import sequelize from "../../sqldb.js";
 import User from "./user.table.js";
 
 const Friendship = sequelize.define("friendships", {

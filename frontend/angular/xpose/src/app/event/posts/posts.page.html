@@ -1,13 +1,3 @@
-<div class="card-container post-image">
-  <div class="card-row" *ngFor="let row of imageRows">
-    <div class="card" *ngFor="let image of row">
-      <div class="card-image">
-        <img [src]="image.url" alt="Uploaded Image" class="card-img">
-      </div>
-      <div class="card-content">
-        <p>This is the card content.</p>
-      </div>
-    </div>
-  </div>
-  <input type="file" class="d-none" (change)="onFileSelected($event)" #imageInput/>
-</div>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<app-gallery-lightbox [galleryData]="data"></app-gallery-lightbox>
