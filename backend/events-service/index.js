@@ -733,6 +733,7 @@ app.delete('/events/:code/remove', upload.none(), async (req, res) => {
     }
 });
   
+console.log(sequelize);
 
 // Start the server
 sequelize
