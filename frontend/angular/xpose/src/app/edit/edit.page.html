@@ -8,19 +8,19 @@
   </ion-header>
   
   <ion-content>
-	<ion-list>
+	<div class="profile-container">
+	  <img [src]="photoURL" alt="Profile Picture" class="profile-picture">
+  
 	  <ion-item>
-		<ion-label position="stacked">Username</ion-label>
-		<ion-input type="text" [(ngModel)]="username"></ion-input>
+		<ion-label position="floating">username</ion-label>
+		<ion-input [(ngModel)]="username"></ion-input>
 	  </ion-item>
   
 	  <ion-item>
-		<ion-label position="stacked">Email</ion-label>
-		<ion-input type="email" [(ngModel)]="email"></ion-input>
+		<ion-label position="floating">Email</ion-label>
+		<ion-input [(ngModel)]="email"></ion-input>
 	  </ion-item>
   
-	 
-	  <ion-button expand="full" (click)="saveProfile()">Save</ion-button>
-	</ion-list>
+	  <ion-button expand="full" (click)="saveProfile()">Save Changes</ion-button>
+	</div>
   </ion-content>
-  
