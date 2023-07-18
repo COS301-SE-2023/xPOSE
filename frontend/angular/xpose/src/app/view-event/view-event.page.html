@@ -8,35 +8,46 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+  <!-- <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">Event Details</ion-title>
     </ion-toolbar>
-  </ion-header>
+  </ion-header> -->
 
-  <ion-img src="{{event.image_url}}"></ion-img>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <ion-img src="{{event.image_url}}" fullscreen></ion-img>
+      </ion-col>
+    </ion-row>
 
-  <div class="ion-padding">
-    <h1 class="h1">Event details</h1>
-    <h1 class="h1">Owner</h1>
-    <p>{{event.owner}}</p>
-    <h1 class="h1">Location</h1>
-    <p>{{event.latitude}} {{event.longitude}}</p>
-    <div id="map"></div>
-    <h1 class="h1">Description</h1>
-    <p>{{event.description}}</p>
+    <ion-row>
+      <ion-col size="12">
+        <div class="content-container">
+          <h1 class="h1">Event details</h1>
+          <h1 class="h1">Owner</h1>
+          <p>{{event.owner}}</p>
+          <h1 class="h1">Location</h1>
+          <p>{{event.latitude}} {{event.longitude}}</p>
+          <div id="map" class="map"></div>
+          <h1 class="h1">Description</h1>
+          <p>{{event.description}}</p>
 
-    <h1 class="section-title">Participants</h1>
-    <ion-card class="participant-card" *ngFor="let participant of event.participants">
-      <ion-card-header>
-        {{ participant.username }}
-      </ion-card-header>
-      <ion-card-content>
-        <h2 class="participant-name">{{ participant.name }}</h2>
-        <p class="participant-description">{{ participant.description }}</p>
-      </ion-card-content>
-    </ion-card>
+          <!-- <h1 class="section-title">Participants</h1> -->
+          <ion-card class="participant-card" *ngFor="let participant of event.participants">
+            <ion-card-header>
+              <p>fghdfdffdfd</p>
+              {{ participant.username }}
+            </ion-card-header>
+            <ion-card-content>hjhj
+              <h2 class="participant-name">{{ participant.name }}</h2>
+              <p class="participant-description">{{ participant.description }}</p>
+            </ion-card-content>
+          </ion-card>
 
-    <ion-button expand="block" (click)="joinAndRedirect()" class="join-button">{{event.user_event_position}}</ion-button>
-  </div>
+          <ion-button expand="block" (click)="joinAndRedirect()" class="join-button">{{event.user_event_position}}</ion-button>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
