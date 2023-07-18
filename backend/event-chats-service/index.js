@@ -1,14 +1,22 @@
 const express = require('express');
 const app = express();
 const PORT = 3000;
-const admin = require('firebase-admin');
+// const admin = require('firebase-admin');
+const cors = require('cors');
+const router = require('./router');
+const bodyParser = require('body-parser');
 
-// Initialize Firebase Admin SDK
-const serviceAccount = require('../permissions.json');
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: 'https://xpose-4f48c-default-rtdb.firebaseio.com',
-  storageBucket: 'gs://xpose-4f48c.appspot.com',
+// Initialize Express Middleware
+app.use(cors());
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+
+app.use('/', router);
+
+// simple config
+app.get('/', (req, res) => {
+    res.send('Welcome to the Event Chats Service');
 });
 
 app.listen(PORT, () => {
