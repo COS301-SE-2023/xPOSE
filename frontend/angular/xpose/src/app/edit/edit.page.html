@@ -1,18 +1,18 @@
 <ion-header>
-	<ion-toolbar>
-	  <ion-buttons slot="start">
-		<ion-back-button defaultHref="/profile"></ion-back-button>
-	  </ion-buttons>
-	  <ion-title>Settings</ion-title>
-	</ion-toolbar>
-  </ion-header>
+	<ion-toolbar class="custom-toolbar">
+		<ion-buttons slot="start">
+		  <ion-back-button defaultHref="/profile"></ion-back-button>
+		</ion-buttons>
+		<ion-title>Settings</ion-title>
+	  </ion-toolbar>
+	</ion-header>
   
   <ion-content>
 	<div class="profile-container">
 	  <img [src]="photoURL" alt="Profile Picture" class="profile-picture">
   
 	  <ion-item>
-		<ion-label position="floating">username</ion-label>
+		<ion-label position="floating">Username</ion-label>
 		<ion-input [(ngModel)]="username"></ion-input>
 	  </ion-item>
   
@@ -21,6 +21,6 @@
 		<ion-input [(ngModel)]="email"></ion-input>
 	  </ion-item>
   
-	  <ion-button expand="full" (click)="saveProfile()">Save Changes</ion-button>
+	  <ion-button expand="ion-button" (click)="saveProfile()">Save Changes</ion-button>
 	</div>
   </ion-content>

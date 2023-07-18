@@ -25,9 +25,20 @@ ion-content {
   ion-item {
     margin-bottom: 10px;
   }
+
+  ion-toolbar.custom-toolbar {
+    --background: #ffffff;
+    color: #000000;
+    font-size: 20px;
+    /* Add more custom styles as needed */
+    --min-height: 70px;
+  }
   
   /* Save button */
   ion-button {
-    margin-top: 20px;
+    margin-top: 10px;
+    --background: #007bff; /* Set the background color for the Edit Profile button */
+    // --color: #fff; /* Set the text color for the Edit Profile button */
+  border-radius: 50px;
   }
   
