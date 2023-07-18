@@ -2,6 +2,7 @@ const express = require('express');
 const multer = require('multer');
 const upload = multer({ dest: 'uploads/' });
 const router = express.Router();
+// const cors = require('cors');
 const {
     createEvent,
     deleteEvent,
@@ -15,12 +16,62 @@ const {
     userRequestToJoinEvent,
 } = require('./controllers/index');
 
+// const setupSwagger = require('./swagger');
+// setupSwagger(router);
+
+// router.use(cors);
+
 // test route
 router.get('/', upload.none(),async (req, res) => {
     res.send('Hello from the events service!');
 });
 
 // Create an event
+/**
+ * @swagger
+ * /events:
+ *   post:
+ *     summary: Create an event
+ *     requestBody:
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               uid:
+ *                 type: string
+ *               title:
+ *                 type: string
+ *               description:
+ *                 type: string
+ *               latitude:
+ *                 type: number
+ *               longitude:
+ *                 type: number
+ *               start_date:
+ *                 type: string
+ *                 format: date
+ *               end_date:
+ *                 type: string
+ *                 format: date
+ *               privacy_setting:
+ *                 type: string
+ *                 enum: [public, private]
+ *               image:
+ *                 type: string
+ *                 format: binary
+ *     responses:
+ *       200:
+ *         description: Created event
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Event'
+ *       400:
+ *         description: Bad request
+ *       500:
+ *         description: Failed to create an event
+ */
 router.post('/events', upload.single('image'), createEvent);
 
 // Get all events
