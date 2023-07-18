@@ -75,6 +75,7 @@ export class GalleryLightboxPage implements OnInit {
   }
   onClosePreview(){
     this.previewImage = false;
+    this.showMask = false;
   }
   next(): void {
     this.currentIndex = this. currentIndex + 1;

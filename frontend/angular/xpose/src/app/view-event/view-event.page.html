@@ -2,6 +2,8 @@
   <ion-toolbar class="custom-toolbar">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/home"></ion-back-button>
+      <ion-back-button [routerLink]="['/home']"></ion-back-button>
+
     </ion-buttons>
     <ion-title class="event-title">{{event.title}}</ion-title>
   </ion-toolbar>
@@ -33,10 +35,9 @@
           <h1 class="h1">Description</h1>
           <p>{{event.description}}</p>
 
-          <!-- <h1 class="section-title">Participants</h1> -->
+          <h1 class="section-title">Participants</h1>
           <ion-card class="participant-card" *ngFor="let participant of event.participants">
             <ion-card-header>
-              <p>fghdfdffdfd</p>
               {{ participant.username }}
             </ion-card-header>
             <ion-card-content>hjhj

@@ -35,11 +35,11 @@
 }
 
 .participant-card {
-  background-color: #f5f5f5;
+  background-color: #000000;
   border-radius: 10px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  padding: 15px;
-  margin-bottom: 15px;
+  padding: 150px;
+  margin-bottom: 150px;
 }
 
 .participant-name {
@@ -63,6 +63,17 @@
 
 ion-content {
   --padding-bottom: 0; /* Remove bottom padding */
+}
+
+ion-card {
+  --background: #ffffff;
+  --border-radius: 10px;
+  --box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  --padding-bottom: 0; /* Remove bottom padding */
+  --padding-top: 0; /* Remove top padding */
+  --padding-start: 0; /* Remove left padding */
+  --padding-end: 0; /* Remove right padding */
+  --margin-bottom: 20px;
 }
 
 ion-img {
