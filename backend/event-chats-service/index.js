@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use('/', router);
-
+app.use(bodyParser.json());
 // simple config
 app.get('/', (req, res) => {
     res.send('Welcome to the Event Chats Service');
