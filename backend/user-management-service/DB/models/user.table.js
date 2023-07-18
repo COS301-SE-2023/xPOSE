@@ -2,7 +2,7 @@
 // const sequelize = require("../sqldb.js");
 
 import { Sequelize } from "sequelize";
-import sequelize from "../sqldb.js";
+import sequelize from "../../sqldb.js";
 
 const User = sequelize.define("users", {
     id: {

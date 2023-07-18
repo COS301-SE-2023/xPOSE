@@ -1,22 +1,21 @@
-.card-container {
-  display: flex;
-  flex-wrap: wrap;
+/* Styles for phone devices */
+@media screen and (max-width: 768px) {
+  .post-container {
+    padding: 10px; /* Reduce padding for smaller screens */
+  }
+
+  .post {
+    border: none; /* Remove the border on smaller screens */
+  }
+}
+/* Styles for PC devices */
+.post-container {
+  max-width: 960px; /* Set a maximum width for the container */
+  margin: 0 auto; /* Center the container horizontally */
 }
 
-.card-row {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  padding: 10px;
-  box-sizing: border-box;
-}
-
-.card {
-  width: 45%;
-  margin-bottom: 20px;
-}
-
-.card-img {
-  width: 100%;
-  height: auto;
+.post {
+  padding: 20px; /* Add padding to the post content */
+  border: 1px solid #ccc; /* Add a border to the post */
+  border-radius: 4px; /* Rounded corners for the post */
 }

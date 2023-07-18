@@ -1,12 +1,12 @@
 import { v4 as uuidv4 } from 'uuid';
 import admin from "firebase-admin";
-import { messaging } from "../index.js";
+import { messaging } from "../server.js";
 import User from '../DB/models/user.table.js';
-import initializeSQLDB from '../DB/index.js';
+import Friend_request from '../DB/models/friend_request.table.js';
+import Friendship from '../DB/models/friendship.table.js';
+import { response } from 'express';
 
 let users = [];
-
-initializeSQLDB();
 // const messaging = admin.messaging();
 
 export const getUsers = async (req, res) => {
@@ -78,14 +78,14 @@ export const createUser = async (req, res) => {
             uid,
           };
 
-        // Create the user in Firebase Authentication
+        //Create the user in Firebase Authentication
         await admin.auth().createUser({
             uid,
             email,
             password,
         });
 
-      console.log('User', user);
+      // console.log('User', user);
 
       // add user document to the firestore
       await admin.firestore().collection('Users').doc(uid).set(user);
@@ -94,8 +94,7 @@ export const createUser = async (req, res) => {
       await User.create({
         firebase_doc_ref: uid
       });
-      
-      
+
       res.send({message: `User with the name ${displayName} added to the DB`});
 
     } catch(error){
@@ -291,39 +290,29 @@ export const getFriend = async (req, res) => {
 export const sendFriendRequest = async (req, res) => {
     try {
       const { userId, requestId } = req.params;
-  
       // Get the sender and recipient user documents
-      const senderDoc = await admin.firestore().collection('Users').doc(userId).get();
-      const recipientDoc = await admin.firestore().collection('Users').doc(requestId).get();
+      // const senderDoc = await admin.firestore().collection('Users').doc(userId).get();
+      // const recipientDoc = await admin.firestore().collection('Users').doc(requestId).get();
   
       // Check if sender and recipient exist
-      if (!senderDoc.exists || !recipientDoc.exists) {
-        return res.status(404).json({ error: 'Sender or recipient not found' });
-      }
+      // if (!senderDoc.exists || !recipientDoc.exists) {
+        // return res.status(404).json({ error: 'Sender or recipient not found' });
+      // }
   
       // Create friend request object
-      const friendRequest = {
-        senderId: userId,
-        recipientId: requestId,
-        status: 'pending'
-      };
-  
-      // Add the friend request to the recipient's FriendRequests collection
-      await admin.firestore().collection('Users').doc(requestId).collection('FriendRequests').doc(userId).set(friendRequest);
-  
-      // Send friend request notification
-      const senderData = senderDoc.data();
-      const fcmToken = senderData.fcmToken;
-      const message = {
-        notification: {
-          title: 'New Friend Request',
-          body: `You have received a new friend request from ${senderData.displayName}`,
-        },
-        token: fcmToken
-      };
-  
-      await messaging.send(message); // Await the messaging send operation
-  
+      // const friendRequest = {
+        // senderId: userId,
+        // recipientId: requestId,
+        // status: 'pending'
+      // };
+      await Friend_request.create({
+        friend_a_id: userId,
+        friend_b_id: requestId,
+        response: "pending"
+      });
+      // Here bellow use message broker to communicate with the notification services
+
+      // finallly message feedback
       res.status(200).json({ message: `Friend request sent successfully to user with id ${requestId}` });
     } catch (error) {
       console.error('Error sending friend request:', error);

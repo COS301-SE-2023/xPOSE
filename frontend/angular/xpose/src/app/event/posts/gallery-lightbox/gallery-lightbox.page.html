@@ -1,0 +1,36 @@
+<div class="gallery-lightox-container">
+  <div class="gallery">
+    <!-- ngFor loop to display images in the gallery -->
+    <div *ngFor="let item of galleryData; let i=index">
+      <img (click)="onPreviewImage(i)" [src]="item.imageSrc" [alt]="item.imageAlt" class="gallery-img" />
+    </div>
+  </div>  
+
+  <!-- Lightbox section -->
+  <div *ngIf="showMask" class="lightbox">
+    <!-- Show image count if showCount is true -->
+    <span *ngIf="showCount" class="count">{{currentIndex + 1}}/{{totalImageCount}}</span>
+    
+    <!-- Close button for lightbox -->
+    <ion-button *ngIf="previewImage" class="close-btn" (click)="onClosedPreview()">
+      <i class="far fa-times"></i>
+    </ion-button>
+
+    <!-- Previous and Next buttons for lightbox carousel -->
+    <ion-button *ngIf="controls" class="btn-Lightbox-carousel btn-prev" (click) = "prev()">
+      <i class="fas fa-arrow-circle-left" icon-lightbox-carousel icon-prev></i>
+    </ion-button>
+    <ion-button *ngIf="controls" class="btn-lightbox-carousel btn-next" (click) = "next()">
+      <i class="fas fa-arrow-circle-right" icon-lightbox-carousel icon-next></i>
+    </ion-button>
+    
+    <!-- Lightbox image display -->
+    <div *ngIf="previewImage"
+         
+          class="lightbox-img">
+      <img [src]="currentLightboxImage.imageSrc" [alt]="currentLightboxImage.imageAlt" />
+    </div>
+  </div>
+</div>
+ 
+  
