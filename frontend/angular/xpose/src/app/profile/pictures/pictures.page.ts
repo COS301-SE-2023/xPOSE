@@ -13,9 +13,14 @@ export class PicturesPage implements OnInit {
   ngOnInit() {
     // Populate the userPictures array with picture URLs
     this.userPictures = [
-      'https://example.com/picture1.jpg',
-      'https://example.com/picture2.jpg',
-      // Add more picture URLs as needed
+      './assets/images/john pic1.jpg',
+      './assets/images/John Pic2.jpg',
+      './assets/images/John Pic3.jpg',
+      './assets/images/John Pic4.jpg',
+      
+
+
+      // Add more'./assets/images/John Pic3.jpg', picture URLs as needed
     ];
   }
 }

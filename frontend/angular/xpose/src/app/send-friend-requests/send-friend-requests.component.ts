@@ -2,9 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { IonicModule, ModalController } from '@ionic/angular';
 import {NgFor, NgIf} from '@angular/common';
-import { AngularFireAuth } from "@angular/fire/compat/auth";
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { AuthService } from "../shared/services/auth.service";
 
 @Component({
   selector: 'app-send-friend-requests',
@@ -19,7 +17,7 @@ export class SendFriendRequestsComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
-    private afAuth: AngularFireAuth
+    public authService: AuthService
     ) {}
 
   ngOnInit() {
@@ -42,7 +40,7 @@ export class SendFriendRequestsComponent implements OnInit {
   }
   
   sendFriendRequest(user: any) {
-    this.getCurrentUserId().subscribe(
+    this.authService.getCurrentUserId().subscribe(
       (userId) => {
         if (userId) {
           const requestId = user.uid;
@@ -53,7 +51,7 @@ export class SendFriendRequestsComponent implements OnInit {
   
           this.http.post(endpoint, {}).subscribe(
             (response) => {
-              console.log('Friend request sent successfully.');
+              console.log(response);
             },
             (error) => {
               console.error('Error sending friend request:', error);
@@ -66,50 +64,4 @@ export class SendFriendRequestsComponent implements OnInit {
     );
   }
   
-  getCurrentUserId(): Observable<string> {
-    return this.afAuth.authState.pipe(
-      map((user) => {
-        if (user) {
-          return user.uid;
-        } else {
-          console.log('No user is currently logged in.');
-          return '';
-        }
-      })
-    );
-  }
-  
-
-
-
-  // sendFriendRequest(user: any) {
-  //   const userId = this.getCurrentUserId();
-  //   const requestId = user.uid;
-
-  //   const endpoint = `http://localhost:8000/u/users/${userId}/friend-requests/${requestId}`;
-
-  //   console.log("My sender id is: "+ userId);
-  //   this.http.post(endpoint, {}).subscribe(
-  //     (response) => {
-  //       console.log('Friend request sent successfully.');
-  //     },
-  //     (error) => {
-  //       console.error('Error sending friend request:', error);
-  //     }
-  //   );
-  // }
-
-
-  // getCurrentUserId() {
-  //   this.afAuth.authState.subscribe(user => {
-  //     if (user) {
-  //       const userId = user.uid;
-  //       // console.log('Current user ID:', userId);
-  //       return userId;
-  //     } else {
-  //       console.log('No user is currently logged in.');
-  //       return null;
-  //     }
-  //   });
-  // }
 }
