@@ -211,8 +211,8 @@ export class CreateEventPage implements OnInit, AfterViewInit {
 				this.http.post(url, formData)
 				  .subscribe({
 					next: (response:any) => {
-					  // console.log(response);
-					  this.openEventModal(response.id);
+					  console.log(response);
+					  this.openEventModal(response.code);
 					  // Handle the response from the server
 					  this.router.navigate(['/home']);
 					},
@@ -258,12 +258,13 @@ export class CreateEventPage implements OnInit, AfterViewInit {
 
 	async openEventModal(id:string) {
 		console.log("OUR ID" + id);
-	const modal = await this.modalController.create({
-		component: EventModal,
-		componentProps: {
-			id
-		}
-	});
+
+		const modal = await this.modalController.create({
+			component: EventModal,
+			componentProps: {
+				id
+			}
+		});
 	
 	await modal.present();
 	}
