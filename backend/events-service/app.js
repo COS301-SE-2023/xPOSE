@@ -26,7 +26,7 @@ app.use('/', router);
 const PORT = 8004;
 
 // only start the server if the database is up
-console.log(sequelize);
+// console.log(sequelize);
 sequelize
 .sync({ force: false })
 .then(() => {
