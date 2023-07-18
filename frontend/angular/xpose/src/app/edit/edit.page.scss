@@ -1,6 +1,33 @@
-.filebtn{
-    opacity: 0;
-    position: absolute;
-    top: -100em;
-    left: -100em;
-}
+/* Global styles for the edit page */
+ion-content {
+    --ion-background-color: #f2f2f2;
+  }
+  
+  /* Container for the profile details */
+  .profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    margin-top: 20px;
+  }
+  
+  /* Profile picture */
+  .profile-picture {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+  }
+  
+  /* Form input fields */
+  ion-item {
+    margin-bottom: 10px;
+  }
+  
+  /* Save button */
+  ion-button {
+    margin-top: 20px;
+  }
+  
