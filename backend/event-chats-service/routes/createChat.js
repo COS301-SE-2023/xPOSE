@@ -16,7 +16,18 @@ async function createChat(req, res) {
         // Add a new chat message to the chats subcollection
         const chatDocRef = await docRef.collection('chats').add({ message, uid, timestamp });
 
-        res.status(201).json({ id: chatDocRef.id });
+        // Retrieve the newly created chat document
+        const newChatDoc = await chatDocRef.get();
+
+        // Construct the chat object with its contents
+        const chatObject = {
+        id: newChatDoc.id,
+        message: newChatDoc.data().message,
+        uid: newChatDoc.data().uid,
+        timestamp: newChatDoc.data().timestamp,
+        };
+
+        res.status(201).json(chatObject);
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Something went wrong' });
