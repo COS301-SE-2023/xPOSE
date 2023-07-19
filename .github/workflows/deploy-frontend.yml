@@ -6,18 +6,25 @@ on:
       - main
 
 jobs:
-    deploy:
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@master
-            - uses: actions/setup-node@master
-              with:
-                  node-version: '18.x'
-            - name: Building Project
-              working-directory: frontend/angular/xpose
-              run: ng build --prod
-            - uses: w9jds/firebase-action@master
-              with:
-                  args: deploy --only hosting
-              env:
-                  FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14.x'  # Choose the desired Node.js version
+          registry-url: 'https://registry.npmjs.org/'
+
+      - name: Install Angular CLI
+        run: npm install -g @angular/cli
+
+      - name: Building Project
+        working-directory: frontend/angular/xpose
+        run: ng build --prod
+
+      - uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only hosting
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
