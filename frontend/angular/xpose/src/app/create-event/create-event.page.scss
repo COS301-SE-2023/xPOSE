@@ -130,8 +130,13 @@
   }
   .label{
     color: #000000;
-    
+  }
 
+  .row{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 95%;
   }
   
   
