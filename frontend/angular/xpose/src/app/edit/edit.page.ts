@@ -38,11 +38,22 @@ export class EditPage implements OnInit {
     this.router.navigate(['/profile']);
   } 
 
-  ngOnInit() {
-    
-    
-    
-  }
+  ngOnInit() {}
+
+  onFileSelected(event: any) {
+		const file: File = event.target.files[0];
+		if (file) {
+      // You can implement your own logic to upload the image to your storage or server
+      // For now, we'll just set the photoURL to a local object URL for demonstration purposes.
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        this.photoURL = reader.result as string;
+      };
+    }
+		// You can perform further operations with the selected file, such as uploading it to a server or displaying a preview.
+		// Remember to update your component's property (e.g., createEvent.coverImage) with the selected file or file data.
+	  }
 
 }
 
