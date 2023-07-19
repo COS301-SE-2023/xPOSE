@@ -12,6 +12,8 @@ export class EditPage implements OnInit {
   username: string;
   email: string;
 
+  isPublic: boolean = true;
+
   constructor(
     public router: Router,
     public authService: AuthService
@@ -19,6 +21,10 @@ export class EditPage implements OnInit {
     this.photoURL= './assets/images/profile picture.jpg';
     this.email = 'johndoe@example.com'; 
     this. username= 'John Doe';
+
+    
+    
+    
    }
    
   saveProfile() {
@@ -26,9 +32,12 @@ export class EditPage implements OnInit {
     const updatedProfile = {
       username: this.username,
       email: this.email,
-      
-      
+
+     
     };
+    console.log('Updated Profile:', updatedProfile);
+    console.log('Account Privacy:', this.isPublic ? 'Public' : 'Private');
+
 
     
     // Call a service method to update the profile
@@ -54,6 +63,14 @@ export class EditPage implements OnInit {
 		// You can perform further operations with the selected file, such as uploading it to a server or displaying a preview.
 		// Remember to update your component's property (e.g., createEvent.coverImage) with the selected file or file data.
 	  }
+
+    deleteAccount() {
+
+      
+      // Add your logic here to delete the user account.
+      // You may want to show a confirmation modal to confirm the deletion before proceeding.
+      console.log('Account deleted');
+    }
 
 }
 

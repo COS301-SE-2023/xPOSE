@@ -23,7 +23,7 @@ ion-content {
   
   /* Form input fields */
   ion-item {
-    margin-bottom: 10px;
+    margin-bottom: 40px;
   }
 
   ion-toolbar.custom-toolbar {
@@ -41,9 +41,14 @@ ion-content {
   
   /* Save button */
   ion-button {
-    margin-top: 10px;
+    margin-top: 20px;
     --background: #007bff; /* Set the background color for the Edit Profile button */
     // --color: #fff; /* Set the text color for the Edit Profile button */
   border-radius: 50px;
+  }
+
+  .pink-button {
+    --background: #ff43d6; /* Set the background color for the pink button */
+    --color: white; /* Set the text color for the pink button */
   }
   
