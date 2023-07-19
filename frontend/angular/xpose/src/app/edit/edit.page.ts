@@ -29,6 +29,8 @@ export class EditPage implements OnInit {
       
       
     };
+
+    
     // Call a service method to update the profile
     
 
