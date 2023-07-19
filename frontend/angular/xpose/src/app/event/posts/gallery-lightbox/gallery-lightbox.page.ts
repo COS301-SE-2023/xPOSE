@@ -8,7 +8,7 @@ import {
     trigger,
     AnimationEvent,
     } from '@angular/animations';
-import { MatIconModule } from '@angular/material/icon';
+// import { MatIconModule } from '@angular/material/icon';
 
 
 interface Item {
