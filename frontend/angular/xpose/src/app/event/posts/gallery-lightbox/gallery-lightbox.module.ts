@@ -6,15 +6,15 @@ import { IonicModule } from '@ionic/angular';
 
 import { GalleryLightboxPageRoutingModule } from './gallery-lightbox-routing.module';
 
-import { MatIconModule } from '@angular/material/icon';
+// import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule,
+    // IonicModule,
     GalleryLightboxPageRoutingModule,
-    MatIconModule,
+    // MatIconModule,
   ],
   declarations: []
 })
