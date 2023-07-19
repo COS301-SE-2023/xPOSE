@@ -45,7 +45,17 @@
 		<ion-label position="floating">Email</ion-label>
 		<ion-input [(ngModel)]="email"></ion-input>
 	  </ion-item>
+
+	  
+		<ion-label>Account Privacy</ion-label>
+		<ion-toggle [(ngModel)]="isPublic"></ion-toggle>
+	 
   
 	  <ion-button expand="ion-button" (click)="saveProfile()">Save Changes</ion-button>
 	</div>
   </ion-content>
+ 
+
+  <ion-footer>
+	<ion-button (click)="deleteAccount()" expand="full" class="pink-button">Delete Account</ion-button>
+  </ion-footer>
