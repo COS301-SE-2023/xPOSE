@@ -65,8 +65,15 @@
     margin-bottom: 15px;
     height: 40px;
     // color: #000000;
-    border: 1px solid #DD10FE;
+    border: 0.5px solid #DD10FE;
     background-color: #F8F8F8;
+    scrollbar-highlight-color: #000;
+    // highlight-color-focused: var(--ion-color-primary, #3880ff); 
+    // highlight-color-valid: var(--ion-color-success, #ffffff); 
+    // highlight-color-invalid: var(--ion-color-danger, #eb445a);
+
+
+
   }
 
   input{
@@ -80,7 +87,7 @@
     margin-bottom: 25px;
     margin-top: 5px;
     height: 55px;
-    border: 1px solid #DD10FE;
+    border: 0.5px solid #DD10FE;
     background-color: #F8F8F8;
   }
   
@@ -104,7 +111,7 @@
   .input-container {
     display: flex;
     align-items: center;
-    border: 1px solid #DD10FE;
+    border: 0.5px solid #DD10FE;
     padding: 7px;
     border-radius: 4px;
     margin-bottom: 25px;
@@ -115,8 +122,8 @@
   .input-container1 {
     display: flex;
     align-items: center;
-    border: 1px solid #DD10FE;
-    padding: 30px;
+    border: 0.5px solid #DD10FE;
+    // padding: 30px;
     border-radius: 4px;
     margin-bottom: 25px;
     width: 95%;
