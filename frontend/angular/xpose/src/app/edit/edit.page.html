@@ -1,9 +1,9 @@
 <ion-header>
 	<ion-toolbar class="custom-toolbar">
 		<ion-buttons slot="end">
-			<ion-menu-toggle autoHide="false">
+			
 			<ion-menu-button></ion-menu-button>
-		</ion-menu-toggle>
+		
 		  
 		</ion-buttons>
 		<ion-buttons slot="start">
@@ -27,9 +27,14 @@
 	  </ion-menu>
   
   <ion-content>
+	
 	<div class="profile-container">
 		
+		
 	  <img [src]="photoURL" alt="Profile Picture" class="profile-picture">
+	  <input type="file" accept="image/*" (change)="onFileSelected($event)"id="fileInput" hidden>
+	  <label for="fileInput" class="custom-file-input">Edit Picture</label>
+	  
   
 	  <ion-item>
 		<ion-label position="floating">Username</ion-label>
