@@ -15,7 +15,7 @@ ion-header {
   .event-title {
     font-size: 24px;
     // font-weight: bold;
-    color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
   }
   
   .h1 {
@@ -40,7 +40,7 @@ ion-header {
     height: 200px; /* Set the height of the map */
     // background-color: #ddd; /* Fallback background color for the map container */
     color: black;
-    border: #3880ff;
+    border: solid #757575;
   }
   
   .ion-img {
