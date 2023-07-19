@@ -7,9 +7,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class JoinedViewPagePage implements OnInit {
 
-  constructor() { }
+  event: any = {
+    title: 'Sample Event',
+    owner: 'John Doe',
+    latitude: 40.7128,
+    longitude: -74.0060,
+    description: 'This is a sample event description. Lorem ipsum dolor sit amet...',
+    participants: [
+      { username: 'user1', name: 'User One', description: 'Participant One' },
+      { username: 'user2', name: 'User Two', description: 'Participant Two' },
+      // Add more participants as needed
+    ],
+    user_event_position: 'Joined',
+    image_url: '../assets/images/youth.jpg',
+  };
 
-  ngOnInit() {
-  }
+  constructor() {}
 
+  ngOnInit() {}
 }

@@ -142,7 +142,7 @@ export class JoinedEventPage implements OnInit {
     
   }
   eventDetails() {
-		this.router.navigate(['/view-event']);
+		this.router.navigate(['/joined-view-page']);
 	}
 
   onEvent() {
