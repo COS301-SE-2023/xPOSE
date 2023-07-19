@@ -1,0 +1,10 @@
+{
+  "hosting": {
+    "public": "frontend/angular/xpose/www/",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}
