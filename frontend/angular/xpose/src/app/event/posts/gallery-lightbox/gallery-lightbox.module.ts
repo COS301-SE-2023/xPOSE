@@ -12,7 +12,7 @@ import { GalleryLightboxPageRoutingModule } from './gallery-lightbox-routing.mod
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule,
+    // IonicModule,
     GalleryLightboxPageRoutingModule,
     // MatIconModule,
   ],
