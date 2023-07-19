@@ -20,7 +20,7 @@
     </ion-segment-button>
   </ion-segment>
 
-  <ion-list *ngIf="filterType === 'private'">
+  <!-- <ion-list *ngIf="filterType === 'private'"> -->
     <!-- Mock Private Events -->
     <ion-card  *ngFor="let card of cards">
       <img [src]="card.image_url" alt="Card Image" class="card-image">
@@ -39,9 +39,9 @@
         View event
       </ion-button>
     </ion-card>
-  </ion-list>
+  <!-- </ion-list> -->
 
-  <ion-list *ngIf="filterType === 'public'">
+  <!-- <ion-list *ngIf="filterType === 'public'"> -->
     <!-- Mock Public Events -->
     <ion-card  *ngFor="let card of cards">
       <img [src]="card.image_url" alt="Card Image" class="card-image">
@@ -60,7 +60,7 @@
         View event
       </ion-button>
     </ion-card>
-  </ion-list>
+  <!-- </ion-list> -->
 
 </ion-content>
 
@@ -72,7 +72,8 @@
           <ion-icon name="home-outline"></ion-icon>
           <ion-label>Home</ion-label>
         </ion-tab-button>
-        <ion-tab-button tab="joined-events" (click)="onJoinedEvent()" [class.active]="filterType === 'private' || filterType === 'public'">
+        <ion-tab-button tab="joined-events" (click)="onJoinedEvent()" >
+        <!-- <ion-tab-button tab="joined-events" (click)="onJoinedEvent()" [class.active]="filterType === 'private' || filterType === 'public'"> -->
           <ion-icon name="people-outline"></ion-icon>
           <ion-label>Joined Events</ion-label>
         </ion-tab-button>
