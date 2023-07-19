@@ -15,7 +15,7 @@ jobs:
                   node-version: '18.x'
             - name: Building Project
               working-directory: frontend/angular/xpose
-              run: npm build
+              run: ng build --prod
             - uses: w9jds/firebase-action@master
               with:
                   args: deploy --only hosting
