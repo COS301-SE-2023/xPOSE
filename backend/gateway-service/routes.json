@@ -1,7 +1,7 @@
 {
+    "/c": "http://localhost:8001",
     "/p": "http://localhost:8005",
     "/e": "http://localhost:8004",
-    "/images": "http://localhost:8003",
     "/u": "http://localhost:8002"
 }
   

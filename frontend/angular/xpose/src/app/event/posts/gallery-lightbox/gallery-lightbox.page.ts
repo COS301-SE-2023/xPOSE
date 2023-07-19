@@ -8,6 +8,7 @@ import {
     trigger,
     AnimationEvent,
     } from '@angular/animations';
+// import { MatIconModule } from '@angular/material/icon';
 
 
 interface Item {
@@ -57,6 +58,7 @@ export class GalleryLightboxPage implements OnInit {
   currentIndex = 0;
   controls = true;
   totalImageCount = 0;
+  
 
 
   onPreviewImage(index: number): void {
@@ -72,8 +74,9 @@ export class GalleryLightboxPage implements OnInit {
       this.showMask = false;
     }
   }
-  onClosedPreview(){
+  onClosePreview(){
     this.previewImage = false;
+    this.showMask = false;
   }
   next(): void {
     this.currentIndex = this. currentIndex + 1;
@@ -88,6 +91,22 @@ export class GalleryLightboxPage implements OnInit {
       this.currentIndex = this.galleryData.length - 1;
     }
     this.currentLightboxImage = this.galleryData [this.currentIndex];
+  }
+
+  onFileSelected(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    if (inputElement.files && inputElement.files.length > 0) {
+      // You can handle the selected file here, for example, read it as a data URL
+      const file = inputElement.files[0];
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const imageSrc = reader.result as string;
+        const imageAlt = file.name; // You can set a default alt text here, or ask the user to provide one.
+        // Now you can add the new image to the galleryData array
+        this.galleryData.push({ imageSrc, imageAlt });
+      };
+      reader.readAsDataURL(file);
+    }
   }
 
 }
