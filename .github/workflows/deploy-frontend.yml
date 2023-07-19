@@ -17,9 +17,13 @@ jobs:
       - name: Install Angular CLI
         run: npm install -g @angular/cli
 
+      - name: Installing dependencies
+        working-directory: frontend/angular/xpose
+        run: npm install
+      
       - name: Building Project
         working-directory: frontend/angular/xpose
-        run: ng build --prod
+        run: npm build
 
       - uses: w9jds/firebase-action@master
         with:
