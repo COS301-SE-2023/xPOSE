@@ -150,12 +150,39 @@ export class ViewEventPage implements OnInit, AfterViewInit {
     acceptInvite() {
       // Make the API call to accept the invite here
       console.log('Accepting invite...');
+      this.getCurrentUserId().subscribe((uid) => {
+        if (uid) {
+          const formData = new FormData();
+          formData.append('response', 'accepted'); // will make this dynamic
+          this.http
+            .put(`http://localhost:8000/e/events/${this.event_id}/invite?uid=${uid}`, formData)
+            .subscribe((data) => {
+              console.log(data);
+              this.router.navigate(['/event', this.event.code]);
+            });
+        } else {
+          console.log('no user id');
+        }
+      });
     }
   
     // Function to join a public event (Replace this with your actual API call)
     joinPublicEvent() {
       // Make the API call to join the public event here
+      
       console.log('Joining public event...');
+      this.getCurrentUserId().subscribe((uid) => {
+        if (uid) {
+          const formData = new FormData();
+          formData.append('response', 'accepted'); // will make this dynamic
+          this.http
+            .post(`http://localhost:8000/e/events/${this.event_id}/join?uid=${uid}`, formData)
+            .subscribe((data) => {
+              console.log(data);
+              this.router.navigate(['/event', this.event.code]);
+            });
+        }
+      });
     }
   
     // Function to request to join a private event (Replace this with your actual API call)
@@ -173,4 +200,6 @@ export class ViewEventPage implements OnInit, AfterViewInit {
 
     this.isJoined = true;
   }
+
+  
 }
