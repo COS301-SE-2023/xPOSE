@@ -25,19 +25,20 @@ class RabbitMQProducer {
                     this.channel = channel;
 
                     // predefined Queues in the message broker
-                    let notificationQueue = 'Notifications_service';
-                    let eventsServiceQueue = 'Events_service';
-                    let aiRecServiceQueue = "AI_service"
-                    channel.assertQueue(notificationQueue, { durable: false });
-                    channel.assertQueue(eventsServiceQueue, { durable: false });
+                    let notificationsQueue = 'notificationsQueue';
+                    let eventsQueue = 'eventsQueue';
+                    let aiRecogQueue = "aiRecogQueue"
+                    channel.assertQueue(notificationsQueue, { durable: false });
+                    channel.assertQueue(eventsQueue, { durable: false });
+                    channel.assertQueue(aiRecogQueue, { durable: false });
 
                     // create exchange
                     channel.assertExchange('Exchange', 'direct', { durable: true });
 
                     // bind queue routes to the Exchange
-                    channel.bindQueue(notificationQueue, 'Exchange', 'notifications');
-                    channel.bindQueue(eventsServiceQueue, 'Exchange', 'events');
-                    channel.bindQueue(eventsServiceQueue, 'Exchange', 'ai');
+                    channel.bindQueue(notificationsQueue, 'Exchange', 'notifications');
+                    channel.bindQueue(eventsQueue, 'Exchange', 'events');
+                    channel.bindQueue(aiRecogQueue, 'Exchange', 'ai');
 
                     resolve();
                 });
