@@ -43,6 +43,8 @@
       <label class="label" for="image">Event Name:</label>
       <ion-input class="ther" [(ngModel)]="createEvent.title" required maxlength="100"></ion-input>
 
+      <ion-label *ngIf="form.controls['event-name']?.invalid && form.controls['event-name']?.touched" color="danger">
+
       <label class="label"  for="image">Description:</label>
       <ion-textarea class="ther" [(ngModel)]="createEvent.description"></ion-textarea>
 
