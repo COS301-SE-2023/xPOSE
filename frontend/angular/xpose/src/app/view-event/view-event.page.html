@@ -32,13 +32,25 @@
           <h1 class="section-title">Participants</h1>
           <ion-card class="participant-card" *ngFor="let participant of event?.participants">
             <ion-card-header>
-              {{ participant?.display_name }}
+              <ion-avatar>
+                <ion-img [src]="participant?.avatar_url"></ion-img>
+              </ion-avatar>
             </ion-card-header>
             <ion-card-content>
-              <h2 class="participant-name">{{ participant?.timestamp }}</h2>
-              <!-- <p class="participant-description">{{ participant?.description }}</p> -->
+              <h2 class="participant-name">{{ participant?.display_name }}</h2>
+              <p class="participant-timestamp">{{ participant?.timestamp }}</p>
+              <!-- Add other participant details here if needed -->
             </ion-card-content>
+            <ion-buttons>
+              <ion-button fill="clear" (click)="removeParticipant(participant)">
+                <ion-icon name="close"></ion-icon>
+              </ion-button>
+              <ion-button fill="clear" (click)="addParticipant(participant)">
+                <ion-icon name="add"></ion-icon>
+              </ion-button>
+            </ion-buttons>
           </ion-card>
+          
 
         </div>
       </ion-col>
