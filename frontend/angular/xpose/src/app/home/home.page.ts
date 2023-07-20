@@ -6,6 +6,7 @@ import { HttpClient } from "@angular/common/http";
 import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { Observable, map } from "rxjs";
 import { get } from "http";
+import { ModalController } from "@ionic/angular";
 
 
 
@@ -24,10 +25,9 @@ export class HomePage {
 		public authService: AuthService,
 		private router: Router,
 		private http: HttpClient,
-		private afAuth: AngularFireAuth
-		) {
-	
-	   }
+		private afAuth: AngularFireAuth,
+		private modalController: ModalController,
+		){}
 
 	ngOnInit() {
 		this.getEventsFromAPI();
@@ -99,17 +99,9 @@ export class HomePage {
 
   ];
 
-	search(){
-		//search logic here 
-		console.log('Performing search for:', this.search);
-
-		// Simulating search results
-		this.searchResults = [
-			{ title: 'Result 1', description: 'Lorem ipsum dolor sit amet' },
-			{ title: 'Result 2', description: 'Consectetur adipiscing elit' },
-			{ title: 'Result 3', description: 'Sed do eiusmod tempor incididunt' },
-		];
-	
+	search() {
+		// Here we navigate to the search page when the button is clicked
+		this.router.navigateByUrl('/search');
 	}
 	viewEvent() {
 		this.router.navigate(['/event']);
