@@ -37,27 +37,6 @@ export class HomePage {
 		this.getEventsFromAPI();
 	}
 	   // get events from firebase and display
-	   
-
-	async search(event: any) {
-		const modal = await this.modalController.create({
-		  component: SearchPage,
-		  cssClass: 'search-modal', // Custom CSS class for the modal
-		  presentingElement: this.routerOutlet.nativeEl, // Set the presenting element
-		});
-		modal.onWillDismiss().then((result) => {
-			if (result.data && result.data.searchQuery) {
-			  const searchQuery = result.data.searchQuery.toLowerCase();
-			  this.searchResults = this.events.filter((event) =>
-				event.title.toLowerCase().includes(searchQuery) ||
-				event.description.toLowerCase().includes(searchQuery)
-			  );
-			}
-		  });
-	  
-		  return await modal.present();
-		}
-
   getEventsFromAPI() {
 
 	this.getCurrentUserId().subscribe((uid) => {
@@ -117,14 +96,11 @@ export class HomePage {
 		}));
 	  }
   }
-//   events: any[] = [];
 
-//   cards: any[] = [ ];
-
-	// search() {
-	// 	// Here we navigate to the search page when the button is clicked
-	// 	this.router.navigateByUrl('/search');
-	// }
+	search() {
+		// Here we navigate to the search page when the button is clicked
+		this.router.navigateByUrl('/search');
+	}
 	viewEvent() {
 		this.router.navigate(['/event']);
 	}
