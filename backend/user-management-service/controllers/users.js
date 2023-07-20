@@ -4,7 +4,6 @@ import { messaging } from "../server.js";
 import User from '../DB/models/user.table.js';
 import Friend_request from '../DB/models/friend_request.table.js';
 import Friendship from '../DB/models/friendship.table.js';
-import { response } from 'express';
 import RabbitMQProducer from '../../message broker/sender.js';
 
 
@@ -257,11 +256,14 @@ export const sendFriendRequest = async (req, res) => {
         // recipientId: requestId,
         // status: 'pending'
       // };
+      
+      /*
       await Friend_request.create({
         friend_a_id: userId,
         friend_b_id: requestId,
         response: "pending"
       });
+      */
 
       // Communicate with the notification service
       (async () => {
@@ -271,7 +273,8 @@ export const sendFriendRequest = async (req, res) => {
             console.log('communicating with the notificationsQueue');
             const now = new Date();
             const timestamp = `${now.toLocaleDateString()} ${now.toLocaleTimeString()}`;
-            console.log("Friend request sent at "+ timestamp); 
+            console.log("Friend request sent at "+ timestamp);
+            let response = "pending" 
             let msg = `{
               notificationType: 'friendRequest',
               userId: ${userId},
