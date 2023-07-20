@@ -289,4 +289,30 @@ export class ViewEventPage implements OnInit, AfterViewInit {
     this.event.participants.push(participant);
   }
   
+
+  //////////////////footer//////////////////////
+  search() {
+		this.router.navigateByUrl('/search');
+	}
+	viewEvent() {
+		this.router.navigate(['/event']);
+	}
+	eventDetails(event_id: string) {
+		this.router.navigate(['/view-event', event_id]);
+	}
+	onEvent(){
+		this.router.navigate(['/create-event']);
+	}
+	onNotifications(){
+		this.router.navigate(['/notification']);
+	}
+	onProfile(){
+		this.router.navigate(['/profile']);
+	}  
+	onJoinedEvent(){
+		this.router.navigate(['/joined-event']);
+	}
+	onHome(){
+		this.router.navigate(['/home']);
+	}
 }
