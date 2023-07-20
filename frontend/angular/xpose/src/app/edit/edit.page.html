@@ -10,12 +10,14 @@
 		<ion-back-button defaultHref="/profile"></ion-back-button>
 	</ion-buttons>
 
-		<ion-title>Settings</ion-title>
+		<ion-title>Edit Profile</ion-title>
 	  </ion-toolbar>
 	</ion-header>
 	<ion-menu side="end" content-id="main-content">
 		<ion-header>
-		 
+			<ion-toolbar>
+				<ion-title>Settings</ion-title>
+			  </ion-toolbar>
 		</ion-header>
 		<ion-content>
 		  <ion-list>
@@ -33,7 +35,7 @@
 		
 	  <img [src]="photoURL" alt="Profile Picture" class="profile-picture">
 	  <input type="file" accept="image/*" (change)="onFileSelected($event)"id="fileInput" hidden>
-	  <label for="fileInput" class="custom-file-input">Edit Picture</label>
+	  <label for="fileInput" class="custom-file-input">Change image</label>
 	  
   
 	  <ion-item>
