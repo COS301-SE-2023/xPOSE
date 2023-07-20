@@ -53,6 +53,8 @@
       <label class="label"  for="image">Location</label>
       <div class="input-container">
         <ion-input  class="ther" [(ngModel)]="createEvent.location" id="locationInput" required minlength="5" maxlength="100"></ion-input>
+
+        <ion-label *ngIf="form.controls['location']?.invalid && form.controls['location']?.touched" color="danger">Location is required and must be between 5 and 100 characters long.</ion-label>
       </div>
 
       <br>
