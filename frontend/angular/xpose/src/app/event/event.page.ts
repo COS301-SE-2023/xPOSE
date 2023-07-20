@@ -4,6 +4,9 @@ import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { IonTabs } from '@ionic/angular';
 import { NavController } from '@ionic/angular';
+import { CurrentEventDataService } from '../shared/current-event-data.service';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Observable, map } from 'rxjs';
 
 @Component({
   selector: 'app-event',
@@ -17,7 +20,12 @@ export class EventPage {
   selectedTab: any;
   // http: any;
 
-  constructor(private http: HttpClient, private activatedRoute: ActivatedRoute, private router: Router, private navCtrl: NavController) {
+  constructor(private http: HttpClient,
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private navCtrl: NavController,
+    private currentEventDataService: CurrentEventDataService,
+		private afAuth: AngularFireAuth) {
     // Mocked event data
     // this.event = {
     //   title: 'Sample Event',
@@ -27,17 +35,19 @@ export class EventPage {
     // };
 
     this.event = {
-      eventName: '',
-      eventDescription: '',
-      eventLocation: '',
-      eventCreator: '',
-      eventStartDate: new Date(),
-      eventEndDate: new Date(),
-      imageUrl: '',
-      eventPrivacySetting: '',
-      eventCode: ''
+      title: '',
+      description: '',
+      location: '',
+      owner_id: '',
+      start_date: new Date(),
+      end_date: new Date(),
+      image_url: '',
+      privacy_setting: '',
+      code: ''
     }
   }
+
+  current_event: any;
 
   ngOnInit() {
     this.activatedRoute.paramMap.subscribe(paramMap => {
@@ -46,24 +56,69 @@ export class EventPage {
         this.navCtrl.navigateBack('/home');
         return;
       }
+      
+      const event_id = paramMap.get('id');
+
+      this.getCurrentUserId().subscribe((uid) => {
+        if (uid) {
+          this.http.get(`http://localhost:8000/e/events/${event_id}?uid=${uid}`).subscribe((data) => {
+            this.current_event = data;
+            this.currentEventDataService.event_id = this.current_event.id;
+            this.currentEventDataService.event_title = this.current_event.title;
+            this.currentEventDataService.event_description = this.current_event.description;
+            this.currentEventDataService.code = this.current_event.code;
+            this.currentEventDataService.privacy_setting = this.current_event.privacy_setting;
+            this.currentEventDataService.start_date = this.current_event.start_date;
+            this.currentEventDataService.end_date = this.current_event.end_date;
+            // this.currentEventDataService.location = this.current_event.location;
+            // this.currentEventDataService.owner_id = this.current_event.owner_id;
+            this.currentEventDataService.image_url = this.current_event.image_url;
+            this.currentEventDataService.owner_uid = this.current_event.owner;
+            this.currentEventDataService.timestamp = this.current_event.timestamp;
+
+            // console.log(this.current_event); 
+            console.log(this.currentEventDataService);
+          });
+        }
+        else {
+          console.log("no user id");
+        }
+      });
 
       // Fetch event data based on the route parameter
-      const eventId = paramMap.get('id');
       // Call API or perform necessary logic to fetch event details
       // Assign the fetched data to this.event
-      console.log(eventId);
+      // console.log(event_id);
 
-      // make api call to http://localhost:8000/e/events/{eventId}
-      this.http.get('http://localhost:8000/e/events/' + eventId).subscribe((res : any) => {
-        console.log(res);
-        this.event = res;
-      });
+      console.log('Hello from event page');
+      // // make api call to http://localhost:8000/e/events/{event_id}
+      // this.http.get('http://localhost:8000/e/events/' + event_id).subscribe((res : any) => {
+      //   console.log(res);
+      //   this.event = res;
+      //   // this.currentEventDataService.event_id = res._id;
+      // });
     });
   }
 
+  getCurrentUserId(): Observable<string> {
+    return this.afAuth.authState.pipe(
+      map((user) => {
+      if (user) {
+        return user.uid;
+      } else {
+        // throw error
+        // some extra stuff
+        
+        console.log('No user is currently logged in.');
+        return '';
+      }
+      })
+    );
+    }
+
   ionViewWillEnter() {
     // Fetch event data based on the route parameter
-    const eventId = this.activatedRoute.snapshot.paramMap.get('id');
+    const event_id = this.activatedRoute.snapshot.paramMap.get('id');
     // Call API or perform necessary logic to fetch event details
     // Assign the fetched data to this.event
     
@@ -96,13 +151,13 @@ export class EventPage {
 }
 
 interface Event {
-  eventName: string;
-  eventDescription: string;
-  eventLocation: string;
-  eventCreator: string;
-  eventStartDate: Date;
-  eventEndDate: Date;
-  imageUrl: string;
-  eventPrivacySetting: string;
-  eventCode: string;
+  title: string;
+  description: string;
+  location: string;
+  owner_id: string;
+  start_date: Date;
+  end_date: Date;
+  image_url: string;
+  privacy_setting: string;
+  code: string;
 }

@@ -1,6 +1,54 @@
-.filebtn{
-    opacity: 0;
-    position: absolute;
-    top: -100em;
-    left: -100em;
-}
+/* Global styles for the edit page */
+ion-content {
+    --ion-background-color: #f2f2f2;
+  }
+  
+  /* Container for the profile details */
+  .profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    margin-top: 20px;
+  }
+  
+  /* Profile picture */
+  .profile-picture {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+  }
+  
+  /* Form input fields */
+  ion-item {
+    margin-bottom: 40px;
+  }
+
+  ion-toolbar.custom-toolbar {
+    --background: #ffffff;
+    color: #000000;
+    font-size: 20px;
+    /* Add more custom styles as needed */
+    --min-height: 70px;
+  }
+
+  .custom-file-input {
+    
+    color: #007bff;
+  }
+  
+  /* Save button */
+  ion-button {
+    margin-top: 20px;
+    --background: #007bff; /* Set the background color for the Edit Profile button */
+    // --color: #fff; /* Set the text color for the Edit Profile button */
+  border-radius: 50px;
+  }
+
+  .pink-button {
+    --background: #ff43d6; /* Set the background color for the pink button */
+    --color: white; /* Set the text color for the pink button */
+  }
+  

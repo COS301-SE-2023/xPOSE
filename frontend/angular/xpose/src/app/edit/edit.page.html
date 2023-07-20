@@ -1,26 +1,61 @@
 <ion-header>
-	<ion-toolbar>
-	  <ion-buttons slot="start">
+	<ion-toolbar class="custom-toolbar">
+		<ion-buttons slot="end">
+			
+			<ion-menu-button></ion-menu-button>
+		
+		  
+		</ion-buttons>
+		<ion-buttons slot="start">
 		<ion-back-button defaultHref="/profile"></ion-back-button>
-	  </ion-buttons>
-	  <ion-title>Edit Profile</ion-title>
-	</ion-toolbar>
-  </ion-header>
+	</ion-buttons>
+
+		<ion-title>Settings</ion-title>
+	  </ion-toolbar>
+	</ion-header>
+	<ion-menu side="end" content-id="main-content">
+		<ion-header>
+		 
+		</ion-header>
+		<ion-content>
+		  <ion-list>
+			<ion-item>Delete</ion-item>
+			<ion-item>Report</ion-item>
+			<ion-item>Favourite</ion-item>
+		  </ion-list>
+		</ion-content>
+	  </ion-menu>
   
   <ion-content>
-	<ion-list>
+	
+	<div class="profile-container">
+		
+		
+	  <img [src]="photoURL" alt="Profile Picture" class="profile-picture">
+	  <input type="file" accept="image/*" (change)="onFileSelected($event)"id="fileInput" hidden>
+	  <label for="fileInput" class="custom-file-input">Edit Picture</label>
+	  
+  
 	  <ion-item>
-		<ion-label position="stacked">Username</ion-label>
-		<ion-input type="text" [(ngModel)]="username"></ion-input>
+		<ion-label position="floating">Username</ion-label>
+		<ion-input [(ngModel)]="username"></ion-input>
 	  </ion-item>
   
 	  <ion-item>
-		<ion-label position="stacked">Email</ion-label>
-		<ion-input type="email" [(ngModel)]="email"></ion-input>
+		<ion-label position="floating">Email</ion-label>
+		<ion-input [(ngModel)]="email"></ion-input>
 	  </ion-item>
-  
+
+	  
+		<ion-label>Account Privacy</ion-label>
+		<ion-toggle [(ngModel)]="isPublic"></ion-toggle>
 	 
-	  <ion-button expand="full" (click)="saveProfile()">Save</ion-button>
-	</ion-list>
-  </ion-content>
   
+	  <ion-button expand="ion-button" (click)="saveProfile()">Save Changes</ion-button>
+	</div>
+  </ion-content>
+ 
+
+  <ion-footer>
+	<ion-button (click)="deleteAccount()" expand="full" class="pink-button">Delete Account</ion-button>
+  </ion-footer>
