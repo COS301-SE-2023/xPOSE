@@ -176,7 +176,7 @@ export class ViewEventPage implements OnInit, AfterViewInit {
       switch (this.event?.user_event_position) {
         case 'owner':
         case 'participant':
-          return 'Enter event';
+          return 'View event';
         case 'invited':
           return 'Accept Invite';
         case 'requested':
