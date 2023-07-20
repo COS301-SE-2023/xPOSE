@@ -1,0 +1,33 @@
+<!-- search.page.html -->
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Search</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeSearchPage()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Search</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-searchbar
+    #searchBar
+    placeholder="Search"
+    [(ngModel)]="searchQuery"
+    (ionChange)="onSearch()"
+  ></ion-searchbar>
+
+  <ion-list>
+    <ion-item *ngFor="let item of filteredItems">
+      {{ item.name }}
+    </ion-item>
+  </ion-list>
+</ion-content>
