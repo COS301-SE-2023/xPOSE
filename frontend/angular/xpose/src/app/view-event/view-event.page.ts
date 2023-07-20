@@ -34,6 +34,27 @@ export class ViewEventPage implements OnInit, AfterViewInit {
     this.getEventDataFromAPI();
   }
 
+  // getEventDataFromAPI() {
+  //   this.getCurrentUserId().subscribe((uid) => {
+  //     if (uid) {
+  //       this.http
+  //         .get(`http://localhost:8000/e/events/${this.event_id}?uid=${uid}`)
+  //         .subscribe((data) => {
+  //           this.event = data;
+
+            
+            
+
+  //           console.log(data);
+  //           // Call initMap() after the event object has been fetched and contains the required properties.
+  //           this.initMap();
+  //         });
+          
+  //     } else {
+  //       console.log('no user id');
+  //     }
+  //   });
+  // }
   getEventDataFromAPI() {
     this.getCurrentUserId().subscribe((uid) => {
       if (uid) {
@@ -41,8 +62,27 @@ export class ViewEventPage implements OnInit, AfterViewInit {
           .get(`http://localhost:8000/e/events/${this.event_id}?uid=${uid}`)
           .subscribe((data) => {
             this.event = data;
+  
+            // Dummy participant data for demonstration purposes
+            this.event.participants = [
+              {
+                username: 'participant1',
+                name: 'Participant One',
+                description: 'Participant 1 description.',
+              },
+              {
+                username: 'participant2',
+                name: 'Participant Two',
+                description: 'Participant 2 description.',
+              },
+              {
+                username: 'participant3',
+                name: 'Participant Three',
+                description: 'Participant 3 description.',
+              },
+            ];
+  
             console.log(data);
-            // Call initMap() after the event object has been fetched and contains the required properties.
             this.initMap();
           });
       } else {
@@ -50,6 +90,7 @@ export class ViewEventPage implements OnInit, AfterViewInit {
       }
     });
   }
+  
 
   getCurrentUserId(): Observable<string> {
     return this.afAuth.authState.pipe(
