@@ -1,14 +1,60 @@
 /* Add your custom styles here */
+/* view-event.page.scss */
+ion-card {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  background-color: #f8f8f8; /* Background color for the card */
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  ion-avatar {
+    width: 50px;
+    height: 50px;
+    border: 2px solid #f39c12; /* Border color for the avatar */
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 16px; /* Add some space between avatar and content */
+  }
+
+  ion-img {
+    width: 100%;
+    height: 10px;
+    object-fit: cover;
+  }
+
+  ion-card-content {
+    flex: 1; /* Expand to fill remaining space */
+    text-align: left; /* Align content to the left */
+    overflow-wrap: break-word; /* Wrap text if it's too long */
+  }
+
+  .participant-name {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 8px; /* Add some space between name and timestamp */
+  }
+
+  .participant-timestamp {
+    font-size: 14px;
+    color: #999; /* Timestamp color */
+  }
+}
+
+
+
+
+
 .custom-toolbar {
   --background: #ffffff;
   color: #000000;
 }
 
-ion-img {
-  height: 300px;
-  width: 100%;
-  object-fit: cover;
-}
+// ion-img {
+//   height: 300px;
+//   width: 100%;
+//   object-fit: cover;
+// }
 
 .content-container {
   padding: 10px;

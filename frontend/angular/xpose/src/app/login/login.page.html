@@ -4,23 +4,14 @@
   </ion-toolbar>
 </ion-header>
 
-
-<ion-icon>
-  <img src="../assets/icon/Xp.jpeg" alt="Logo" class="logo-image">
-</ion-icon>
-
-
 <ion-content [fullscreen]="true" id="main-content">
   <div class="containeri">
-    <!-- <ion-icon>
-      <img src="../assets/icon/Xp.jpeg" alt="Logo" class="logo-image">
-    </ion-icon> -->
     <img src="../assets/icon/Xp.jpeg" alt="Logo" class="logo-image">
   </div>
+
   <div class="container">
     <div class="button-container">
       <ion-button id="google-button" type="submit" class="custom-bt" (click)="signInWithGoogle()">G</ion-button>
-<!--      <p> or </p>-->
       <ion-button id="Facebook-button" type="submit" class="custom-bt" (click)="signInWithFacebook()">F</ion-button>
     </div>
     <form [formGroup]="loginForm">
