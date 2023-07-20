@@ -46,7 +46,7 @@
       <ion-label *ngIf="form.controls['event-name']?.invalid && form.controls['event-name']?.touched" color="danger"> Event name is required and must be less than 100 characters long.</ion-label>
 
       <label class="label"  for="image">Description:</label>
-      <ion-textarea class="ther" [(ngModel)]="createEvent.description"></ion-textarea>
+      <ion-textarea class="ther" [(ngModel)]="createEvent.description" required></ion-textarea>
 
       <label class="label"  for="image">Location</label>
       <div class="input-container">
