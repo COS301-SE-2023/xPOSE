@@ -1,99 +1,47 @@
-/* Global styles */
-.event-title {
-  font-size: 24px;
-//   text-align: center;
-  color: #5E2390;
-}
-
-.event-image {
-  display: block;
-  margin: 20px auto;
-  max-width: 200px;
-}
-
-.section-title {
-  font-size: 22px;
-  color: #5E2390;
-  margin-bottom: 15px;
-}
-
-.event-card {
-  background-color: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
-  padding: 15px;
-}
-
-.event-subtitle {
-  font-size: 18px;
-  color: #5E2390;
-}
-
-.event-info {
-  font-size: 16px;
-}
-
-.participant-card {
-  background-color: #000000;
-  border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  padding: 150px;
-  margin-bottom: 150px;
-}
-
-.participant-name {
-  font-size: 18px;
-  color: #5E2390;
-  margin-bottom: 5px;
-}
-
-.participant-description {
-  font-size: 16px;
-}
-
-.join-button {
-  --background-color: #ea00ff;
-  color: #ffffff;
-  font-size: 18px;
-  font-weight: bold;
-  border-radius: 10px;
-  margin-top: 20px;
-}
-
-ion-content {
-  --padding-bottom: 0; /* Remove bottom padding */
-}
-
-ion-card {
+/* Add your custom styles here */
+.custom-toolbar {
   --background: #ffffff;
-  --border-radius: 10px;
-  --box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  --padding-bottom: 0; /* Remove bottom padding */
-  --padding-top: 0; /* Remove top padding */
-  --padding-start: 0; /* Remove left padding */
-  --padding-end: 0; /* Remove right padding */
-  --margin-bottom: 20px;
+  color: #000000;
 }
 
 ion-img {
+  height: 300px;
   width: 100%;
-  height: 200px;
   object-fit: cover;
 }
 
-ion-grid {
-  height: 80%; /* Make the grid fill the entire screen height */
-}
-
-ion-row {
-  // height: 100%; /* Make the row fill the entire screen height */
-}
-
 .content-container {
-  padding: 20px;
+  padding: 10px;
 }
-.map#map{
-  width: 100%;
-  height: 150px;
+
+.h1 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.p {
+  margin: 0;
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.participant-card {
+  margin-bottom: 10px;
+}
+
+.join-button {
+  margin-top: 20px;
+  --background: #cc33a6;
+  --color: #fff;
+}
+
+.joined {
+  --background: #ccc;
+  pointer-events: none;
 }

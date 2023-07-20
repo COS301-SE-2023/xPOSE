@@ -15,15 +15,33 @@
       <!-- <ion-input label="Email" label-placement="floating" fill="outline" placeholder="Email" style="margin-bottom: 10px; width: 350px;"></ion-input>
       <ion-input label="Password" label-placement="floating" type="password" fill="outline" placeholder="Password" style="margin-top: 10px; width: 350px; margin-bottom: 10px;"></ion-input>
       <ion-button style="width: 350px;">Login</ion-button> -->
-      <ion-item>
+      <!-- <ion-item> -->
         <!-- <ion-button size="medium" class="custom-btn">Public</ion-button>
         <ion-button size="medium" class="custom-btn">Private</ion-button> -->
-        <ion-radio-group value="privacy" name="privacy_setting" [(ngModel)]="createEvent.privacy_setting">
-          <!-- <ion-radio value="everyone">Everyone</ion-radio> -->
-          <ion-radio value="public">Public</ion-radio>
-          <ion-radio value="private">Private</ion-radio>
-        </ion-radio-group>
-      </ion-item>
+        <!-- <ion-item> -->
+          <!-- <ion-label>Privacy Setting</ion-label> -->
+          <ion-grid>
+            <ion-row >
+              <ion-col size="6">
+                <ion-radio-group value="privacy" name="privacy_setting" [(ngModel)]="createEvent.privacy_setting">
+                  <ion-item class="item1">
+                    <ion-label>Public</ion-label>
+                    <ion-radio value="public"></ion-radio>
+                  </ion-item>
+                </ion-radio-group>
+              </ion-col>
+              <ion-col size="6">
+                <ion-radio-group value="privacy" name="privacy_setting" [(ngModel)]="createEvent.privacy_setting">
+                  <ion-item class="item1" >
+                    <ion-label >Private</ion-label>
+                    <ion-radio value="private"></ion-radio>
+                  </ion-item>
+                </ion-radio-group>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        <!-- </ion-item> -->
+      <!-- </ion-item> -->
 
       <label class="label"  for="image">Upload Cover Page Image:</label>
       <div class="input-container">
@@ -31,14 +49,14 @@
       </div>
 
       <label class="label"  for="image">Event Name:</label>
-      <ion-input   fill="outline" placeholder="Event Name" name="title" [(ngModel)]="createEvent.title"></ion-input>
+      <ion-input class="ther" [(ngModel)]="createEvent.title"></ion-input>
 
       <label class="label"  for="image">Description:</label>
-      <ion-textarea labelPlacement="floating" fill="outline" placeholder="Event Description" name="description" [(ngModel)]="createEvent.description"></ion-textarea>
+      <ion-textarea class="ther" [(ngModel)]="createEvent.description"></ion-textarea>
 
       <label class="label"  for="image">Location</label>
       <div class="input-container">
-        <ion-input label-placement="floating" fill="outline" placeholder="Location" name="location" [(ngModel)]="createEvent.location" id="locationInput"></ion-input>
+        <ion-input  class="ther" [(ngModel)]="createEvent.location" id="locationInput"></ion-input>
       </div>
 
       <br>
@@ -49,9 +67,9 @@
 
       <ion-row>
         <!-- Start date -->
-        <ion-col>
+        <ion-col size="6">
           <ion-item>
-            <ion-label>Start Date</ion-label>
+            <p>Start Date</p>
             <ion-input
               type="date"
               [(ngModel)]="createEvent.start_date"
@@ -61,9 +79,9 @@
         </ion-col>
       
         <!-- End date -->
-        <ion-col>
+        <ion-col size="6">
           <ion-item>
-            <ion-label>End Date</ion-label>
+            <p>End Date</p>
             <ion-input
               type="date"
               [(ngModel)]="createEvent.end_date"
