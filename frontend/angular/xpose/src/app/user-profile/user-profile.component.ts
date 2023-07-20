@@ -9,7 +9,8 @@ import { Service } from '../service/service';
 })
 export class UserProfileComponent  implements OnInit {
 
-  constructor() { }
+  constructor(public authService: AuthService,
+    public userService: Service) { }
 
   ngOnInit() {}
 
