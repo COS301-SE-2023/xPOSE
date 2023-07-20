@@ -9,7 +9,12 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <h2>{{ user.name }}</h2>
-  <ion-button *ngIf="areFriends" (click)="unfriend()">Unfriend</ion-button>
-</ion-content>
+<div class="profile_div" >
+  <div>
+    <img [src]="user.photoURL">
+    <div class="first_div">
+      <ion-label class="username">Janie Doe</ion-label><br>
+    </div>
+    <ion-button class="edit_div">Unfriend</ion-button>
+  </div>
+</div>
