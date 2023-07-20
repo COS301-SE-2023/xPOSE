@@ -56,7 +56,7 @@ class RabbitMQConsumer {
 
 // Example usage
 (async () => {
-    const consumer = new RabbitMQConsumer('notifications');
+    const consumer = new RabbitMQConsumer('notificationsQueue');
     try {
         await consumer.connect();
         console.log('Consumer connected. Waiting for messages...');
