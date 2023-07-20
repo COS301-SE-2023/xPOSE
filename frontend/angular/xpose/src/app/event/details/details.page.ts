@@ -12,6 +12,7 @@ export class DetailsPage implements OnInit {
   eventName!: string;
   eventDate!: Date;
   eventLocation!: string;
+  event: any;
 
   constructor(private route: ActivatedRoute) {
     this.participants = [];
@@ -49,5 +50,11 @@ export class DetailsPage implements OnInit {
     if (index > -1) {
       this.participants.splice(index, 1);
     }
+  }
+  addParticipant(participant: any) {
+    // Handle participant addition logic here
+  
+    // For demonstration, we'll add the participant back to the event object's participants array
+    this.event.participants.push(participant);
   }
 }
