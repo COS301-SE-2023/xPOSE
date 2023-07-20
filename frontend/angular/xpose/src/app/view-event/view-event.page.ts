@@ -32,7 +32,9 @@ export class ViewEventPage implements OnInit, AfterViewInit {
     this.event_id = this.route.snapshot.paramMap.get('id');
     console.log(this.event_id);
     this.getEventDataFromAPI();
+    this.getEventParticipantsFromAPI();
   }
+
 
   // getEventDataFromAPI() {
   //   this.getCurrentUserId().subscribe((uid) => {
@@ -55,6 +57,24 @@ export class ViewEventPage implements OnInit, AfterViewInit {
   //     }
   //   });
   // }
+  getEventParticipantsFromAPI() {
+    this.getCurrentUserId().subscribe((uid) => {
+      if(uid) {
+        this.http
+          .get(`http://localhost:8000/e/events/${this.event_id}/participants?uid=${uid}`)
+          .subscribe((data) => {
+            this.event.participants = data;
+
+            // this.event.participants.forEach((participant: any) => {
+            //   participant.since_joining = this.formatDateSinceJoining(participant.join_date);
+            // });
+
+            console.log(data);
+          });
+      }
+    });
+  }
+
   getEventDataFromAPI() {
     this.getCurrentUserId().subscribe((uid) => {
       if (uid) {
@@ -63,24 +83,24 @@ export class ViewEventPage implements OnInit, AfterViewInit {
           .subscribe((data) => {
             this.event = data;
   
-            // Dummy participant data for demonstration purposes
-            this.event.participants = [
-              {
-                username: 'participant1',
-                name: 'Participant One',
-                description: 'Participant 1 description.',
-              },
-              {
-                username: 'participant2',
-                name: 'Participant Two',
-                description: 'Participant 2 description.',
-              },
-              {
-                username: 'participant3',
-                name: 'Participant Three',
-                description: 'Participant 3 description.',
-              },
-            ];
+            // // Dummy participant data for demonstration purposes
+            // this.event.participants = [
+            //   {
+            //     username: 'participant1',
+            //     name: 'Participant One',
+            //     description: 'Participant 1 description.',
+            //   },
+            //   {
+            //     username: 'participant2',
+            //     name: 'Participant Two',
+            //     description: 'Participant 2 description.',
+            //   },
+            //   {
+            //     username: 'participant3',
+            //     name: 'Participant Three',
+            //     description: 'Participant 3 description.',
+            //   },
+            // ];
   
             console.log(data);
             this.initMap();

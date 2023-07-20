@@ -45,6 +45,10 @@ const Event = sequelize.define('event', {
     type: Sequelize.TEXT,
     allowNull: false,
   },
+  // location: {
+  //   type: Sequelize.STRING,
+  //   allowNull: false,
+  // },
   privacy_setting: {
     type: Sequelize.STRING,
     allowNull: false,
@@ -114,6 +118,12 @@ const EventJoinRequest = sequelize.define('eventJoinRequest', {
 // Associations
 User.hasMany(Event, { foreignKey: 'owner_id_fk', as: 'owner', onDelete: 'CASCADE' });
 Event.belongsTo(User, { foreignKey: 'owner_id_fk', as: 'owner', onDelete: 'CASCADE' });
+EventParticipant.belongsTo(User, { foreignKey: 'user_id_fk', as: 'user' });
+EventParticipant.belongsTo(Event, { foreignKey: 'event_id_fk', as: 'event' });
+EventInvitation.belongsTo(User, { foreignKey: 'user_id_fk', as: 'user' });
+EventInvitation.belongsTo(Event, { foreignKey: 'event_id_fk', as: 'event' });
+EventJoinRequest.belongsTo(User, { foreignKey: 'user_id_fk', as: 'user' });
+EventJoinRequest.belongsTo(Event, { foreignKey: 'event_id_fk', as: 'event' });
 
 User.belongsToMany(Event, {
   through: EventParticipant,
