@@ -1,12 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { JoinedViewPagePage } from './joined-view-page.page';
+import { SearchPage } from './search.page';
 
-describe('JoinedViewPagePage', () => {
-  let component: JoinedViewPagePage;
-  let fixture: ComponentFixture<JoinedViewPagePage>;
+describe('SearchPage', () => {
+  let component: SearchPage;
+  let fixture: ComponentFixture<SearchPage>;
 
   beforeEach(async(() => {
-    fixture = TestBed.createComponent(JoinedViewPagePage);
+    fixture = TestBed.createComponent(SearchPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

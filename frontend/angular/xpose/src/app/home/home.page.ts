@@ -98,18 +98,8 @@ export class HomePage {
   cards: any[] = [
 
   ];
-
-	search(){
-		//search logic here 
-		console.log('Performing search for:', this.search);
-
-		// Simulating search results
-		this.searchResults = [
-			{ title: 'Result 1', description: 'Lorem ipsum dolor sit amet' },
-			{ title: 'Result 2', description: 'Consectetur adipiscing elit' },
-			{ title: 'Result 3', description: 'Sed do eiusmod tempor incididunt' },
-		];
-	
+	search() {
+		this.router.navigateByUrl('/search');
 	}
 	viewEvent() {
 		this.router.navigate(['/event']);

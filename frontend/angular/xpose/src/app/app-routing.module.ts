@@ -69,11 +69,11 @@ const routes: Routes = [
   {
     path: 'edit',
     loadChildren: () => import('./edit/edit.module').then( m => m.EditPageModule)
+  },  {
+    path: 'search',
+    loadChildren: () => import('./search/search.module').then( m => m.SearchPageModule)
   },
-  {
-    path: 'joined-view-page',
-    loadChildren: () => import('./joined-view-page/joined-view-page.module').then( m => m.JoinedViewPagePageModule)
-  }
+
 
 
 ];
