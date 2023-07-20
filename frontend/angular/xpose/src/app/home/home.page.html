@@ -27,7 +27,6 @@
 
 <ion-content [fullscreen]="true" id="main-content">
   <div class="button-container">
-    <!-- Search bar -->
     <ion-searchbar placeholder="Search" (click)="search()"></ion-searchbar>
   </div>
 
@@ -37,7 +36,7 @@
       <h1>Loading events...</h1>
     </ion-text>
   </div>
- 
+
   <div class="no-cards" *ngIf="cards.length === 0">
     <ion-text>
       <h1>No Events could be loaded...</h1>
@@ -61,7 +60,6 @@
       View
     </ion-button>
   </ion-card>
-
 </ion-content>
 
 <ion-footer>

@@ -6,8 +6,6 @@ import { HttpClient } from "@angular/common/http";
 import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { Observable, map } from "rxjs";
 import { get } from "http";
-import { ModalController } from "@ionic/angular";
-import { SearchPage } from "../search/search.page";
 
 
 
@@ -21,22 +19,21 @@ import { SearchPage } from "../search/search.page";
 export class HomePage {
 	loading: boolean = true;
 	searchResults: { title: string; description: string; }[] | undefined;
-	routerOutlet: any;
-	events: any[] = [];
-	cards: any[] = [];
 	constructor(
 		private afs: AngularFirestore,
 		public authService: AuthService,
 		private router: Router,
 		private http: HttpClient,
-		private afAuth: AngularFireAuth,
-		private modalController: ModalController,
-		){}
+		private afAuth: AngularFireAuth
+		) {
+	
+	   }
 
 	ngOnInit() {
 		this.getEventsFromAPI();
 	}
 	   // get events from firebase and display
+	   
   getEventsFromAPI() {
 
 	this.getCurrentUserId().subscribe((uid) => {
@@ -96,9 +93,12 @@ export class HomePage {
 		}));
 	  }
   }
+  events: any[] = [];
 
+  cards: any[] = [
+
+  ];
 	search() {
-		// Here we navigate to the search page when the button is clicked
 		this.router.navigateByUrl('/search');
 	}
 	viewEvent() {
