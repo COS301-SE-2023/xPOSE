@@ -46,12 +46,12 @@ class RabbitMQProducer {
         });
     }
 
-    sendMessage(queue, message) {
+    sendMessage(queueRoute, message) {
         if (!this.channel) {
             throw new Error('Connection not established. Call connect() first.');
         }
 
-        this.channel.publish('Exchange', queue, Buffer.from(message));
+        this.channel.publish('Exchange', queueRoute, Buffer.from(message));
     }
 
     closeConnection() {
@@ -60,7 +60,7 @@ class RabbitMQProducer {
                 this.connection.close();
                 console.log('Connection closed...');
                 process.exit(0);
-            }, 1000);
+            }, 1800);
         }
     }
 }
