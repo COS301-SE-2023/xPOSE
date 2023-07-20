@@ -45,6 +45,12 @@ async function getEvent(req, res) {
         if (event) {
             const { owner_id_fk, ...eventData } = event.toJSON();
         
+            // Get the display name of the owner of the event from firestore
+            const firestoreUserDoc = await admin.firestore().collection('Users').doc(event.owner.uid).get();
+            // Get displayName from the firestore document
+            const { displayName } = firestoreUserDoc.data();
+            // Add displayName to the event data
+            eventData.owner_display_name = displayName;
           // Check if user is the owner
           if (user.id === owner_id_fk) {
             eventData.user_event_position = 'owner';
