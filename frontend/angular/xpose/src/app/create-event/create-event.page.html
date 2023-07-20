@@ -12,34 +12,26 @@
 <ion-content [fullscreen]="true" id="main-content">
   <div>
     <form #form="ngForm" (ngSubmit)="CreateEvent()">
-      <!-- <ion-input label="Email" label-placement="floating" fill="outline" placeholder="Email" style="margin-bottom: 10px; width: 350px;"></ion-input>
-      <ion-input label="Password" label-placement="floating" type="password" fill="outline" placeholder="Password" style="margin-top: 10px; width: 350px; margin-bottom: 10px;"></ion-input>
-      <ion-button style="width: 350px;">Login</ion-button> -->
-      <!-- <ion-item> -->
-        <!-- <ion-button size="medium" class="custom-btn">Public</ion-button>
-        <ion-button size="medium" class="custom-btn">Private</ion-button> -->
-        <!-- <ion-item> -->
-          <!-- <ion-label>Privacy Setting</ion-label> -->
-          <ion-grid>
-            <ion-row >
-              <ion-col size="6">
-                <ion-radio-group value="privacy" name="privacy_setting" [(ngModel)]="createEvent.privacy_setting">
-                  <ion-item class="item1">
-                    <ion-label>Public</ion-label>
-                    <ion-radio value="public"></ion-radio>
-                  </ion-item>
-                </ion-radio-group>
-              </ion-col>
-              <ion-col size="6">
-                <ion-radio-group value="privacy" name="privacy_setting" [(ngModel)]="createEvent.privacy_setting">
-                  <ion-item class="item1" >
-                    <ion-label >Private</ion-label>
-                    <ion-radio value="private"></ion-radio>
-                  </ion-item>
-                </ion-radio-group>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
+      <ion-grid>
+        <ion-row >
+          <ion-col size="6">
+            <ion-radio-group value="privacy" name="privacy_setting" [(ngModel)]="createEvent.privacy_setting">
+              <ion-item class="item1">
+                <ion-label>Public</ion-label>
+                <ion-radio value="public"></ion-radio>
+              </ion-item>
+            </ion-radio-group>
+          </ion-col>
+          <ion-col size="6">
+            <ion-radio-group value="privacy" name="privacy_setting" [(ngModel)]="createEvent.privacy_setting">
+              <ion-item class="item1" >
+                <ion-label >Private</ion-label>
+                <ion-radio value="private"></ion-radio>
+              </ion-item>
+            </ion-radio-group>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
         <!-- </ion-item> -->
       <!-- </ion-item> -->
 
