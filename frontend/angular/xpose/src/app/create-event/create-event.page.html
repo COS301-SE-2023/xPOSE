@@ -91,6 +91,9 @@
               required
             ></ion-input>
           </ion-item>
+          <ion-label *ngIf="form.controls['end_date']?.invalid && form.controls['end_date']?.touched" color="danger">
+            End date is required.
+          </ion-label>
         </ion-col>
       </ion-row>
       
