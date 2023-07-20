@@ -51,7 +51,15 @@ class RabbitMQProducer {
             throw new Error('Connection not established. Call connect() first.');
         }
 
-        this.channel.publish('Exchange', queueRoute, Buffer.from(message));
+        return new Promise((resolve, reject) => {
+          const sent = this.channel.publish('Exchange', queueRoute, Buffer.from(message));
+          if(sent) {
+            resolve();
+          } else {
+            reject (new Error("Message could not be sent"));
+          }
+        });
+        
     }
 
     closeConnection() {
@@ -60,26 +68,28 @@ class RabbitMQProducer {
                 this.connection.close();
                 console.log('Connection closed...');
                 process.exit(0);
-            }, 1800);
+            }, 500);
         }
     }
 }
 
-// Example usage
-(async () => {
-    const producer = new RabbitMQProducer();
-    try {
-        await producer.connect();
-        console.log('Sending message...');
-        let msg = "{notificationType: 'friendRequest', userId: 'XXT', timestamp: '<timestamp idk>'}";
-        producer.sendMessage('notifications', msg);
-        // Wait a bit before closing the connection
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        producer.closeConnection();
-    } catch (error) {
-        console.error('Error:', error);
-    }
-})();
+module.exports = RabbitMQProducer;
+
+// // Example usage
+// (async () => {
+//     const producer = new RabbitMQProducer();
+//     try {
+//         await producer.connect();
+//         console.log('Sending message...');
+//         let msg = "{notificationType: 'friendRequest', userId: 'XXT', timestamp: '<timestamp idk>'}";
+//         await producer.sendMessage('notifications', msg);
+//         // Wait a bit before closing the connection
+//         await new Promise(resolve => setTimeout(resolve, 2000));
+//         producer.closeConnection();
+//     } catch (error) {
+//         console.error('Error:', error);
+//     }
+// })();
 
 
 

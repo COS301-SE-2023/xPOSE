@@ -121,6 +121,7 @@ export class AuthService {
       email: email,
       password: password,
       emailVerified: false,
+      privacy:false,
       bio:" Default bio",
       fcmTokens: [],
       photoObject:{}
