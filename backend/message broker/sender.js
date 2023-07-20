@@ -75,23 +75,6 @@ class RabbitMQProducer {
 
 module.exports = RabbitMQProducer;
 
-// // Example usage
-// (async () => {
-//     const producer = new RabbitMQProducer();
-//     try {
-//         await producer.connect();
-//         console.log('Sending message...');
-//         let msg = "{notificationType: 'friendRequest', userId: 'XXT', timestamp: '<timestamp idk>'}";
-//         await producer.sendMessage('notifications', msg);
-//         // Wait a bit before closing the connection
-//         await new Promise(resolve => setTimeout(resolve, 2000));
-//         producer.closeConnection();
-//     } catch (error) {
-//         console.error('Error:', error);
-//     }
-// })();
-
-
 
 
 
