@@ -14,6 +14,7 @@ const {
     responseToEventJoinRequest,
     updateEvent,
     userRequestToJoinEvent,
+    joinEvent,
 } = require('./controllers/index');
 
 // const setupSwagger = require('./swagger');
@@ -86,8 +87,11 @@ router.put('/events/:code', upload.single('image'), updateEvent);
 // Delete an event
 router.delete('/events/:code', upload.none(), deleteEvent);
 
+// User joins an event
+router.post('/events/:code/join', upload.none(), joinEvent);
+
 // Invite user
-router.post('/events/:code/invite/', upload.none(), inviteUserToEvent);
+router.post('/events/:code/invite', upload.none(), inviteUserToEvent);
 
 // response from invited user
 router.put('/events/:code/invite', upload.none(), responseToEventInvite);
