@@ -15,7 +15,7 @@
   }
   
   .custom-btn {
-    --ion-color-primary: #862e82;
+    --ion-color-primary: #5E2390;
     --border-color: rgba(189, 0, 255, 0.37);
     --border-style: solid;
     --border-width: 2px;
@@ -40,19 +40,36 @@
     align-items: center;
     justify-content: center;
     width: 80%;
+    color: #000;
+
+    ion-col{
+      margin-bottom: 2px;
+      --background: rgba(0, 0, 0, 0.19);
+      width: 95%;
+      color: #000;
+   }
   }
   
- 
+  .item1{
+    margin-bottom: 2px;
+    --background: #9D5AD5;
+    // width: 95%;
+    height: 100px;
+    border-radius: 10px;
+    color: #ffffff;
+  }
   
   ion-item {
     margin-bottom: 20px;
-    --background: rgba(0, 0, 0, 0.19);
     width: 95%;
     color: #000;
   }
 
   ion-radio{
-    margin-bottom: 5px;
+    margin-bottom: 10px;
+    margin-left: 100px;
+    --box-shadow: 0 2px 6px 0 rgba(255, 255, 255, 0.37);
+    
   }
   
   ion-button {
@@ -64,14 +81,8 @@
     margin-bottom: 15px;
     height: 40px;
     // color: #000000;
-    border: 1px solid #DD10FE;
+    border: 0.1px solid #f5b1ff9a;
     background-color: #F8F8F8;
-  }
-
-  input{
-    width: 95%;
-    margin-bottom: 15px;
-    height: 40px;
   }
   
   ion-textarea {
@@ -79,7 +90,7 @@
     margin-bottom: 25px;
     margin-top: 5px;
     height: 55px;
-    border: 1px solid #DD10FE;
+    border: 0.5px solid #f5b1ff9a;
     background-color: #F8F8F8;
   }
   
@@ -103,7 +114,7 @@
   .input-container {
     display: flex;
     align-items: center;
-    border: 1px solid #DD10FE;
+    border: 0.5px solid #f5b1ff9a;
     padding: 7px;
     border-radius: 4px;
     margin-bottom: 25px;
@@ -114,8 +125,8 @@
   .input-container1 {
     display: flex;
     align-items: center;
-    border: 1px solid #DD10FE;
-    padding: 30px;
+    border: 0.5px solid #f5b1ff9a;
+    // padding: 30px;
     border-radius: 4px;
     margin-bottom: 25px;
     width: 95%;
@@ -135,11 +146,28 @@
   }
   .label{
     color: #000000;
+  }
+  ion-label{
+    // top: 0px;
+    // margin: 0px;
+     position: fixed;
+    // width: 100%;
+    // height: 100%;
+    // border: 0px;
+    // background: transparent;
+    // cursor: pointer;
+    // appearance: none;
+    // outline: none;
+    // display: flex;
+    align-items: center;
+    // margin-left: 100px;
     
-
   }
   
-  
+ion-row{
+  // background-color: #000;
+  height: 75px;
+}
   
   
   
