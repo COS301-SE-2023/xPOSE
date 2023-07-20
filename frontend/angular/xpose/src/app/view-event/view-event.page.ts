@@ -118,9 +118,10 @@ export class ViewEventPage implements OnInit, AfterViewInit {
         // No action required for "Requested" state, button is already disabled.
         break;
       case 'none':
+        console.log('Will join or request');
         if (this.event?.privacy_setting === 'public') {
           this.joinPublicEvent();
-        } else if (this.event?.privacy_setting === 'private') {
+        } else {
           this.requestPrivateEvent();
         }
         break;
@@ -189,6 +190,19 @@ export class ViewEventPage implements OnInit, AfterViewInit {
     requestPrivateEvent() {
       // Make the API call to request to join the private event here
       console.log('Requesting to join private event...');
+      this.getCurrentUserId().subscribe((uid) => {
+        if(uid) {
+          const formData = new FormData();
+          formData.append('response', 'accepted'); // will make this dynamic
+          this.http
+            .post(`http://localhost:8000/e/events/${this.event_id}/request?uid=${uid}`, formData)
+            .subscribe((data) => {
+              // change the button label to "Request Sent"
+              console.log(data);
+              console.log('Request sent');
+            });
+        }
+      });
     }
 
   joinAndRedirect() {
