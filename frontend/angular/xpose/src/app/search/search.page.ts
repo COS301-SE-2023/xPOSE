@@ -1,15 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from "@angular/core";
+import { ModalController } from "@ionic/angular";
 
 @Component({
-  selector: 'app-search',
-  templateUrl: './search.page.html',
-  styleUrls: ['./search.page.scss'],
+  selector: "app-search",
+  templateUrl: "search.page.html",
+  styleUrls: ["search.page.scss"]
 })
-export class SearchPage implements OnInit {
+export class SearchPage {
+  searchQuery: string = "";
 
-  constructor() { }
+  constructor(private modalController: ModalController) {}
 
-  ngOnInit() {
+  dismissModal() {
+    this.modalController.dismiss();
   }
 
+  applySearch() {
+    this.modalController.dismiss({ searchQuery: this.searchQuery });
+  }
 }
