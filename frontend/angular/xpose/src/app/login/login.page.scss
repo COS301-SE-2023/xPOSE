@@ -2,6 +2,11 @@ ion-toolbar {
   --background: rgba(255, 255, 255, 0.55);
 }
 
+ion-content .main-content{
+  --background: #000000;
+  background-color: #a50000;
+}
+
 .centered-title {
   display: block;
   text-align: center;
@@ -114,4 +119,11 @@ ion-toolbar {
   .no-account-link a {
     color: blue;
     text-decoration: underline;
+  }
+  .logo-image{
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    background-color: aqua;
+    margin-bottom: -80px;
   }

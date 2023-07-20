@@ -10,8 +10,13 @@
 </ion-icon>
 
 
-<ion-content [fullscreen]="true">
-
+<ion-content [fullscreen]="true" id="main-content">
+  <div class="containeri">
+    <!-- <ion-icon>
+      <img src="../assets/icon/Xp.jpeg" alt="Logo" class="logo-image">
+    </ion-icon> -->
+    <img src="../assets/icon/Xp.jpeg" alt="Logo" class="logo-image">
+  </div>
   <div class="container">
     <div class="button-container">
       <ion-button id="google-button" type="submit" class="custom-bt" (click)="signInWithGoogle()">G</ion-button>
@@ -42,5 +47,6 @@
       <p>No account? <a href="/signup">Click here</a></p>
     </div>
   </div>
+
 </ion-content>
 
