@@ -1,5 +1,6 @@
-const amqp = require('amqplib/callback_api');
-require('dotenv').config();
+import amqp from 'amqplib/callback_api.js';
+import dotenv from 'dotenv';
+dotenv.config();
 
 class RabbitMQProducer {
     constructor() {
@@ -73,59 +74,36 @@ class RabbitMQProducer {
     }
 }
 
-module.exports = RabbitMQProducer;
+export default   RabbitMQProducer;
 
 
+  // Communicate with the notification service
+//   (async () => {
+//     const producer = new RabbitMQProducer();
+//     try {
+//         await producer.connect();
+//         console.log('communicating with the notificationsQueue');
+//         const now = new Date();
+//         const timestamp = `${now.toLocaleDateString()} ${now.toLocaleTimeString()}`;
+//         console.log("Friend request sent at "+ timestamp); 
+//         let userId ="1234";
+//         let requestId ="2233";
+//         let response ="pending";
+//         let msg = `{
+//           notificationType: 'friendRequest',
+//           userId: ${userId},
+//           requestId: ${requestId},
+//           timestamp: ${timestamp},
+//           status: ${response}
+//         }`;
 
-
-
-
-
-
-// const amqp = require('amqplib/callback_api');
-// require('dotenv').config();
-
-// amqp.connect(process.env.CLOUDAMQP_URL, function (error0, connection) {
-//     if(error0) {
-//         throw error0;
+//         await producer.sendMessage('notifications', msg);
+//         // Wait a bit before closing the connection
+//         await new Promise(resolve => setTimeout(resolve, 2000));
+//         producer.closeConnection();
+//     } catch (error) {
+//         console.error('Error:', error);
 //     }
+//   })();
 
-//     connection.createChannel(function (error1, channel) {
-//         if(error1) {
-//             throw error1;
-//         }
 
-//         // Queues in the message broker
-//         let notificationQuue = 'Notifications_service';
-//         let eventsServiceQueue = "Events_service";
-//         channel.assertQueue(notificationQuue, {durable: false});
-//         channel.assertQueue(eventsServiceQueue, {durable: false});
-//         let msg = "{notificationType: 'friendRequest', userId: 'XXT', timestamp: '<timestamp idk>'}";
-
-//         // create exchange
-//         channel.assertExchange('Exchange', 'direct', {durable: true});
-        
-//         // bind queu routes to the Exchange
-//         channel.bindQueue(notificationQuue, 'Exchange', 'notifications');
-//         channel.bindQueue(eventsServiceQueue, 'Exchange', 'events');
-
-//         console.log("Sending message...");
-//         // channel.sendToQueue(notificationQuue, Buffer.from(msg));
-        
-//         // Test sending friend request
-//         channel.publish(
-//             'Exchange',
-//             'notifications',
-//             Buffer.from(msg)
-//         );
-
-//         // console.log(`[x] Sent ${msg} to the ${queue} queue`);
-//     });
-    
-//     setTimeout(function () {
-//         connection.close();
-//         console.log('Connection closed...');
-//         process.exit(0);
-//     }, 1000);
-
-// });
