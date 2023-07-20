@@ -10,10 +10,19 @@ import RabbitMQConsumer from  '../../message broker/receiver.js';
     
           consumer.consume((message) => {
               console.log('Received message:', message);
-              // Add your logic to process the message here
+              // treat message received
+              try{
+                const data = JSON.parse(message.content.toString());
+                console.log('Processed Data:', data);
+              } catch(error){
+                console.error('Error processing message:', error);
+              }
+
+                // Keep the consumer running indefinitely, or you can set a timeout to close the connection.
+                // acknowledge message received
+                consumer.acknowledge(message);
           });
     
-          // Keep the consumer running indefinitely, or you can set a timeout to close the connection.
       } catch (error) {
           console.error('Error:', error);
       }
@@ -21,7 +30,6 @@ import RabbitMQConsumer from  '../../message broker/receiver.js';
 
 const router = express.Router();
 
-// Get all users
 router.get('/', function(req, res){
     console.log("All notifications up and running");
     res.send({message:"All notifications up and running"});
