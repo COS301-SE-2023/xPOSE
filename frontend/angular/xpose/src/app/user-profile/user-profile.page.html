@@ -8,3 +8,8 @@
       </ion-title>
   </ion-toolbar>
 </ion-header>
+
+<ion-content class="ion-padding">
+  <h2>{{ user.name }}</h2>
+  <ion-button *ngIf="areFriends" (click)="unfriend()">Unfriend</ion-button>
+</ion-content>
