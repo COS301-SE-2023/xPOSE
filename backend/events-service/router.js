@@ -87,7 +87,7 @@ router.put('/events/:code', upload.single('image'), updateEvent);
 router.delete('/events/:code', upload.none(), deleteEvent);
 
 // Invite user
-router.post('/events/:code/invite/', upload.none(), inviteUserToEvent);
+router.post('/events/:code/invite', upload.none(), inviteUserToEvent);
 
 // response from invited user
 router.put('/events/:code/invite', upload.none(), responseToEventInvite);
