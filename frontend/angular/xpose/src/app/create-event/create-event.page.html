@@ -75,6 +75,9 @@
               required
             ></ion-input>
           </ion-item>
+          <ion-label *ngIf="form.controls['start_date']?.invalid && form.controls['start_date']?.touched" color="danger">
+            Start date is required.
+          </ion-label>
         </ion-col>
       
         <!-- End date -->
