@@ -15,7 +15,7 @@ const {
     updateEvent,
     userRequestToJoinEvent,
     joinEvent,
-} = require('./controllers/index');
+} = require('./services/index');
 
 // const setupSwagger = require('./swagger');
 // setupSwagger(router);
@@ -104,6 +104,9 @@ router.put('/events/:code/request', upload.none(), responseToEventJoinRequest);
 
 // remove user
 router.delete('/events/:code/remove', upload.none(), removeUserFromEvent);
+
+// get participants of an event
+// router.get('/events/:code/participants', upload.none(), getEventParticipants);
 
 // export router
 module.exports = router;
