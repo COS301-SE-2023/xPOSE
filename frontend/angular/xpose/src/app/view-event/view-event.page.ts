@@ -275,6 +275,18 @@ export class ViewEventPage implements OnInit, AfterViewInit {
 
     this.isJoined = true;
   }
-
+  removeParticipant(participant: any) {
+    // Handle participant removal logic here
+  
+    // For demonstration, we'll remove the participant from the event object's participants array
+    this.event.participants = this.event.participants.filter((p: any) => p !== participant);
+  }
+  
+  addParticipant(participant: any) {
+    // Handle participant addition logic here
+  
+    // For demonstration, we'll add the participant back to the event object's participants array
+    this.event.participants.push(participant);
+  }
   
 }
