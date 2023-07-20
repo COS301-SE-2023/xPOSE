@@ -15,7 +15,7 @@
   }
   
   .custom-btn {
-    --ion-color-primary: #862e82;
+    --ion-color-primary: #5E2390;
     --border-color: rgba(189, 0, 255, 0.37);
     --border-style: solid;
     --border-width: 2px;
@@ -41,13 +41,26 @@
     justify-content: center;
     width: 80%;
     color: #000;
+
+    ion-col{
+      margin-bottom: 2px;
+      --background: rgba(0, 0, 0, 0.19);
+      width: 95%;
+      color: #000;
+   }
   }
   
- 
+  .item1{
+    margin-bottom: 20px;
+    --background: rgba(0, 0, 0, 0.19);
+    // width: 95%;
+    height: 100px;
+    border: #5E2390;
+    // color: #000;
+  }
   
   ion-item {
     margin-bottom: 20px;
-    --background: rgba(0, 0, 0, 0.19);
     width: 95%;
     color: #000;
   }
@@ -56,6 +69,7 @@
     margin-bottom: 10px;
     margin-left: 100px;
     --box-shadow: 0 2px 6px 0 rgba(189, 0, 255, 0.37);
+    
   }
   
   ion-button {
@@ -150,7 +164,10 @@
     
   }
   
-
+ion-row{
+  // background-color: #000;
+  height: 75px;
+}
   
   
   
