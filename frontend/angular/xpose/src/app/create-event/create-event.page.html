@@ -32,7 +32,7 @@
               </ion-col>
               <ion-col size="6">
                 <ion-radio-group value="privacy" name="privacy_setting" [(ngModel)]="createEvent.privacy_setting">
-                  <ion-item>
+                  <ion-item >
                     <ion-label>Private</ion-label>
                     <ion-radio value="private"></ion-radio>
                   </ion-item>
@@ -69,7 +69,7 @@
         <!-- Start date -->
         <ion-col>
           <ion-item>
-            <ion-label>Start Date</ion-label>
+            <p>Start Date</p>
             <ion-input
               type="date"
               [(ngModel)]="createEvent.start_date"
@@ -81,7 +81,7 @@
         <!-- End date -->
         <ion-col>
           <ion-item>
-            <ion-label>End Date</ion-label>
+            <p>End Date</p>
             <ion-input
               type="date"
               [(ngModel)]="createEvent.end_date"
