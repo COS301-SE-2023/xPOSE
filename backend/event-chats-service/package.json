@@ -1,12 +1,11 @@
 {
-  "name": "user-management-service",
+  "name": "event-chats-service",
   "version": "1.0.0",
-  "description": "",
+  "description": "This service handles the chats for the xPOSE project",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "start": "node .",
-    "start:dev": "nodemon index.js",
+    "start:dev": "nodemon .",
     "test": "jest"
   },
   "keywords": [],
@@ -14,11 +13,11 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.2",
-    "firebase-admin": "^11.9.0",
-    "uuid": "^9.0.0"
+    "firebase-admin": "^11.10.1",
+    "multer": "^1.4.5-lts.1"
   },
   "devDependencies": {
     "jest": "^29.6.1",
-    "nodemon": "^1.14.9"
+    "nodemon": "^3.0.1"
   }
 }

@@ -8,23 +8,38 @@ import { AuthService } from "../shared/services/auth.service";
   styleUrls: ['./edit.page.scss'],
 })
 export class EditPage implements OnInit {
+  photoURL: string;
   username: string;
   email: string;
 
+  isPublic: boolean = true;
+
   constructor(
-    private router: Router,
+    public router: Router,
     public authService: AuthService
   ) {
-    this.email = ''; 
-    this. username= '';
+    this.photoURL= './assets/images/profile picture.jpg';
+    this.email = 'johndoe@example.com'; 
+    this. username= 'John Doe';
+
+    
+    
+    
    }
+   
   saveProfile() {
     // Add logic to save the updated profile
     const updatedProfile = {
       username: this.username,
       email: this.email,
-      
+
+     
     };
+    console.log('Updated Profile:', updatedProfile);
+    console.log('Account Privacy:', this.isPublic ? 'Public' : 'Private');
+
+
+    
     // Call a service method to update the profile
     
 
@@ -32,7 +47,30 @@ export class EditPage implements OnInit {
     this.router.navigate(['/profile']);
   } 
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
+
+  onFileSelected(event: any) {
+		const file: File = event.target.files[0];
+		if (file) {
+      // You can implement your own logic to upload the image to your storage or server
+      // For now, we'll just set the photoURL to a local object URL for demonstration purposes.
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        this.photoURL = reader.result as string;
+      };
+    }
+		// You can perform further operations with the selected file, such as uploading it to a server or displaying a preview.
+		// Remember to update your component's property (e.g., createEvent.coverImage) with the selected file or file data.
+	  }
+
+    deleteAccount() {
+
+      
+      // Add your logic here to delete the user account.
+      // You may want to show a confirmation modal to confirm the deletion before proceeding.
+      console.log('Account deleted');
+    }
 
 }
+
