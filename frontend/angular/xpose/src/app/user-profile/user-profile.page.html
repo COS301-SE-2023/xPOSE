@@ -9,12 +9,13 @@
   </ion-toolbar>
 </ion-header>
 
-<div class="profile_div" >
-  <div>
-    <img [src]="user.photoURL">
-    <div class="first_div">
-      <ion-label class="username">Janie Doe</ion-label><br>
+<ion-content class="ion-padding">
+  <div class="profile-info">
+    <div class="profile-picture">
+      <!-- Replace 'user.profilePicture' with the actual URL or data of the user's profile picture -->
+      <img [src]="user.photoURL" alt="Profile Picture" />
     </div>
-    <ion-button class="edit_div">Unfriend</ion-button>
+    <h2 class="user-name">Janie Do</h2>
   </div>
-</div>
+  <ion-button class="unfriend-button">Unfriend</ion-button>
+</ion-content>
