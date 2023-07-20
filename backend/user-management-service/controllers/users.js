@@ -5,6 +5,8 @@ import User from '../DB/models/user.table.js';
 import Friend_request from '../DB/models/friend_request.table.js';
 import Friendship from '../DB/models/friendship.table.js';
 import { response } from 'express';
+import RabbitMQProducer from '../../message broker/sender.js';
+
 
 let users = [];
 // const messaging = admin.messaging();
@@ -262,6 +264,32 @@ export const sendFriendRequest = async (req, res) => {
       });
 
       // Communicate with the notification service
+      (async () => {
+        const producer = new RabbitMQProducer();
+        try {
+            await producer.connect();
+            console.log('communicating with the notificationsQueue');
+            const now = new Date();
+            const timestamp = `${now.toLocaleDateString()} ${now.toLocaleTimeString()}`;
+            console.log("Friend request sent at "+ timestamp); 
+            let msg = `{
+              notificationType: 'friendRequest',
+              userId: ${userId},
+              requestId: ${requestId},
+              timestamp: ${timestamp},
+              status: ${response}
+            }`;
+
+            await producer.sendMessage('notifications', msg);
+            // Wait a bit before closing the connection
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            producer.closeConnection();
+        } catch (error) {
+            console.error('Error:', error);
+        }
+      })();
+
+
       
 
       // finallly message feedback
