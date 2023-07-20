@@ -260,7 +260,9 @@ export const sendFriendRequest = async (req, res) => {
         friend_b_id: requestId,
         response: "pending"
       });
-      // Here bellow use message broker to communicate with the notification services
+
+      // Communicate with the notification service
+      
 
       // finallly message feedback
       res.status(200).json({ message: `Friend request sent successfully to user with id ${requestId}` });
