@@ -104,6 +104,66 @@ export class ViewEventPage implements OnInit, AfterViewInit {
     }
   }
 
+  // Function to handle the button click based on the user_event_position
+  handleButtonClick() {
+    switch (this.event?.user_event_position) {
+      case 'owner':
+      case 'participant':
+        this.router.navigate(['/event', this.event.code]);
+        break;
+      case 'invited':
+        this.acceptInvite();
+        break;
+      case 'requested':
+        // No action required for "Requested" state, button is already disabled.
+        break;
+      case 'none':
+        if (this.event?.privacy_setting === 'public') {
+          this.joinPublicEvent();
+        } else if (this.event?.privacy_setting === 'private') {
+          this.requestPrivateEvent();
+        }
+        break;
+      default:
+        break;
+    }
+  }
+
+    // Function to get the button label based on the user_event_position
+    getButtonLabel(): string {
+      switch (this.event?.user_event_position) {
+        case 'owner':
+        case 'participant':
+          return 'Enter event';
+        case 'invited':
+          return 'Accept Invite';
+        case 'requested':
+          return 'Requested';
+        case 'none':
+          return this.event?.privacy_setting === 'public' ? 'Join' : 'Request';
+        default:
+          return '';
+      }
+    }
+  
+    // Function to accept the invite (Replace this with your actual API call)
+    acceptInvite() {
+      // Make the API call to accept the invite here
+      console.log('Accepting invite...');
+    }
+  
+    // Function to join a public event (Replace this with your actual API call)
+    joinPublicEvent() {
+      // Make the API call to join the public event here
+      console.log('Joining public event...');
+    }
+  
+    // Function to request to join a private event (Replace this with your actual API call)
+    requestPrivateEvent() {
+      // Make the API call to request to join the private event here
+      console.log('Requesting to join private event...');
+    }
+
   joinAndRedirect() {
     if (this.isJoined) {
       return;

@@ -38,7 +38,7 @@
             </ion-card-content>
           </ion-card>
 
-          <ion-button expand="block" class="join-button">{{ event?.user_event_position }}</ion-button>
+          <ion-button expand="block" class="join-button" (click)="handleButtonClick()">{{ getButtonLabel() }}</ion-button>
         </div>
       </ion-col>
     </ion-row>
