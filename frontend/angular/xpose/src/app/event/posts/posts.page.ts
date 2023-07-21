@@ -28,9 +28,11 @@ export class PostsPage {
     
     // Add more items as needed...
   ];
+  router: any;
 
   constructor(private galleryDataService: GalleryDataService) {
     this.galleryDataService.setData(this.data);
   }
   // Other component logic goes here.
+ 
 }

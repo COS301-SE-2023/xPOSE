@@ -5,6 +5,7 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  <div>
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">{{ eventName }}</ion-title>
@@ -31,23 +32,19 @@
       <!-- Display your QR code here -->
       <img src="./assets/images/qrcode.png" alt="QR Code" class="qrcode" />
     </ion-card-content>
-  </ion-card>
-  
-  <!-- Participants -->
-  <!-- <ion-card>
+    <!-- link -->
+  </ion-card>  <ion-card>
     <ion-card-header>
-      <ion-card-title>Participants</ion-card-title>
+      <ion-card-title>Event link</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <ion-list>
-        <ion-item *ngFor="let participant of participants">
-          <ion-label class="h2">{{ participant.name }}</ion-label>
-          <ion-button (click)="removeParticipant(participant)" color="danger">Remove</ion-button>
-        </ion-item>
-      </ion-list>
+      <!-- Display your QR code here -->
+     <p style="color: blue;">www.cpose.com121540000</p>
     </ion-card-content>
   </ion-card>
-</ion-content> -->
+  </div>
+  
+  
 <h1 class="section-title">Participants</h1>
 <ion-card class="participant-card" *ngFor="let participant of participants">
   <ion-card-header>
@@ -69,3 +66,4 @@
     </ion-button>
   </ion-buttons>
 </ion-card>
+</ion-content>

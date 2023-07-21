@@ -1,59 +1,50 @@
 <ion-header [translucent]="true">
   <ion-toolbar class="custom-toolbar">
-      <ion-buttons slot="start">
-        <ion-back-button defaultHref="home"></ion-back-button>
-      </ion-buttons>
-      <ion-title>
-        Create Event
-      </ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Create Event</ion-title>
   </ion-toolbar>
 </ion-header>
 
+
 <ion-content [fullscreen]="true" id="main-content">
+          <ion-grid>
+            <ion-row >
+              <ion-col size="6">
+                <ion-radio-group value="privacy" name="privacy_setting" [(ngModel)]="createEvent.privacy_setting">
+                  <ion-item class="item1">
+                    <ion-label>Public</ion-label>
+                    <ion-radio value="public"></ion-radio>
+                  </ion-item>
+                </ion-radio-group>
+              </ion-col>
+              <ion-col size="6">
+                <ion-radio-group value="privacy" name="privacy_setting" [(ngModel)]="createEvent.privacy_setting">
+                  <ion-item class="item1" >
+                    <ion-label >Private</ion-label>
+                    <ion-radio value="private"></ion-radio>
+                  </ion-item>
+                </ion-radio-group>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
   <div>
     <form #form="ngForm" (ngSubmit)="CreateEvent()">
-      <ion-grid>
-        <ion-row >
-          <ion-col size="6">
-            <ion-radio-group value="privacy" name="privacy_setting" [(ngModel)]="createEvent.privacy_setting" required>
-              <ion-item class="item1">
-                <ion-label>Public</ion-label>
-                <ion-radio value="public"></ion-radio>
-              </ion-item>
-            </ion-radio-group>
-          </ion-col>
-          <ion-col size="6">
-            <ion-radio-group value="privacy" name="privacy_setting" [(ngModel)]="createEvent.privacy_setting" required>
-              <ion-item class="item1" >
-                <ion-label >Private</ion-label>
-                <ion-radio value="private"></ion-radio>
-              </ion-item>
-            </ion-radio-group>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-        <!-- </ion-item> -->
-      <!-- </ion-item> -->
-
-      <label class="label"  for="image">Upload Cover Page Image:</label>
+      <label class="label" for="image">Upload Cover Page Image:</label>
       <div class="input-container">
-        <input type="file" accept="image/*" (change)="onFileSelected($event)" name="image" id="image" required>
+        <input type="file" accept="image/*" (change)="onFileSelected($event)" name="image" id="image">
       </div>
 
       <label class="label" for="image">Event Name:</label>
-      <ion-input class="ther" [(ngModel)]="createEvent.title" required minlength="2" maxlength="100" name="event-name"></ion-input>
+      <ion-input class="ther" name="title" [(ngModel)]="createEvent.title"></ion-input>
 
-      <ion-label *ngIf="form.controls['event-name']?.invalid && form.controls['event-name']?.touched" color="danger"> Event name is required and must be between 2 and 100 characters long.</ion-label>
+      <label class="label" for="image">Description:</label>
+      <ion-textarea class="ther" name="description" [(ngModel)]="createEvent.description"></ion-textarea>
 
-      <label class="label"  for="image">Description:</label>
-      <ion-textarea class="ther" [(ngModel)]="createEvent.description" required minlength="2" maxlength="150" name="event-desc"></ion-textarea>
-
-      <ion-label *ngIf="form.controls['description']?.invalid && form.controls['description']?.touched" color="danger">Description is required and must be between 2 and 150 characters long.</ion-label>
-
-      <label class="label"  for="image">Location</label>
+      <label class="label" for="image">Location</label>
       <div class="input-container">
-        <ion-input  class="ther" [(ngModel)]="createEvent.location" id="locationInput" required minlength="5" maxlength="100" name="loction"></ion-input>
-        <ion-label *ngIf="form.controls['location']?.invalid && form.controls['location']?.touched" color="danger">Location is required and must be between 5 and 100 characters long.</ion-label>
+        <ion-input class="ther" name="location" [(ngModel)]="createEvent.location" id="locationInput"></ion-input>
       </div>
 
       <br>
@@ -66,45 +57,32 @@
         <!-- Start date -->
         <ion-col size="6">
           <ion-item>
-            <p class="p">Start Date</p>
+            <p>Start Date</p>
             <ion-input
               type="date"
               [(ngModel)]="createEvent.start_date"
               name="start_date"
-              required
             ></ion-input>
           </ion-item>
-          <ion-label *ngIf="form.controls['start_date']?.invalid && form.controls['start_date']?.touched" color="danger">
-            Start date is required.
-          </ion-label>
         </ion-col>
       
         <!-- End date -->
         <ion-col size="6">
           <ion-item>
-            <p class="p">End Date</p>
+            <p>End Date</p>
             <ion-input
               type="date"
               [(ngModel)]="createEvent.end_date"
               name="end_date"
-              required
             ></ion-input>
           </ion-item>
-          <ion-label *ngIf="form.controls['end_date']?.invalid && form.controls['end_date']?.touched" color="danger">
-            End date is required.
-          </ion-label>
         </ion-col>
       </ion-row>
-      
 
       <ion-button id="submitBtn" type="submit" class="custom-btn" [disabled]="buttonClicked || loading">
         <ion-spinner *ngIf="loading"></ion-spinner>
         <span *ngIf="!loading">Create Event</span>
       </ion-button>
-
     </form>
   </div>
 </ion-content>
-<!--  (click)="redirectToEventPage()" -->
-
-
