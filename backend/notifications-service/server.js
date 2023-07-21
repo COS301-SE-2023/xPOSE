@@ -2,13 +2,12 @@ import express from 'express';
 import bodyParser from  'body-parser';
 import userRoute from './routes/notifications.js';
 import admin from "firebase-admin";
+import serviceAccount from "./serviceAccountKey.json" assert { type: "json" };
 
-// import serviceAccount from "./DB/credentials/serviceAccountKey.json" assert { type: "json" };
-
-// admin.initializeApp({
-//   credential: admin.credential.cert(serviceAccount),
-//   databaseURL: "https://xpose-4f48c-default-rtdb.firebaseio.com"
-// });
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://xpose-4f48c-default-rtdb.firebaseio.com"
+});
 
 // const messaging = admin.messaging();
 const app = express();
