@@ -30,23 +30,23 @@ export function sendMessageToQueue(queue, msg) {
             connection.close();
             console.log('Connection closed...');
             // process.exit(0);
-        }, 500);
+        }, 1000);
 
     });
 }
  
-const queueName = 'notifications';
-const message = {
-    from: 'user_service',
-    type: 'friend_request',
-    data: {
-        message: ' you have a new friend request',
-        userId: '12345',
-        requestId: '4343',
-        timestamp: Date.now()
-    },
-    responses: ['accepted', 'rejected']
-};
-sendMessageToQueue(queueName, message);
+// const queueName = 'notifications';
+// const message = {
+//     from: 'user_service',
+//     type: 'friend_request',
+//     data: {
+//         message: ' you have a new friend request',
+//         senderId: '4444',
+//         receiverId: '4343',
+//         timestamp: Date.now()
+//     },
+//     responses: ['accepted', 'rejected']
+// };
+// sendMessageToQueue(queueName, message);
 
 

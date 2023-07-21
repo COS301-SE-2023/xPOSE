@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
-import {getMessaging, getToken, onMessage} from "firebase/messaging";
 import { environment } from "../../environments/environment";
+import { getFirestore, collection, query, onSnapshot, where } from "firebase/firestore";
+
 
 
 @Component({
@@ -18,13 +19,34 @@ export class NotificationPage implements OnInit {
 
   ngOnInit() {
     // this.requestPermission();
+    this.listenForNotifications();
     // this.listen();
-    // this.loadMessages();
+    this.loadMessages();
   }
 
   loadMessages() {
     const storedMessages = localStorage.getItem('messages');
     this.messages = storedMessages ? JSON.parse(storedMessages) : [];
+  }
+
+  listenForNotifications() {
+    const db = getFirestore();
+    const userId = 'your-user-id'; // Replace this with the user ID of the current user
+    const notificationsCollection = collection(db, `Notifications/${userId}/MyNotifications`);
+
+    const querySnapshotListener = onSnapshot(notificationsCollection, (snapshot) => {
+      snapshot.docChanges().forEach((change) => {
+        if (change.type === 'added') {
+          const data = change.doc.data();
+          // The 'data' variable will contain the notification data
+          console.log("New notification received:", data);
+          // You can add your logic to handle the new notification here
+          // For example, update the messages array and save it in localStorage
+          this.messages.push(data);
+          this.saveMessages();
+        }
+      });
+    });
   }
 
   saveMessages() {
