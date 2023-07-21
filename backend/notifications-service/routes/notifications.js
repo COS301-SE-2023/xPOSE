@@ -1,35 +1,9 @@
 import express from 'express';
+import { receiveMessageFromQueue } from '../receiver.js';
 // import { } from '../controllers/notifications.js';
 
-import RabbitMQConsumer from  '../../message broker/receiver.js';
-(async () => {
-      const consumer = new RabbitMQConsumer('notificationsQueue');
-      try {
-          await consumer.connect();
-          console.log('Notification service Waiting for messages...');
-    
-          consumer.consume((message) => {
-              console.log('Received message:', message);
-              console.log("Message properties:", Object.keys(message));
-              // treat message received
-              try{
-                // const data = JSON.parse(message.content);
-                console.log(Object.prototype.toString.call(message));
-              
-                console.log(message.notificationType);
-                // consumer.ack(message);
-
-            } catch(error){
-                console.error('Error processing message:', error);
-            }
-          }, {
-                noAck: true
-          });
-    
-      } catch (error) {
-          console.error('Error:', error);
-      }
-    })();
+const queueName = 'notifications';
+receiveMessageFromQueue(queueName);
 
 const router = express.Router();
 
