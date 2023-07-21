@@ -258,18 +258,27 @@ export const sendFriendRequest = async (req, res) => {
         // status: 'pending'
       // };
       
-      /*
-      await Friend_request.create({
-        friend_a_id: userId,
-        friend_b_id: requestId,
-        response: "pending"
-      });
-      */
-
+      
+      // await Friend_request.create({
+      //   friend_a_id: userId,
+      //   friend_b_id: requestId,
+      //   response: "pending"
+      // });
       
       // Communicate with the notification service
       const queueName = 'notifications';
-      const message = "Now working perfectly";
+      const message = {
+          from: 'user_service',
+          type: 'friend_request',
+          data: {
+              message: ' you have a new friend request',
+              senderId: userId,
+              receiverId: requestId,
+              timestamp: Date.now(),
+              status: ' pending'
+          },
+          responses: ['accepted', 'rejected']
+      };
       sendMessageToQueue(queueName, message);
       
       

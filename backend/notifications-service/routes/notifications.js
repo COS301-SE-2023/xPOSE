@@ -1,48 +1,60 @@
 import express from 'express';
 import { receiveMessageFromQueue } from '../receiver.js';
+import admin from "firebase-admin";
+
 // import { } from '../controllers/notifications.js';
 
-const queueName = 'notifications';
-receiveMessageFromQueue(queueName);
+async function processReceivedMessage() {
+    try{
+        const queueName = 'notifications';
+        const receivedMsg = await receiveMessageFromQueue(queueName);
+        console.log("Received message:", receivedMsg);
+        
+        handleNotification(receivedMsg);
+        
+        /*switch (receivedMsg.type) {
+            case 'notification':
+                handleNotificationMessage(message);
+                break;
+            case 'request':
+                handleRequestMessage(message);
+                break;
+            default:
+                console.log('Received an unknown message type');
+        }*/
+        
+
+    } catch(error){
+        console.error("Error while receiving message", error);
+    }
+}
+
+// Process message
+processReceivedMessage();
+
+export function handleNotification(message) {
+    // Extract required data from the message
+    const {responses, userId, data } = message;
+
+    // Store the message in the Notification collection
+    const db = admin.firestore();
+    const notificationRef = db.collection('Notifications').doc(data.userId);
+    // Store the message in the MyNotifications subcollection
+    notificationRef.collection('MyNotifications').add(data)
+            .then(()=> {
+                console.log("Notification sent successfully!");
+            })
+            .catch((error) => {
+                console.error("Error adding document: ", error);
+            });
+  }
+
 
 const router = express.Router();
 
-router.get('/', function(req, res){
-    console.log("All notifications up and running");
-    res.send({message:"All notifications up and running"});
-});
-
-// // create new user
-// router.post('/', createUser);
-
-// // get all friends of user
-// router.get('/:userId/friends', getFriends);
-
-// // get specified friend
-// router.get('/:userId/friends/:requestId', getFriend);
-
-// // send friend request
-// router.post('/:userId/friend-requests/:requestId', sendFriendRequest);
-
-// // Accept friend request
-// router.post('/:userId/friend-requests/:requestId/accept', acceptFriendRequest);
-
-// // Reject friend request
-// router.post('/:userId/friend-requests/:requestId/reject', rejectFriendRequest);
-
-// // remove specified friend
-// router.delete('/:userId/friends/:requestId', removeFriend);
-
-// // get user with specifiedd id
-// router.get('/:userId', getUser);
-
-// // update existing user
-// router.patch('/:userId', updateUser);
-
-// // delete specified user
-// router.delete('/:userId', deleteUser);
-
-
-
+// router.get('/', function(req, res){
+//     console.log("All notifications up and running");
+//     res.send({message:"All notifications up and running"});
+// });
 
 export default router;

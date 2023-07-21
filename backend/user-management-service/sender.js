@@ -35,18 +35,18 @@ export function sendMessageToQueue(queue, msg) {
     });
 }
  
-const queueName = 'notifications';
-const message = {
-    from: 'user_service',
-    type: 'friend_request',
-    data: {
-        message: ' you have a new friend request',
-        userId: '12345',
-        requestId: '4343',
-        timestamp: Date.now()
-    },
-    responses: ['accepted', 'rejected']
-};
-sendMessageToQueue(queueName, message);
+// const queueName = 'notifications';
+// const message = {
+//     from: 'user_service',
+//     type: 'friend_request',
+//     data: {
+//         message: ' you have a new friend request',
+//         userId: '12345222',
+//         requestId: '4343',
+//         timestamp: Date.now()
+//     },
+//     responses: ['accepted', 'rejected']
+// };
+// sendMessageToQueue(queueName, message);
 
 
