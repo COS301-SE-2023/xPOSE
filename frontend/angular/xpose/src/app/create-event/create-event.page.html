@@ -1,72 +1,29 @@
 <ion-header [translucent]="true">
   <ion-toolbar class="custom-toolbar">
-      <ion-buttons slot="start">
-        <ion-back-button defaultHref="/home"></ion-back-button>
-      </ion-buttons>
-      <ion-title>
-        Create Event
-      </ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Create Event</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" id="main-content">
   <div>
     <form #form="ngForm" (ngSubmit)="CreateEvent()">
-      <!-- <ion-input label="Email" label-placement="floating" fill="outline" placeholder="Email" style="margin-bottom: 10px; width: 350px;"></ion-input>
-      <ion-input label="Password" label-placement="floating" type="password" fill="outline" placeholder="Password" style="margin-top: 10px; width: 350px; margin-bottom: 10px;"></ion-input>
-      <ion-button style="width: 350px;">Login</ion-button> -->
-      <!-- <ion-item> -->
-        <!-- <ion-button size="medium" class="custom-btn">Public</ion-button>
-        <ion-button size="medium" class="custom-btn">Private</ion-button> -->
-        <!-- <ion-item> -->
-          <!-- <ion-label>Privacy Setting</ion-label> -->
-          <ion-grid>
-            <ion-row >
-              <ion-col size="6">
-                <ion-radio-group value="privacy" name="privacy_setting" [(ngModel)]="createEvent.privacy_setting">
-                  <ion-item class="item1">
-                    <ion-label>Public</ion-label>
-                    <ion-radio value="public"></ion-radio>
-                  </ion-item>
-                </ion-radio-group>
-              </ion-col>
-              <ion-col size="6">
-                <ion-radio-group value="privacy" name="privacy_setting" [(ngModel)]="createEvent.privacy_setting">
-                  <ion-item class="item1" >
-                    <ion-label >Private</ion-label>
-                    <ion-radio value="private"></ion-radio>
-                  </ion-item>
-                </ion-radio-group>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        <!-- </ion-item> -->
-      <!-- </ion-item> -->
-
-      <!-- image input -->
-      <ion-item>
-        <ion-label >Upload Cover Page Image</ion-label>
-        <ion-input type="file" accept="image/*" (change)="onFileSelected($event)" name="image" required></ion-input>
-      </ion-item>
-      <!-- <label class="label"  for="image">Upload Cover Page Image:</label>
+      <label class="label" for="image">Upload Cover Page Image:</label>
       <div class="input-container">
         <input type="file" accept="image/*" (change)="onFileSelected($event)" name="image" id="image">
-      </div> -->
-      
-        <!-- <title name -->
-      <!-- <label class="label" for="image">Event Name:</label>
-      <ion-input class="ther" [(ngModel)]="createEvent.title"></ion-input> -->
-      <ion-item>
-        <ion-label position="floating">Event Name</ion-label>
-        <ion-input [(ngModel)]="createEvent.title" name="title" required></ion-input>
-      </ion-item>
+      </div>
 
-      <label class="label"  for="image">Description:</label>
-      <ion-textarea class="ther" [(ngModel)]="createEvent.description"></ion-textarea>
+      <label class="label" for="image">Event Name:</label>
+      <ion-input class="ther" name="title" [(ngModel)]="createEvent.title"></ion-input>
 
-      <label class="label"  for="image">Location</label>
+      <label class="label" for="image">Description:</label>
+      <ion-textarea class="ther" name="description" [(ngModel)]="createEvent.description"></ion-textarea>
+
+      <label class="label" for="image">Location</label>
       <div class="input-container">
-        <ion-input  class="ther" [(ngModel)]="createEvent.location" id="locationInput"></ion-input>
+        <ion-input class="ther" name="location" [(ngModel)]="createEvent.location" id="locationInput"></ion-input>
       </div>
 
       <br>
@@ -100,16 +57,11 @@
           </ion-item>
         </ion-col>
       </ion-row>
-      
 
       <ion-button id="submitBtn" type="submit" class="custom-btn" [disabled]="buttonClicked || loading">
         <ion-spinner *ngIf="loading"></ion-spinner>
         <span *ngIf="!loading">Create Event</span>
       </ion-button>
-
     </form>
   </div>
 </ion-content>
-<!--  (click)="redirectToEventPage()" -->
-
-
