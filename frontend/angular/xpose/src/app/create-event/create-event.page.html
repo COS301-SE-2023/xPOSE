@@ -41,19 +41,18 @@
       </div>
 
       <label class="label" for="image">Event Name:</label>
-      <ion-input class="ther" [(ngModel)]="createEvent.title" required minlength="2" maxlength="100"></ion-input>
+      <ion-input class="ther" [(ngModel)]="createEvent.title" required minlength="2" maxlength="100" name="event-name"></ion-input>
 
       <ion-label *ngIf="form.controls['event-name']?.invalid && form.controls['event-name']?.touched" color="danger"> Event name is required and must be between 2 and 100 characters long.</ion-label>
 
       <label class="label"  for="image">Description:</label>
-      <ion-textarea class="ther" [(ngModel)]="createEvent.description" required minlength="2" maxlength="150"></ion-textarea>
+      <ion-textarea class="ther" [(ngModel)]="createEvent.description" required minlength="2" maxlength="150" name="event-desc"></ion-textarea>
 
       <ion-label *ngIf="form.controls['description']?.invalid && form.controls['description']?.touched" color="danger">Description is required and must be between 2 and 150 characters long.</ion-label>
 
       <label class="label"  for="image">Location</label>
       <div class="input-container">
-        <ion-input  class="ther" [(ngModel)]="createEvent.location" id="locationInput" required minlength="5" maxlength="100"></ion-input>
-
+        <ion-input  class="ther" [(ngModel)]="createEvent.location" id="locationInput" required minlength="5" maxlength="100" name="loction"></ion-input>
         <ion-label *ngIf="form.controls['location']?.invalid && form.controls['location']?.touched" color="danger">Location is required and must be between 5 and 100 characters long.</ion-label>
       </div>
 
