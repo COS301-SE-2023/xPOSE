@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 
 
 @NgModule({
-  declarations: [SendFriendRequestsComponent],
+  declarations: [],
   imports: [
     CommonModule,
     BrowserModule,

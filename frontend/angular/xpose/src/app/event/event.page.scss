@@ -61,7 +61,10 @@
         color: #fff;
     }
 }
-ion-toolbar {
-    --background: #ff43d6; /* Set the toolbar background color */
-    color: white; /* Set the toolbar text color */
+
+ion-toolbar.custom-toolbar {
+    --background: #ffffff;
+    color: #000000;
+    font-size: 20px;
+    --min-height: 70px;
   }

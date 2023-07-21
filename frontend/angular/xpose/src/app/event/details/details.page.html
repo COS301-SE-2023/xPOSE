@@ -34,7 +34,7 @@
   </ion-card>
   
   <!-- Participants -->
-  <ion-card>
+  <!-- <ion-card>
     <ion-card-header>
       <ion-card-title>Participants</ion-card-title>
     </ion-card-header>
@@ -47,4 +47,25 @@
       </ion-list>
     </ion-card-content>
   </ion-card>
-</ion-content>
+</ion-content> -->
+<h1 class="section-title">Participants</h1>
+<ion-card class="participant-card" *ngFor="let participant of participants">
+  <ion-card-header>
+    <ion-avatar>
+      <ion-img [src]="participant?.avatar_url"></ion-img>
+    </ion-avatar>
+  </ion-card-header>
+  <ion-card-content>
+    <h2 class="participant-name">{{ participant.name }}</h2>
+    <!-- <p class="participant-timestamp">{{ participant?.timestamp }}</p> -->
+    <!-- Add other participant details here if needed -->
+  </ion-card-content>
+  <ion-buttons>
+    <ion-button fill="clear" (click)="removeParticipant(participant)">
+      <ion-icon name="close"></ion-icon>
+    </ion-button>
+    <ion-button fill="clear" (click)="addParticipant(participant)">
+      <ion-icon name="add"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+</ion-card>

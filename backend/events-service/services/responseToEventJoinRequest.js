@@ -4,10 +4,11 @@ const admin = require('firebase-admin');
 
 async function responseToEventJoinRequest(req, res) {
     try {
-        const { uid, request_id, response } = req.body;
+        const { uid } = req.query;
+        const { response } = req.body; // Remove request_id from req.body
 
         // Check if required fields are present in the request body
-        if (!uid || !request_id || !response) {
+        if (!uid || !response) {
             res.status(400).json({ error: 'Invalid request. Required fields are missing.' });
             return;
         }
@@ -61,13 +62,14 @@ async function responseToEventJoinRequest(req, res) {
         // Check if the request is already sent and its response is pending
         const existingRequest = await EventJoinRequest.findOne({
             where: {
-                id: request_id,
+                user_id_fk: user.id,
+                event_id_fk: event.id,
                 response: 'pending',
             },
         });
 
         if (!existingRequest) {
-            res.status(404).json({ error: 'Request does not exist' });
+            res.status(404).json({ error: 'Request does not exist or already processed' });
             return;
         }
 
