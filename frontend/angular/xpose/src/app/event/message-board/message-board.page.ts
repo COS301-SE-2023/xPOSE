@@ -8,6 +8,7 @@ import { AngularFirestore, AngularFirestoreCollection, DocumentChangeAction } fr
 
 interface Message {
   uid: string;
+  displayName?: string; // Add displayName property
   message: string;
   id?: string;
   timestamp?: Date;
@@ -83,7 +84,7 @@ export class MessageBoardPage implements OnInit {
 
         this.http.post(`http://localhost:8000/c/chats/${event_id}?uid=${uid}`, formData).subscribe((res) => {
           console.log('Message sent successfully');
-          this.messages.push(message);
+          // this.messages.push(message);
         });
       });
       
@@ -93,8 +94,28 @@ export class MessageBoardPage implements OnInit {
   retrieveMessages() {
     this.messagesCollection.valueChanges().subscribe((messages: Message[]) => {
       this.messages = messages;
+  
+      // Fetch and assign the displayName for each message
+      this.messages.forEach((message: Message) => {
+        this.getUserNameFromUid(message.uid).subscribe((displayName: string) => {
+          message.displayName = displayName;
+        });
+      });
     });
   }
+  
+  getUserNameFromUid(uid: string): Observable<string> {
+    return this.afs.collection('Users').doc(uid).valueChanges().pipe(
+      map((user: any) => {
+        if (user && user.displayName) {
+          return user.displayName;
+        } else {
+          return 'Unknown User';
+        }
+      })
+    );
+  }
+  
 
   getCurrentUserId(): Observable<string> {
     return this.afAuth.authState.pipe(
@@ -110,5 +131,5 @@ export class MessageBoardPage implements OnInit {
       }
       })
     );
-    }
+  }
 }
