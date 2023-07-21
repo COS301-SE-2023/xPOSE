@@ -41,8 +41,8 @@ export function receiveMessageFromQueue(queue) {
 
 }
 
-// const queueName = 'notifications';
-// receiveMessageFromQueue(queueName);
+const queueName = 'notifications';
+receiveMessageFromQueue(queueName);
 
 
 
