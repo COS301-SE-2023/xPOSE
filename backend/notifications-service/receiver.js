@@ -22,17 +22,34 @@ export function receiveMessageFromQueue(queue) {
                     durable: false
                 });
     
-                console.log("Waiting for messages...");
+                // console.log("Waiting for messages...");
                 channel.consume(queue, function (msg) {
-                    if (msg !== null){
+                    if (msg !== null) {
                         const jsonString = msg.content.toString();
                         const message = JSON.parse(jsonString);
     
                         // console.log(`[x] Received ${jsonString} from ${queue} queue`);
                         // console.log('Parsed Message:', message);
-                         
                         resolve(message);
-                    }
+
+                          // Close the channel after receiving and processing the message
+                        channel.close((error) => {
+                        if (error) {
+                            console.error("Error closing the channel:", error);
+                        } else {
+                            console.log("Channel closed.");
+                        }
+                        
+                        // Close the connection after closing the channel
+                        connection.close((connError) => {
+                            if (connError) {
+                              console.error("Error closing the connection:", connError);
+                            } else {
+                              console.log("Connection closed.");
+                            }
+                          });
+                        });
+                      }
                 }, {
                     noAck: true
                 });

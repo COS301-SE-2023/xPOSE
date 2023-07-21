@@ -242,23 +242,9 @@ export const getFriend = async (req, res) => {
 export const sendFriendRequest = async (req, res) => {
     try {
       const { userId, requestId } = req.params;
-      // Get the sender and recipient user documents
-      // const senderDoc = await admin.firestore().collection('Users').doc(userId).get();
-      // const recipientDoc = await admin.firestore().collection('Users').doc(requestId).get();
-  
-      // Check if sender and recipient exist
-      // if (!senderDoc.exists || !recipientDoc.exists) {
-        // return res.status(404).json({ error: 'Sender or recipient not found' });
-      // }
-  
-      // Create friend request object
-      // const friendRequest = {
-        // senderId: userId,
-        // recipientId: requestId,
-        // status: 'pending'
-      // };
+      const {username} = req.body;
       
-      
+      // send friemd request
       // await Friend_request.create({
       //   friend_a_id: userId,
       //   friend_b_id: requestId,
@@ -271,7 +257,7 @@ export const sendFriendRequest = async (req, res) => {
           from: 'user_service',
           type: 'friend_request',
           data: {
-              message: ' you have a new friend request',
+              message: `New friend request from ${username}`,
               senderId: userId,
               receiverId: requestId,
               timestamp: Date.now(),
@@ -279,9 +265,8 @@ export const sendFriendRequest = async (req, res) => {
           },
           responses: ['accepted', 'rejected']
       };
-      sendMessageToQueue(queueName, message);
-      
-      
+    
+        sendMessageToQueue(queueName, message);
       // finallly message feedback
       res.status(200).json({ message: `Friend request sent successfully to user with id ${requestId}` });
     } catch (error) {
