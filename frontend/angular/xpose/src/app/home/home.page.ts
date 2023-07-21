@@ -98,6 +98,7 @@ export class HomePage {
   cards: any[] = [
 
   ];
+
 	search() {
 		this.router.navigateByUrl('/search');
 	}
