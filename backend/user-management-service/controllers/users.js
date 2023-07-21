@@ -4,7 +4,7 @@ import { messaging } from "../server.js";
 import User from '../DB/models/user.table.js';
 import Friend_request from '../DB/models/friend_request.table.js';
 import Friendship from '../DB/models/friendship.table.js';
-import RabbitMQProducer from '../../message broker/sender.js';
+// import RabbitMQProducer from '../../message broker/sender.js';
 
 
 let users = [];
@@ -265,8 +265,9 @@ export const sendFriendRequest = async (req, res) => {
       });
       */
 
+      
       // Communicate with the notification service
-      (async () => {
+      /*(async () => {
         const producer = new RabbitMQProducer();
         try {
             await producer.connect();
@@ -275,12 +276,20 @@ export const sendFriendRequest = async (req, res) => {
             const timestamp = `${now.toLocaleDateString()} ${now.toLocaleTimeString()}`;
             console.log("Friend request sent at "+ timestamp);
             let response = "pending" 
+            // let msg = `{
+            //   notificationType: 'friendRequest',
+            //   userId: ${userId},
+            //   requestId: ${requestId},
+            //   timestamp: ${timestamp},
+            //   status: ${response}
+            // }`;
+
             let msg = `{
               notificationType: 'friendRequest',
-              userId: ${userId},
-              requestId: ${requestId},
+              userId: '1234',
+              requestId: '4444',
               timestamp: ${timestamp},
-              status: ${response}
+              status: 'pending'
             }`;
 
             await producer.sendMessage('notifications', msg);
@@ -290,11 +299,9 @@ export const sendFriendRequest = async (req, res) => {
         } catch (error) {
             console.error('Error:', error);
         }
-      })();
-
-
+      })();*/
       
-
+      
       // finallly message feedback
       res.status(200).json({ message: `Friend request sent successfully to user with id ${requestId}` });
     } catch (error) {
