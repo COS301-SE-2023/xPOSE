@@ -30,7 +30,7 @@ export function sendMessageToQueue(queue, msg) {
             connection.close();
             console.log('Connection closed...');
             // process.exit(0);
-        }, 500);
+        }, 1000);
 
     });
 }
@@ -41,8 +41,8 @@ export function sendMessageToQueue(queue, msg) {
 //     type: 'friend_request',
 //     data: {
 //         message: ' you have a new friend request',
-//         userId: '12345222',
-//         requestId: '4343',
+//         senderId: '4444',
+//         receiverId: '4343',
 //         timestamp: Date.now()
 //     },
 //     responses: ['accepted', 'rejected']

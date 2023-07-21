@@ -22,23 +22,26 @@ async function processReceivedMessage() {
             default:
                 console.log('Received an unknown message type');
         }*/
-        
+    
 
     } catch(error){
         console.error("Error while receiving message", error);
     }
 }
 
-// Process message
 processReceivedMessage();
+// Set up an interval to periodically check for new messages in the queue
+const intervalTime = 10000; // 5 seconds (adjust this as needed)
+setInterval(processReceivedMessage, intervalTime);
 
 export function handleNotification(message) {
+    console.log("Listening to incoming messages...")
     // Extract required data from the message
     const {responses, userId, data } = message;
 
     // Store the message in the Notification collection
     const db = admin.firestore();
-    const notificationRef = db.collection('Notifications').doc(data.userId);
+    const notificationRef = db.collection('Notifications').doc(data.senderId);
     // Store the message in the MyNotifications subcollection
     notificationRef.collection('MyNotifications').add(data)
             .then(()=> {
