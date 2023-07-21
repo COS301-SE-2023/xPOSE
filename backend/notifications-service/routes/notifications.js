@@ -1,32 +1,9 @@
 import express from 'express';
+import { receiveMessageFromQueue } from '../receiver.js';
 // import { } from '../controllers/notifications.js';
 
-import RabbitMQConsumer from  '../../message broker/receiver.js';
-(async () => {
-      const consumer = new RabbitMQConsumer('notificationsQueue');
-      try {
-          await consumer.connect();
-          console.log('Notification service Waiting for messages...');
-    
-          consumer.consume((message) => {
-              console.log('Received message:', message);
-              // treat message received
-              try{
-                const data = JSON.parse(message.content.toString());
-                console.log('Processed Data:', data);
-              } catch(error){
-                console.error('Error processing message:', error);
-              }
-
-                // Keep the consumer running indefinitely, or you can set a timeout to close the connection.
-                // acknowledge message received
-                consumer.acknowledge(message);
-          });
-    
-      } catch (error) {
-          console.error('Error:', error);
-      }
-    })();
+const queueName = 'notifications';
+receiveMessageFromQueue(queueName);
 
 const router = express.Router();
 
