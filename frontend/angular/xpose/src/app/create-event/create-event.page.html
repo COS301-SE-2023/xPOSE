@@ -9,10 +9,10 @@
 
 
 <ion-content [fullscreen]="true" id="main-content">
-    <ion-grid>
-         <ion-row >
-           <ion-col size="6">
-               <ion-radio-group value="privacy" name="privacy_setting" [(ngModel)]="createEvent.privacy_setting">
+          <ion-grid>
+            <ion-row >
+              <ion-col size="6">
+                <ion-radio-group value="privacy" name="privacy_setting" [(ngModel)]="createEvent.privacy_setting">
                   <ion-item class="item1">
                     <ion-label>Public</ion-label>
                     <ion-radio value="public"></ion-radio>
@@ -38,17 +38,9 @@
 
       <label class="label" for="image">Event Name:</label>
       <ion-input class="ther" name="title" [(ngModel)]="createEvent.title"></ion-input>
-      <div *ngIf="form.submitted && form.controls['title']?.errors?.['required']" class="error-message">
-        Event Name is required.
-      </div>
 
       <label class="label" for="image">Description:</label>
       <ion-textarea class="ther" name="description" [(ngModel)]="createEvent.description"></ion-textarea>
-      <div *ngIf="form.submitted && form.controls['description']?.errors?.['required']" class="error-message">
-        Description is required.
-      </div>
-
-
 
       <label class="label" for="image">Location</label>
       <div class="input-container">
