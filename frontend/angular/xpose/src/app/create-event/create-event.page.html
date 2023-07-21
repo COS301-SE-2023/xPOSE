@@ -43,13 +43,23 @@
         <!-- </ion-item> -->
       <!-- </ion-item> -->
 
-      <label class="label"  for="image">Upload Cover Page Image:</label>
+      <!-- image input -->
+      <ion-item>
+        <ion-label >Upload Cover Page Image</ion-label>
+        <ion-input type="file" accept="image/*" (change)="onFileSelected($event)" name="image" required></ion-input>
+      </ion-item>
+      <!-- <label class="label"  for="image">Upload Cover Page Image:</label>
       <div class="input-container">
         <input type="file" accept="image/*" (change)="onFileSelected($event)" name="image" id="image">
-      </div>
-
-      <label class="label" for="image">Event Name:</label>
-      <ion-input class="ther" [(ngModel)]="createEvent.title"></ion-input>
+      </div> -->
+      
+        <!-- <title name -->
+      <!-- <label class="label" for="image">Event Name:</label>
+      <ion-input class="ther" [(ngModel)]="createEvent.title"></ion-input> -->
+      <ion-item>
+        <ion-label position="floating">Event Name</ion-label>
+        <ion-input [(ngModel)]="createEvent.title" name="title" required></ion-input>
+      </ion-item>
 
       <label class="label"  for="image">Description:</label>
       <ion-textarea class="ther" [(ngModel)]="createEvent.description"></ion-textarea>
@@ -69,7 +79,7 @@
         <!-- Start date -->
         <ion-col size="6">
           <ion-item>
-            <p class="p">Start Date</p>
+            <p>Start Date</p>
             <ion-input
               type="date"
               [(ngModel)]="createEvent.start_date"
@@ -81,7 +91,7 @@
         <!-- End date -->
         <ion-col size="6">
           <ion-item>
-            <p class="p">End Date</p>
+            <p>End Date</p>
             <ion-input
               type="date"
               [(ngModel)]="createEvent.end_date"
