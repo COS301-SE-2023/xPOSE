@@ -10,17 +10,20 @@ import RabbitMQConsumer from  '../../message broker/receiver.js';
     
           consumer.consume((message) => {
               console.log('Received message:', message);
+              console.log("Message properties:", Object.keys(message));
               // treat message received
               try{
-                const data = JSON.parse(message.content.toString());
-                console.log('Processed Data:', data);
-              } catch(error){
-                console.error('Error processing message:', error);
-              }
+                // const data = JSON.parse(message.content);
+                console.log(Object.prototype.toString.call(message));
+              
+                console.log(message.notificationType);
+                // consumer.ack(message);
 
-                // Keep the consumer running indefinitely, or you can set a timeout to close the connection.
-                // acknowledge message received
-                consumer.acknowledge(message);
+            } catch(error){
+                console.error('Error processing message:', error);
+            }
+          }, {
+                noAck: true
           });
     
       } catch (error) {
