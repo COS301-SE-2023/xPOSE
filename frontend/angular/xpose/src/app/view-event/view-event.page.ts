@@ -32,6 +32,47 @@ export class ViewEventPage implements OnInit, AfterViewInit {
     this.event_id = this.route.snapshot.paramMap.get('id');
     console.log(this.event_id);
     this.getEventDataFromAPI();
+    this.getEventParticipantsFromAPI();
+  }
+
+
+  // getEventDataFromAPI() {
+  //   this.getCurrentUserId().subscribe((uid) => {
+  //     if (uid) {
+  //       this.http
+  //         .get(`http://localhost:8000/e/events/${this.event_id}?uid=${uid}`)
+  //         .subscribe((data) => {
+  //           this.event = data;
+
+            
+            
+
+  //           console.log(data);
+  //           // Call initMap() after the event object has been fetched and contains the required properties.
+  //           this.initMap();
+  //         });
+          
+  //     } else {
+  //       console.log('no user id');
+  //     }
+  //   });
+  // }
+  getEventParticipantsFromAPI() {
+    this.getCurrentUserId().subscribe((uid) => {
+      if(uid) {
+        this.http
+          .get(`http://localhost:8000/e/events/${this.event_id}/participants?uid=${uid}`)
+          .subscribe((data) => {
+            this.event.participants = data;
+
+            // this.event.participants.forEach((participant: any) => {
+            //   participant.since_joining = this.formatDateSinceJoining(participant.join_date);
+            // });
+
+            console.log(data);
+          });
+      }
+    });
   }
 
   getEventDataFromAPI() {
@@ -41,8 +82,27 @@ export class ViewEventPage implements OnInit, AfterViewInit {
           .get(`http://localhost:8000/e/events/${this.event_id}?uid=${uid}`)
           .subscribe((data) => {
             this.event = data;
+  
+            // // Dummy participant data for demonstration purposes
+            // this.event.participants = [
+            //   {
+            //     username: 'participant1',
+            //     name: 'Participant One',
+            //     description: 'Participant 1 description.',
+            //   },
+            //   {
+            //     username: 'participant2',
+            //     name: 'Participant Two',
+            //     description: 'Participant 2 description.',
+            //   },
+            //   {
+            //     username: 'participant3',
+            //     name: 'Participant Three',
+            //     description: 'Participant 3 description.',
+            //   },
+            // ];
+  
             console.log(data);
-            // Call initMap() after the event object has been fetched and contains the required properties.
             this.initMap();
           });
       } else {
@@ -50,6 +110,7 @@ export class ViewEventPage implements OnInit, AfterViewInit {
       }
     });
   }
+  
 
   getCurrentUserId(): Observable<string> {
     return this.afAuth.authState.pipe(
@@ -104,6 +165,107 @@ export class ViewEventPage implements OnInit, AfterViewInit {
     }
   }
 
+  // Function to handle the button click based on the user_event_position
+  handleButtonClick() {
+    switch (this.event?.user_event_position) {
+      case 'owner':
+      case 'participant':
+        this.router.navigate(['/event', this.event.code]);
+        break;
+      case 'invited':
+        this.acceptInvite();
+        break;
+      case 'requested':
+        // No action required for "Requested" state, button is already disabled.
+        break;
+      case 'none':
+        console.log('Will join or request');
+        if (this.event?.privacy_setting === 'public') {
+          this.joinPublicEvent();
+        } else {
+          this.requestPrivateEvent();
+        }
+        break;
+      default:
+        break;
+    }
+  }
+
+    // Function to get the button label based on the user_event_position
+    getButtonLabel(): string {
+      switch (this.event?.user_event_position) {
+        case 'owner':
+        case 'participant':
+          return 'View event';
+        case 'invited':
+          return 'Accept Invite';
+        case 'requested':
+          return 'Requested';
+        case 'none':
+          return this.event?.privacy_setting === 'public' ? 'Join' : 'Request';
+        default:
+          return '';
+      }
+    }
+  
+    // Function to accept the invite (Replace this with your actual API call)
+    acceptInvite() {
+      // Make the API call to accept the invite here
+      console.log('Accepting invite...');
+      this.getCurrentUserId().subscribe((uid) => {
+        if (uid) {
+          const formData = new FormData();
+          formData.append('response', 'accepted'); // will make this dynamic
+          this.http
+            .put(`http://localhost:8000/e/events/${this.event_id}/invite?uid=${uid}`, formData)
+            .subscribe((data) => {
+              console.log(data);
+              this.router.navigate(['/event', this.event.code]);
+            });
+        } else {
+          console.log('no user id');
+        }
+      });
+    }
+  
+    // Function to join a public event (Replace this with your actual API call)
+    joinPublicEvent() {
+      // Make the API call to join the public event here
+      
+      console.log('Joining public event...');
+      this.getCurrentUserId().subscribe((uid) => {
+        if (uid) {
+          const formData = new FormData();
+          formData.append('response', 'accepted'); // will make this dynamic
+          this.http
+            .post(`http://localhost:8000/e/events/${this.event_id}/join?uid=${uid}`, formData)
+            .subscribe((data) => {
+              console.log(data);
+              this.router.navigate(['/event', this.event.code]);
+            });
+        }
+      });
+    }
+  
+    // Function to request to join a private event (Replace this with your actual API call)
+    requestPrivateEvent() {
+      // Make the API call to request to join the private event here
+      console.log('Requesting to join private event...');
+      this.getCurrentUserId().subscribe((uid) => {
+        if(uid) {
+          const formData = new FormData();
+          formData.append('response', 'accepted'); // will make this dynamic
+          this.http
+            .post(`http://localhost:8000/e/events/${this.event_id}/request?uid=${uid}`, formData)
+            .subscribe((data) => {
+              // change the button label to "Request Sent"
+              console.log(data);
+              console.log('Request sent');
+            });
+        }
+      });
+    }
+
   joinAndRedirect() {
     if (this.isJoined) {
       return;
@@ -113,4 +275,18 @@ export class ViewEventPage implements OnInit, AfterViewInit {
 
     this.isJoined = true;
   }
+  removeParticipant(participant: any) {
+    // Handle participant removal logic here
+  
+    // For demonstration, we'll remove the participant from the event object's participants array
+    this.event.participants = this.event.participants.filter((p: any) => p !== participant);
+  }
+  
+  addParticipant(participant: any) {
+    // Handle participant addition logic here
+  
+    // For demonstration, we'll add the participant back to the event object's participants array
+    this.event.participants.push(participant);
+  }
+  
 }
