@@ -13,6 +13,7 @@ export class JoinedEventPage implements OnInit {
   loading: boolean = true;
   events: any[] = []; // Array to store events data
   cards: any[] = []; // Array to store cards data
+  filterType: string = 'Ongoing';
 
   constructor(
     public authService: AuthService,
@@ -133,19 +134,19 @@ export class JoinedEventPage implements OnInit {
       }
   }
   applyFilter() {
-    // if (this.filterType === 'private') {
-    //   this.filteredEvents = this.joinedEvents.filter((event) => event.type === 'private');
-    // } else if (this.filterType === 'public') {
-    //   this.filteredEvents = this.joinedEvents.filter((event) => event.type === 'public');
-    // } else {
-    //   this.filteredEvents = this.joinedEvents; // No filter applied
-    // }
+    if (this.filterType === 'Ongoing') {
+      this.cards = this.events.filter((event) => new Date(event.start_date) <= new Date() && new Date(event.end_date) >= new Date());
+    } else if (this.filterType === 'Upcoming') {
+      this.cards = this.events.filter((event) => new Date(event.start_date) > new Date());
+    } else if (this.filterType === 'Ended') {
+      this.cards = this.events.filter((event) => new Date(event.end_date) < new Date());
+    }
+  }
   
-  }
-  filterType(){
-    //implement filter
-    
-  }
+  // applyFilter() {
+  //   this.applyFilter();
+  // }
+  
   eventDetails() {
 		this.router.navigate(['/event']);
 	}
