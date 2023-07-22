@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search',
@@ -25,7 +26,7 @@ export class SearchPage implements OnInit {
   filteredItems: any[] = [];
   showSuggestions: boolean = true;
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit() {
     // Initialize the filteredItems with all events on page load
@@ -67,5 +68,6 @@ export class SearchPage implements OnInit {
 
   closeSearchPage() {
     // Implement the function to close the search page if needed
+    this.router.navigate(['/home']);
   }
 }
