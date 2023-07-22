@@ -288,9 +288,19 @@ export class ViewEventPage implements OnInit, AfterViewInit {
     // For demonstration, we'll add the participant back to the event object's participants array
     this.event.participants.push(participant);
   }
+  // participantDetails(participant: any)
   
+  onCardClick(participant: any) {
+    // Handle card click logic here
+    console.log('Card clicked');
+    console.log(participant);
+    this.router.navigateByUrl('/user-profile')
+    // this.router.navigate(['/participant', participant.id]);
 
-  //////////////////footer//////////////////////
+  }
+
+  
+  ////////////////footer//////////////////////
   search() {
 		this.router.navigateByUrl('/search');
 	}

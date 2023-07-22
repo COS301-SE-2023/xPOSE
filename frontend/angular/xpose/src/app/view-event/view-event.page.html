@@ -30,7 +30,7 @@
           <p>{{ event?.description }}</p>
 
           <h1 class="section-title">Participants</h1>
-          <ion-card class="participant-card" *ngFor="let participant of event?.participants">
+          <ion-card class="participant-card" *ngFor="let participant of event?.participants" (click)="onCardClick(participant)">
             <ion-card-header>
               <ion-avatar>
                 <ion-img [src]="participant?.avatar_url"></ion-img>
