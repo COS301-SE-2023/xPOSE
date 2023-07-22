@@ -80,7 +80,7 @@ export class JoinedEventPage implements OnInit {
             id: 'event2',
             createdAt: '2023-07-02T12:00:00Z',
             start_date: '2023-07-15T10:00:00Z',
-            end_date: '2023-010-15T16:00:00Z',
+            end_date: '2023-10-15T16:00:00Z',
           },
           // Add more mock events as needed
         ];
