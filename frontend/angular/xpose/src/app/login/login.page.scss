@@ -1,8 +1,11 @@
 ion-toolbar {
-  --background: rgba(185, 76, 76, 0.55);
+  --background: rgba(255, 255, 255, 0.55);
 }
 
-
+.custom-background {
+  --background: #000000;
+  background-color: #a50000;
+}
 
 ion-content .main-content{
   --background: #000000;
