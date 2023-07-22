@@ -3,14 +3,15 @@ ion-toolbar {
 }
 
 .custom-background {
-  --background: #000000;
-  background-color: #a50000;
+  --background: #fceeee;
+  background-color: #000000;
+  color: #000000;
 }
 
-ion-content .main-content{
-  --background: #000000;
-  background-color: #a50000;
-}
+// ion-content .main-content{
+//   --background: #ffffff;
+//   background-color: #a50000;
+// }
 
 .centered-title {
   display: block;
@@ -73,6 +74,7 @@ ion-content .main-content{
     width: 100%;
     margin-bottom: 5px;
     max-width: 285px;
+    color: #000000;
   }
 
   .container {
