@@ -11,7 +11,7 @@
 
   <ion-searchbar placeholder="Search"></ion-searchbar>
 
-  <ion-segment [(ngModel)]="filterType">
+  <ion-segment [(ngModel)]="filterType"  (ionChange)="applyFilter()">
     <ion-segment-button value="Ongoing">
       On going
     </ion-segment-button>
