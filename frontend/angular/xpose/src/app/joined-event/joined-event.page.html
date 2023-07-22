@@ -7,7 +7,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" id="main-content">
+<ion-content [fullscreen]="true" id="main-content" class="custom-backround">
 
   <div class="button-container">
     <ion-searchbar placeholder="Search" (click)="search()"></ion-searchbar>
@@ -25,7 +25,7 @@
     </ion-segment-button>
   </ion-segment>
 
-  <ion-list *ngIf="filterType === 'Ongoing'">
+  <ion-list *ngIf="filterType === 'Ongoing'" class="custom-backround">
     <!-- Mock Private Events -->
     <ion-card  *ngFor="let card of cards">
       <img [src]="card.image_url" alt="Card Image" class="card-image">

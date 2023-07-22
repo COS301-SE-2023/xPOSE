@@ -1,12 +1,19 @@
-ion-content#main-content {
-  --background: #ffffff;
-  --ion-background-color: #ffffff;
-  /* Add more custom styles as needed */
-}
+// ion-content#main-content {
+//   --background: #ffffff;
+//   --ion-background-color: #ffffff;
+//   /* Add more custom styles as needed */
+// }
 .logo-image {
   width: 50px;
   height: 50px;
   border-radius: 50%;
+}
+
+.custom-backround{
+  --background: #ffffff;
+  color: #000000;
+  font-size: 20px;
+  // --min-height: 70px;
 }
 
 ion-button {
@@ -104,7 +111,11 @@ ion-item{
   --padding-start: 10px;
   --padding-end: 10px;
   --min-height: 80px;
+  background-color: #000000;
 }
 ion-title{
   color: #000000;
+}
+ion-list{
+  color: #ff0000;
 }
