@@ -72,10 +72,12 @@ ion-card {
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 5px;
+  color: #000000;
 }
 
 .p {
   margin: 0;
+  color: #000000;
 }
 
 .section-title {
@@ -83,6 +85,7 @@ ion-card {
   font-weight: bold;
   margin-top: 20px;
   margin-bottom: 10px;
+  color: #000000;
 }
 
 .participant-card {
@@ -92,10 +95,10 @@ ion-card {
 .join-button {
   margin-top: 20px;
   --background: #cc33a6;
-  --color: #fff;
+  --color: #000000;
 }
 
 .joined {
-  --background: #ccc;
+  --background: #000000;
   pointer-events: none;
 }
