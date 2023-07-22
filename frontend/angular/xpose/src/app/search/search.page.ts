@@ -6,23 +6,30 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./search.page.scss'],
 })
 export class SearchPage implements OnInit {
-  items: any[] = [
-    { name: 'Item 1' },
-    { name: 'Item 2' },
-    { name: 'Item 3' },
-    // Add more items as needed
+  // Define the search types (tabs)
+  searchType: 'events' | 'users' = 'events';
+  events: any[] = [
+    { name: 'Event 1' },
+    { name: 'Event 2' },
+    { name: 'Event 3' },
+    // Add more events as needed
   ];
-
-  suggestedItems: any[] = []; // Suggested data
+  users: any[] = [
+    { name: 'User 1' },
+    { name: 'User 2' },
+    { name: 'User 3' },
+    // Add more users as needed
+  ];
+  suggestedItems: any[] = [];
   searchQuery: string = '';
   filteredItems: any[] = [];
-  showSuggestions: boolean = true; // Show suggested data initially
+  showSuggestions: boolean = true;
 
   constructor() {}
 
   ngOnInit() {
-    // Initialize the filteredItems with all items on page load
-    this.filteredItems = this.items;
+    // Initialize the filteredItems with all events on page load
+    this.filteredItems = this.events;
     // Initialize suggestedItems with some suggested data
     this.suggestedItems = [
       { name: 'Suggested Item 1' },
@@ -34,15 +41,28 @@ export class SearchPage implements OnInit {
 
   onSearch() {
     if (this.searchQuery.trim() !== '') {
-      this.showSuggestions = false; // Hide suggested data when user starts searching
-      // Filter the items based on the searchQuery
-      this.filteredItems = this.items.filter(item =>
-        item.name.toLowerCase().includes(this.searchQuery.toLowerCase())
-      );
+      this.showSuggestions = false;
+      if (this.searchType === 'events') {
+        // Filter the events based on the searchQuery
+        this.filteredItems = this.events.filter(event =>
+          event.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+        );
+      } else if (this.searchType === 'users') {
+        // Filter the users based on the searchQuery
+        this.filteredItems = this.users.filter(user =>
+          user.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+        );
+      }
     } else {
-      this.showSuggestions = true; // Show suggested data when search query is empty
-      this.filteredItems = this.items; // Reset filtered items to show all items
+      this.showSuggestions = true;
+      this.filteredItems = [];
     }
+  }
+
+  onSearchTypeChange() {
+    // Clear the search query and show suggestions when search type changes
+    this.searchQuery = '';
+    this.showSuggestions = true;
   }
 
   closeSearchPage() {
