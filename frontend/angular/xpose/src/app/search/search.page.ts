@@ -1,62 +1,51 @@
-// search.page.ts
-import { Component, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { IonSearchbar, NavController } from '@ionic/angular';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-search',
-  templateUrl: 'search.page.html',
-  styleUrls: ['search.page.scss'],
+  templateUrl: './search.page.html',
+  styleUrls: ['./search.page.scss'],
 })
-export class SearchPage {
-  items = [
+export class SearchPage implements OnInit {
+  items: any[] = [
     { name: 'Item 1' },
     { name: 'Item 2' },
     { name: 'Item 3' },
     // Add more items as needed
   ];
 
-  filteredItems = this.items;
-  searchQuery = '';
+  suggestedItems: any[] = []; // Suggested data
+  searchQuery: string = '';
+  filteredItems: any[] = [];
+  showSuggestions: boolean = true; // Show suggested data initially
 
-  @ViewChild('searchBar', { static: false }) searchBar: IonSearchbar | undefined;
+  constructor() {}
 
-  constructor(
-    private route: ActivatedRoute,
-    private navCtrl: NavController
-  ) {}
-
-  ionViewDidEnter() {
-    this.route.queryParams.subscribe((params) => {
-      this.searchQuery = params['query'] || '';
-      this.onSearch();
-    });
+  ngOnInit() {
+    // Initialize the filteredItems with all items on page load
+    this.filteredItems = this.items;
+    // Initialize suggestedItems with some suggested data
+    this.suggestedItems = [
+      { name: 'Suggested Item 1' },
+      { name: 'Suggested Item 2' },
+      { name: 'Suggested Item 3' },
+      // Add more suggested items as needed
+    ];
   }
 
   onSearch() {
-    const searchQuery = this.searchQuery.toLowerCase();
-
-    if (!searchQuery) {
-      this.filteredItems = this.items;
-      return;
-    }
-
-    this.filteredItems = this.items.filter((item) =>
-      item.name.toLowerCase().includes(searchQuery)
-    );
-  }
-
-  closeSearchBar() {
-    if (this.searchBar) {
-      this.searchBar.value = '';
-      this.searchBar.getInputElement().then((input: HTMLInputElement) => {
-        input.blur();
-      });
+    if (this.searchQuery.trim() !== '') {
+      this.showSuggestions = false; // Hide suggested data when user starts searching
+      // Filter the items based on the searchQuery
+      this.filteredItems = this.items.filter(item =>
+        item.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+      );
+    } else {
+      this.showSuggestions = true; // Show suggested data when search query is empty
+      this.filteredItems = this.items; // Reset filtered items to show all items
     }
   }
 
   closeSearchPage() {
-    this.closeSearchBar();
-    this.navCtrl.pop();
+    // Implement the function to close the search page if needed
   }
 }
