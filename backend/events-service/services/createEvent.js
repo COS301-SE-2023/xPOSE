@@ -39,6 +39,9 @@ async function createEvent(req, res) {
         if (imageFile) {
             image_url = await uploadImageToFirebase(uid, imageFile);
         }
+        else{
+            image_url = "https://e0.pxfuel.com/wallpapers/286/336/desktop-wallpaper-random-things-i-cant-explain-eggdog.jpg";
+        }
 
         // Build the event object
         const event = await Event.create({
