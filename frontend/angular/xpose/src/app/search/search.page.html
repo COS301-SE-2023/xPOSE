@@ -1,6 +1,14 @@
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <!-- Condensed header content -->
+  <ion-header [translucent]="true">
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/home"></ion-back-button>
+      </ion-buttons>
+      <ion-title>Search</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="closeSearchPage()">Close</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
   </ion-header>
 
   <ion-segment [(ngModel)]="searchType" (ionChange)="onSearchTypeChange()">
