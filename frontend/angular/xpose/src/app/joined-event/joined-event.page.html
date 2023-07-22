@@ -23,7 +23,7 @@
     </ion-segment-button>
   </ion-segment>
 
-  <ion-list *ngIf="filterType === 'private'">
+  <ion-list *ngIf="filterType === 'Ongoing'">
     <!-- Mock Private Events -->
     <ion-card  *ngFor="let card of cards">
       <img [src]="card.image_url" alt="Card Image" class="card-image">
@@ -43,7 +43,7 @@
     </ion-card>
   </ion-list>
 
-  <ion-list *ngIf="filterType === 'public'">
+  <ion-list *ngIf="filterType === 'Upcoming'">
     <!-- Mock Public Events -->
     <ion-card  *ngFor="let card of cards">
       <img [src]="card.image_url" alt="Card Image" class="card-image">
@@ -64,7 +64,7 @@
     </ion-card>
   </ion-list>
 
-    <ion-list *ngIf="filterType === 'public'">
+    <ion-list *ngIf="filterType === 'Ended'">
     <!-- Mock Public Events -->
     <ion-card  *ngFor="let card of cards">
       <img [src]="card.image_url" alt="Card Image" class="card-image">
