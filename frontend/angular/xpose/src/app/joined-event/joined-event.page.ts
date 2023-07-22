@@ -24,6 +24,12 @@ export class JoinedEventPage implements OnInit {
     this.getEventsFromMockData();
   }
 
+    // Function to handle the card button click
+  onCardButtonClick(eventId: string) {
+    // Redirect to event details page with the event ID as a query parameter
+    this.router.navigate(['/view-event'], { queryParams: { id: eventId } });
+  }
+
   // Get events from mock data and display
   getEventsFromMockData() {
     this.getCurrentUserId().subscribe((uid) => {
@@ -95,10 +101,9 @@ export class JoinedEventPage implements OnInit {
         start_date: event.start_date,
         end_date: event.end_date,
         // Add event listener to the button
-        buttonClick: function() {
+        buttonClick: () => {
           // Redirect to event details page
-          console.log("Redirecting to event details page: ", event.id);
-          // window.location.href = "/view-event/" + event.id;
+          this.onCardButtonClick(event.id);
         },
       }));
     }
@@ -128,13 +133,13 @@ export class JoinedEventPage implements OnInit {
       }
   }
   applyFilter() {
-  //   if (this.filterType === 'private') {
-  //     this.filteredEvents = this.joinedEvents.filter((event) => event.type === 'private');
-  //   } else if (this.filterType === 'public') {
-  //     this.filteredEvents = this.joinedEvents.filter((event) => event.type === 'public');
-  //   } else {
-  //     this.filteredEvents = this.joinedEvents; // No filter applied
-  //   }
+    // if (this.filterType === 'private') {
+    //   this.filteredEvents = this.joinedEvents.filter((event) => event.type === 'private');
+    // } else if (this.filterType === 'public') {
+    //   this.filteredEvents = this.joinedEvents.filter((event) => event.type === 'public');
+    // } else {
+    //   this.filteredEvents = this.joinedEvents; // No filter applied
+    // }
   
   }
   filterType(){
