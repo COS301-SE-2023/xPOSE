@@ -292,8 +292,8 @@ export class ViewEventPage implements OnInit, AfterViewInit {
   
   onCardClick(participant: any) {
     // Handle card click logic here
-    console.log('Card clicked');
-    console.log(participant);
+    // console.log('Card clicked');
+    // console.log(participant);
     this.router.navigateByUrl('/user-profile')
     // this.router.navigate(['/participant', participant.id]);
 
