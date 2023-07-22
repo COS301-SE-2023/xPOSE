@@ -165,6 +165,9 @@ export class JoinedEventPage implements OnInit {
     }
   }
   
+  search() {
+		this.router.navigateByUrl('/search');
+	}
   
   eventDetails() {
 		this.router.navigate(['/event']);

@@ -9,7 +9,9 @@
 
 <ion-content [fullscreen]="true" id="main-content">
 
-  <ion-searchbar placeholder="Search"></ion-searchbar>
+  <div class="button-container">
+    <ion-searchbar placeholder="Search" (click)="search()"></ion-searchbar>
+  </div>
 
   <ion-segment [(ngModel)]="filterType"  (ionChange)="applyFilter()">
     <ion-segment-button value="Ongoing">
