@@ -89,3 +89,10 @@ ion-content .main-content{
 ion-buttons{
   color: #000000;
 }
+ion-toolbar.custom-toolbar {
+  --background: #ffffff;
+  color: #000000;
+  font-size: 20px;
+  /* Add more custom styles as needed */
+  --min-height: 70px;
+}
