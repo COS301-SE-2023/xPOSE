@@ -23,7 +23,7 @@
     </ion-segment-button>
   </ion-segment>
 
-  <!-- <ion-list *ngIf="filterType === 'private'"> -->
+  <ion-list *ngIf="filterType === 'private'">
     <!-- Mock Private Events -->
     <ion-card  *ngFor="let card of cards">
       <img [src]="card.image_url" alt="Card Image" class="card-image">
@@ -41,9 +41,9 @@
         View eventt
       </ion-button>
     </ion-card>
-  <!-- </ion-list> -->
+  </ion-list>
 
-  <!-- <ion-list *ngIf="filterType === 'public'"> -->
+  <ion-list *ngIf="filterType === 'public'">
     <!-- Mock Public Events -->
     <ion-card  *ngFor="let card of cards">
       <img [src]="card.image_url" alt="Card Image" class="card-image">
@@ -62,9 +62,9 @@
         View eventt
       </ion-button>
     </ion-card>
-  <!-- </ion-list> -->
+  </ion-list>
 
-    <!-- <ion-list *ngIf="filterType === 'public'"> -->
+    <ion-list *ngIf="filterType === 'public'">
     <!-- Mock Public Events -->
     <ion-card  *ngFor="let card of cards">
       <img [src]="card.image_url" alt="Card Image" class="card-image">
@@ -83,7 +83,7 @@
         View eventt
       </ion-button>
     </ion-card>
-  <!-- </ion-list> -->
+  </ion-list>
 
 </ion-content>
 

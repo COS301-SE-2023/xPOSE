@@ -143,9 +143,6 @@ export class JoinedEventPage implements OnInit {
     }
   }
   
-  // applyFilter() {
-  //   this.applyFilter();
-  // }
   
   eventDetails() {
 		this.router.navigate(['/event']);
