@@ -64,6 +64,27 @@
     </ion-card>
   <!-- </ion-list> -->
 
+    <!-- <ion-list *ngIf="filterType === 'public'"> -->
+    <!-- Mock Public Events -->
+    <ion-card  *ngFor="let card of cards">
+      <img [src]="card.image_url" alt="Card Image" class="card-image">
+      <ion-card-header class="card-title">
+        <ion-card-title class="header">{{ card.title }}</ion-card-title>
+        <ion-card-content>
+            {{card.longitude}} {{card.latitude}}
+        </ion-card-content>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-icon name="location"></ion-icon>
+        {{ card.description }}
+      </ion-card-content>
+      <ion-button class="button-style"  (click)="	eventDetails()">
+        <!-- {{ card.button }} -->
+        View eventt
+      </ion-button>
+    </ion-card>
+  <!-- </ion-list> -->
+
 </ion-content>
 
 <ion-footer>
