@@ -7,18 +7,24 @@ ion-toolbar.custom-toolbar {
   --min-height: 70px;
 }
 
+.custom-backround{
+  --background: #ffffff;
+  color: #000000;
+  font-size: 20px;
+  // --min-height: 70px;
+}
+
 /* home.page.scss */
 .search-modal {
-  // Add your custom styles here
-
   // Example styles:
   width: 80%;
   height: 80%;
   max-width: 400px;
   max-height: 600px;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: white;
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+  background-color: rgb(196, 75, 75);
+  background-color: #ea00ff;
 }
 
 
@@ -51,27 +57,7 @@ ion-title {
   font-family: 'Pacifico', sans-serif;
   font-size: 25px;
 }
-// ion-card .button-style {
-//   --color: #ffffff;
-//   --background: #ea00ff;
-//   --box-shadow: none;
-//   --padding-start: 10px;
-//   --padding-end: 10px;
-//   --margin-top: 10px;
-//   --margin-bottom: 10px;
-//   --margin-start: 10px;
-//   --margin-end: 10px;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   font-size: 20px;
-//   font-family: "Helvetica", sans-serif; /* Replace "Arial" with your preferred font or a web-safe font */
-//   --ripple-color: rgb(250, 160, 208);
-//   --padding-top: 25px;
-//   --padding-bottom: 29px;
-//   --border-radius: 10px;
-//   --box-shadow: #000000;
-// }
+
 ion-card .button-style {
   --color: #ffffff;
   --background: linear-gradient(135deg, #ff0066, #ea00ff);
@@ -140,5 +126,12 @@ ion-label{
 }
 ion-content .main-content{
   --background: #ffffff;
+  background-color: #ffffff;
+}
+.button-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ff0066;
   background-color: #ffffff;
 }
