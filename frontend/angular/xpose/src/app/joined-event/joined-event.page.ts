@@ -43,7 +43,7 @@ export class JoinedEventPage implements OnInit {
             description: 'Description of Event 1',
             latitude: 40.7128,
             longitude: -74.0060,
-            image_url: 'https://example.com/event1.jpg',
+            image_url: 'assets/images/download.jpg',
             id: 'event1',
             createdAt: '2023-07-01T12:00:00Z',
             start_date: '2023-07-10T18:00:00Z',

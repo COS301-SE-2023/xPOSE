@@ -1,3 +1,11 @@
+.custom-backround{
+  --background: #ffffff;
+  color: #000000;
+  font-size: 20px;
+  // --min-height: 70px;
+}
+
+
 /* Add your custom styles here */
 /* view-event.page.scss */
 ion-card {
@@ -37,7 +45,7 @@ ion-card {
 
   .participant-timestamp {
     font-size: 14px;
-    color: #999; /* Timestamp color */
+    color: #000000; /* Timestamp color */
   }
 }
 
