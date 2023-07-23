@@ -45,10 +45,10 @@ const Event = sequelize.define('event', {
     type: Sequelize.TEXT,
     allowNull: false,
   },
-  // location: {
-  //   type: Sequelize.STRING,
-  //   allowNull: false,
-  // },
+  location: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
   privacy_setting: {
     type: Sequelize.STRING,
     allowNull: false,
