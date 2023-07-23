@@ -2,7 +2,7 @@ import express from 'express';
 import bodyParser from  'body-parser';
 import userRoute from './routes/users.js';
 import admin from "firebase-admin";
-import serviceAccount from "./DB/credentials/serviceAccountKey.json" assert { type: "json" };
+import serviceAccount from "./data-access/credentials/serviceAccountKey.json" assert { type: "json" };
 import initializeSQLDB from './index.js'; 
 
 admin.initializeApp({
