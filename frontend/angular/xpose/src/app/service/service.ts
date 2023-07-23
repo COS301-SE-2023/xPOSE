@@ -15,7 +15,6 @@ export class Service {
     })
   }
     constructor(private httpClient: HttpClient) { 
-    constructor(private httpClient: HttpClient) { 
   }
 
   CreateEvent(event:any): Observable<any>{

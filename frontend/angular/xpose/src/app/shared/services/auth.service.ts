@@ -10,10 +10,6 @@ import { HttpClient } from "@angular/common/http";
 import { HttpHeaders } from '@angular/common/http';
 import { map } from "rxjs";
 import { Observable } from "rxjs";
-import { HttpClient } from "@angular/common/http";
-import { HttpHeaders } from '@angular/common/http';
-import { map } from "rxjs";
-import { Observable } from "rxjs";
 
 
 @Injectable({
@@ -28,19 +24,15 @@ export class AuthService {
       public router: Router,
       public ngZone: NgZone, // remove outside scope warning
       private http: HttpClient // inject HttpClient for making HTTP requests
-      public ngZone: NgZone, // remove outside scope warning
-      private http: HttpClient // inject HttpClient for making HTTP requests
   ) {
   
   }
 
   // sign in with email/password
   signIn(email: string, password: string): Promise<void> {
-  signIn(email: string, password: string): Promise<void> {
     return this.afAuth
       .signInWithEmailAndPassword(email, password)
       .then((result) => {
-        // this.setUserData(result.user);
         // this.setUserData(result.user);
         this.afAuth.authState.subscribe((user) => {
           if (user) {
@@ -71,37 +63,7 @@ export class AuthService {
     // console.log("User data:::::", signUpData);
     const requestBody = JSON.stringify(signUpData);
     // console.log("User data stringified:::::", requestBody);
-  signUp(email: string, password: string, username: string): Promise<any> {
-    const signUpData = {
-      displayName: username,
-      email: email,
-      password: password,
-      emailVerified: false,
-      privacy:false,
-      bio:" Default bio",
-      fcmTokens: [],
-      photoObject:{}
-    };
-    
-    // console.log("User data:::::", signUpData);
-    const requestBody = JSON.stringify(signUpData);
-    // console.log("User data stringified:::::", requestBody);
 
-    const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    return this.http.post<any>("http://localhost:8000/u/users", requestBody, {headers})
-    .toPromise()
-    .then((response) => {
-      console.log("signed up successfully",response);
-      // Handle success response here
-      this.router.navigate(['/home']);
-    })
-    .catch((error) => {
-      // Handle error response here
-      // window.alert(error.message);
-      console.log("Error:", error);
-      // console.log("Response body:", error.error);
-      return Promise.reject(error);
-    });
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     return this.http.post<any>("http://localhost:8000/u/users", requestBody, {headers})
     .toPromise()
@@ -203,24 +165,6 @@ export class AuthService {
 		  })
 		);
 	}
-	  
-
-
-  getCurrentUserId(): Observable<string> {
-		return this.afAuth.authState.pipe(
-		  map((user) => {
-			if (user) {
-			  return user.uid;
-			} else {
-				// throw error
-				// some extra stuff
-			  console.log('No user is currently logged in.');
-			  return '';
-			}
-		  })
-		);
-	}
-	  
 
   // Sign out
   signOut(): Promise<void> {
