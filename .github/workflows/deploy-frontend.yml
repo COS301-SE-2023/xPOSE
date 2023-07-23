@@ -13,14 +13,31 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v3
         with:
-          node: 16
+          node-version: '16'
+
       - name: Install Angular CLI
         run: npm install -g @angular/cli
 
       - name: Installing dependencies
         working-directory: frontend/angular/xpose
         run: npm install
-      
+        
+      - name: Run the Configuration Script
+        working-directory: frontend/angular/xpose/src/environments/
+        env:
+          FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
+          FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
+          FIREBASE_DATABASE_URL: ${{ secrets.FIREBASE_DATABASE_URL }}
+          FIREBASE_STORAGE_BUCKET: ${{ secrets.FIREBASE_STORAGE_BUCKET }}
+          FIREBASE_LOCATION_ID: ${{ secrets.FIREBASE_LOCATION_ID }}
+          FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
+          FIREBASE_AUTH_DOMAIN: ${{ secrets.FIREBASE_AUTH_DOMAIN }}
+          FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}
+          FIREBASE_MEASUREMENT_ID: ${{ secrets.FIREBASE_MEASUREMENT_ID }}
+          FIREBASE_VAPID_KEY: ${{ secrets.FIREBASE_VAPID_KEY }}
+          GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
+        run: node config.index.js $FIREBASE_PROJECT_ID $FIREBASE_APP_ID $FIREBASE_DATABASE_URL $FIREBASE_STORAGE_BUCKET $FIREBASE_LOCATION_ID $FIREBASE_API_KEY $FIREBASE_AUTH_DOMAIN $FIREBASE_MESSAGING_SENDER_ID $FIREBASE_MEASUREMENT_ID $FIREBASE_VAPID_KEY $GOOGLE_MAPS_API_KEY
+
       - name: Building Project
         working-directory: frontend/angular/xpose
         run: npm run build
