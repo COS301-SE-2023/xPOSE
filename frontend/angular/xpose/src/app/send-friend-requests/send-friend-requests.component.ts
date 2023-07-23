@@ -64,6 +64,8 @@ export class SendFriendRequestsComponent implements OnInit {
             }
           );
           
+          // console.log("?????: "+ senderName);
+
           this.http.post(endpoint, {username:`${senderName}`}).subscribe(
             (response) => {
               console.log(response);
