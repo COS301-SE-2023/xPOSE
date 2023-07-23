@@ -5,10 +5,11 @@ ion-content.background-color {
   ion-item.comment-item,
   ion-item.comment-input {
     --background: white;
+    color: rgb(0, 0, 0);
   }
   
   .text-white {
-    color: white;
+    color: rgb(0, 0, 0);
   }
   .list-md {
     margin: 0;
