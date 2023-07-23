@@ -44,16 +44,16 @@
   </div>
 
   <ion-card (click)="viewEvent()" *ngFor="let card of cards">
-    <img [src]="card.image_url" alt="Card Image" class="card-image">
+    <img [src]="card?.image_url" alt="Card Image" class="card-image">
     <ion-card-header class="card-title">
-      <ion-card-title class="header">{{ card.title }}</ion-card-title>
+      <ion-card-title class="header">{{ card?.title }}</ion-card-title>
       <ion-card-content>
-          {{card.longitude}} {{card.latitude}}
+          {{card?.description}}
       </ion-card-content>
     </ion-card-header>
     <ion-card-content>
       <ion-icon name="location"></ion-icon>
-      {{ card.description }}
+      {{ card?.location }}
     </ion-card-content>
     <ion-button class="button-style"  (click)="eventDetails(card.id)">
       <!-- {{ card.button }} -->
