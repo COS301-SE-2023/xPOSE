@@ -2,8 +2,6 @@ import express from 'express';
 import { receiveMessageFromQueue } from '../receiver.js';
 import admin from "firebase-admin";
 
-// import { } from '../controllers/notifications.js';
-
 async function processReceivedMessage() {
     try{
         const queueName = 'notifications';
@@ -31,7 +29,7 @@ async function processReceivedMessage() {
 
 processReceivedMessage();
 // Set up an interval to periodically check for new messages in the queue
-const intervalTime = 10000; // 5 seconds (adjust this as needed)
+const intervalTime = 10000; // 10 seconds (adjust this as needed)
 setInterval(processReceivedMessage, intervalTime);
 
 export function handleNotification(message) {
@@ -54,10 +52,5 @@ export function handleNotification(message) {
 
 
 const router = express.Router();
-
-// router.get('/', function(req, res){
-//     console.log("All notifications up and running");
-//     res.send({message:"All notifications up and running"});
-// });
 
 export default router;
