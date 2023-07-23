@@ -14,9 +14,6 @@ export function sendMessageToQueue(queue, msg) {
                 throw error1;
             }
     
-            // let queue = 'hello';
-            // let msg = 'Hello world';
-    
             channel.assertQueue(queue, {
                 durable: false
             });
