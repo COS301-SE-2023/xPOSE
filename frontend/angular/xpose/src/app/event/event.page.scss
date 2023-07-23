@@ -75,3 +75,15 @@ ion-toolbar.custom-toolbar {
     color: #333;
     font-size: 14px;
   }
+  
+  ion-content .main-content{
+    --background: #ffffff;
+    background-color: #ffffff;
+  }
+  
+  .custom-background{
+    --background: #ffffff;
+    color: #000000;
+    font-size: 20px;
+    // --min-height: 70px;
+  }
