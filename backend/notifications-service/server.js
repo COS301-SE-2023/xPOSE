@@ -9,7 +9,6 @@ admin.initializeApp({
   databaseURL: "https://xpose-4f48c-default-rtdb.firebaseio.com"
 });
 
-// const messaging = admin.messaging();
 const app = express();
 const PORT = 8006;
 

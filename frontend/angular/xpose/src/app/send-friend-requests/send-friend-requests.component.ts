@@ -42,6 +42,7 @@ export class SendFriendRequestsComponent implements OnInit {
     );
   }
   
+  
   sendFriendRequest(user: any) {
     this.authService.getCurrentUserId().subscribe(
       (userId) => {
@@ -68,6 +69,7 @@ export class SendFriendRequestsComponent implements OnInit {
 
           this.http.post(endpoint, {username:`${senderName}`}).subscribe(
             (response) => {
+              console.log(response);
               console.log(response);
             },
             (error) => {
