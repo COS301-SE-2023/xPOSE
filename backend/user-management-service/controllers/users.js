@@ -4,7 +4,9 @@ import { messaging } from "../server.js";
 import User from '../DB/models/user.table.js';
 import Friend_request from '../DB/models/friend_request.table.js';
 import Friendship from '../DB/models/friendship.table.js';
-import { response } from 'express';
+import { sendMessageToQueue } from '../sender.js';
+// import RabbitMQProducer from '../../message broker/sender.js';
+
 
 let users = [];
 // const messaging = admin.messaging();
@@ -61,7 +63,8 @@ export const createUser = async (req, res) => {
           displayName,
           email, 
           password, 
-          emailVerified, 
+          emailVerified,
+          privacy, 
           bio,
           fcmTokens, 
           photoObject } = req.body;
@@ -72,6 +75,7 @@ export const createUser = async (req, res) => {
             displayName,
             email,
             emailVerified,
+            privacy,
             bio,
             fcmTokens,
             photoObject,
@@ -234,84 +238,35 @@ export const getFriend = async (req, res) => {
       }
 }
 
-// export const sendFriendRequest = async (req, res) => {
-
-//     try{
-//         const {userId, requestId} = req.params;
-
-//         // Get the sender and recipient user documents
-//         const senderDoc = await admin.firestore().collection('Users').doc(userId).get();
-//         const recipientDoc = await admin.firestore().collection('Users').doc(requestId).get();
-
-//         // Check if sender and recipient exist
-//         if (!senderDoc.exists || !recipientDoc.exists) {
-//             return res.status(404).json({ error: 'Sender or recipient not found' });
-//         }
-
-//         // Create  friend request object
-//         const friendRequest = {
-//             senderId: userId,
-//             recipientId: requestId,
-//             status: 'pending'
-//         };
-
-//         // Add the friend request to the recipient's FriendRequests collection
-//         await admin.firestore().collection('Users').doc(requestId).collection('FriendRequests').doc(userId).set(friendRequest);
-//         res.status(200).json({ message: `Friend request sent successfully to user with id ${requestId}` });
-        
-//         // send friend request notification 
-//         const senderData = senderDoc.data();
-//         const fcmToken = senderData.fcmToken;
-//         const message = {
-//             notification: {
-//               title: ' ',
-//               body: 'New friend request from ' + senderData.displayName,
-//             },
-//             token: fcmToken
-//           };
-
-//           messaging
-//             .send(message)
-//             .then((response) => {
-//                 console.log('notification sent successfully:', response);
-//             })
-//             .catch((error) => {
-//                 console.error('Error sending message:', error);
-//             });
-
-
-//     } catch(error){
-//         console.error('Error sending friend request:', error);
-//         res.status(500).json({ error: 'An error occurred while sending friend request' });  
-//     }
-// }
-
 
 export const sendFriendRequest = async (req, res) => {
     try {
       const { userId, requestId } = req.params;
-      // Get the sender and recipient user documents
-      // const senderDoc = await admin.firestore().collection('Users').doc(userId).get();
-      // const recipientDoc = await admin.firestore().collection('Users').doc(requestId).get();
-  
-      // Check if sender and recipient exist
-      // if (!senderDoc.exists || !recipientDoc.exists) {
-        // return res.status(404).json({ error: 'Sender or recipient not found' });
-      // }
-  
-      // Create friend request object
-      // const friendRequest = {
-        // senderId: userId,
-        // recipientId: requestId,
-        // status: 'pending'
-      // };
-      await Friend_request.create({
-        friend_a_id: userId,
-        friend_b_id: requestId,
-        response: "pending"
-      });
-      // Here bellow use message broker to communicate with the notification services
-
+      const {username} = req.body;
+      
+      // send friemd request
+      // await Friend_request.create({
+      //   friend_a_id: userId,
+      //   friend_b_id: requestId,
+      //   response: "pending"
+      // });
+      
+      // Communicate with the notification service
+      const queueName = 'notifications';
+      const message = {
+          from: 'user_service',
+          type: 'friend_request',
+          data: {
+              message: `New friend request from ${username}`,
+              senderId: userId,
+              receiverId: requestId,
+              timestamp: Date.now(),
+              status: ' pending'
+          },
+          responses: ['accepted', 'rejected']
+      };
+    
+        sendMessageToQueue(queueName, message);
       // finallly message feedback
       res.status(200).json({ message: `Friend request sent successfully to user with id ${requestId}` });
     } catch (error) {

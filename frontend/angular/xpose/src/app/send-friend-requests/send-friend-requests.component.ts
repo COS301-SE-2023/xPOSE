@@ -48,8 +48,9 @@ export class SendFriendRequestsComponent implements OnInit {
   
           console.log("My sender id is: " + userId);
           console.log("My recipient id is: " + requestId);
-  
-          this.http.post(endpoint, {}).subscribe(
+          console.log("Sender name: "+ user.displayName);
+          
+          this.http.post(endpoint, {username:`${user.displayName}`}).subscribe(
             (response) => {
               console.log(response);
             },

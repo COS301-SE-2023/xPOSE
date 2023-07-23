@@ -1,9 +1,17 @@
+.custom-backround{
+  --background: #ffffff;
+  color: #000000;
+  font-size: 20px;
+  // --min-height: 70px;
+}
 
 .notification-list {
     margin-top: 10px;
   }
   ion-list {
     margin-top:0px;
+    color: #ea00ff;
+    background-color: #fcddff;
   }
  
   ion-icon {
@@ -14,12 +22,14 @@
     font-size: 15px;
     margin-bottom: 5px;
     margin-left: 11px;
+    color: #000000;
   }
   
   p {
     font-size: 14px;
     color: gray;
     margin-left: 13px;
+    color: #000000;
   }
   
   ion-tab-bar {
@@ -65,12 +75,24 @@ ion-tab-button{
   background: #ffffff;
   border: #ea00ff;
   border-color: #ea00ff;
+  color: #000000;
 }
 ion-label{
   color: #000000;
+
 }
 
 ion-content .main-content{
   --background: #ffffff;
   background-color: #ffffff;
+}
+ion-buttons{
+  color: #000000;
+}
+ion-toolbar.custom-toolbar {
+  --background: #ffffff;
+  color: #000000;
+  font-size: 20px;
+  /* Add more custom styles as needed */
+  --min-height: 70px;
 }

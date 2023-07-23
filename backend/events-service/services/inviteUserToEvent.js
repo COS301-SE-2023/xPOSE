@@ -2,9 +2,9 @@ const { sequelize, User, Event, EventInvitation, EventParticipant, EventJoinRequ
 const uploadImageToFirebase = require('../data-access/firebase.repository');
 const admin = require('firebase-admin');
 
-async function userRequestToJoinEvent(req, res) {
+async function inviteUserToEvent(req, res) {
     try {
-        const { uid } = req.body;
+        const { uid } = req.query;
         const { code } = req.params;
 
         // Find the user with the provided uid
@@ -20,7 +20,7 @@ async function userRequestToJoinEvent(req, res) {
             return;
         }
 
-        // Find the event with the provided code
+        // Find the event with the provided event code
         const event = await Event.findOne({
             where: {
                 code: code,
@@ -33,32 +33,33 @@ async function userRequestToJoinEvent(req, res) {
             return;
         }
 
-        // Check if the user has already sent a join request for the event
-        const existingRequest = await EventJoinRequest.findOne({
+        // Check if the user is already invited to the event
+        const existingInvitation = await EventInvitation.findOne({
             where: {
                 user_id_fk: user.id,
                 event_id_fk: event.id,
+                response: 'pending'
             },
         });
 
-        if (existingRequest) {
-            res.status(400).json({ error: 'User has already sent a join request for the event' });
+        if (existingInvitation) {
+            res.status(400).json({ error: 'User is already invited to the event' });
             return;
         }
 
-        // Create a new join request
-        const joinRequest = await EventJoinRequest.create({
+        // Create a new invitation
+        const invitation = await EventInvitation.create({
             user_id_fk: user.id,
             event_id_fk: event.id,
             response: 'pending',
             timestamp: new Date(),
         });
 
-        res.json(joinRequest);
+        res.json(invitation);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'Failed to process the join request' });
+        res.status(500).json({ error: 'Failed to invite the user to the event' });
     }
 }
 
-module.exports = userRequestToJoinEvent;
+module.exports = inviteUserToEvent;

@@ -1,34 +1,97 @@
-.h2{
-    color: rgb(247, 0, 255);
-    font-size: 15px;
-    font-weight: bold;
+/* Style for the page header */
+// ion-toolbar {
+//   --background: #eb0091;
+//   color: #ffffff;
+//   font-size: 24px;
+// }
+ion-title {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #eb0091;
+  text-align: center;
+  margin-bottom: 20px;
 }
-ion-button{
-    color: rgb(178, 174, 179);
-    background-color: antiquewhite;
-    --background: rgb(255, 255, 255);
-    border: 1px solid rgb(156, 146, 156);
-    --ion-color-base: rgb(250, 120, 255);
-    .ion-color-danger {
-        --ion-color-base: var(--ion-color-danger, #dd44eb) !important;
-        --ion-color-base-rgb: var(--ion-color-danger-rgb, 235, 68, 90) !important;
-        --ion-color-contrast: var(--ion-color-danger-contrast, #fff) !important;
-        --ion-color-contrast-rgb: var(--ion-color-danger-contrast-rgb, 255, 255, 255) !important;
-        --ion-color-shade: var(--ion-color-danger-shade, #e7e7e7) !important;
-        --ion-color-tint: var(--ion-color-danger-tint, #ed576b) !important;
-    }
+/* Style for the section title */
+.section-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 20px 0;
 }
-ion-card{
-    --background: rgb(255, 255, 255);
-    --ion-color-base: rgb(250, 120, 255);
-   
+
+/* Style for the event card */
+ion-card {
+  margin: 10px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px 0px rgba(250, 34, 232, 0.2);
 }
-.qrcode{
-    width: 20%; 
-    height: auto; 
+
+/* Style for the QR code image */
+.qrcode {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+  margin: 0 auto;
+  display: block;
 }
-ion-toolbar {
-    --background: #ffffff; /* Set the toolbar background color */
-    color: rgb(0, 0, 0); /* Set the toolbar text color */
-    text-align: center;
-  }
+
+/* Style for the participant card */
+.participant-card {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+
+/* Style for the participant avatar */
+ion-avatar {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+}
+
+/* Style for the participant name */
+.participant-name {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* Style for the participant timestamp (if needed) */
+.participant-timestamp {
+  font-size: 14px;
+  color: #ffffff;
+}
+
+/* Style for the event link */
+ion-card-title {
+  color: blue;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+/* Style for the event card content */
+ion-card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+/* Style for the "Participants" section */
+div {
+  margin: 20px;
+}
+
+/* Style for the "Participants" card buttons */
+ion-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.background-color{
+  --background: #ffffff;
+  background-color: #ffffff;
+}
+ion-content .main-content{
+  --background: #ffffff;
+  background-color: #ffffff;
+}

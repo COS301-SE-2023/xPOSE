@@ -1,15 +1,23 @@
-ion-button{
-    color: rgb(247, 0, 255);
-    background-color: antiquewhite;
-    --background: rgb(255, 255, 255);
-    border: 1px solid rgb(247, 0, 255);
-}
-.h2{
-    color: rgb(247, 0, 255);
-    font-size: 15px;
-    font-weight: bold;
- 
-}
-ion-title{
-    text-align: center;
-}
+ion-content.background-color {
+    --background: white;
+  }
+  
+  ion-item.comment-item,
+  ion-item.comment-input {
+    --background: white;
+    color: rgb(0, 0, 0);
+  }
+  
+  .text-white {
+    color: rgb(0, 0, 0);
+  }
+  .list-md {
+    margin: 0;
+    padding: 0;
+    background: transparent;
+  }  
+
+  ion-avatar{
+    color: #000;
+    background-color: aqua;
+  }

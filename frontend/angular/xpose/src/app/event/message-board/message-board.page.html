@@ -4,24 +4,28 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
+<ion-content [fullscreen]="true" id="main-content" class="background-color">
+  <ion-header collapse="condense" class="now">
+    <ion-toolbar class="now">
       <ion-title size="large">message-board</ion-title>
     </ion-toolbar>
   </ion-header>
+  
+  <ion-item class="comment-input">
+    <ion-input [(ngModel)]="newMessage" placeholder="Type your comment"></ion-input>
+    <ion-button (click)="createMessage()">Send</ion-button>
+  </ion-item>
 
-  <ion-list>
-    <ion-item *ngFor="let message of messages">
-      <ion-label>
-        <h2 class="h2">{{ message.uid }}</h2 >
-        <p>{{ message.message }}</p>
+  <ion-list class="now">
+    <ion-item class="comment-item" *ngFor="let message of messages">
+      <ion-avatar slot="start">
+        <!-- <img src="{{ message.avatar }}" alt="User Avatar"> -->
+      </ion-avatar>
+      <ion-label class="text-white">
+        <h2 class="h2">{{ message.displayName }}</h2>
+        <p class="comment-message">{{ message.message }}</p>
       </ion-label>
     </ion-item>
   </ion-list>
 
-  <ion-item>
-    <ion-input [(ngModel)]="newMessage" placeholder="Type your comment"></ion-input>
-    <ion-button (click)="createMessage()">Send</ion-button>
-  </ion-item>
 </ion-content>

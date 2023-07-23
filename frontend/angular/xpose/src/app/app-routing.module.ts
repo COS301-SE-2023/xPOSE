@@ -69,7 +69,16 @@ const routes: Routes = [
   {
     path: 'edit',
     loadChildren: () => import('./edit/edit.module').then( m => m.EditPageModule)
-  }
+  },  {
+    path: 'search',
+    loadChildren: () => import('./search/search.module').then( m => m.SearchPageModule)
+  },
+  {
+    path: 'user-profile',
+    loadChildren: () => import('./user-profile/user-profile.module').then( m => m.UserProfilePageModule)
+  },
+
+
 
 ];
 

@@ -28,6 +28,7 @@ export class CreateEventPage implements OnInit, AfterViewInit {
 		privacy_setting: ' ',
 		latitude: 0,
 		longitude: 0,
+		
 	  };
 	  route: any;
 	  buttonClicked = false;

@@ -61,7 +61,29 @@
         color: #fff;
     }
 }
-ion-toolbar {
-    --background: #ff43d6; /* Set the toolbar background color */
-    color: white; /* Set the toolbar text color */
+
+ion-toolbar.custom-toolbar {
+    --background: #ffffff;
+    color: #000000;
+    font-size: 20px;
+    --min-height: 70px;
+  }
+  .footer-content {
+    background-color: #f2f2f2;
+    padding: 10px;
+    text-align: center;
+    color: #333;
+    font-size: 14px;
+  }
+  
+  ion-content .main-content{
+    --background: #ffffff;
+    background-color: #ffffff;
+  }
+  
+  .custom-background{
+    --background: #ffffff;
+    color: #000000;
+    font-size: 20px;
+    // --min-height: 70px;
   }

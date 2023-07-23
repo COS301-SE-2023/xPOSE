@@ -7,20 +7,25 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" id="main-content">
+<ion-content [fullscreen]="true" id="main-content" class="custom-backround">
 
-  <ion-searchbar placeholder="Search"></ion-searchbar>
+  <div class="button-container">
+    <ion-searchbar placeholder="Search" (click)="search()"></ion-searchbar>
+  </div>
 
-  <ion-segment [(ngModel)]="filterType">
-    <ion-segment-button value="private">
-      Private Events
+  <ion-segment [(ngModel)]="filterType"  (ionChange)="applyFilter()">
+    <ion-segment-button value="Ongoing">
+      On going
     </ion-segment-button>
-    <ion-segment-button value="public">
-      Public Events
+    <ion-segment-button value="Upcoming">
+      Upcoming
+    </ion-segment-button>
+    <ion-segment-button  value="Ended">
+      Ended
     </ion-segment-button>
   </ion-segment>
 
-  <ion-list *ngIf="filterType === 'private'">
+  <ion-list *ngIf="filterType === 'Ongoing'" class="custom-backround">
     <!-- Mock Private Events -->
     <ion-card  *ngFor="let card of cards">
       <img [src]="card.image_url" alt="Card Image" class="card-image">
@@ -34,14 +39,13 @@
         <ion-icon name="location"></ion-icon>
         {{ card.description }}
       </ion-card-content>
-      <ion-button class="button-style"  (click)="	eventDetails()">
-        <!-- {{ card.button }} -->
-        View event
+      <ion-button class="button-style"  (click)="eventDetails()">
+        View eventt
       </ion-button>
     </ion-card>
   </ion-list>
 
-  <ion-list *ngIf="filterType === 'public'">
+  <ion-list *ngIf="filterType === 'Upcoming'">
     <!-- Mock Public Events -->
     <ion-card  *ngFor="let card of cards">
       <img [src]="card.image_url" alt="Card Image" class="card-image">
@@ -57,7 +61,28 @@
       </ion-card-content>
       <ion-button class="button-style"  (click)="	eventDetails()">
         <!-- {{ card.button }} -->
-        View event
+        View eventt
+      </ion-button>
+    </ion-card>
+  </ion-list>
+
+    <ion-list *ngIf="filterType === 'Ended'">
+    <!-- Mock Public Events -->
+    <ion-card  *ngFor="let card of cards">
+      <img [src]="card.image_url" alt="Card Image" class="card-image">
+      <ion-card-header class="card-title">
+        <ion-card-title class="header">{{ card.title }}</ion-card-title>
+        <ion-card-content>
+            {{card.longitude}} {{card.latitude}}
+        </ion-card-content>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-icon name="location"></ion-icon>
+        {{ card.description }}
+      </ion-card-content>
+      <ion-button class="button-style"  (click)="	eventDetails()">
+        <!-- {{ card.button }} -->
+        View eventt
       </ion-button>
     </ion-card>
   </ion-list>
@@ -72,7 +97,8 @@
           <ion-icon name="home-outline"></ion-icon>
           <ion-label>Home</ion-label>
         </ion-tab-button>
-        <ion-tab-button tab="joined-events" (click)="onJoinedEvent()" [class.active]="filterType === 'private' || filterType === 'public'">
+        <ion-tab-button tab="joined-events" (click)="onJoinedEvent()" >
+        <!-- <ion-tab-button tab="joined-events" (click)="onJoinedEvent()" [class.active]="filterType === 'private' || filterType === 'public'"> -->
           <ion-icon name="people-outline"></ion-icon>
           <ion-label>Joined Events</ion-label>
         </ion-tab-button>

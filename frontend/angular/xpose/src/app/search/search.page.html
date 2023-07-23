@@ -1,0 +1,42 @@
+<ion-content [fullscreen]="true">
+  <ion-header [translucent]="true">
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/home"></ion-back-button>
+      </ion-buttons>
+      <ion-title>Search</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="closeSearchPage()">Close</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-segment [(ngModel)]="searchType" (ionChange)="onSearchTypeChange()">
+    <ion-segment-button value="events">
+      Events
+    </ion-segment-button>
+    <ion-segment-button value="users">
+      Users
+    </ion-segment-button>
+  </ion-segment>
+
+  <ion-searchbar
+    #searchBar
+    placeholder="Search"
+    [(ngModel)]="searchQuery"
+    (ionChange)="onSearch()"
+  ></ion-searchbar>
+
+  <!-- Display suggested data or filtered search results based on searchType -->
+  <ion-list *ngIf="showSuggestions">
+    <ion-item *ngFor="let suggestion of suggestedItems">
+      {{ suggestion.name }}
+    </ion-item>
+  </ion-list>
+
+  <ion-list *ngIf="!showSuggestions">
+    <ion-item *ngFor="let item of filteredItems">
+      {{ item.name }}
+    </ion-item>
+  </ion-list>
+</ion-content>

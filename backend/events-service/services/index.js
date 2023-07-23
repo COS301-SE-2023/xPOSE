@@ -8,6 +8,8 @@ const responseToEventInvite = require('./responseToEventInvite');
 const responseToEventJoinRequest = require('./responseToEventJoinRequest');
 const updateEvent = require('./updateEvent');
 const userRequestToJoinEvent = require('./userRequestToJoinEvent');
+const joinEvent = require('./joinEvent');
+const getEventParticipants = require('./getEventParticipants');
 
 // export all 
 module.exports = {
@@ -21,4 +23,6 @@ module.exports = {
     responseToEventJoinRequest,
     updateEvent,
     userRequestToJoinEvent,
+    joinEvent,
+    getEventParticipants,
 };

@@ -1,0 +1,22 @@
+<ion-header [translucent]="true">
+  <ion-toolbar class="custom-toolbar">
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/home"></ion-back-button>
+      </ion-buttons>
+      <ion-title>
+        User Profile
+      </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="profile-info">
+    <div class="profile-picture">
+      <!-- Replace 'user.profilePicture' with the actual URL or data of the user's profile picture -->
+      <img [src]="user.photoURL" alt="Profile Picture" />
+    </div>
+    <h2 class="user-name">Janie Do</h2>
+  </div>
+  <ion-button class="unfriend-button">Unfriend</ion-button>
+  <ion-button class="friend-button">Friend</ion-button>
+</ion-content>

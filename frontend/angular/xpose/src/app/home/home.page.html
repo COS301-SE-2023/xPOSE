@@ -25,9 +25,9 @@
   </ion-content>
 </ion-menu>
 
-<ion-content [fullscreen]="true" id="main-content">
+<ion-content [fullscreen]="true" id="main-content" class="custom-backround">
   <div class="button-container">
-    <ion-searchbar placeholder="Search" (click)="search()"></ion-searchbar>
+    <ion-searchbar class="button-container" placeholder="Search" (click)="search()"></ion-searchbar>
   </div>
 
   <div class="loading-container" *ngIf="loading">
@@ -62,7 +62,7 @@
   </ion-card>
 </ion-content>
 
-<ion-footer>
+<ion-footer class="footer-content">
   <ion-toolbar position="fixed">
     <ion-tabs>
       <ion-tab-bar slot="bottom">

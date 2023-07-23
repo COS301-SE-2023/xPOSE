@@ -2,6 +2,17 @@ ion-toolbar {
   --background: rgba(255, 255, 255, 0.55);
 }
 
+.custom-background {
+  --background: #fceeee;
+  background-color: #000000;
+  color: #000000;
+}
+
+// ion-content .main-content{
+//   --background: #ffffff;
+//   background-color: #a50000;
+// }
+
 .centered-title {
   display: block;
   text-align: center;
@@ -63,6 +74,7 @@ ion-toolbar {
     width: 100%;
     margin-bottom: 5px;
     max-width: 285px;
+    color: #000000;
   }
 
   .container {
@@ -103,6 +115,7 @@ ion-toolbar {
   .no-account-link {
     text-align: center;
     margin-top: 10px;
+    color: #000000;
   }
 
   @media (min-width: 768px) {
@@ -114,4 +127,11 @@ ion-toolbar {
   .no-account-link a {
     color: blue;
     text-decoration: underline;
+  }
+  .logo-image{
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    background-color: aqua;
+    margin-bottom: -80px;
   }

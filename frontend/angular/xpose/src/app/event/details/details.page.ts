@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-details',
@@ -12,8 +13,9 @@ export class DetailsPage implements OnInit {
   eventName!: string;
   eventDate!: Date;
   eventLocation!: string;
+  event: any;
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute, private navCtrl: NavController, private router: Router) {
     this.participants = [];
     
     if (!this.route.snapshot.data['event']) {
@@ -49,5 +51,19 @@ export class DetailsPage implements OnInit {
     if (index > -1) {
       this.participants.splice(index, 1);
     }
+  }
+  addParticipant(participant: any) {
+    // Handle participant addition logic here
+  
+    // For demonstration, we'll add the participant back to the event object's participants array
+    this.event.participants.push(participant);
+  }
+  // participants 
+  onCardClick(participant: any) {
+    console.log('Card clicked');
+    console.log(participant);
+    this.router.navigateByUrl('/user-profile')
+    // this.router.navigate(['/participant', participant.id]);
+
   }
 }

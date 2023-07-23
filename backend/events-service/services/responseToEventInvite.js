@@ -4,10 +4,12 @@ const admin = require('firebase-admin');
 
 async function responseToEventInvite(req, res) {
     try {
-        const { uid, invitation_id, response } = req.body;
+        const { code } = req.params; // Change req.code to req.body.code
+        const { uid } = req.query;
+        const { response } = req.body; // Remove invitation_id from req.body
 
         // Check if required fields are present in the request body
-        if (!uid || !invitation_id || !response) {
+        if (!uid || !code || !response) {
             res.status(400).json({ error: 'Invalid request. Required fields are missing.' });
             return;
         }
@@ -31,10 +33,19 @@ async function responseToEventInvite(req, res) {
             return;
         }
 
-        // Find the invitation
+        // Find the event
+        const event = await Event.findOne({
+            where: {
+                code: code,
+            },
+        });
+
+        // Find the invitation with pending status for the given event code and user id
         const invitation = await EventInvitation.findOne({
             where: {
-                id: invitation_id,
+                event_id_fk: event.id,
+                user_id_fk: user.id,
+                response: 'pending',
             },
         });
 
@@ -65,5 +76,6 @@ async function responseToEventInvite(req, res) {
         res.status(500).json({ error: 'Failed to process the invitation response' });
     }
 }
+
 
 module.exports = responseToEventInvite;
