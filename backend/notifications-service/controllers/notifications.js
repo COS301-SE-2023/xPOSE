@@ -51,6 +51,6 @@ export function handleNotification(message) {
   }
 
 
-const router = express.Router();
+const service = express.Router();
 
-export default router;
+export default service;

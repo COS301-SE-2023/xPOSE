@@ -1,6 +1,6 @@
 import express from 'express';
 import bodyParser from  'body-parser';
-import userRoute from './routes/notifications.js';
+import notify from './controllers/notifications.js';
 import admin from "firebase-admin";
 import serviceAccount from "./serviceAccountKey.json" assert { type: "json" };
 
@@ -15,7 +15,7 @@ const PORT = 8006;
 
 // initialize body-parser middleware
 app.use(bodyParser.json()); // will be using Json  data
-app.use('/notifications', userRoute);
+app.use('/notifications', notify);
 app.get('/', (req, res) => res.send(" Notifications services"));
 app.listen(PORT, () => console.log(`Server running on port: http://localhost:${PORT}`));
 
