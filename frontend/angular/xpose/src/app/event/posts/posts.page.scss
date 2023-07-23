@@ -26,3 +26,14 @@ ion-title {
   text-align: center;
   margin-bottom: 20px;
 }
+ion-content .main-content{
+  --background: #ffffff;
+  background-color: #ffffff;
+}
+
+.custom-background{
+  --background: #cfcfcf;
+  color: #000000;
+  font-size: 20px;
+  // --min-height: 70px;
+}
