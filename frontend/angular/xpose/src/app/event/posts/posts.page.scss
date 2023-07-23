@@ -19,3 +19,18 @@
   border: 1px solid #ccc; /* Add a border to the post */
   border-radius: 4px; /* Rounded corners for the post */
 }
+ion-title {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #eb0091;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.background-color{
+  --background: #ffffff;
+  background-color: #ffffff;
+}
+ion-content .main-content{
+  --background: #ffffff;
+  background-color: #ffffff;
+}
