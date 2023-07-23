@@ -11,16 +11,19 @@
     </ion-toolbar>
   </ion-header>
   
-  <ion-item>
+  <ion-item class="comment-input">
     <ion-input [(ngModel)]="newMessage" placeholder="Type your comment"></ion-input>
     <ion-button (click)="createMessage()">Send</ion-button>
   </ion-item>
 
   <ion-list>
-    <ion-item *ngFor="let message of messages">
+    <ion-item class="comment-item" *ngFor="let message of messages">
+      <ion-avatar slot="start">
+        <!-- <img src="{{ message.avatar }}" alt="User Avatar"> -->
+      </ion-avatar>
       <ion-label>
         <h2 class="h2">{{ message.displayName }}</h2>
-        <p>{{ message.message }}</p>
+        <p class="comment-message">{{ message.message }}</p>
       </ion-label>
     </ion-item>
   </ion-list>

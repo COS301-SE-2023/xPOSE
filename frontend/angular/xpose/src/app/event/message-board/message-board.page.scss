@@ -1,19 +1,38 @@
-ion-button{
-    color: rgb(247, 0, 255);
-    background-color: antiquewhite;
-    --background: rgb(255, 255, 255);
-    border: 1px solid rgb(247, 0, 255);
-}
-.h2{
-    color: rgb(247, 0, 255);
-    font-size: 15px;
-    font-weight: bold;
- 
-}
-ion-title {
-    font-size: 1.5rem;
-    font-weight: 500;
-    color: #eb0091;
-    text-align: center;
-    margin-bottom: 20px;
+.comment-input {
+    margin: 10px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+  
+    ion-input {
+      flex: 1;
+      margin-right: 10px;
+    }
   }
+  
+  .comment-item {
+    display: flex;
+    align-items: flex-start;
+    padding: 10px;
+  
+    ion-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+  
+    .h2 {
+      margin-bottom: 5px;
+      font-size: 16px;
+      font-weight: bold;
+    }
+  
+    .comment-message {
+      font-size: 14px;
+      line-height: 1.4;
+    }
+  }
+  
