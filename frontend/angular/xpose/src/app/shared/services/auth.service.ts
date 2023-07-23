@@ -25,22 +25,7 @@ export class AuthService {
       public ngZone: NgZone, // remove outside scope warning
       private http: HttpClient // inject HttpClient for making HTTP requests
   ) {
-    // save user data in local storage
-    /*this.afAuth.authState.subscribe(user => {
-      if (user) {
-        const userData = {
-          uid: user.uid
-        };
-        this.userData = userData;
-        this.isLoggedIn = true;
-        localStorage.setItem('user', JSON.stringify(this.userData));
-        console.log(JSON.parse(localStorage.getItem('user')!));
-      } else {
-        this.isLoggedIn = false;
-        localStorage.setItem('user', 'null');
-        console.log(JSON.parse(localStorage.getItem('user')!));
-      }
-    });*/
+  
   }
 
   // sign in with email/password
@@ -62,58 +47,6 @@ export class AuthService {
         window.alert(error.message);
       });
   }
-
-  // sign in with email/password
-  /*signIn(email: string, password: string): Promise<void> {
-    return this.afAuth
-        .signInWithEmailAndPassword(email, password)
-        .then((result) => {
-          this.setUserData(result.user);
-
-          // Obtain the current FCM token
-          const messaging = getMessaging();
-          getToken(messaging, { vapidKey: environment.firebase.vapidKey })
-              .then((currentToken) => {
-                if (currentToken) {
-                  // Check if the token has changed
-                  const userRef = this.afs.collection('Users').doc(result.user!.uid);
-                  userRef.get().subscribe((userSnapshot) => {
-                    const userData = userSnapshot.data() as any;
-                    const storedToken = userData?.fcmToken;
-
-                    if (storedToken !== currentToken) {
-                      // Update the token in the database
-                      userRef.set({ fcmToken: currentToken }, { merge: true })
-                          .then(() => {
-                            console.log('FCM token updated for user: ', result.user!.uid);
-                          })
-                          .catch((error) => {
-                            console.log('Error updating FCM token: ', error);
-                          });
-                    }
-                  });
-                } else {
-                  console.log('No registration token available. Request permission to generate one.');
-                }
-
-                this.afAuth.authState.subscribe((user) => {
-                  if (user) {
-                    console.log("User has been logged in");
-                    this.router.navigate(['/home']);
-                  }
-                });
-              })
-              .catch((error) => {
-                console.log('An error occurred while retrieving token. ', error);
-              });
-        })
-        .catch((error) => {
-          window.alert(error.message);
-        });
-  }*/
-
-
-
   // Sign up with email/password
   signUp(email: string, password: string, username: string): Promise<any> {
     const signUpData = {
