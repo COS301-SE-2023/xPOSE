@@ -1,54 +1,102 @@
 /* Global styles for the edit page */
 ion-content {
-    --ion-background-color: #f2f2f2;
-  }
-  
-  /* Container for the profile details */
-  .profile-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    margin-top: 20px;
-  }
-  
-  /* Profile picture */
-  .profile-picture {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: 20px;
-  }
-  
-  /* Form input fields */
-  ion-item {
-    margin-bottom: 40px;
-  }
+  --ion-background-color: #f2f2f2;
+}
 
-  ion-toolbar.custom-toolbar {
-    --background: #ffffff;
-    color: #000000;
-    font-size: 20px;
-    /* Add more custom styles as needed */
-    --min-height: 70px;
-  }
+/* Container for the profile details */
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  margin-top: 20px;
+  font-size: 16px;
+}
 
-  .custom-file-input {
-    
-    color: #007bff;
-  }
-  
-  /* Save button */
-  ion-button {
-    margin-top: 20px;
-    --background: #007bff; /* Set the background color for the Edit Profile button */
-    // --color: #fff; /* Set the text color for the Edit Profile button */
-  border-radius: 50px;
-  }
+/* Profile picture */
+.profile-picture {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 20px;
+}
 
-  .pink-button {
-    --background: #ff43d6; /* Set the background color for the pink button */
-    --color: white; /* Set the text color for the pink button */
-  }
+/* Form input fields */
+ion-item {
+  margin-bottom: 40px;
+}
+
+ion-toolbar.custom-toolbar {
+  --background: #ffffff;
+  color: #000000;
+  font-size: 20px;
+  /* Add more custom styles as needed */
+  --min-height: 70px;
+}
+
+.custom-file-input {
   
+  color: #007bff;
+  font-size: 16px;
+}
+
+/* Save button */
+ion-button {
+  margin-top: 70px;
+  --background: #007bff; /* Set the background color for the Edit Profile button */
+  // --color: #fff; /* Set the text color for the Edit Profile button */
+border-radius: 50px;
+font-size: 20px;
+}
+
+.account-privacy-container {
+ 
+  align-items: center; /* Vertically align the elements within the container */
+  margin-bottom: 0px; /* Add a margin at the bottom to create spacing */
+}
+
+.account-privacy-label {
+  flex: 1; 
+  margin-right: 10px; /* Make the label take available space within the container */
+}
+
+.account-privacy-toggle {
+  flex: 1; 
+  zoom: 0.9;
+  transform: translateY(5px);/* Make the toggle take available space within the container */
+
+  
+   /* Make the toggle take available space within the container */
+}
+
+
+
+ion-label,
+ion-toggle {
+font-size: 20px; /* Adjust the font size to your preference */
+}
+
+.username-label,
+.email-label {
+font-size: 20px; /* Adjust the font size for the Username and Email labels */
+}
+
+.username-input,
+.email-input {
+font-size: 20px; /* Adjust the font size for the Username and Email inputs */
+}
+
+ion-footer {
+  background-color: #f2f2f2;
+  
+}
+
+
+.pink-button {
+  --background: #ff43d6; /* Set the background color for the pink button */
+  --color: white; /* Set the text color for the pink button */
+  font-size: 20px;
+}
+
+
