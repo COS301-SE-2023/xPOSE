@@ -1,38 +1,17 @@
-.comment-input {
-    margin: 10px;
-    border: 1px solid #ccc;
-    border-radius: 20px;
-    padding: 5px 10px;
-    display: flex;
-    align-items: center;
-  
-    ion-input {
-      flex: 1;
-      margin-right: 10px;
-    }
+ion-content.background-color {
+    --background: white;
   }
   
-  .comment-item {
-    display: flex;
-    align-items: flex-start;
-    padding: 10px;
-  
-    ion-avatar {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      margin-right: 10px;
-    }
-  
-    .h2 {
-      margin-bottom: 5px;
-      font-size: 16px;
-      font-weight: bold;
-    }
-  
-    .comment-message {
-      font-size: 14px;
-      line-height: 1.4;
-    }
+  ion-item.comment-item,
+  ion-item.comment-input {
+    --background: white;
   }
   
+  .text-white {
+    color: white;
+  }
+  .list-md {
+    margin: 0;
+    padding: 0;
+    background: transparent;
+  }  
