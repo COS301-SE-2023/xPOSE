@@ -12,3 +12,10 @@ backend/user-management-service/DB/credentials/serviceAccountKey.json
 firebase-messaging-sw.js
 .idea/
 firebase-debug.log
+**/node_modules/**
+**/*.json
+**/credentials/**
+**/permissions.json
+**/serviceAccountKey.json
+**/firebase-debug.log
+**/environments/**
