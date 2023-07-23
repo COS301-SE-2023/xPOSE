@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  deploy:
+  build:
     name: Install Angular
     runs-on: ubuntu-latest
     steps:
