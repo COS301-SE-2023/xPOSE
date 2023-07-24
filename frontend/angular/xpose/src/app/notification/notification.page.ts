@@ -3,6 +3,7 @@ import { Router } from "@angular/router";
 import { environment } from "../../environments/environment";
 import { getFirestore, collection, query, onSnapshot, where } from "firebase/firestore";
 import { NavigationEnd } from '@angular/router';
+import { Location } from '@angular/common';
 
 
 
@@ -16,7 +17,7 @@ export class NotificationPage implements OnInit {
   private history: string[] = [];
   title = 'notification??';
   messages: any[] = []; // Array to store message payloads
-  constructor(private router: Router, private Location: Location) { 
+  constructor(private router: Router, private location: Location,) { 
 
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -69,6 +70,14 @@ export class NotificationPage implements OnInit {
     console.log('Messages cleared from local storage');
   }
 
+  back(): void {
+    this.history.pop();
+    if (this.history.length >= 0) {
+      this.location.back();
+    } else {
+      this.router.navigateByUrl("/home");
+    }
+  }
   
   
   // requestPermission() {
