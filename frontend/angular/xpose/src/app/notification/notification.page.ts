@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { environment } from "../../environments/environment";
 import { getFirestore, collection, query, onSnapshot, where } from "firebase/firestore";
+import { NavigationEnd } from '@angular/router';
 
 
 
@@ -12,9 +13,17 @@ import { getFirestore, collection, query, onSnapshot, where } from "firebase/fir
 })
 export class NotificationPage implements OnInit {
 
+  private history: string[] = [];
   title = 'notification??';
   messages: any[] = []; // Array to store message payloads
-  constructor(private router: Router) { }
+  constructor(private router: Router, private Location: Location) { 
+
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.history.push(event.urlAfterRedirects);
+      }
+    });
+  }
   // constructor() { }
 
   ngOnInit() {
@@ -60,6 +69,7 @@ export class NotificationPage implements OnInit {
     console.log('Messages cleared from local storage');
   }
 
+  
   
   // requestPermission() {
   //   const messaging = getMessaging();
