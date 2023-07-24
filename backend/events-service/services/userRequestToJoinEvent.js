@@ -1,6 +1,7 @@
 const { sequelize, User, Event, EventInvitation, EventParticipant, EventJoinRequest } = require('../data-access/sequelize');
 const uploadImageToFirebase = require('../data-access/firebase.repository');
 const admin = require('firebase-admin');
+const { sendMessageToQueue } = require('../libs/sender');
 
 async function userRequestToJoinEvent(req, res) {
     try {
@@ -53,6 +54,20 @@ async function userRequestToJoinEvent(req, res) {
             response: 'pending',
             timestamp: new Date(),
         });
+
+        // send message to notification queue using rabbitmq
+        const message = {
+            responses: ['accepted', 'rejected'],
+            data: {
+                join_request_id: joinRequest.id,
+                type: 'event_join_request',
+                receiverId: user.uid,
+                event_name: event.name,
+                event_code: event.code,
+            }
+        };
+
+        sendMessageToQueue('notifications', message);
 
         res.json(joinRequest);
     } catch (error) {
