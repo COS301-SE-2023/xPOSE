@@ -165,3 +165,42 @@ ion-content .main-content{
   color: #ff0066;
   background-color: #ffffff;
 }
+
+.label {
+  display: inline-block;
+  padding: 4px 10px;
+  margin-right: 5px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.label-default {
+  background-color: #bdc3c7;
+  color: #fff;
+}
+
+.label-primary {
+  background-color: #3498db;
+  color: #fff;
+}
+
+.label-success {
+  background-color: #2ecc71;
+  color: #fff;
+}
+
+.label-info {
+  background-color: #46b8da;
+  color: #fff;
+}
+
+.label-warning {
+  background-color: #f0ad4e;
+  color: #fff;
+}
+
+.label-danger {
+  background-color: #e74c3c;
+  color: #fff;
+}

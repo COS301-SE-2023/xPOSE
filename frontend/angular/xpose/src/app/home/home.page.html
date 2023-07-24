@@ -46,14 +46,18 @@
   <ion-card (click)="eventDetails(card.id)" *ngFor="let card of cards">
     <img [src]="card.image_url" alt="Card Image" class="card-image">
     <ion-card-header class="card-title">
-      <ion-card-title class="header">{{ card?.title }}</ion-card-title>
+      <ion-card-title class="header">
+        {{ card?.title }}
+        <span class="label-{{ getStatusColor(card?.status) }} label">{{ card?.status }}</span>
+      </ion-card-title>
       <ion-card-content>
-          {{card.longitude}} {{card.latitude}}
+          {{ card.date }}
+          {{ card.location }}
       </ion-card-content>
       <ion-row>
         <ion-col center text-center>
           <ion-card-subtitle>
-            {{ card.description }}       
+            {{ card.description }}
           </ion-card-subtitle>
         </ion-col>
         <ion-col class="ion-text-end">
@@ -64,7 +68,7 @@
     </ion-card-header>
     <ion-card-content>
       <ion-icon name="location"></ion-icon>
-      {{ card.description }}
+      {{ card.location }}
     </ion-card-content>
     <ion-button class="button-style"  (click)="eventDetails(card.id)">
       <!-- {{ card.button }} -->
