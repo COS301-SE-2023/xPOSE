@@ -1,5 +1,5 @@
 ion-card {
-  background-color: #ffcefb;
+  background-color: hsl(304, 49%, 82%);
   color: #000000;
   margin-bottom: 20px;
   height: auto; /* Remove fixed height to allow variable card height based on content */
@@ -129,4 +129,12 @@ ion-card-content {
   display: flex;
   align-items: center;
 
+}
+.iconp{
+  color: #ff00bfa8;
+  // background-color: #d1d1d1;
+  // margin-right: 5px;
+  font-size: 40px;
+  box-shadow: #000000;
+  text-shadow: #f00;
 }
