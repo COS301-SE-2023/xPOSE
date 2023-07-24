@@ -38,7 +38,6 @@ export function handleNotification(message) {
     
     // Extract required data from the message
     const {data } = message;
-    
     // Store the message in the Notification collection
     const db = admin.firestore();
     const notificationRef = db.collection('Notifications').doc(data.receiverId);
