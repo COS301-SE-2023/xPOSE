@@ -1,10 +1,9 @@
 <ion-header [translucent]="true">
   <ion-toolbar class="custom-toolbar">
     <ion-buttons slot="start">
-      <ion-back-button (click)="goBack()" icon="arrow-back"></ion-back-button>
+      <ion-back-button (click)="goBack()" defaultHref="/home"></ion-back-button>
     </ion-buttons>
-    
-    <ion-title >Notifications</ion-title>
+    <ion-title class="event-title">{{ event?.title }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
