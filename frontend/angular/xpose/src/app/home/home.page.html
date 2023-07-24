@@ -51,10 +51,15 @@
           {{card.longitude}} {{card.latitude}}
       </ion-card-content>
     </ion-card-header>
-    <ion-card-content>
+    <ion-card-subtitle>
+      <ion-icon name="location"></ion-icon>
+      Card Subtitle
+    </ion-card-subtitle>
+
+    <!-- <ion-card-content>
       <ion-icon name="location"></ion-icon>
       {{ card.description }}
-    </ion-card-content>
+    </ion-card-content> -->
     <ion-button class="button-style"  (click)="eventDetails(card.id)">
       <!-- {{ card.button }} -->
       View
