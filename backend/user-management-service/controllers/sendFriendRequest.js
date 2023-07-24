@@ -25,7 +25,8 @@ export const sendFriendRequest = async (req, res) => {
               senderId: userId,
               receiverId: requestId,
               timestamp: Date.now(),
-              status: ' pending'
+              status: ' pending',
+              type: 'friend-request'
           },
           responses: ['accepted', 'rejected']
       };
