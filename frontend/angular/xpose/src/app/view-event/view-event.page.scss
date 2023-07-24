@@ -1,3 +1,110 @@
+// .custom-backround{
+//   --background: #ffffff;
+//   color: #000000;
+//   font-size: 20px;
+//   // --min-height: 70px;
+// }
+
+
+// /* Add your custom styles here */
+// /* view-event.page.scss */
+// ion-card {
+//   display: flex;
+//   align-items: center;
+//   // padding: 16px;
+//   background-color: #f8f8f8; /* Background color for the card */
+//   border-radius: 8px;
+//   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+//   ion-avatar {
+//     width: 50px;
+//     height: 50px;
+//     border: 2px solid #f39c12; /* Border color for the avatar */
+//     border-radius: 50%;
+//     overflow: hidden;
+//     margin-right: 16px; /* Add some space between avatar and content */
+//   }
+
+//   ion-img {
+//     width: 100%;
+//     height: 10px;
+//     object-fit: cover;
+//   }
+
+//   ion-card-content {
+//     flex: 1; /* Expand to fill remaining space */
+//     text-align: left; /* Align content to the left */
+//     overflow-wrap: break-word; /* Wrap text if it's too long */
+//   }
+
+//   .participant-name {
+//     font-size: 16px;
+//     font-weight: bold;
+//     margin-bottom: 8px; /* Add some space between name and timestamp */
+//   }
+
+//   .participant-timestamp {
+//     font-size: 14px;
+//     color: #000000; /* Timestamp color */
+//   }
+// }
+
+// ion-footer{
+//   background-color: #ffffff;
+// }
+
+
+
+// .custom-toolbar {
+//   --background: #ffffff;
+//   color: #000000;
+// }
+
+// // ion-img {
+// //   height: 300px;
+// //   width: 100%;
+// //   object-fit: cover;
+// // }
+
+// .content-container {
+//   padding: 10px;
+//   color: #000000;
+// }
+
+// .h1 {
+//   font-size: 24px;
+//   font-weight: bold;
+//   margin-bottom: 5px;
+//   color: #000000;
+// }
+
+// .p {
+//   margin: 0;
+//   color: #000000;
+// }
+
+// .section-title {
+//   font-size: 20px;
+//   font-weight: bold;
+//   margin-top: 20px;
+//   margin-bottom: 10px;
+//   color: #000000;
+// }
+
+// .participant-card {
+//   margin-bottom: 10px;
+// }
+
+// .join-button {
+//   margin-top: 20px;
+//   --background: #cc33a6;
+//   --color: #000000;
+// }
+
+// .joined {
+//   --background: #000000;
+//   pointer-events: none;
+// }
 .custom-backround{
   --background: #ffffff;
   color: #000000;
@@ -25,11 +132,9 @@ ion-card {
     margin-right: 16px; /* Add some space between avatar and content */
   }
 
-  ion-img {
-    width: 100%;
-    height: 10px;
-    object-fit: cover;
-  }
+/* Add this CSS to your global styles or in your component's CSS file */
+
+
 
   ion-card-content {
     flex: 1; /* Expand to fill remaining space */
@@ -49,6 +154,23 @@ ion-card {
   }
 }
 
+
+ion-img {
+  height: 200px; /* Set the desired height for the cover picture */
+  width: 100%; /* Ensure the cover picture spans the full width */
+  object-fit: cover; /* Crop the image to fit the container without distortion */
+  border-radius: 10px; /* Add rounded corners */
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+  transition: all 0.3s ease-in-out; /* Add smooth transition on hover */
+  cursor: pointer; /* Show pointer cursor when hovering over the image */
+}
+
+/* Optional: Add hover effects to the cover picture */
+ion-img:hover {
+  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05);
+}
+
 ion-footer{
   background-color: #ffffff;
 }
@@ -60,22 +182,16 @@ ion-footer{
   color: #000000;
 }
 
-// ion-img {
-//   height: 300px;
-//   width: 100%;
-//   object-fit: cover;
-// }
-
 .content-container {
   padding: 10px;
   color: #000000;
 }
 
 .h1 {
-  font-size: 24px;
+  font-size: 15px;
   font-weight: bold;
   margin-bottom: 5px;
-  color: #000000;
+  color: #6b6b6b;
 }
 
 .p {
@@ -89,6 +205,7 @@ ion-footer{
   margin-top: 20px;
   margin-bottom: 10px;
   color: #000000;
+  text-align: center;
 }
 
 .participant-card {
@@ -104,4 +221,11 @@ ion-footer{
 .joined {
   --background: #000000;
   pointer-events: none;
+}
+ion-item{
+  --background: #ffffff;
+  color: #ff0000;
+  // font-size: 20px;
+  // --min-height: 70px;
+  // text-align: center;
 }

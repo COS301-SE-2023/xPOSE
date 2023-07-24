@@ -43,17 +43,28 @@
     </ion-text>
   </div>
 
-  <ion-card (click)="viewEvent()" *ngFor="let card of cards">
-    <img [src]="card?.image_url" alt="Card Image" class="card-image">
+  <ion-card (click)="eventDetails(card.id)" *ngFor="let card of cards">
+    <img [src]="card.image_url" alt="Card Image" class="card-image">
     <ion-card-header class="card-title">
       <ion-card-title class="header">{{ card?.title }}</ion-card-title>
       <ion-card-content>
-          {{card?.description}}
+          {{card.longitude}} {{card.latitude}}
       </ion-card-content>
+      <ion-row>
+        <ion-col center text-center>
+          <ion-card-subtitle>
+            {{ card.description }}       
+          </ion-card-subtitle>
+        </ion-col>
+        <ion-col class="ion-text-end">
+          <!-- Use the "ion-text-end" class to align the button to the right -->
+          <ion-button fill="clear" class="right-aligned-button">Share</ion-button>
+        </ion-col>
+      </ion-row>
     </ion-card-header>
     <ion-card-content>
       <ion-icon name="location"></ion-icon>
-      {{ card?.location }}
+      {{ card.description }}
     </ion-card-content>
     <ion-button class="button-style"  (click)="eventDetails(card.id)">
       <!-- {{ card.button }} -->
