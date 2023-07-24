@@ -17,4 +17,3 @@ app.use(bodyParser.json()); // will be using Json  data
 app.use('/notifications', notify);
 app.get('/', (req, res) => res.send(" Notifications services"));
 app.listen(PORT, () => console.log(`Server running on port: http://localhost:${PORT}`));
-
