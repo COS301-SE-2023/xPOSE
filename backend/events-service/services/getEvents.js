@@ -43,6 +43,18 @@ async function getEvents(req, res) {
         const transformedEvents = [];
         for (let i = 0; i < events.length; i++) {
           const event = events[i];
+          // update event status
+          let status = '';
+          const obj_start_date = new Date(event.start_date);
+          const obj_end_date = new Date(event.end_date);
+          if (Date.now() < obj_start_date) {
+            status = 'upcoming';
+          } else if (Date.now() >= obj_start_date && Date.now() <= obj_end_date) {
+            status = 'ongoing';
+          } else {
+            status = 'ended';
+          }
+
           const { owner_id_fk, ...eventData } = event.toJSON();
         
           // Check if user is the owner
