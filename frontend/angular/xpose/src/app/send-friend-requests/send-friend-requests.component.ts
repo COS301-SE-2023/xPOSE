@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { IonicModule, ModalController } from '@ionic/angular';
 import {NgFor, NgIf} from '@angular/common';
 import { AuthService } from "../shared/services/auth.service";
+import { Service } from '../service/service';
+import { error } from 'console';
 
 @Component({
   selector: 'app-send-friend-requests',
@@ -17,7 +19,8 @@ export class SendFriendRequestsComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
-    public authService: AuthService
+    public authService: AuthService,
+    public userService: Service
     ) {}
 
   ngOnInit() {
@@ -48,9 +51,20 @@ export class SendFriendRequestsComponent implements OnInit {
   
           console.log("My sender id is: " + userId);
           console.log("My recipient id is: " + requestId);
-          console.log("Sender name: "+ user.displayName);
+
+          let senderName = "";
+          // get name of sender
+          this.userService.GetUser(userId).subscribe(
+            (senderData) => {
+              console.log("Sender name: "+ senderData.displayName);
+              senderName = senderData.displayName;
+            },
+            (error) => {
+              console.log("Error fetching sender name:", error);
+            }
+          );
           
-          this.http.post(endpoint, {username:`${user.displayName}`}).subscribe(
+          this.http.post(endpoint, {username:`${senderName}`}).subscribe(
             (response) => {
               console.log(response);
             },

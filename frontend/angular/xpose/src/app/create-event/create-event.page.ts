@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
 import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
+// import { google } from 'google-maps';
 @Component({
 	selector: "app-create-event",
 	templateUrl: "./create-event.page.html",
@@ -191,39 +192,59 @@ export class CreateEventPage implements OnInit, AfterViewInit {
 			if(userId){
 				this.buttonClicked = true;
 				this.loading = true;
-				// this.createEvent.userId = parseInt(userId);
-				const formData: FormData = new FormData();
-				formData.append('uid', userId);
-				formData.append('title', this.createEvent.title);
-				if (this.createEvent.image) {
-				  formData.append('image', this.createEvent.image, this.createEvent.image.name);
-				}
-				formData.append('start_date', this.createEvent.start_date);
-				formData.append('end_date', this.createEvent.end_date);
-				formData.append('location', this.createEvent.location);
-				formData.append('description', this.createEvent.description);
-				formData.append('privacy_setting', this.createEvent.privacy_setting);
-				formData.append('latitude', this.createEvent.latitude.toString());
-				formData.append('longitude', this.createEvent.longitude.toString());
-			  
-				// REfactor this to be done in the service class for better decoupling
-				const url = 'http://localhost:8000/e/events';
-			  
-				this.http.post(url, formData)
-				  .subscribe({
-					next: (response:any) => {
-					  console.log(response);
-					  this.openEventModal(response.code);
-					  // Handle the response from the server
-					  this.router.navigate(['/home']);
-					},
-					error: (error) => {
-					  // Handle any errors that occurred during the request
-					  console.error(error);
-					  this.loading = false;
-					  // Display an error message to the user or perform any necessary error handling
+				const geocoder = new google.maps.Geocoder();
+				const location = new google.maps.LatLng(
+				  this.createEvent.latitude,
+				  this.createEvent.longitude
+				);
+
+				geocoder.geocode({ location }, (results, status) => {
+				  if (status === 'OK') {
+					if (results[0]) {
+					  this.createEvent.location = results[0].formatted_address;
+					  console.log(results[0].formatted_address);
+					} else {
+					  console.log('No results found');
 					}
-				  });
+				  } else {
+					console.log('Geocoder failed due to: ' + status);
+				  }
+
+				  // this.createEvent.userId = parseInt(userId);
+				  const formData: FormData = new FormData();
+				  formData.append('uid', userId);
+				  formData.append('title', this.createEvent.title);
+				  if (this.createEvent.image) {
+					formData.append('image', this.createEvent.image, this.createEvent.image.name);
+				  }
+				  formData.append('start_date', this.createEvent.start_date);
+				  formData.append('end_date', this.createEvent.end_date);
+				  formData.append('location', this.createEvent.location);
+				  formData.append('description', this.createEvent.description);
+				  formData.append('privacy_setting', this.createEvent.privacy_setting);
+				  formData.append('latitude', this.createEvent.latitude.toString());
+				  formData.append('longitude', this.createEvent.longitude.toString());
+				//   console.log(formData);
+				  console.log(this.createEvent);
+				  // REfactor this to be done in the service class for better decoupling
+				  const url = 'http://localhost:8000/e/events';
+				
+				  this.http.post(url, formData)
+					.subscribe({
+					  next: (response:any) => {
+						console.log(response);
+						this.openEventModal(response.code);
+						// Handle the response from the server
+						this.router.navigate(['/home']);
+					  },
+					  error: (error) => {
+						// Handle any errors that occurred during the request
+						console.error(error);
+						this.loading = false;
+						// Display an error message to the user or perform any necessary error handling
+					  }
+					});
+				});
 			}
 			else {
 				console.log("No user is currently logged in.");

@@ -10,7 +10,7 @@ import { getUsers,
         removeFriend,
         acceptFriendRequest,
         rejectFriendRequest 
-    } from '../controllers/users.js';
+    } from '../controllers/index.js';
 
 const router = express.Router();
 
