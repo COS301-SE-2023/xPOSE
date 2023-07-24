@@ -130,14 +130,17 @@ export class JoinedEventPage implements OnInit {
 		this.router.navigateByUrl('/search');
 	}
   
-  eventDetails() {
-		this.router.navigate(['/event']);
-	}
+  // eventDetails() {
+	// 	this.router.navigate(['/event']);
+	// }
 
   onEvent() {
     this.router.navigate(['/create-event']);
   }
 
+  eventDetails(event_id: string) {
+		this.router.navigate(['/view-event', event_id]);
+	}
   onNotifications() {
     this.router.navigate(['/notification']);
   }
@@ -153,4 +156,19 @@ export class JoinedEventPage implements OnInit {
   onHome() {
     this.router.navigate(['/home']);
   }
+  getStatusColor(status: string) {
+    if (status === 'ongoing') {
+      return 'success';
+    } else if (status === 'upcoming') {
+      return 'warning';
+    } else {
+      return 'danger';
+    }
+      }
+
+      truncateText(text: string, words: number): string {
+        if (!text) return '';
+        const wordsArray = text.trim().split(' ');
+        return wordsArray.slice(0, words).join(' ');
+        }
 }

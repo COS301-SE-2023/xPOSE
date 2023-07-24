@@ -4,7 +4,6 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>
-      <!-- <img src="assets/icon/Xp.jpeg" alt="Logo" class="logo-image"> -->
       xPOSE
     </ion-title>
   </ion-toolbar>
@@ -25,7 +24,7 @@
   </ion-content>
 </ion-menu>
 
-<ion-content [fullscreen]="true" id="main-content" class="custom-backround">
+<ion-content [fullscreen]="true" id="main-content" class="custom-background">
   <div class="button-container">
     <ion-searchbar class="button-container" placeholder="Search" (click)="search()"></ion-searchbar>
   </div>
@@ -50,10 +49,6 @@
       <ion-card-title class="header">
         {{ card?.title }}
       </ion-card-title>
-      <!-- <ion-card-content>
-          {{ card.date }}
-          {{ card.location }}
-      </ion-card-content> -->
       <ion-card-content>
         <ion-icon name="location"></ion-icon>
         {{ truncateText(card.location, 4) }}
@@ -65,21 +60,12 @@
           </ion-card-subtitle>
         </ion-col>
         <ion-col class="ion-text-end">
-          <!-- Use the "ion-text-end" class to align the button to the right -->
-          <!-- <div class="iconp"> -->
           <ion-button fill="clear" class="right-aligned-button">
-            <!-- Share  -->
             <ion-icon class="iconp" name='share'></ion-icon>
           </ion-button>
-        <!-- </div> -->
-
         </ion-col>
       </ion-row>
     </ion-card-header>
-    <!-- <ion-button class="button-style"  (click)="eventDetails(card.id)"> -->
-      <!-- {{ card.button }} -->
-      <!-- View -->
-    <!-- </ion-button> -->
   </ion-card>
 </ion-content>
 
