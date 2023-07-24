@@ -54,6 +54,7 @@ ion-card {
   height: 320px;
   border: solid 0.1px #868686;
   box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
 }
 
 ion-card-content{
@@ -61,6 +62,7 @@ ion-card-content{
   padding-bottom: -0px;
   // padding-left: -10px;
   padding-right: 10px;
+  color: #353535;
 }
 
 ion-title {
@@ -98,7 +100,7 @@ ion-card .button-style:hover {
 }
 ion-card-subtitle{
   // padding-bottom: 50px;
-  color: #000000;
+  color: #3d3d3d;
 }
 
 ion-card .card-image {
