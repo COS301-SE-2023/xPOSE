@@ -45,12 +45,14 @@ async function createEvent(req, res) {
         }
 
         let status = '';
-        if (Date.now() < start_date) {
+        const obj_start_date = new Date(start_date);
+        const obj_end_date = new Date(end_date);
+        if (Date.now() < obj_start_date) {
             status = 'upcoming';
-        } else if (Date.now() >= start_date && Date.now() <= end_date) {
+        } else if (Date.now() >= obj_start_date && Date.now() <= obj_end_date) {
             status = 'ongoing';
         } else {
-            status = 'finished';
+            status = 'ended';
         }
 
         // Build the event object
