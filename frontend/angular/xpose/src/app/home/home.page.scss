@@ -48,10 +48,15 @@ ion-toolbar.custom-toolbar {
 
 ion-card {
   border-radius: 0px;
-  background-color: #ffffff; /* Dark purple background */
+  background-color: #c5bcbc; /* Dark purple background */
   color: #000000; /* White text color */
   margin-bottom: 20px;
   height: 300px;
+}
+
+ion-card-content{
+  // padding-top: -100px;
+  padding-bottom: 0px;
 }
 
 ion-title {
@@ -73,14 +78,14 @@ ion-card .button-style {
   --margin-start: 10px;
   --margin-end: 10px;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 20px;
-  font-family: "Helvetica", sans-serif; /* Replace "Arial" with your preferred font or a web-safe font */
-  --ripple-color: rgb(250, 160, 208);
-  --padding-top: 25px;
-  --padding-bottom: 29px;
-  transition: background-color 0.3s ease-in-out;
+  // justify-content: center;
+  // align-items: center;
+  // font-size: 20px;
+  // font-family: "Helvetica", sans-serif; /* Replace "Arial" with your preferred font or a web-safe font */
+  // --ripple-color: rgb(250, 160, 208);
+  // --padding-top: 20px;
+  // --padding-bottom: 29px;
+  // transition: background-color 0.3s ease-in-out;
 }
 
 ion-card .button-style:hover {
