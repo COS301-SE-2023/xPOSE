@@ -53,7 +53,11 @@ export class HomePage {
 	});
   }
 
-  
+  truncateText(text: string, words: number): string {
+	if (!text) return '';
+	const wordsArray = text.trim().split(' ');
+	return wordsArray.slice(0, words).join(' ');
+  }
 
   getCurrentUserId(): Observable<string> {
 	return this.afAuth.authState.pipe(
