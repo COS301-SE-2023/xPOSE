@@ -27,6 +27,8 @@
 		  </ion-list>
 		</ion-content>
 	  </ion-menu>
+
+	  <link rel="stylesheet" href="edit.page.scss">
   
   <ion-content>
 	
@@ -39,18 +41,19 @@
 	  
   
 	  <ion-item>
-		<ion-label position="floating">Username</ion-label>
-		<ion-input [(ngModel)]="username"></ion-input>
+		<ion-label class="username-label" position="floating">Username</ion-label>
+		<ion-input class="username-input" [(ngModel)]="username"></ion-input>
 	  </ion-item>
   
 	  <ion-item>
-		<ion-label position="floating">Email</ion-label>
-		<ion-input [(ngModel)]="email"></ion-input>
+		<ion-label class="email-label" position="floating">Email</ion-label>
+		<ion-input class="email-input" [(ngModel)]="email"></ion-input>
 	  </ion-item>
 
-	  
-		<ion-label>Account Privacy</ion-label>
-		<ion-toggle [(ngModel)]="isPublic"></ion-toggle>
+	  <div class="account-privacy-container">
+		<ion-label class="account-privacy-label">Account Privacy</ion-label>
+		<ion-toggle class="account-privacy-toggle" [(ngModel)]="isPublic"></ion-toggle>
+	  </div>
 	 
   
 	  <ion-button expand="ion-button" (click)="saveProfile()">Save Changes</ion-button>

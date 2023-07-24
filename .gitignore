@@ -19,3 +19,5 @@ firebase-debug.log
 **/serviceAccountKey.json
 **/firebase-debug.log
 **/environments/**
+frontend/angular/xpose/src/environments/environment.prod.ts
+frontend/angular/xpose/src/environments/environment.ts

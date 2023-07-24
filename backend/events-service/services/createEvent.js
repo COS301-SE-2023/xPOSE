@@ -10,6 +10,7 @@ async function createEvent(req, res) {
 
         // Check if the required fields are provided
         if (!uid || !title || !description || !location || !latitude || !longitude || !start_date || !end_date || !privacy_setting) {
+
             res.status(400).json({ error: 'Missing required fields' });
             return;
         }

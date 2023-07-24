@@ -1,2 +1,3 @@
 www/
-environments
+src/environments/
+frontend/angular/xpose/src/environments/
