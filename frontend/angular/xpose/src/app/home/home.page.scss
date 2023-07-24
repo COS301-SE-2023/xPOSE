@@ -48,15 +48,19 @@ ion-toolbar.custom-toolbar {
 
 ion-card {
   border-radius: 0px;
-  background-color: #c5bcbc; /* Dark purple background */
+  background-color: #ffffff; /* Dark purple background */
   color: #000000; /* White text color */
   margin-bottom: 20px;
-  height: 350px;
+  height: 320px;
+  border: solid 0.1px #868686;
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
 }
 
 ion-card-content{
   // padding-top: -100px;
   padding-bottom: -0px;
+  // padding-left: -10px;
+  padding-right: 10px;
 }
 
 ion-title {
@@ -64,29 +68,29 @@ ion-title {
   font-size: 25px;
 }
 
-ion-card .button-style {
-  --color: #ffffff;
-  --background: linear-gradient(135deg, #ff0066, #ea00ff);
-  --box-shadow: none;
-  border: none;
-  --border-radius: 10px;
-  /* ... other CSS variables ... */
-    --padding-start: 10px;
-  --padding-end: 10px;
-  --margin-top: 10px;
-  --margin-bottom: 10px;
-  --margin-start: 10px;
-  --margin-end: 10px;
-  display: flex;
-  // justify-content: center;
-  // align-items: center;
-  // font-size: 20px;
-  // font-family: "Helvetica", sans-serif; /* Replace "Arial" with your preferred font or a web-safe font */
-  // --ripple-color: rgb(250, 160, 208);
-  // --padding-top: 20px;
-  // --padding-bottom: 30px;
-  // transition: background-color 0.3s ease-in-out;
-}
+// ion-card .button-style {
+//   --color: #ffffff;
+//   --background: linear-gradient(135deg, #ff0066, #ea00ff);
+//   --box-shadow: none;
+//   border: none;
+//   --border-radius: 10px;
+//   /* ... other CSS variables ... */
+//     --padding-start: 10px;
+//   --padding-end: 10px;
+//   --margin-top: 7px;
+//   --margin-bottom: 10px;
+//   --margin-start: 10px;
+//   --margin-end: 10px;
+//   display: flex;
+//   // justify-content: center;
+//   // align-items: center;
+//   // font-size: 20px;
+//   // font-family: "Helvetica", sans-serif; /* Replace "Arial" with your preferred font or a web-safe font */
+//   // --ripple-color: rgb(250, 160, 208);
+//   // --padding-top: 20px;
+//   // --padding-bottom: 30px;
+//   // transition: background-color 0.3s ease-in-out;
+// }
 
 ion-card .button-style:hover {
   --background: linear-gradient(135deg, #ea00ff, #ff0066);
@@ -101,13 +105,14 @@ ion-card .card-image {
   object-fit: cover;
 }
 
-ion-card .card-title {
-  font-size: 20px;
-  color: #000000;
-}
+// ion-card .card-title {
+//   font-size: 20px;
+//   color: #000000;
+// }
 
 ion-card .header {
   color: #000000;
+  // padding-top: 0px;
 }
 ion-tabs {
   background: #ffffff;

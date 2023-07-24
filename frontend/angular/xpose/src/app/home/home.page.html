@@ -43,27 +43,27 @@
     </ion-text>
   </div>
 
-  <ion-card (click)="viewEvent()" *ngFor="let card of cards">
+  <ion-card (click)="eventDetails(card.id)" *ngFor="let card of cards">
     <img [src]="card.image_url" alt="Card Image" class="card-image">
     <ion-card-header class="card-title">
       <ion-card-title class="header">{{ card.title }}</ion-card-title>
       <ion-card-content>
+        <ion-icon name="location"></ion-icon>
           {{card.longitude}} {{card.latitude}}
       </ion-card-content>
+      <ion-card-subtitle>
+        {{ card.description }}
+      </ion-card-subtitle>
     </ion-card-header>
-    <ion-card-subtitle>
-      <ion-icon name="location"></ion-icon>
-      {{ card.description }}
-    </ion-card-subtitle>
 
     <!-- <ion-card-content>
       <ion-icon name="location"></ion-icon>
       {{ card.description }}
     </ion-card-content> -->
-    <ion-button class="button-style"  (click)="eventDetails(card.id)">
+    <!-- <ion-button class="button-style"  (click)="eventDetails(card.id)"> -->
       <!-- {{ card.button }} -->
-      View
-    </ion-button>
+      <!-- View
+    </ion-button> -->
   </ion-card>
 </ion-content>
 
