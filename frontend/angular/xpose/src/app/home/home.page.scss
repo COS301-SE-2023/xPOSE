@@ -1,4 +1,5 @@
 /* app.component.scss */
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto&display=swap');
 
 ion-toolbar.custom-toolbar {
   --background: #ffffff;
@@ -51,7 +52,7 @@ ion-card {
   background-color: #e1e0ff; /* Dark purple background */
   color: #000000; /* White text color */
   margin-bottom: 20px;
-  height: 320px;
+  height: 330px;
   border: solid 0.1px #adadad;
   box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
   border-radius: 5px;
@@ -63,6 +64,7 @@ ion-card-content{
   // padding-left: -10px;
   padding-right: 10px;
   color: #353535;
+  font-family: 'Pacifico', cursive;
 }
 
 ion-title {
@@ -106,9 +108,11 @@ ion-title {
 ion-card .button-style:hover {
   --background: linear-gradient(135deg, #ea00ff, #ff0066);
 }
-ion-card-subtitle{
-  // padding-bottom: 50px;
+ion-card-subtitle {
+  /* Adjust padding values as needed */
+  padding-bottom: 10px;
   color: #3d3d3d;
+  
 }
 
 ion-card .card-image {
@@ -124,7 +128,8 @@ ion-card .card-image {
 
 ion-card .header {
   color: #000000;
-  // padding-top: 0px;
+  /* Adjust padding values as needed */
+  padding-top: 10px;
 }
 ion-tabs {
   background: #ffffff;

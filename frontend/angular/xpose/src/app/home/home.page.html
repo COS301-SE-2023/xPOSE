@@ -42,33 +42,26 @@
       <h1>No Events could be loaded...</h1>
     </ion-text>
   </div>
-
-  <ion-card (click)="eventDetails(card.id)" *ngFor="let card of cards"  >
+  <ion-card (click)="eventDetails(card.id)" *ngFor="let card of cards">
     <img [src]="card.image_url" alt="Card Image" class="card-image">
     <ion-card-header class="card-title">
       <ion-card-title class="header">{{ card.title }}</ion-card-title>
       <ion-card-content>
         <ion-icon name="location"></ion-icon>
-          {{card.longitude}} {{card.latitude}}
+        {{card.longitude}} {{card.latitude}}
       </ion-card-content>
-      
-      <ion-card-subtitle>
-        {{ card.description }}
-        <ion-button fill="clear" class="left-aligned-button">Share</ion-button>
-      </ion-card-subtitle>
+      <ion-row>
+        <ion-col center text-center>
+          <ion-card-subtitle>
+            {{ card.description }}       
+          </ion-card-subtitle>
+        </ion-col>
+        <ion-col class="ion-text-end">
+          <!-- Use the "ion-text-end" class to align the button to the right -->
+          <ion-button fill="clear" class="right-aligned-button">Share</ion-button>
+        </ion-col>
+      </ion-row>
     </ion-card-header>
-    
-    <ion-button fill="clear">Action 1</ion-button>
-    
-
-    <!-- <ion-card-content>
-      <ion-icon name="location"></ion-icon>
-      {{ card.description }}
-    </ion-card-content> -->
-    <!-- <ion-button class="button-style"  (click)="eventDetails(card.id)"> -->
-      <!-- {{ card.button }} -->
-      <!-- View
-    </ion-button> -->
   </ion-card>
 </ion-content>
 
