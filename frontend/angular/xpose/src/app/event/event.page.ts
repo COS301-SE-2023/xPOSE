@@ -7,6 +7,7 @@ import { NavController } from '@ionic/angular';
 import { CurrentEventDataService } from '../shared/current-event-data.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Observable, map } from 'rxjs';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-event',
@@ -25,7 +26,9 @@ export class EventPage {
     private router: Router,
     private navCtrl: NavController,
     private currentEventDataService: CurrentEventDataService,
-		private afAuth: AngularFireAuth) {
+		private afAuth: AngularFireAuth,
+    private location: Location
+    ) {
     // Mocked event data
     // this.event = {
     //   title: 'Sample Event',
@@ -56,7 +59,9 @@ export class EventPage {
         this.navCtrl.navigateBack('/home');
         return;
       }
-      
+
+     
+
       const event_id = paramMap.get('id');
 
       this.getCurrentUserId().subscribe((uid) => {
@@ -98,6 +103,10 @@ export class EventPage {
       //   // this.currentEventDataService.event_id = res._id;
       // });
     });
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 
   getCurrentUserId(): Observable<string> {
