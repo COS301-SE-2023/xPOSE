@@ -15,9 +15,7 @@ export function receiveMessageFromQueue(queue) {
                 if(error1) {
                     throw error1;
                 }
-        
-                // let queue = 'hello';
-        
+
                 channel.assertQueue(queue, {
                     durable: false
                 });

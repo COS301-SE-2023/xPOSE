@@ -13,10 +13,7 @@ export function sendMessageToQueue(queue, msg) {
             if(error1) {
                 throw error1;
             }
-    
-            // let queue = 'hello';
-            // let msg = 'Hello world';
-    
+
             channel.assertQueue(queue, {
                 durable: false
             });

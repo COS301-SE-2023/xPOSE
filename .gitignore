@@ -11,3 +11,11 @@ backend/user-management-service/DB/credentials/serviceAccountKey.json
 #worker script for FCM pushed notifications
 firebase-messaging-sw.js
 .idea/
+firebase-debug.log
+**/node_modules/**
+**/*.json
+**/credentials/**
+**/permissions.json
+**/serviceAccountKey.json
+**/firebase-debug.log
+**/environments/**

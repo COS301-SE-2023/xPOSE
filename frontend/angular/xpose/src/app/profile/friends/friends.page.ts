@@ -30,4 +30,13 @@ export class FriendsPage implements OnInit {
   ngOnInit() {
     // You can optionally fetch the userFriends array from your data source or API here
   }
+
+  unfriend(friend: any) {
+    // Here you can implement the logic to remove the friend from your list
+    // For demonstration purposes, I'll just remove the friend from the userFriends array directly
+    const index = this.userFriends.indexOf(friend);
+    if (index !== -1) {
+      this.userFriends.splice(index, 1);
+    }
+  }
 }

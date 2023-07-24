@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const app = express();
 const router = require('./router');
 const {sequelize} = require('./data-access/sequelize');
-const admin = require('firebase-admin');
+// const admin = require('firebase-admin');
 
 app.use(cors());
 app.use(bodyParser.urlencoded({

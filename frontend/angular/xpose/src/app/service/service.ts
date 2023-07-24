@@ -22,7 +22,7 @@ export class Service {
     .pipe(map(result => result))
   }
 
-  GetUser(uid: string):Observable<any> {
+ GetUser(uid: string):Observable<any> {
     const url = `${this.apiUrl}u/users/${uid}`;
     return this.httpClient.get(url);
   }

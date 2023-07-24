@@ -5,11 +5,12 @@ const { generateUniqueCode, EventBuilder } = require('../libs/Events');
 
 async function createEvent(req, res) {
     try {
-        const { uid, title, description, latitude, longitude, start_date, end_date, privacy_setting } = req.body;
+        const { uid, title, description, location, latitude, longitude, start_date, end_date, privacy_setting } = req.body;
         const imageFile = req.file;
 
         // Check if the required fields are provided
-        if (!uid || !title || !description || !latitude || !longitude || !start_date || !end_date || !privacy_setting) {
+        if (!uid || !title || !description || !location || !latitude || !longitude || !start_date || !end_date || !privacy_setting) {
+
             res.status(400).json({ error: 'Missing required fields' });
             return;
         }
@@ -47,6 +48,7 @@ async function createEvent(req, res) {
         const event = await Event.create({
             title: title,
             description: description,
+            location: location,
             latitude: latitude,
             longitude: longitude,
             start_date: start_date,
