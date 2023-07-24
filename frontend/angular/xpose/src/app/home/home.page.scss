@@ -48,11 +48,11 @@ ion-toolbar.custom-toolbar {
 
 ion-card {
   border-radius: 0px;
-  background-color: #ffffff; /* Dark purple background */
+  background-color: #e1e0ff; /* Dark purple background */
   color: #000000; /* White text color */
   margin-bottom: 20px;
   height: 320px;
-  border: solid 0.1px #868686;
+  border: solid 0.1px #adadad;
   box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
   border-radius: 5px;
 }
@@ -70,7 +70,15 @@ ion-title {
   font-size: 25px;
   color: #000000;
 }
-
+/* Style for the left-aligned button */
+.left-aligned-button {
+  margin-right: auto;
+}
+.card-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
 // ion-card .button-style {
 //   --color: #ffffff;
 //   --background: linear-gradient(135deg, #ff0066, #ea00ff);
