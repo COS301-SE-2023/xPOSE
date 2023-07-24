@@ -10,6 +10,7 @@ async function processReceivedMessage() {
         
         handleNotification(receivedMsg);
         
+
         /*switch (receivedMsg.type) {
             case 'notification':
                 handleNotificationMessage(message);
@@ -34,12 +35,13 @@ setInterval(processReceivedMessage, intervalTime);
 
 export function handleNotification(message) {
     console.log("Listening to incoming messages...")
+    
     // Extract required data from the message
-    const {responses, userId, data } = message;
-
+    const {data } = message;
+    
     // Store the message in the Notification collection
     const db = admin.firestore();
-    const notificationRef = db.collection('Notifications').doc(data.senderId);
+    // const notificationRef = db.collection('Notifications').doc(data.receiverId);
     // Store the message in the MyNotifications subcollection
     notificationRef.collection('MyNotifications').add(data)
             .then(()=> {
@@ -48,6 +50,7 @@ export function handleNotification(message) {
             .catch((error) => {
                 console.error("Error adding document: ", error);
             });
+
   }
 
 
