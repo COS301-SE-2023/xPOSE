@@ -120,7 +120,7 @@ export class EventPage {
     if (this.history.length >= 0) {
       this.location.back();
     } else {
-      this.router.navigateByUrl("/home");
+      this.router.navigate(['/home']);
     }
   }
 
