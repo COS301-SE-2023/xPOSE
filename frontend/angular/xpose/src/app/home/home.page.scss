@@ -84,14 +84,16 @@ ion-card .button-style {
   // font-family: "Helvetica", sans-serif; /* Replace "Arial" with your preferred font or a web-safe font */
   // --ripple-color: rgb(250, 160, 208);
   // --padding-top: 20px;
-  // --padding-bottom: 29px;
+  // --padding-bottom: 30px;
   // transition: background-color 0.3s ease-in-out;
 }
 
 ion-card .button-style:hover {
   --background: linear-gradient(135deg, #ea00ff, #ff0066);
 }
-
+ion-card-subtitle{
+  // padding-bottom: 50px;
+}
 
 ion-card .card-image {
   width: 100%;
