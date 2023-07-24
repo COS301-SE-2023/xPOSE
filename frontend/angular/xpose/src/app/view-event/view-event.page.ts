@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-view-event',
@@ -19,7 +20,8 @@ export class ViewEventPage implements OnInit, AfterViewInit {
     private router: Router,
     private route: ActivatedRoute,
     private http: HttpClient,
-    private afAuth: AngularFireAuth
+    private afAuth: AngularFireAuth,
+    private location: Location
   ) {
     this.map = null;
     this.marker = null;
@@ -33,6 +35,10 @@ export class ViewEventPage implements OnInit, AfterViewInit {
     console.log(this.event_id);
     this.getEventDataFromAPI();
     this.getEventParticipantsFromAPI();
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 
 

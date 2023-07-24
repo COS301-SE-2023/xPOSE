@@ -7,6 +7,8 @@ import { NavController } from '@ionic/angular';
 import { CurrentEventDataService } from '../shared/current-event-data.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Observable, map } from 'rxjs';
+import { Location } from '@angular/common';
+import { NavigationEnd } from "@angular/router";
 
 @Component({
   selector: 'app-event',
@@ -15,6 +17,7 @@ import { Observable, map } from 'rxjs';
 })
 export class EventPage {
   event: Event;
+  private history: string[] = [];
 
   @ViewChild('eventTabs', { static: false }) tabs: IonTabs | undefined;
   selectedTab: any;
@@ -25,7 +28,17 @@ export class EventPage {
     private router: Router,
     private navCtrl: NavController,
     private currentEventDataService: CurrentEventDataService,
-		private afAuth: AngularFireAuth) {
+		private afAuth: AngularFireAuth,
+    private location: Location
+    ) {
+
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.history.push(event.urlAfterRedirects);
+      }
+    });
+  
+    
     // Mocked event data
     // this.event = {
     //   title: 'Sample Event',
@@ -56,7 +69,9 @@ export class EventPage {
         this.navCtrl.navigateBack('/home');
         return;
       }
-      
+
+     
+
       const event_id = paramMap.get('id');
 
       this.getCurrentUserId().subscribe((uid) => {
@@ -98,6 +113,15 @@ export class EventPage {
       //   // this.currentEventDataService.event_id = res._id;
       // });
     });
+  }
+
+  back(): void {
+    this.history.pop();
+    if (this.history.length >= 0) {
+      this.location.back();
+    } else {
+      this.router.navigate(['/home']);
+    }
   }
 
   getCurrentUserId(): Observable<string> {

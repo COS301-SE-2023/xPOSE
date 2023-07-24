@@ -3,8 +3,9 @@
 <ion-header [translucent]="true">
   <ion-toolbar class="custom-toolbar">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="previous-page"></ion-back-button>
+      <ion-back-button (click)="back()" icon="arrow-back"></ion-back-button>
     </ion-buttons>
+    
     <ion-title >Notifications</ion-title>
   </ion-toolbar>
 </ion-header>
