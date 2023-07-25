@@ -127,11 +127,13 @@ export class EventPage {
      
 
       const event_id = paramMap.get('id');
+
+      console.log(`The event id = ${event_id}`);
+      this.messagesCollection = this.afs.collection<Message>(`Event-Chats/${event_id}/chats`);
       
       this.getCurrentUserId().subscribe((uid) => {
         if (uid) {
           this.http.get(`http://localhost:8000/e/events/${event_id}?uid=${uid}`).subscribe((data) => {
-            this.messagesCollection = this.afs.collection<Message>(`Event-Chats/${event_id}/chats`);
             this.retrieveMessages();
             // Note: I'll have to remove this later
             this.current_event = data;
@@ -260,32 +262,38 @@ export class EventPage {
         };
 
         this.newMessage = '';
-        const event_id = this.currentEventDataService.code;
+        const event_id = this.current_event.code;
         const formData: FormData = new FormData();
         formData.append('message', message.message);
 
         this.http.post(`http://localhost:8000/c/chats/${event_id}?uid=${uid}`, formData).subscribe((res) => {
-          console.log('Message sent successfully');
+          console.log(res);
         });
       });
     }
   }
 
-  messagesCollection: AngularFirestoreCollection<Message> = this.afs.collection<Message>(`Event-Chats/0/chats`);
+  messagesCollection: AngularFirestoreCollection<Message> | undefined;
   messages: Message[] = [];
+
   retrieveMessages() {
-    this.messagesCollection.valueChanges().subscribe((messages: Message[]) => {
-      this.messages = messages;
-      
-      // Fetch and assign the displayName for each message
-      this.messages.forEach((message: Message) => {
-        this.getUserNameFromUid(message.uid).subscribe((displayName: string) => {
-          message.displayName = displayName;
+    if(this.messagesCollection) {
+      this.messagesCollection.valueChanges().subscribe((messages: Message[]) => {
+        this.messages = messages;
+        
+        // Fetch and assign the displayName for each message
+        this.messages.forEach((message: Message) => {
+          this.getUserNameFromUid(message.uid).subscribe((displayName: string) => {
+            message.displayName = displayName;
+          });
         });
+        // console.log('Retrieving messages from Firestore...');
+        // console.log(this.messages);
       });
-      // console.log('Retrieving messages from Firestore...');
-      // console.log(this.messages);
-    });
+    }
+    else {
+      console.log("messagesCollection is undefined");
+    }
   }
   
   getUserNameFromUid(uid: string): Observable<string> {
