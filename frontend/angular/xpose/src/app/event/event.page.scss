@@ -62,6 +62,20 @@
 //     }
 // }
 
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.loading-text {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #333; /* Adjust the color as per your design */
+}
+
 ion-toolbar.custom-toolbar {
     --background: #ffffff;
     color: #000000;
