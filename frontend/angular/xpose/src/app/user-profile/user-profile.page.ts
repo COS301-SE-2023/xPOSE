@@ -9,9 +9,12 @@ import { Service } from '../service/service';
   styleUrls: ['./user-profile.page.scss'],
 })
 export class UserProfilePage implements OnInit {
+  filterType: string = 'Events';
+  events: any[] = [];
+  cards: any[] = [];
+  selectedTab: any;
   user: {
     photoURL: string;
-    // displayName: string;
   };
 
   constructor(
@@ -28,4 +31,11 @@ export class UserProfilePage implements OnInit {
   ngOnInit() {
   }
 
+  applyFilter() {
+    if (this.filterType === 'Events') {
+      this.cards = this.events.filter((event) => event.status === 'events');
+    } else if (this.filterType === 'Friends') {
+      this.cards = this.events.filter((event) => event.status === 'friends');
+    }
+  }
 }
