@@ -108,9 +108,9 @@
               </ion-avatar>
             </ion-card-header>
             <ion-card-content>
-              <h2 c0ass="participant-name">{{ participant.name }}</h2>
+              <h2 class="participant-name">{{ participant?.display_name }}</h2>
               <p class="participant-timestamp">{{ participant?.timestamp }}</p>
-              Add other participant details here if needed
+              <!-- Add other participant details here if needed -->
             </ion-card-content>
             <ion-buttons>
               <ion-button fill="clear" (click)="removeParticipant(participant)">
