@@ -18,8 +18,6 @@ import { map } from "rxjs/operators";
 	})
 export class CreateEventPage implements OnInit, AfterViewInit {
 
-	selectedPrivacy: string = '';
-  	selectedPrivacySetting: string = '';
 	createEvent: Event = {
 		uid: 0,
 		title: ' ',
