@@ -10,6 +10,7 @@ import { Observable, map } from 'rxjs';
 import { Location } from '@angular/common';
 import { NavigationEnd } from "@angular/router";
 import { GalleryDataService } from './posts/gallery-lightbox/gallery-data.service';
+import { AngularFirestore, AngularFirestoreCollection, DocumentChangeAction } from '@angular/fire/compat/firestore';
 
 interface Item {
   imageSrc: string;
@@ -71,7 +72,8 @@ export class EventPage {
     private currentEventDataService: CurrentEventDataService,
 		private afAuth: AngularFireAuth,
     private location: Location,
-    private galleryDataService: GalleryDataService
+    private galleryDataService: GalleryDataService,
+    private afs: AngularFirestore,
     ) {
 
     this.router.events.subscribe((event) => {
@@ -107,6 +109,8 @@ export class EventPage {
   current_event: any;
 
   ngOnInit() {
+    // give messageCollection stub value
+    // this.messagesCollection = this.afs.collection<Message>(`Event-Chats/0/chats`);
     this.activatedRoute.paramMap.subscribe(paramMap => {
       if (!paramMap.has('id')) {
         // Redirect to home page if no event id is available
@@ -123,26 +127,29 @@ export class EventPage {
      
 
       const event_id = paramMap.get('id');
-
+      
       this.getCurrentUserId().subscribe((uid) => {
         if (uid) {
           this.http.get(`http://localhost:8000/e/events/${event_id}?uid=${uid}`).subscribe((data) => {
-            this.current_event = data;
-            this.currentEventDataService.event_id = this.current_event.id;
-            this.currentEventDataService.event_title = this.current_event.title;
-            this.currentEventDataService.event_description = this.current_event.description;
-            this.currentEventDataService.code = this.current_event.code;
-            this.currentEventDataService.privacy_setting = this.current_event.privacy_setting;
-            this.currentEventDataService.start_date = this.current_event.start_date;
-            this.currentEventDataService.end_date = this.current_event.end_date;
-            // this.currentEventDataService.location = this.current_event.location;
-            // this.currentEventDataService.owner_id = this.current_event.owner_id;
-            this.currentEventDataService.image_url = this.current_event.image_url;
-            this.currentEventDataService.owner_uid = this.current_event.owner;
-            this.currentEventDataService.timestamp = this.current_event.timestamp;
+            this.messagesCollection = this.afs.collection<Message>(`Event-Chats/${event_id}/chats`);
+            this.retrieveMessages();
+            // Note: I'll have to remove this later
+            // this.current_event = data;
+            // this.currentEventDataService.event_id = this.current_event.id;
+            // this.currentEventDataService.event_title = this.current_event.title;
+            // this.currentEventDataService.event_description = this.current_event.description;
+            // this.currentEventDataService.code = this.current_event.code;
+            // this.currentEventDataService.privacy_setting = this.current_event.privacy_setting;
+            // this.currentEventDataService.start_date = this.current_event.start_date;
+            // this.currentEventDataService.end_date = this.current_event.end_date;
+            // // this.currentEventDataService.location = this.current_event.location;
+            // // this.currentEventDataService.owner_id = this.current_event.owner_id;
+            // this.currentEventDataService.image_url = this.current_event.image_url;
+            // this.currentEventDataService.owner_uid = this.current_event.owner;
+            // this.currentEventDataService.timestamp = this.current_event.timestamp;
 
             // console.log(this.current_event); 
-            console.log(this.currentEventDataService);
+            // console.log(this.currentEventDataService);
           });
         }
         else {
@@ -240,6 +247,60 @@ export class EventPage {
   onHome() {
     this.router.navigate(['/home']);
   }
+
+  // Code to create and send messages
+  newMessage!: string;
+
+  createMessage() {
+    if (this.newMessage) {
+      this.getCurrentUserId().subscribe((uid) => {
+        const message: Message = {
+          uid: uid,
+          message: this.newMessage
+        };
+
+        this.newMessage = '';
+        const event_id = this.currentEventDataService.code;
+        const formData: FormData = new FormData();
+        formData.append('message', message.message);
+
+        this.http.post(`http://localhost:8000/c/chats/${event_id}?uid=${uid}`, formData).subscribe((res) => {
+          console.log('Message sent successfully');
+        });
+      });
+    }
+  }
+
+  messagesCollection: AngularFirestoreCollection<Message> = this.afs.collection<Message>(`Event-Chats/0/chats`);
+  messages: Message[] = [];
+  retrieveMessages() {
+    this.messagesCollection.valueChanges().subscribe((messages: Message[]) => {
+      this.messages = messages;
+      
+      // Fetch and assign the displayName for each message
+      this.messages.forEach((message: Message) => {
+        this.getUserNameFromUid(message.uid).subscribe((displayName: string) => {
+          message.displayName = displayName;
+        });
+      });
+      // console.log('Retrieving messages from Firestore...');
+      // console.log(this.messages);
+    });
+  }
+  
+  getUserNameFromUid(uid: string): Observable<string> {
+    return this.afs.collection('Users').doc(uid).valueChanges().pipe(
+      map((user: any) => {
+        if (user && user.displayName) {
+          return user.displayName;
+        } else {
+          return 'Unknown User';
+        }
+      })
+    );
+  }
+
+
 }
 
 interface Event {
@@ -252,4 +313,12 @@ interface Event {
   image_url: string;
   privacy_setting: string;
   code: string;
+}
+
+interface Message {
+  uid: string;
+  displayName?: string; // Add displayName property
+  message: string;
+  id?: string;
+  timestamp?: Date;
 }
