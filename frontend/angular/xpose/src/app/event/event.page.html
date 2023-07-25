@@ -52,22 +52,22 @@
   </ion-list>
 
    <ion-list *ngIf="filterType === 'details'" >
-    <!-- <ion-header [translucent]="true">
+    <ion-header [translucent]="true">
       <ion-toolbar>
-        <ion-title>eventName1</ion-title>
+        <ion-title>{{ current_event?.title }}</ion-title>
       </ion-toolbar>
-    </ion-header> -->
+    </ion-header>
     
-    <!-- <ion-content [fullscreen]="true"> -->
+    <ion-content [fullscreen]="true">
       <div>
         <ion-card>
           <ion-card-header>
             <ion-card-subtitle>Date</ion-card-subtitle>
-            <ion-card-title> eventDate | date </ion-card-title>
+            <ion-card-title> {{ current_event?.start_date }} - {{ current_event?.end_date }} ({{ current_event?.status }}) </ion-card-title>
           </ion-card-header>
           <ion-card-content>
             <ion-card-subtitle>Location</ion-card-subtitle>
-            <ion-card-title> eventLocation </ion-card-title>
+            <ion-card-title> {{ current_event?.location }} </ion-card-title>
           </ion-card-content>
         </ion-card>
     
@@ -89,33 +89,33 @@
           </ion-card-header>
           <ion-card-content>
             <!-- Display your event link here -->
-            <p style="color: blue;">www.cpose.com121540000</p>
+            <p style="color: blue;">{{ this.url }}</p>
           </ion-card-content>
         </ion-card>
       </div>
     
       <h1 class="section-title">Participants</h1>
-      <!-- <ion-card class="participant-card" *ngFor="let participant of participants" (click)="onCardClick(participant)"> -->
+      <ion-card class="participant-card" *ngFor="let participant of participants" (click)="onCardClick(participant)">
         <ion-card-header>
           <ion-avatar>
-            <!-- <ion-img [src]="participant?.avatar_url"></ion-img> -->
+            <ion-img [src]="participant?.avatar_url"></ion-img>
           </ion-avatar>
         </ion-card-header>
         <ion-card-content>
-          <!-- <h2 c0ass="participant-name">{{ participant.name }}</h2> -->
-          <!-- <p class="participant-timestamp">{{ participant?.timestamp }}</p> -->
-          <!-- Add other participant details here if needed -->
+          <h2 c0ass="participant-name">{{ participant.name }}</h2>
+          <p class="participant-timestamp">{{ participant?.timestamp }}</p>
+          Add other participant details here if needed
         </ion-card-content>
         <ion-buttons>
-          <!-- <ion-button fill="clear" (click)="removeParticipant(participant)"> -->
-            <!-- <ion-icon name="close"></ion-icon> -->
-          <!-- </ion-button> -->
-          <!-- <ion-button fill="clear" (click)="addParticipant(participant)">
+          <ion-button fill="clear" (click)="removeParticipant(participant)">
+            <ion-icon name="close"></ion-icon>
+          </ion-button>
+          <ion-button fill="clear" (click)="addParticipant(participant)">
             <ion-icon name="add"></ion-icon>
-          </ion-button> -->
+          </ion-button>
         </ion-buttons>
-      <!-- </ion-card> -->
-    <!-- </ion-content> -->
+      </ion-card>
+    </ion-content>
     
   </ion-list>
 

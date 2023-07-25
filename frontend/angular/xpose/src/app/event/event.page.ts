@@ -107,8 +107,10 @@ export class EventPage {
   }
 
   current_event: any;
+  url: string | undefined;
 
   ngOnInit() {
+    this.url = this.router.url;
     // give messageCollection stub value
     // this.messagesCollection = this.afs.collection<Message>(`Event-Chats/0/chats`);
     this.activatedRoute.paramMap.subscribe(paramMap => {
@@ -308,6 +310,23 @@ export class EventPage {
     );
   }
 
+  // Code to handle participants
+  participants: any[] = [];
+
+  addParticipant(participant: any) {
+    // Handle participant addition logic here
+  
+    // For demonstration, we'll add the participant back to the event object's participants array
+    // this.event.participants.push(participant);
+    this.participants.push(participant);
+  }
+
+  removeParticipant(participant: any) {
+    const index = this.participants.indexOf(participant);
+    if (index > -1) {
+      this.participants.splice(index, 1);
+    }
+  }
 
 }
 
