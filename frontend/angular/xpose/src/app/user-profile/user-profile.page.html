@@ -42,29 +42,24 @@
   </ion-segment>
 
   <ion-segment *ngIf="filterType === 'Events'" (ionChange)="applyFilter()">
-    <ion-segment-button value="Public">
+    <ion-segment-button value="Public" (click)="selectedTab = 'Public'">
       Public
     </ion-segment-button>
-    <ion-segment-button value="Private">
+    <ion-segment-button value="Private" (click)="selectedTab = 'Private'">
       Private
     </ion-segment-button>
   </ion-segment>
 
   <div *ngIf="filterType === 'Events'">
-    <!-- Display the content based on the selected tab -->
-    <div *ngIf="filterType === 'Events' && selectedTab === 'Public'">
+    <div>
       <ion-list>
-        <ion-item *ngFor="let card of cards">
-          <!-- Display Public Events Cards -->
-          {{ card.name }} - Public
+        <ion-item>
         </ion-item>
       </ion-list>
     </div>
-    <div *ngIf="filterType === 'Events' && selectedTab === 'Private'">
+    <div>
       <ion-list>
-        <ion-item *ngFor="let card of cards">
-          <!-- Display Private Events Cards -->
-          {{ card.name }} - Private
+        <ion-item>
         </ion-item>
       </ion-list>
     </div>
