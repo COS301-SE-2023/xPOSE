@@ -36,10 +36,6 @@ const routes: Routes = [
     loadChildren: () => import("./settings/settings.module").then(m => m.SettingsPageModule)
   },
   {
-    path: "footer",
-    loadChildren: () => import("./footer/footer.module").then(m => m.FooterPageModule)
-  },
-  {
     path: "header",
     loadChildren: () => import("./header/header.module").then(m => m.HeaderPageModule)
   },

@@ -9,6 +9,7 @@ import { get } from "http";
 
 
 
+
 @Component({
 	selector: "app-home",
 	templateUrl: "./home.page.html",
