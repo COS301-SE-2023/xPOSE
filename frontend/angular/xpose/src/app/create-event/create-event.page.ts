@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
 import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 // import { google } from 'google-maps';
 @Component({
 	selector: "app-create-event",
@@ -17,7 +18,7 @@ import { map } from "rxjs/operators";
 	styleUrls: ["./create-event.page.scss"],
 	})
 export class CreateEventPage implements OnInit, AfterViewInit {
-
+	createEventForm: FormGroup = new FormGroup({});
 	createEvent: Event = {
 		uid: 0,
 		title: ' ',
@@ -40,6 +41,7 @@ export class CreateEventPage implements OnInit, AfterViewInit {
 	
 
 	constructor(private http: HttpClient,
+		private formBuilder: FormBuilder,
 		private router: Router,
 		private service: Service,
 		private modalController: ModalController,
@@ -54,7 +56,17 @@ export class CreateEventPage implements OnInit, AfterViewInit {
 		this.initMap();
 	}
 
-	ngOnInit(): void {}
+	ngOnInit() {
+		this.createEventForm = this.formBuilder.group({
+			privacy_setting: ['', Validators.required],
+			image: [null, Validators.required],
+			title: ['', Validators.required],
+			description: ['', Validators.required],
+			location: ['', Validators.required],
+			start_date: ['', Validators.required],
+			end_date: ['', Validators.required],
+		  });
+	}
 
 	onFileSelected(event: any) {
 		const file: File = event.target.files[0];
@@ -188,72 +200,76 @@ export class CreateEventPage implements OnInit, AfterViewInit {
 	  }
 
 	  CreateEvent() {
-		this.getCurrentUserId().subscribe((userId) => {
-			if(userId){
-				this.buttonClicked = true;
-				this.loading = true;
-				const geocoder = new google.maps.Geocoder();
-				const location = new google.maps.LatLng(
-				  this.createEvent.latitude,
-				  this.createEvent.longitude
-				);
-
-				geocoder.geocode({ location }, (results, status) => {
-				  if (status === 'OK') {
-					if (results[0]) {
-					  this.createEvent.location = results[0].formatted_address;
-					  console.log(results[0].formatted_address);
-					} else {
-					  console.log('No results found');
-					}
-				  } else {
-					console.log('Geocoder failed due to: ' + status);
-				  }
-
-				  // this.createEvent.userId = parseInt(userId);
-				  const formData: FormData = new FormData();
-				  formData.append('uid', userId);
-				  formData.append('title', this.createEvent.title);
-				  if (this.createEvent.image) {
-					formData.append('image', this.createEvent.image, this.createEvent.image.name);
-				  }
-				  formData.append('start_date', this.createEvent.start_date);
-				  formData.append('end_date', this.createEvent.end_date);
-				  formData.append('location', this.createEvent.location);
-				  formData.append('description', this.createEvent.description);
-				  formData.append('privacy_setting', this.createEvent.privacy_setting);
-				  formData.append('latitude', this.createEvent.latitude.toString());
-				  formData.append('longitude', this.createEvent.longitude.toString());
-				//   console.log(formData);
-				  console.log(this.createEvent);
-				  // REfactor this to be done in the service class for better decoupling
-				  const url = 'http://localhost:8000/e/events';
-				
-				  this.http.post(url, formData)
-					.subscribe({
-					  next: (response:any) => {
-						console.log(response);
-						this.openEventModal(response.code);
-						// Handle the response from the server
-						this.router.navigate(['/home']);
-					  },
-					  error: (error) => {
-						// Handle any errors that occurred during the request
-						console.error(error);
-						this.loading = false;
-						// Display an error message to the user or perform any necessary error handling
+		if(this.createEventForm.valid){
+			this.getCurrentUserId().subscribe((userId) => {
+				if(userId){
+					this.buttonClicked = true;
+					this.loading = true;
+					const geocoder = new google.maps.Geocoder();
+					const location = new google.maps.LatLng(
+					  this.createEvent.latitude,
+					  this.createEvent.longitude
+					);
+	
+					geocoder.geocode({ location }, (results, status) => {
+					  if (status === 'OK') {
+						if (results[0]) {
+						  this.createEvent.location = results[0].formatted_address;
+						  console.log(results[0].formatted_address);
+						} else {
+						  console.log('No results found');
+						}
+					  } else {
+						console.log('Geocoder failed due to: ' + status);
 					  }
+	
+					  // this.createEvent.userId = parseInt(userId);
+					  const formData: FormData = new FormData();
+					  formData.append('uid', userId);
+					  formData.append('title', this.createEvent.title);
+					  if (this.createEvent.image) {
+						formData.append('image', this.createEvent.image, this.createEvent.image.name);
+					  }
+					  formData.append('start_date', this.createEvent.start_date);
+					  formData.append('end_date', this.createEvent.end_date);
+					  formData.append('location', this.createEvent.location);
+					  formData.append('description', this.createEvent.description);
+					  formData.append('privacy_setting', this.createEvent.privacy_setting);
+					  formData.append('latitude', this.createEvent.latitude.toString());
+					  formData.append('longitude', this.createEvent.longitude.toString());
+					//   console.log(formData);
+					  console.log(this.createEvent);
+					  // REfactor this to be done in the service class for better decoupling
+					  const url = 'http://localhost:8000/e/events';
+					
+					  this.http.post(url, formData)
+						.subscribe({
+						  next: (response:any) => {
+							console.log(response);
+							this.openEventModal(response.code);
+							// Handle the response from the server
+							this.router.navigate(['/home']);
+						  },
+						  error: (error) => {
+							// Handle any errors that occurred during the request
+							console.error(error);
+							this.loading = false;
+							// Display an error message to the user or perform any necessary error handling
+						  }
+						});
 					});
-				});
-			}
-			else {
-				console.log("No user is currently logged in.");
-				// ! throw error
-			}
-		});
-	  }
-	  
-
+				}
+				else {
+					console.log("No user is currently logged in.");
+					// ! throw error
+				}
+			});
+		  }
+		  else{
+			  console.log("Please fill in all details.")
+		  }
+		}
+		
 	goBack(){
 		this.router.navigate(["/home"]);
 	}
