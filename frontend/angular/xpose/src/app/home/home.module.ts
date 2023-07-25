@@ -6,7 +6,7 @@ import { HomePage } from "./home.page";
 
 import { HomePageRoutingModule } from "./home-routing.module";
 
-import { FooterComponent } from "../footer/footer.component";
+import { SharedModule } from "../shared/shared.module";
 
 
 @NgModule({
@@ -15,8 +15,9 @@ import { FooterComponent } from "../footer/footer.component";
 		FormsModule,
 		IonicModule,
 		HomePageRoutingModule,
+		SharedModule,
 	
 	],
-	declarations: [HomePage,FooterComponent]
+	declarations: [HomePage]
 })
 export class HomePageModule {}

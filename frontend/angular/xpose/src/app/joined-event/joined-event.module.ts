@@ -8,6 +8,8 @@ import { JoinedEventPageRoutingModule } from './joined-event-routing.module';
 
 import { JoinedEventPage } from './joined-event.page';
 
+import { SharedModule } from '../shared/shared.module';
+
 
 
 
@@ -17,9 +19,9 @@ import { JoinedEventPage } from './joined-event.page';
     FormsModule,
     IonicModule,
     JoinedEventPageRoutingModule,
-    // FooterPageModule,
+    SharedModule,
+  
   ],
   declarations: [JoinedEventPage]
-    // FooterComponent]
 })
 export class JoinedEventPageModule {}
