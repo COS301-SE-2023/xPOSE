@@ -14,7 +14,7 @@
       <ion-grid>
           <ion-row >
             <ion-col size="6">
-              <ion-radio-group value="privacy" name="privacy_setting" [(ngModel)]="createEvent.privacy_setting">
+              <ion-radio-group value="privacy" name="privacy_setting" [(ngModel)]="createEvent.privacy_setting" required>
                 <ion-item class="item1">
                   <ion-label>Public</ion-label>
                     <ion-radio value="public"></ion-radio>
@@ -22,7 +22,7 @@
                 </ion-radio-group>
               </ion-col>
               <ion-col size="6">
-                <ion-radio-group value="privacy" name="privacy_setting" [(ngModel)]="createEvent.privacy_setting">
+                <ion-radio-group value="privacy" name="privacy_setting" [(ngModel)]="createEvent.privacy_setting" required>
                   <ion-item class="item1" >
                     <ion-label >Private</ion-label>
                   <ion-radio value="private"></ion-radio>
@@ -80,7 +80,7 @@
         </ion-col>
       </ion-row>
 
-      <ion-button id="submitBtn" type="submit" class="custom-btn" [disabled]="buttonClicked || loading">
+      <ion-button id="submitBtn" type="submit" class="custom-btn" [disabled]="buttonClicked || loading || form.valid">
         <ion-spinner *ngIf="loading"></ion-spinner>
         <span *ngIf="!loading">Create Event</span>
       </ion-button>
