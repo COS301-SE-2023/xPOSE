@@ -29,6 +29,7 @@ export class EventPage {
   cards: any[] = []; // Array to store cards data
   filterType: string = 'Ongoing';
   loading: boolean = true;
+  errorMessage: string | undefined;
   events: any[] = []; // Array to store events data
   // participants: Participant[] = [
   //   { name: 'John' },
@@ -64,6 +65,8 @@ export class EventPage {
   // participants: never[];
   qrCodeImage: string | undefined;
   // http: any;
+
+  
 
   constructor(private http: HttpClient,
     private activatedRoute: ActivatedRoute,
@@ -110,7 +113,7 @@ export class EventPage {
   url: string | undefined;
 
   ngOnInit() {
-    this.url = this.router.url;
+    this.url = this.location.path();
     // give messageCollection stub value
     // this.messagesCollection = this.afs.collection<Message>(`Event-Chats/0/chats`);
     this.activatedRoute.paramMap.subscribe(paramMap => {
@@ -137,26 +140,19 @@ export class EventPage {
         if (uid) {
           this.http.get(`http://localhost:8000/e/events/${event_id}?uid=${uid}`).subscribe((data) => {
             this.retrieveMessages();
-            // Note: I'll have to remove this later
             this.current_event = data;
-            // this.currentEventDataService.event_id = this.current_event.id;
-            // this.currentEventDataService.event_title = this.current_event.title;
-            // this.currentEventDataService.event_description = this.current_event.description;
-            // this.currentEventDataService.code = this.current_event.code;
-            // this.currentEventDataService.privacy_setting = this.current_event.privacy_setting;
-            // this.currentEventDataService.start_date = this.current_event.start_date;
-            // this.currentEventDataService.end_date = this.current_event.end_date;
-            // // this.currentEventDataService.location = this.current_event.location;
-            // // this.currentEventDataService.owner_id = this.current_event.owner_id;
-            // this.currentEventDataService.image_url = this.current_event.image_url;
-            // this.currentEventDataService.owner_uid = this.current_event.owner;
-            // this.currentEventDataService.timestamp = this.current_event.timestamp;
-
+            this.loading = false;
             console.log(this.current_event); 
             // console.log(this.currentEventDataService);
+          },
+          (error) => {
+              this.loading = false; // Request completed with an error
+              this.errorMessage = "Couldn't load event.";
+              console.error(error);
           });
         }
         else {
+          this.loading = false; // Request completed with an error
           console.log("no user id");
         }
       });
