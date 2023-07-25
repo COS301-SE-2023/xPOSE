@@ -134,7 +134,7 @@ export class EventPage {
             this.messagesCollection = this.afs.collection<Message>(`Event-Chats/${event_id}/chats`);
             this.retrieveMessages();
             // Note: I'll have to remove this later
-            // this.current_event = data;
+            this.current_event = data;
             // this.currentEventDataService.event_id = this.current_event.id;
             // this.currentEventDataService.event_title = this.current_event.title;
             // this.currentEventDataService.event_description = this.current_event.description;
@@ -148,7 +148,7 @@ export class EventPage {
             // this.currentEventDataService.owner_uid = this.current_event.owner;
             // this.currentEventDataService.timestamp = this.current_event.timestamp;
 
-            // console.log(this.current_event); 
+            console.log(this.current_event); 
             // console.log(this.currentEventDataService);
           });
         }
