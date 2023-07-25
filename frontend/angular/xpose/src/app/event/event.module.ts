@@ -8,13 +8,16 @@ import { EventPageRoutingModule } from './event-routing.module';
 
 import { EventPage } from './event.page';
 
+import { GalleryLightboxPage } from './posts/gallery-lightbox/gallery-lightbox.page';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    EventPageRoutingModule
+    EventPageRoutingModule,
   ],
-  declarations: [EventPage]
+  declarations: [EventPage,
+    GalleryLightboxPage]
 })
 export class EventPageModule {}

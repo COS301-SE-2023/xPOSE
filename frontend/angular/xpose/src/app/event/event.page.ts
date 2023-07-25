@@ -9,6 +9,12 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Observable, map } from 'rxjs';
 import { Location } from '@angular/common';
 import { NavigationEnd } from "@angular/router";
+import { GalleryDataService } from './posts/gallery-lightbox/gallery-data.service';
+
+interface Item {
+  imageSrc: string;
+  imageAlt: string;
+}
 
 @Component({
   selector: 'app-event',
@@ -30,6 +36,28 @@ export class EventPage {
   //   // Add more participant objects as needed
   // ];
 
+  data: Item[] = [
+    { imageSrc: '../assets/images/download.jpg', imageAlt: '1' },
+    { imageSrc: '../assets/images/qrcode.png', imageAlt: '2' },
+    { imageSrc: '../assets/images/images.jpg', imageAlt: '3' },
+    { imageSrc: '../assets/images/qrcode.png', imageAlt: '4' },
+    { imageSrc: '../assets/images/image2.webp', imageAlt: '5' },
+    { imageSrc: '../assets/images/image1.webp', imageAlt: '6' },{ imageSrc: '../assets/images/download.jpg', imageAlt: '1' },
+    { imageSrc: '../assets/images/youth.jpg', imageAlt: '7' },
+    { imageSrc: '../assets/images/images.jpg', imageAlt: '8' },
+    { imageSrc: '../assets/images/youth.png', imageAlt: '9' },
+    { imageSrc: '../assets/images/qrcode.png', imageAlt: '10' },
+    { imageSrc: '../assets/images/image2.webp', imageAlt: '11' },
+    
+    // Add more items as needed...
+  ];
+  // router: any;
+
+  // constructor(private galleryDataService: GalleryDataService) {
+  //   this.galleryDataService.setData(this.data);
+  // }
+
+
   @ViewChild('eventTabs', { static: false }) tabs: IonTabs | undefined;
   selectedTab: any;
   // participants: never[];
@@ -42,7 +70,8 @@ export class EventPage {
     private navCtrl: NavController,
     private currentEventDataService: CurrentEventDataService,
 		private afAuth: AngularFireAuth,
-    private location: Location
+    private location: Location,
+    private galleryDataService: GalleryDataService
     ) {
 
     this.router.events.subscribe((event) => {
@@ -50,6 +79,8 @@ export class EventPage {
         this.history.push(event.urlAfterRedirects);
       }
     });
+
+    this.galleryDataService.setData(this.data);
     
     // Mocked event data
     // this.event = {
