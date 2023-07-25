@@ -130,32 +130,4 @@
 
 </ion-content>
 
-<ion-footer>
-  <ion-toolbar position="fixed">
-    <ion-tabs>
-      <ion-tab-bar slot="bottom">
-        <ion-tab-button tab="home" (click)="onHome()">
-          <ion-icon name="home-outline"></ion-icon>
-          <ion-label>Home</ion-label>
-        </ion-tab-button>
-        <ion-tab-button tab="joined-events" (click)="onJoinedEvent()" >
-        <!-- <ion-tab-button tab="joined-events" (click)="onJoinedEvent()" [class.active]="filterType === 'private' || filterType === 'public'"> -->
-          <ion-icon name="people-outline"></ion-icon>
-          <ion-label>Joined Events</ion-label>
-        </ion-tab-button>
-        <ion-tab-button tab="create-event" (click)="onEvent()">
-          <ion-icon name="add-circle-outline"></ion-icon>
-          <ion-label>Create Event</ion-label>
-        </ion-tab-button>
-        <ion-tab-button tab="notifications" (click)="onNotifications()">
-          <ion-icon name="notifications-outline"></ion-icon>
-          <ion-label>Notifications</ion-label>
-        </ion-tab-button>
-        <ion-tab-button tab="profile" (click)="onProfile()">
-          <ion-icon name="person-outline"></ion-icon>
-          <ion-label>Profile</ion-label>
-        </ion-tab-button>
-      </ion-tab-bar>
-    </ion-tabs>
-  </ion-toolbar>
-</ion-footer>
+

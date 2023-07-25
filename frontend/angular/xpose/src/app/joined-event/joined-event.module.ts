@@ -8,9 +8,9 @@ import { JoinedEventPageRoutingModule } from './joined-event-routing.module';
 
 import { JoinedEventPage } from './joined-event.page';
 
-// import { FooterComponent } from '../footer/footer.component';
+import { FooterComponent } from '../footer/footer.component';
 
-// import { FooterPageModule } from '../footer/footer.module'; 
+
 
 @NgModule({
   imports: [
