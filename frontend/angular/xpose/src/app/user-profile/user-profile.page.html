@@ -64,9 +64,11 @@
     </div>
     <div *ngIf="selectedTab === 'Private'">
       <ion-list>
-        <ion-item *ngFor="let card of cards">
-          <!-- Display Private Events Cards -->
-          {{ card.name }} - Private
+        <ion-item>
+          <ion-card class="event-cards">
+            <h1>Event Name</h1>
+            <p>Event Info</p>
+          </ion-card>
         </ion-item>
       </ion-list>
     </div>
