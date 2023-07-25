@@ -12,9 +12,9 @@ export class UserProfilePage implements OnInit {
   filterType: string = 'Events';
   events: any[] = [];
   cards: any[] = [];
+  selectedTab: string = 'Public';
   user: {
     photoURL: string;
-    // displayName: string;
   };
 
   constructor(
@@ -33,11 +33,9 @@ export class UserProfilePage implements OnInit {
 
   applyFilter() {
     if (this.filterType === 'Events') {
-      this.cards = this.events.filter((event) => event.status === 'ongoing');
+      this.cards = this.events.filter((event) => event.status === 'events');
     } else if (this.filterType === 'Friends') {
-      this.cards = this.events.filter((event) => event.status === 'upcoming');
+      this.cards = this.events.filter((event) => event.status === 'friends');
     }
   }
-
 }
-
