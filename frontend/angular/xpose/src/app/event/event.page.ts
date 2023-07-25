@@ -24,7 +24,7 @@ interface Item {
 })
 export class EventPage {
   event: Event;
-  Participants: any[] = [];
+  participants: any;
   private history: string[] = [];
   cards: any[] = []; // Array to store cards data
   filterType: string = 'Ongoing';
@@ -143,7 +143,8 @@ export class EventPage {
             this.current_event = data;
             this.loading = false;
             console.log(this.current_event); 
-            // console.log(this.currentEventDataService);
+            this.getEventParticipantsFromAPI();
+            console.log(this.participants);
           },
           (error) => {
               this.loading = false; // Request completed with an error
@@ -171,6 +172,25 @@ export class EventPage {
       // });
     });
   }
+
+  getEventParticipantsFromAPI() {
+    this.getCurrentUserId().subscribe((uid) => {
+      if(uid) {
+        this.http
+          .get(`http://localhost:8000/e/events/${this.current_event.code}/participants?uid=${uid}`)
+          .subscribe((data) => {
+            this.participants = data;
+
+            // this.event.participants.forEach((participant: any) => {
+            //   participant.since_joining = this.formatDateSinceJoining(participant.join_date);
+            // });
+
+            console.log(data);
+          });
+      }
+    });
+  }
+
 
   back(): void {
     this.history.pop();
@@ -307,7 +327,6 @@ export class EventPage {
   }
 
   // Code to handle participants
-  participants: any[] = [];
 
   addParticipant(participant: any) {
     // Handle participant addition logic here
