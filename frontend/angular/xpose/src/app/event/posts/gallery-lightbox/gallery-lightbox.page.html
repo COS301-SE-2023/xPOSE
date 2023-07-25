@@ -22,14 +22,14 @@
     </ion-button>
 
     <!-- Previous and Next buttons for lightbox carousel -->
-    <ion-button *ngIf="controls" class="btn-lightbox-carousel btn-prev" (click)="prev()">
-      <ion-icon name="arrow-back" class="icon-lightbox-carousel icon-prev"></ion-icon>
-    </ion-button>
+    <button *ngIf="controls" class="btn-lightbox-carousel btn-prev" (click)="prev()">
+      <ion-icon name="chevron-back-circle-outline" class="icon-prev"></ion-icon>
+    </button>
     
 
-    <ion-button *ngIf="controls" class="btn-lightbox-carousel btn-next" (click)="next()">
-      <i class="fas fa-arrow-circle-right" icon-lightbox-carousel icon-next></i>
-    </ion-button>
+    <button *ngIf="controls" class="btn-lightbox-carousel btn-next" (click)="next()">
+      <ion-icon name="chevron-forward-circle-outline" class="btn-prev"></ion-icon>
+    </button>
 
     <!-- Lightbox image display -->
     <div *ngIf="previewImage" class="lightbox-img">

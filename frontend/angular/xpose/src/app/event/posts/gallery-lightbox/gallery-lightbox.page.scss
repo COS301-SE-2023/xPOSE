@@ -83,9 +83,10 @@
             border: 0;
             cursor: pointer;
             }
-            .btn-prev{
-                left: 0;
-            }
+            // .btn-prev{
+            //     left: 0;
+            //     font-size: 30px;
+            // }
             .btn-next{
                 right: 0;
             }
@@ -133,3 +134,15 @@
         color: #333;
         font-size: 14px;
       }
+      .icon-prev{
+        font-size: 100px;
+        font-weight: bolder;
+      }
+
+      ion-button{
+        font-size: 20px;
+        font-weight: bolder;
+        background-color: #333;
+      }
+
+      
