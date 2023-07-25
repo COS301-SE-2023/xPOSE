@@ -15,11 +15,9 @@
     <span *ngIf="showCount" class="count">{{currentIndex + 1}}/{{totalImageCount}}</span>
 
     <!-- Close button for lightbox -->
-    <ion-button *ngIf="previewImage" class="close-btn" (click)="onClosePreview()">
-      <!-- <i class="far fa-times"></i> -->
-      <!-- <i [icon]="close"></i> -->
-      <!-- <ion-icon [icon]="close"></ion-icon> -->
-    </ion-button>
+    <button *ngIf="previewImage" class="close-btn" (click)="onClosePreview()">
+      <ion-icon name="close-circle-outline" class="icon-prev"></ion-icon>
+    </button>
 
     <!-- Previous and Next buttons for lightbox carousel -->
     <button *ngIf="controls" class="btn-lightbox-carousel btn-prev" (click)="prev()">
@@ -28,7 +26,7 @@
     
 
     <button *ngIf="controls" class="btn-lightbox-carousel btn-next" (click)="next()">
-      <ion-icon name="chevron-forward-circle-outline" class="btn-prev"></ion-icon>
+      <ion-icon name="chevron-forward-circle-outline" class="icon-prev"></ion-icon>
     </button>
 
     <!-- Lightbox image display -->
