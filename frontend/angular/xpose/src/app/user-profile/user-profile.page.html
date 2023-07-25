@@ -1,21 +1,36 @@
 <ion-header [translucent]="true">
   <ion-toolbar class="custom-toolbar">
-      <ion-buttons slot="start">
-        <ion-back-button defaultHref="/home"></ion-back-button>
-      </ion-buttons>
-      <ion-title>
-        User Profile
-      </ion-title>
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      User Profile
+    </ion-title>
   </ion-toolbar>
 </ion-header>
+
+<ion-menu side="end" content-id="main-content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item>Report</ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
 
 <ion-content class="ion-padding">
   <div class="profile-info">
     <div class="profile-picture">
-      <!-- Replace 'user.profilePicture' with the actual URL or data of the user's profile picture -->
+      <!-- Replace 'user.photoURL' with the actual URL or data of the user's profile picture -->
       <img [src]="user.photoURL" alt="Profile Picture" />
     </div>
     <h2 class="user-name">Janie Do</h2>
   </div>
   <ion-button class="friend-button">Add Friend</ion-button>
 </ion-content>
+
+<ion-router-outlet id="main-content"></ion-router-outlet>
