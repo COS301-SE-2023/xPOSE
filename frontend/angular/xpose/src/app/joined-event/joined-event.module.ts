@@ -12,15 +12,17 @@ import { FooterComponent } from '../footer/footer.component';
 
 
 
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
     JoinedEventPageRoutingModule,
-    // FooterPageModule,
+
+
   ],
-  declarations: [JoinedEventPage,]
+  declarations: [JoinedEventPage,FooterComponent],
     // FooterComponent]
 })
 export class JoinedEventPageModule {}
