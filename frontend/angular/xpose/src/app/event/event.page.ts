@@ -17,10 +17,23 @@ import { NavigationEnd } from "@angular/router";
 })
 export class EventPage {
   event: Event;
+  Participants: any[] = [];
   private history: string[] = [];
+  cards: any[] = []; // Array to store cards data
+  filterType: string = 'Ongoing';
+  loading: boolean = true;
+  events: any[] = []; // Array to store events data
+  // participants: Participant[] = [
+  //   { name: 'John' },
+  //   { name: 'Thabo' },
+  //   { name: 'Naria' },
+  //   // Add more participant objects as needed
+  // ];
 
   @ViewChild('eventTabs', { static: false }) tabs: IonTabs | undefined;
   selectedTab: any;
+  // participants: never[];
+  qrCodeImage: string | undefined;
   // http: any;
 
   constructor(private http: HttpClient,
@@ -37,7 +50,6 @@ export class EventPage {
         this.history.push(event.urlAfterRedirects);
       }
     });
-  
     
     // Mocked event data
     // this.event = {
@@ -58,6 +70,7 @@ export class EventPage {
       privacy_setting: '',
       code: ''
     }
+    // this.participants = [];
   }
 
   current_event: any;
@@ -70,6 +83,12 @@ export class EventPage {
         return;
       }
 
+      // participants: Participants[] = [
+      //   { name: 'John' },
+      //   { name: 'Thabo' },
+      //   { name: 'Naria' },
+        // Add more participant objects as needed
+      // ];
      
 
       const event_id = paramMap.get('id');
@@ -121,6 +140,24 @@ export class EventPage {
       this.location.back();
     } else {
       this.router.navigate(['/home']);
+    }
+  }
+
+  onCardClick(participant: any) {
+    console.log('Card clicked');
+    console.log(participant);
+    this.router.navigateByUrl('/user-profile')
+    // this.router.navigate(['/participant', participant.id]);
+
+  }
+
+  applyFilter() {
+    if (this.filterType === 'posts') {
+      this.cards = this.events.filter((event) => event.status === 'posts');
+    } else if (this.filterType === 'message-board') {
+      this.cards = this.events.filter((event) => event.status === 'message-board');
+    } else if (this.filterType === 'Ended') {
+      this.cards = this.events.filter((event) => event.status === 'details' || event.status === 'details');
     }
   }
 
