@@ -12,7 +12,7 @@ export class UserProfilePage implements OnInit {
   filterType: string = 'Events';
   events: any[] = [];
   cards: any[] = [];
-  selectedTab: string = 'Public';
+  selectedTab: any;
   user: {
     photoURL: string;
   };
