@@ -16,7 +16,7 @@
 
     <!-- Close button for lightbox -->
     <button *ngIf="previewImage" class="close-btn" (click)="onClosePreview()">
-      <ion-icon name="close-outline" class="icon-prev"></ion-icon>
+      <ion-icon name="close-outline" class="rev"></ion-icon>
     </button>
 
     <!-- Previous and Next buttons for lightbox carousel -->
@@ -28,6 +28,16 @@
     <button *ngIf="controls" class="btn-lightbox-carousel btn-next" (click)="next()">
       <ion-icon name="chevron-forward-circle-outline" class="icon-prev"></ion-icon>
     </button>
+
+     <!-- Download button for lightbox -->
+  <!-- <button class="btn-lightbox-action" (click)="downloadImage()">
+    <ion-icon name="download-outline" class="icon-p"></ion-icon> Download
+  </button>
+
+  <-- Share button for lightbox -->
+  <!-- <button class="btn-lightbox-action" (click)="shareImage()">
+    <ion-icon name="share-outline" class="icon-p"></ion-icon> Share
+  </button> --> 
 
     <!-- Lightbox image display -->
     <div *ngIf="previewImage" class="lightbox-img">
