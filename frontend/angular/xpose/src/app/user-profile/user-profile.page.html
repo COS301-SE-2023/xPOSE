@@ -56,7 +56,7 @@
       <ion-list>
         <ion-item>
           <ion-card class="event-cards">
-            <h1>Event Name</h1>
+            <h3>Event Name</h3>
             <p>Event Info</p>
           </ion-card>
         </ion-item>
@@ -66,7 +66,7 @@
       <ion-list>
         <ion-item>
           <ion-card class="event-cards">
-            <h1>Event Name</h1>
+            <h3>Event Name</h3>
             <p>Event Info</p>
           </ion-card>
         </ion-item>
@@ -74,5 +74,19 @@
     </div>
   </div>
 
-  <!-- Your existing Friends content here -->
+  <div *ngIf="filterType === 'Friends'">
+    <ion-list>
+      <ion-item>
+        <ion-card class="event-cards">
+          <h3>Friend 1</h3>
+        </ion-card>
+      </ion-item>
+      <ion-item>
+        <ion-card class="event-cards">
+          <h3>Friend 2</h3>
+        </ion-card>
+      </ion-item>
+    </ion-list>
+  </div>
+
 </ion-content>
