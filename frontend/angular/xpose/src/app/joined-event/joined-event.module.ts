@@ -8,8 +8,6 @@ import { JoinedEventPageRoutingModule } from './joined-event-routing.module';
 
 import { JoinedEventPage } from './joined-event.page';
 
-import { FooterComponent } from '../footer/footer.component';
-
 
 
 
@@ -19,10 +17,9 @@ import { FooterComponent } from '../footer/footer.component';
     FormsModule,
     IonicModule,
     JoinedEventPageRoutingModule,
-
-
+    // FooterPageModule,
   ],
-  declarations: [JoinedEventPage,FooterComponent],
+  declarations: [JoinedEventPage]
     // FooterComponent]
 })
 export class JoinedEventPageModule {}
