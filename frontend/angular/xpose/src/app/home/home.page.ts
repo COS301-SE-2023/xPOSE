@@ -87,7 +87,7 @@ export class HomePage {
 
  populateCards() {
 	if (this.events.length === 0) {
-		this.cards = []; // Empty the cards list when there are no events
+		this.cards = [];
 	  } else {
 		this.cards = this.events.map(event => ({
 		  title: event.title,
