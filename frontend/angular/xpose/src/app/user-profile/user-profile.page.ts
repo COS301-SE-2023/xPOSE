@@ -9,6 +9,9 @@ import { Service } from '../service/service';
   styleUrls: ['./user-profile.page.scss'],
 })
 export class UserProfilePage implements OnInit {
+  filterType: string = 'Events';
+  events: any[] = [];
+  cards: any[] = [];
   user: {
     photoURL: string;
     // displayName: string;
@@ -28,4 +31,13 @@ export class UserProfilePage implements OnInit {
   ngOnInit() {
   }
 
+  applyFilter() {
+    if (this.filterType === 'Events') {
+      this.cards = this.events.filter((event) => event.status === 'ongoing');
+    } else if (this.filterType === 'Friends') {
+      this.cards = this.events.filter((event) => event.status === 'upcoming');
+    }
+  }
+
 }
+
