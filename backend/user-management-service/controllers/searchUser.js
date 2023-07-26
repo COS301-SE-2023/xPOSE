@@ -11,7 +11,6 @@ export const searchUser = async (req, res) => {
     if(!field || !value){
         return res.status(400).json({error: "Invalid parameters"});
     }
-    
     const db = admin.firestore();
     const usersCollectionRef = db.collection("Users");
 
