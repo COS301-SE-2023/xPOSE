@@ -2,6 +2,7 @@ import { AfterViewInit,Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from "../shared/services/auth.service";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-edit',
@@ -75,5 +76,9 @@ export class EditPage implements OnInit, AfterViewInit {
     // Add your logic here to delete the user account.
     // You may want to show a confirmation modal to confirm the deletion before proceeding.
     console.log('Account deleted');
+  }
+
+  onButtonClick(){
+    this.router.navigateByUrl('/profile');
   }
 }

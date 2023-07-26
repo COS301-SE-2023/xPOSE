@@ -4,7 +4,7 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/profile"></ion-back-button>
+      <ion-back-button (click)="onButtonClick()"></ion-back-button>
     </ion-buttons>
     <ion-title>Edit Profile</ion-title>
   </ion-toolbar>
@@ -61,6 +61,7 @@
 
 <ion-button (click)="deleteAccount()" expand="full" class="pink-button">Delete Account</ion-button>
   </ion-content>
+
  
 
   
