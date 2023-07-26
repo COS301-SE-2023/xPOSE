@@ -9,13 +9,17 @@ import { getUsers,
         sendFriendRequest,
         removeFriend,
         acceptFriendRequest,
-        rejectFriendRequest 
+        rejectFriendRequest,
+        searchUser 
     } from '../controllers/index.js';
 
 const router = express.Router();
 
 // Get all users
 router.get('/', getUsers);
+
+// Search users
+router.get('/search', searchUser);
 
 // create new user
 router.post('/', createUser);
