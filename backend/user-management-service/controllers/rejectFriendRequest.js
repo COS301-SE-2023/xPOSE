@@ -1,5 +1,4 @@
 import admin from "firebase-admin";
-import { messaging } from "../server.js";
 import User from '../data-access/models/user.table.js';
 import Friend_request from '../data-access/models/friend_request.table.js';
 import Friendship from '../data-access/models/friendship.table.js';

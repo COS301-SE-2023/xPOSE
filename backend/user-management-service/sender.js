@@ -1,6 +1,6 @@
 import amqp from 'amqplib/callback_api.js';
 import dotenv from 'dotenv';
-import MessageBuilder from './controllers/messagebuilder';
+import MessageBuilder from './controllers/messagebuilder.js';
 
 dotenv.config();
    
