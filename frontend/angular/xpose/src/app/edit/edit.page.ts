@@ -76,8 +76,4 @@ export class EditPage implements OnInit, AfterViewInit {
     // You may want to show a confirmation modal to confirm the deletion before proceeding.
     console.log('Account deleted');
   }
-
-  onButtonClick(){
-    this.router.navigateByUrl('/profile');
-  }
 }
