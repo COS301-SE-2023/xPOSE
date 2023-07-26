@@ -1,14 +1,23 @@
 const admin = require('firebase-admin');
-const db = require('../data-access/firebase');
+const db = admin.firestore();
+const uploadImageToFirebase = require('../data-access/firebase');
 
 async function createEventPost(req, res) {
     try {
         const { uid } = req.query;
+
+        
+        
         const { event_id } = req.params;
         const image = req.file;
+        
+        if(!uid || !event_id || !image) {
+            return res.status(400).json({ error: 'Missing required parameters' });
+        }
 
+        // console.log(image);
         // post image to firebase storage
-        const image_url = await db.uploadImage(image);
+        const image_url = await uploadImageToFirebase(uid, image);
 
         // const settings = {};
         const timestamp = admin.firestore.FieldValue.serverTimestamp();
