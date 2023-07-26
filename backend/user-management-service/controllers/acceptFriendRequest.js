@@ -3,7 +3,6 @@ import Friend_request from '../data-access/models/friend_request.table.js';
 import Friendship from '../data-access/models/friendship.table.js';
 import { sendMessageToQueue } from '../sender.js';
 import MessageBuilder from './messagebuilder.js';
-import { sendMessageToQueue } from '../sender.js';
 
 export const acceptFriendRequest = async (req, res) =>{
     try{
