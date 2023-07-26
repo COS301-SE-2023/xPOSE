@@ -10,6 +10,7 @@ import { Observable, map } from 'rxjs';
 import { Location } from '@angular/common';
 import { NavigationEnd } from "@angular/router";
 import { GalleryDataService } from './posts/gallery-lightbox/gallery-data.service';
+import { AngularFirestore, AngularFirestoreCollection, DocumentChangeAction } from '@angular/fire/compat/firestore';
 
 interface Item {
   imageSrc: string;
@@ -23,11 +24,12 @@ interface Item {
 })
 export class EventPage {
   event: Event;
-  Participants: any[] = [];
+  participants: any;
   private history: string[] = [];
   cards: any[] = []; // Array to store cards data
   filterType: string = 'Ongoing';
   loading: boolean = true;
+  errorMessage: string | undefined;
   events: any[] = []; // Array to store events data
   // participants: Participant[] = [
   //   { name: 'John' },
@@ -64,6 +66,8 @@ export class EventPage {
   qrCodeImage: string | undefined;
   // http: any;
 
+  
+
   constructor(private http: HttpClient,
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -71,7 +75,8 @@ export class EventPage {
     private currentEventDataService: CurrentEventDataService,
 		private afAuth: AngularFireAuth,
     private location: Location,
-    private galleryDataService: GalleryDataService
+    private galleryDataService: GalleryDataService,
+    private afs: AngularFirestore,
     ) {
 
     this.router.events.subscribe((event) => {
@@ -105,8 +110,12 @@ export class EventPage {
   }
 
   current_event: any;
+  url: string | undefined;
 
   ngOnInit() {
+    this.url = this.location.path();
+    // give messageCollection stub value
+    // this.messagesCollection = this.afs.collection<Message>(`Event-Chats/0/chats`);
     this.activatedRoute.paramMap.subscribe(paramMap => {
       if (!paramMap.has('id')) {
         // Redirect to home page if no event id is available
@@ -124,28 +133,27 @@ export class EventPage {
 
       const event_id = paramMap.get('id');
 
+      console.log(`The event id = ${event_id}`);
+      this.messagesCollection = this.afs.collection<Message>(`Event-Chats/${event_id}/chats`);
+      
       this.getCurrentUserId().subscribe((uid) => {
         if (uid) {
           this.http.get(`http://localhost:8000/e/events/${event_id}?uid=${uid}`).subscribe((data) => {
+            this.retrieveMessages();
             this.current_event = data;
-            this.currentEventDataService.event_id = this.current_event.id;
-            this.currentEventDataService.event_title = this.current_event.title;
-            this.currentEventDataService.event_description = this.current_event.description;
-            this.currentEventDataService.code = this.current_event.code;
-            this.currentEventDataService.privacy_setting = this.current_event.privacy_setting;
-            this.currentEventDataService.start_date = this.current_event.start_date;
-            this.currentEventDataService.end_date = this.current_event.end_date;
-            // this.currentEventDataService.location = this.current_event.location;
-            // this.currentEventDataService.owner_id = this.current_event.owner_id;
-            this.currentEventDataService.image_url = this.current_event.image_url;
-            this.currentEventDataService.owner_uid = this.current_event.owner;
-            this.currentEventDataService.timestamp = this.current_event.timestamp;
-
-            // console.log(this.current_event); 
-            console.log(this.currentEventDataService);
+            this.loading = false;
+            console.log(this.current_event); 
+            this.getEventParticipantsFromAPI();
+            console.log(this.participants);
+          },
+          (error) => {
+              this.loading = false; // Request completed with an error
+              this.errorMessage = "Couldn't load event.";
+              console.error(error);
           });
         }
         else {
+          this.loading = false; // Request completed with an error
           console.log("no user id");
         }
       });
@@ -164,6 +172,25 @@ export class EventPage {
       // });
     });
   }
+
+  getEventParticipantsFromAPI() {
+    this.getCurrentUserId().subscribe((uid) => {
+      if(uid) {
+        this.http
+          .get(`http://localhost:8000/e/events/${this.current_event.code}/participants?uid=${uid}`)
+          .subscribe((data) => {
+            this.participants = data;
+
+            // this.event.participants.forEach((participant: any) => {
+            //   participant.since_joining = this.formatDateSinceJoining(participant.join_date);
+            // });
+
+            console.log(data);
+          });
+      }
+    });
+  }
+
 
   back(): void {
     this.history.pop();
@@ -240,6 +267,82 @@ export class EventPage {
   onHome() {
     this.router.navigate(['/home']);
   }
+
+  // Code to create and send messages
+  newMessage!: string;
+
+  createMessage() {
+    if (this.newMessage) {
+      this.getCurrentUserId().subscribe((uid) => {
+        const message: Message = {
+          uid: uid,
+          message: this.newMessage
+        };
+
+        this.newMessage = '';
+        const event_id = this.current_event.code;
+        const formData: FormData = new FormData();
+        formData.append('message', message.message);
+
+        this.http.post(`http://localhost:8000/c/chats/${event_id}?uid=${uid}`, formData).subscribe((res) => {
+          console.log(res);
+        });
+      });
+    }
+  }
+
+  messagesCollection: AngularFirestoreCollection<Message> | undefined;
+  messages: Message[] = [];
+
+  retrieveMessages() {
+    if(this.messagesCollection) {
+      this.messagesCollection.valueChanges().subscribe((messages: Message[]) => {
+        this.messages = messages;
+        
+        // Fetch and assign the displayName for each message
+        this.messages.forEach((message: Message) => {
+          this.getUserNameFromUid(message.uid).subscribe((displayName: string) => {
+            message.displayName = displayName;
+          });
+        });
+        // console.log('Retrieving messages from Firestore...');
+        // console.log(this.messages);
+      });
+    }
+    else {
+      console.log("messagesCollection is undefined");
+    }
+  }
+  
+  getUserNameFromUid(uid: string): Observable<string> {
+    return this.afs.collection('Users').doc(uid).valueChanges().pipe(
+      map((user: any) => {
+        if (user && user.displayName) {
+          return user.displayName;
+        } else {
+          return 'Unknown User';
+        }
+      })
+    );
+  }
+
+  // Code to handle participants
+
+  addParticipant(participant: any) {
+    // Handle participant addition logic here
+  
+    // For demonstration, we'll add the participant back to the event object's participants array
+    // this.event.participants.push(participant);
+    this.participants.push(participant);
+  }
+
+  removeParticipant(participant: any) {
+    const index = this.participants.indexOf(participant);
+    if (index > -1) {
+      this.participants.splice(index, 1);
+    }
+  }
+
 }
 
 interface Event {
@@ -252,4 +355,12 @@ interface Event {
   image_url: string;
   privacy_setting: string;
   code: string;
+}
+
+interface Message {
+  uid: string;
+  displayName?: string; // Add displayName property
+  message: string;
+  id?: string;
+  timestamp?: Date;
 }

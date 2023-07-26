@@ -10,11 +10,10 @@ admin.initializeApp({
 });
 
 // Function to upload image to Firebase Storage and return the imageURL
-async function uploadImageToFirebase(event_id, postBuilder, file) {
+async function uploadImageToFirebase(uid, file) {
     return new Promise((resolve, reject) => {
         // Generate a unique file name
-        // Yeah this is not ideal, but it works for now. Switching to TypeScript soon!
-        const fileName = `${postBuilder.post.uid}_${Date.now()}_${file.originalname}`;
+        const fileName = `${uid}_${Date.now()}_${file.originalname}`;
     
         // Upload the file to Firebase Storage
         const bucket = admin.storage().bucket();
@@ -40,14 +39,19 @@ async function uploadImageToFirebase(event_id, postBuilder, file) {
     
             // Save the file record in the images collection
             const db = admin.firestore();
+            const imageRef = db.collection('images').doc();
     
-            const post = postBuilder.withImage(url[0]).build();
-            
-            // get posts document reference
-            const postRef = await db.collection('Event-Posts').doc(event_id).collection('posts').add(post);
-            
+            const image = {
+              userId: uid,
+              fileName: fileName,
+              url: url[0],
+              createdAt: admin.firestore.FieldValue.serverTimestamp()
+            };
+    
+            await imageRef.set(image);
+    
             // Resolve with the file URL
-            resolve(postRef.id);
+            resolve(url[0]);
           } catch (err) {
             console.error('Error generating signed URL or saving file record:', err);
             reject('Error generating signed URL or saving file record');

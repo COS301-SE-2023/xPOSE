@@ -26,6 +26,7 @@ sequelize
     });
 })
 .catch((error) => {
+    console.log(error);
     console.error('Failed to start the server');
 })
 
