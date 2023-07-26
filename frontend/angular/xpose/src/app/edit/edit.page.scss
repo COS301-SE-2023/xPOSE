@@ -39,7 +39,7 @@ ion-toolbar.custom-toolbar {
   
   background-color: #007bff;
   color: #fff;
-   margin-top: 70px;
+  margin-top: 70px;
   border-radius: 50px;
   font-size: 12px;
   border: none;
@@ -47,6 +47,7 @@ ion-toolbar.custom-toolbar {
   text-align: center;
   display: inline-block;
   margin-top: 5px;
+  margin-right: 129px;
 }
 
 .custom-file-input:hover {
@@ -62,8 +63,8 @@ ion-button {
   margin-top: 70px;
   --background: #007bff; /* Set the background color for the Edit Profile button */
   // --color: #fff; /* Set the text color for the Edit Profile button */
-border-radius: 50px;
-font-size: 20px;
+  font-size: 19px;
+  justify-content: center;
 }
 
 .account-privacy-container {
@@ -101,12 +102,10 @@ font-size: 20px; /* Adjust the font size for the Username and Email labels */
 .username-input,
 .email-input {
 font-size: 20px; /* Adjust the font size for the Username and Email inputs */
+
 }
 
-ion-footer {
-  background-color: #f2f2f2;
-  
-}
+
 
 
 .pink-button {
