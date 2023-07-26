@@ -47,7 +47,7 @@ ion-toolbar.custom-toolbar {
   text-align: center;
   display: inline-block;
   margin-top: 5px;
-  margin-right: 129px;
+  margin-right: 200px;
 }
 
 .custom-file-input:hover {
@@ -70,7 +70,8 @@ ion-button {
 .account-privacy-container {
  
   align-items: center; /* Vertically align the elements within the container */
-  margin-bottom: 0px; /* Add a margin at the bottom to create spacing */
+  margin-bottom: 0px; 
+  margin-left: 12px;
 }
 
 .account-privacy-label {
