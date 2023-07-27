@@ -1,3 +1,4 @@
+
 .loading-container {
   display: flex;
   flex-direction: column;
@@ -37,6 +38,9 @@ ion-toolbar.custom-toolbar {
     font-size: 20px;
     // --min-height: 70px;
   }
+
+  ///////
+  /// 
   .card-image{
     height: 200px;
     width: 100%;
@@ -114,71 +118,3 @@ ion-toolbar.custom-toolbar {
     /* contain: content; */
     /* list-style-type: none; */
 }
-/* your-component.scss */
-
-/* Styles for the ion-header and ion-toolbar */
-ion-header {
-  ion-toolbar {
-    --background: #ffffff; /* Background color for the toolbar */
-    color: #000000; /* Text color for the toolbar */
-  }
-
-  ion-title {
-    font-size: 24px;
-    font-weight: bold;
-    align-items: center;
-  }
-}
-
-/* Styles for the ion-content and ion-card */
-ion-content {
-  --background: #f2f2f2; /* Background color for the content area */
-}
-
-ion-card {
-  margin: 16px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional shadow for the card */
-}
-
-ion-card-header {
-  --background: #fff; /* Background color for the card header */
-  border-bottom: 1px solid #ccc; /* Optional border for the card header */
-  padding: 16px;
-}
-
-ion-card-title {
-  font-size: 18px;
-  font-weight: bold;
- 
-}
-
-ion-card-subtitle {
-  font-size: 14px;
-  color: #888; /* Color for the card subtitle */
-}
-
-ion-card-content {
-  padding: 16px;
-}
-
-/* Styles for the card content */
-// ion-card-subtitle {
-//   font-size: 14px;
-//   color: #888; /* Color for the card subtitle */
-// }
-
-// ion-card-title {
-//   font-size: 18px;
-//   font-weight: bold;
-// }
-
-/* Optional styles for the Location card content */
-ion-card-title.location {
-  color: #3498db; /* Customize the color for the location title */
-}
-
-ion-card-content.location {
-  color: #333; /* Customize the color for the location content */
-}
-
