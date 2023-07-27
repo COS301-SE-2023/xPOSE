@@ -6,9 +6,12 @@ async function processReceivedMessage() {
     try{
         const queueName = 'notifications';
         const receivedMsg = await receiveMessageFromQueue(queueName);
-        console.log("Received message:", receivedMsg);
-        
-        handleNotification(receivedMsg);
+        if(receivedMsg !== null){
+            console.log("Received message:", receivedMsg);
+            handleNotification(receivedMsg);
+        }else {
+            console.log("No messages received...");
+        }
         
 
         /*switch (receivedMsg.type) {
@@ -34,8 +37,13 @@ const intervalTime = 10000; // 10 seconds (adjust this as needed)
 setInterval(processReceivedMessage, intervalTime);
 
 export function handleNotification(message) {
-    console.log("Listening to incoming messages...")
-    
+    console.log("Listening to incoming messages...");
+
+    if (!message) {
+        console.error("No messages.");
+        return; // Return early if message is null
+    }
+
     // Extract required data from the message
     const {data } = message;
     // Store the message in the Notification collection

@@ -41,7 +41,7 @@ export function sendMessageToQueue(queue, msg) {
 // const message = new MessageBuilder()
 // .setType("friend_request")
 // .setMessage("Friend request from John Doe")
-// .setSenderId("173")
-// .setReceiverId("999")
+// .setSenderId("1818")
+// .setReceiverId("1212")
 // .build();
 // sendMessageToQueue(queueName, message);
