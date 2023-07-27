@@ -3,9 +3,7 @@ import { Router } from "@angular/router";
 import { NavigationEnd } from '@angular/router';
 import { Location } from '@angular/common';
 import { AngularFirestore } from "@angular/fire/compat/firestore";
-
-
-
+import { AuthService } from '../shared/services/auth.service';
 
 @Component({
   selector: 'app-notification',
@@ -19,7 +17,8 @@ export class NotificationPage implements OnInit {
   messages: any[] = []; // Array to store message payloads
   constructor(private router: Router,
      private location: Location,
-     private firestore: AngularFirestore) { 
+     private firestore: AngularFirestore,
+     public authService: AuthService) { 
 
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -27,12 +26,9 @@ export class NotificationPage implements OnInit {
       }
     });
   }
-  // constructor() { }
 
   ngOnInit() {
-    // this.requestPermission();
     this.listenForNotifications();
-    // this.listen();
     this.loadMessages();
   }
 
@@ -42,30 +38,36 @@ export class NotificationPage implements OnInit {
   }
 
   listenForNotifications() {
-     const userId = '999';
-     const notificationsCollection = this.firestore.firestore.collection(`Notifications/${userId}/MyNotifications`).where('status', '==', 'pending');
+    this.authService.getCurrentUserId().subscribe((userId) => {
+      if (userId) {
 
-     // add listener
-     notificationsCollection.onSnapshot(
-       (snapshot) => {
+        const notificationsCollection = this.firestore.firestore.collection(`Notifications/${userId}/MyNotifications`).where('status', '==', 'pending');
+        // add listener
+        notificationsCollection.onSnapshot(
+          (snapshot) => {
+   
+           this.messages = [];
+   
+            snapshot.forEach((doc) =>{
+              const notificationData = doc.data();
+              this.messages.push(notificationData);
+            });
+   
+            // sort in descending order
+            this.messages.sort((a, b) => b.timestamp - a.timestamp);
+            this.saveMessages();
+          }, 
+    
+          (error) => {
+            console.error("Error listening for notification:", error);
+          }
+        )
 
-        this.messages = [];
-
-         snapshot.forEach((doc) =>{
-           const notificationData = doc.data();
-           this.messages.push(notificationData);
-          //  console.log("Notification:", notificationData);
-         });
-
-         // sort in descending order
-         this.messages.sort((a, b) => b.timestamp - a.timestamp);
-         this.saveMessages();
-       }, 
- 
-       (error) => {
-         console.error("Error listening for notification:", error);
-       }
-     )
+      }
+      else {
+        console.log("profile page no user id");
+      }
+    });
   }
 
   saveMessages() {

@@ -1,7 +1,7 @@
 import admin from "firebase-admin";
 import User from '../data-access/models/user.table.js';
-import Friend_request from '../data-access/models/friend_request.table.js';
 import Friendship from '../data-access/models/friendship.table.js';
+import { Op } from "sequelize";
 
 export const getUser = async (req, res) => {
     const { userId } = req.params;
@@ -11,8 +11,8 @@ export const getUser = async (req, res) => {
         // Check if there is a friendship entry between both users
         const friendship = await Friendship.findOne({
             where: {
-                $or: [
-                    { friend_a_id: userId, friend_b_id: requestId },
+                [Op.or]: [
+                    { friend_a_id: userId, friend_b_id: requestId}, 
                     { friend_a_id: requestId, friend_b_id: userId },
                 ],
             },
@@ -21,24 +21,24 @@ export const getUser = async (req, res) => {
         let areFriends = false;
 
         if (friendship) {
-          areFriends: true;
+          areFriends = true;
         }
 
-        const userRef = admin.firestore().collection('Users').doc(userId);
+        const userRef = admin.firestore().collection('Users').doc(requestId);
 
-        userRef.get()
-        .then((doc) => {
+        try {
+            const doc = await userRef.get();
             if (doc.exists) {
                 const userData = doc.data();
-                res.status(200).json({...userData, areFriends});
-            }else {
-                res.status(404).json({error: "User not found"});
+                // Include the areFriends field in the response
+                res.status(200).json({ ...userData, areFriends });
+            } else {
+                res.status(404).json({ error: "User not found" });
             }
-        })
-        .catch((error) => {
+        } catch (error) {
             console.error('Error retrieving user: ', error);
             res.status(500).json({ error: 'Internal Server Error' });
-        });
+        }
 
     } catch(error) {
         console.error('Error retrieving user: ', error);
