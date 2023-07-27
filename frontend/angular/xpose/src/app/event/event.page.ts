@@ -142,7 +142,6 @@ export class EventPage {
       console.log(`The event id = ${event_id}`);
       this.messagesCollection = this.afs.collection<Message>(`Event-Chats/${event_id}/chats`);
       this.postsCollection = this.afs.collection<Item>(`Event-Posts/${event_id}/posts`);
-      
 
       this.getCurrentUserId().subscribe((uid) => {
         if (uid) {
@@ -190,9 +189,10 @@ export class EventPage {
     if (this.postsCollection) {
       this.postsCollection.snapshotChanges().pipe().subscribe((data) => {
         // this.cards = [];
-        this.data = [];
+        // this.data = [];
         data.forEach((doc) => {
           const post: any = doc.payload.doc.data();
+          console.log(post);
           this.data.push({
             imageSrc: post.image_url,
             imageAlt: post.timestamp,
