@@ -191,7 +191,7 @@ export class CreateEventPage implements OnInit, AfterViewInit {
 		formData.append('privacy_setting', this.createEvent.privacy_setting);
 		formData.append('latitude', this.createEvent.latitude.toString());
 		formData.append('longitude', this.createEvent.longitude.toString());
-		if(this.createEvent.title != " " || this.createEvent.start_date != " " || this.createEvent.end_date != " " || this.createEvent.location != " " || this.createEvent.description != " " || this.createEvent.privacy_setting != " "){
+		if(this.createEvent.title != " " || this.createEvent.start_date != " " || this.createEvent.end_date != " "){
 			this.getCurrentUserId().subscribe((userId) => {
 				if(userId){
 					this.buttonClicked = true;
