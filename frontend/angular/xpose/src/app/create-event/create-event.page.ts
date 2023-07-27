@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
 import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // import { google } from 'google-maps';
 @Component({
 	selector: "app-create-event",
