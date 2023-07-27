@@ -184,6 +184,13 @@ export class CreateEventPage implements OnInit, AfterViewInit {
 	  CreateEvent(form: NgForm) {
 		const formData: FormData = new FormData();
 		formData.append('title', this.createEvent.title);
+		formData.append('start_date', this.createEvent.start_date);
+		formData.append('end_date', this.createEvent.end_date);
+		formData.append('location', this.createEvent.location);
+		formData.append('description', this.createEvent.description);
+		formData.append('privacy_setting', this.createEvent.privacy_setting);
+		formData.append('latitude', this.createEvent.latitude.toString());
+		formData.append('longitude', this.createEvent.longitude.toString());
 		if(this.createEvent.title != " "){
 			this.getCurrentUserId().subscribe((userId) => {
 				if(userId){
