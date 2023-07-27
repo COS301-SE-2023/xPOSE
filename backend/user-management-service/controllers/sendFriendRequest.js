@@ -20,9 +20,9 @@ export const sendFriendRequest = async (req, res) => {
       const queueName = 'notifications';
       const message = new MessageBuilder()
                 .setType("friend_request")
-                .setMessage("Friend request from John Doe")
-                .setSenderId("173")
-                .setReceiverId("999")
+                .setMessage(`Friend request from ${username}`)
+                .setSenderId(userId)
+                .setReceiverId(requestId)
                 .build();
     
         sendMessageToQueue(queueName, message);

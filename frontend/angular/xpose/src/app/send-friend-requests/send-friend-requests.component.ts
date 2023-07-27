@@ -4,7 +4,7 @@ import { IonicModule, ModalController } from '@ionic/angular';
 import {NgFor, NgIf} from '@angular/common';
 import { AuthService } from "../shared/services/auth.service";
 import { Service } from '../service/service';
-import { error } from 'console';
+import { AngularFirestore } from "@angular/fire/compat/firestore";
 
 @Component({
   selector: 'app-send-friend-requests',
@@ -20,7 +20,8 @@ export class SendFriendRequestsComponent implements OnInit {
   constructor(
     private http: HttpClient,
     public authService: AuthService,
-    public userService: Service
+    public userService: Service,
+    private firestore: AngularFirestore
     ) {}
 
   ngOnInit() {
@@ -51,25 +52,25 @@ export class SendFriendRequestsComponent implements OnInit {
   
           console.log("My sender id is: " + userId);
           console.log("My recipient id is: " + requestId);
-
-          let senderName = "";
-          // get name of sender
-          this.userService.GetUser(userId).subscribe(
+  
+          // Get the sender's name from Firestore
+          this.firestore.collection("Users").doc(userId).get().subscribe(
             (senderData) => {
-              console.log("Sender name: "+ senderData.displayName);
-              senderName = senderData.displayName;
+              const senderName = senderData.get("displayName");
+              console.log("Sender name: " + senderName);
+  
+              // HTTP POST request with the senderName included
+              this.http.post(endpoint, { username: senderName }).subscribe(
+                (response) => {
+                  console.log(response);
+                },
+                (error) => {
+                  console.error('Error sending friend request:', error);
+                }
+              );
             },
             (error) => {
-              console.log("Error fetching sender name:", error);
-            }
-          );
-          
-          this.http.post(endpoint, {username:`${senderName}`}).subscribe(
-            (response) => {
-              console.log(response);
-            },
-            (error) => {
-              console.error('Error sending friend request:', error);
+              console.log("Error fetching sender data:", error);
             }
           );
         } else {
@@ -78,5 +79,6 @@ export class SendFriendRequestsComponent implements OnInit {
       }
     );
   }
+  
   
 }
