@@ -1,67 +1,3 @@
-// .card-image{
-//     height: 200px;
-//     width: 100%;
-//     background-size: cover;
-//     background-repeat: no-repeat;
-//     background-position: center;
-//     border-radius: 10px;
-//     margin-bottom: 10px;
-//     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
-//     transition: all 0.3s ease-in-out;
-//     cursor: pointer;
-//     position: relative;
-//     overflow: hidden;
-//     .card-title{
-//         position: absolute;
-//         bottom: 0;
-//         left: 0;
-//         width: 100%;
-//         padding: 10px;
-//         background: rgba(0,0,0,0.5);
-//         color: #fff;
-//         font-weight: 500;
-//         font-size: 1.2rem;
-//         text-align: center;
-//         transition: all 0.3s ease-in-out;
-//     }
-//     &:hover{
-//         box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.2);
-//         .card-title{
-//             font-size: 1.5rem;
-//         }
-//     }
-// }
-// .tabs{
-//     margin-top: 240px;
-//     color: #eb0091;
-//     .tabarea{
-//         display: flex;
-//         justify-content: center;
-//         align-items: center;
-//         margin-bottom: 20px;
-//         --background: #ffc5ff;
-//     }
-//     .tab-button{
-//         --background:var(--color);
-//         padding: 10px 20px;
-//         border-radius: 10px;
-//         background: #555555;
-//         --color: #eb0091;
-//         font-weight: 500;
-//         font-size: 1.2rem;
-//         margin-right: 10px;
-//         transition: all 0.3s ease-in-out;
-//         &:hover{
-//             background: #000;
-//             color: #fff;
-//         }
-//     }
-//     .tab-button-active{
-//         background: #000;
-//         color: #fff;
-//     }
-// }
-
 .loading-container {
   display: flex;
   flex-direction: column;
@@ -101,9 +37,6 @@ ion-toolbar.custom-toolbar {
     font-size: 20px;
     // --min-height: 70px;
   }
-
-  ///////
-  /// 
   .card-image{
     height: 200px;
     width: 100%;
@@ -168,44 +101,6 @@ ion-toolbar.custom-toolbar {
     }
 }
 
-// ion-toolbar.custom-toolbar {
-//     --background: #ffffff;
-//     color: #000000;
-//     font-size: 20px;
-//     --min-height: 70px;
-//   }
-//   .footer-content {
-//     background-color: #f2f2f2;
-//     padding: 10px;
-//     text-align: center;
-//     color: #333;
-//     font-size: 14px;
-//   }
-  
-//   ion-content .main-content{
-//     --background: #ffffff;
-//     background-color: #ffffff;
-//   }
-  
-//   .custom-background{
-//     --background: #ffffff;
-//     color: #000000;
-//     font-size: 20px;
-//     // --min-height: 70px;
-//   }
-
-// //   posts
-//   ion-content .main-content{
-//     --background: #ffffff;
-//     background-color: #ffffff;
-//   }
-  
-//   .custom-background{
-//     --background: #cfcfcf;
-//     color: #000000;
-//     font-size: 20px;
-//     // --min-height: 70px;
-//   }
   ion-list {
     // margin-left: 0;
     // margin-right: 0;
@@ -219,18 +114,71 @@ ion-toolbar.custom-toolbar {
     /* contain: content; */
     /* list-style-type: none; */
 }
-// .inner-scroll {
-//   left: 0px;
-//   right: 0px;
-//   top: calc(var(--offset-top) * -1);
-//   bottom: calc(var(--offset-bottom) * -1);
-//   padding-inline-start: var(--padding-start);
-//   padding-inline-end: var(--padding-end);
-//   padding-top: calc(var(--padding-top) + var(--offset-top));
-//   padding-bottom: calc(var(--padding-bottom) + var(--keyboard-offset) + var(--offset-bottom));
-//   // position: absolute;
-//   color: var(--color);
-//   box-sizing: border-box;
-//   // overflow: hidden;
-//   touch-action: pan-x pan-y pinch-zoom;
+/* your-component.scss */
+
+/* Styles for the ion-header and ion-toolbar */
+ion-header {
+  ion-toolbar {
+    --background: #ffffff; /* Background color for the toolbar */
+    color: #000000; /* Text color for the toolbar */
+  }
+
+  ion-title {
+    font-size: 24px;
+    font-weight: bold;
+    align-items: center;
+  }
+}
+
+/* Styles for the ion-content and ion-card */
+ion-content {
+  --background: #f2f2f2; /* Background color for the content area */
+}
+
+ion-card {
+  margin: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional shadow for the card */
+}
+
+ion-card-header {
+  --background: #fff; /* Background color for the card header */
+  border-bottom: 1px solid #ccc; /* Optional border for the card header */
+  padding: 16px;
+}
+
+ion-card-title {
+  font-size: 18px;
+  font-weight: bold;
+ 
+}
+
+ion-card-subtitle {
+  font-size: 14px;
+  color: #888; /* Color for the card subtitle */
+}
+
+ion-card-content {
+  padding: 16px;
+}
+
+/* Styles for the card content */
+// ion-card-subtitle {
+//   font-size: 14px;
+//   color: #888; /* Color for the card subtitle */
 // }
+
+// ion-card-title {
+//   font-size: 18px;
+//   font-weight: bold;
+// }
+
+/* Optional styles for the Location card content */
+ion-card-title.location {
+  color: #3498db; /* Customize the color for the location title */
+}
+
+ion-card-content.location {
+  color: #333; /* Customize the color for the location content */
+}
+
