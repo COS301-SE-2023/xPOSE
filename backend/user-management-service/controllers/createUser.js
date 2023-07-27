@@ -19,8 +19,9 @@ export const createUser = async (req, res) => {
           emailVerified,
           privacy, 
           bio,
-          fcmTokens, 
-          photoObject } = req.body;
+          photoObject,
+          visibility 
+        } = req.body;
 
         const uid = uuidv4();
 
@@ -30,9 +31,9 @@ export const createUser = async (req, res) => {
             emailVerified,
             privacy,
             bio,
-            fcmTokens,
             photoObject,
             uid,
+            visibility
           };
 
         //Create the user in Firebase Authentication

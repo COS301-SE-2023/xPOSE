@@ -56,8 +56,8 @@ export class AuthService {
       emailVerified: false,
       privacy:false,
       bio:" Default bio",
-      fcmTokens: [],
-      photoObject:{}
+      photoObject:{},
+      visibility: true
     };
     
     // console.log("User data:::::", signUpData);

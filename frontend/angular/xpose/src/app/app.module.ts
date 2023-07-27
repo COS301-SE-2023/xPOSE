@@ -27,7 +27,7 @@ import { NgxMasonryModule } from 'ngx-masonry';
 
 @NgModule({
   declarations: [
-    AppComponent],
+    AppComponent] ,
   imports: [
     FormsModule,
     BrowserModule,
