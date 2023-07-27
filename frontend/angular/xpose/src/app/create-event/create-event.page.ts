@@ -189,7 +189,7 @@ export class CreateEventPage implements OnInit, AfterViewInit {
 		}
 	  }
 
-	  CreateEvent() {
+	  CreateEvent(form: NgForm) {
 		this.getCurrentUserId().subscribe((userId) => {
 			if(userId){
 				this.buttonClicked = true;
