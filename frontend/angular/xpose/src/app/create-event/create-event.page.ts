@@ -50,9 +50,6 @@ export class CreateEventPage implements OnInit, AfterViewInit {
 			this.marker = null;
 		}
 	ngAfterViewInit(): void {
-		// throw new Error("Method not implemented.");
-		// this.displayMap();
-		// this.initAutocomplete();
 		this.initMap();
 	}
 
@@ -61,8 +58,6 @@ export class CreateEventPage implements OnInit, AfterViewInit {
 	onFileSelected(event: any) {
 		const file: File = event.target.files[0];
 		this.createEvent.image = file;
-		// You can perform further operations with the selected file, such as uploading it to a server or displaying a preview.
-		// Remember to update your component's property (e.g., createEvent.coverImage) with the selected file or file data.
 	  }
 
 	  getCurrentUserId(): Observable<string> {
@@ -70,10 +65,7 @@ export class CreateEventPage implements OnInit, AfterViewInit {
 		  map((user) => {
 			if (user) {
 			  return user.uid;
-			} else {
-				// throw error
-				// some extra stuff
-				
+			} else {	
 			  console.log('No user is currently logged in.');
 			  return '';
 			}
