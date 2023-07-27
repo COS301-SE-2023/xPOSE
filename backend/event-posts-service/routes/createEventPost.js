@@ -7,7 +7,8 @@ async function createEventPost(req, res) {
         const { uid } = req.query;
         const { event_id } = req.params;
         const image = req.file;
-        
+        console.log('createEventPost', uid, event_id, image);
+        console.log('createEventPost', req.query, req.params, req.body, req.file);
         if(!uid || !event_id || !image) {
             return res.status(400).json({ error: 'Missing required parameters' });
         }

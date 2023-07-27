@@ -43,13 +43,14 @@ export class HomePage {
 			this.http.get<Event[]>(`http://localhost:8000/e/events?uid=${uid}`).subscribe((events: Event[]) => {
 				console.log(events);
 				  this.events = events;
+				//   this.loading = false;
 				this.populateCards();
 			  });
-			  this.loading = false;
+			//   this.loading = false;
 		}
 		else {
 			console.log("no user id");
-			this.loading = false;
+			
 		}
 	});
   }
@@ -73,6 +74,7 @@ export class HomePage {
 		}
 	  })
 	);
+	
   }
 
   // Function to handle status label color
@@ -103,16 +105,19 @@ export class HomePage {
 		  created_at: event.createdAt,
 		  start_date: event.start_date,
 		  end_date: event.end_date,
+		  
 		  // Add event listener to the button
 		  buttonClick: function() {
 			// Redirect to event details page
 			console.log("Redirecting to event details page: ", event.id)
+			
 			// window.location.href = "/view-event/" + event.id;
 		  }
 		}));
 	  }
   }
   events: any[] = [];
+  
 
   cards: any[] = [
 
