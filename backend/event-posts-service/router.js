@@ -8,7 +8,7 @@ const { commentOnEventPost, createEventPost, deleteEventPost, likeEventPost } = 
 router.post('/:event_id', upload.single('image'), createEventPost);
 
 // Add a comment to a post
-router.post('/:event_id/:post_id', upload.none(), commentOnEventPost);
+router.post('/:event_id/:post_id/comment', upload.none(), commentOnEventPost);
 
 // Add a like to a post
 router.post('/:event_id/:post_id/like', upload.none(), likeEventPost);
