@@ -1,5 +1,4 @@
 
-
 <ion-header [translucent]="true">
   <ion-toolbar class="custom-toolbar">
     <ion-buttons slot="start">
@@ -18,56 +17,54 @@
   </ion-header>
 
 
-    <!-- <div *ngIf="message;">
-      <h1>{{ message.notification.title }}</h1>
-      <h2>{{ message.notification.body }}</h2>
-    </div>
-    <div *ngIf="!message;">
-      No Notifications
-    </div>  -->
-
-
   <ion-list>
     <!-- Example notification item -->
-     <ion-item>
-      <ion-icon name="person-add"></ion-icon>
-      <ion-label>
-        <h2>Friend Request</h2>
-        <p>You have received a friend request from John Doe.</p>
-      </ion-label>
-      <ion-buttons slot="end">
-        <ion-button fill="clear" (click)="acceptRequest()">Accept</ion-button>
-        <ion-button fill="clear" (click)="rejectRequest()">Reject</ion-button>
-      </ion-buttons>
-      
-    </ion-item> 
+     <!-- <ion-item> -->
+    <ng-container *ngIf="messages.length > 0; else noNotifications">
+      <ng-container *ngFor="let message of messages">
 
-    <!-- Add more notification items as needed -->
-    <!-- Event Invitation notification item -->
-     <ion-item>
-      <ion-icon name="calendar"></ion-icon>
-      <ion-label>
-        <h2>Event Invitation</h2>
-        <p>You have been invited to join an event: Music Concert</p>
-      </ion-label>
-      <ion-buttons slot="end">
-        <ion-button fill="clear" (click)="acceptInvitation()">Accept</ion-button>
-        <ion-button fill="clear" (click)="rejectInvitation()">Reject</ion-button>
-      </ion-buttons>
-    </ion-item> 
+        <!--Friendship notification item -->
+        <ion-item *ngIf="message.type =='friend_request'">
+          <ion-icon name="person-add"></ion-icon>
+          <ion-label>
+            <h2>{{ message.message }}</h2>
+          </ion-label>
+          <ion-buttons slot="end">
+            <ion-button fill="clear" (click)="acceptRequest()">Accept</ion-button>
+            <ion-button fill="clear" (click)="rejectRequest()">Reject</ion-button>
+          </ion-buttons>
+        </ion-item>
 
-     <!-- Image Report notification item -->
-     <ion-item>
-      <ion-icon name="warning"></ion-icon>
-      <ion-label>
-        <h2>Image Report</h2>
-        <p>An image you posted has been reported for inappropriate content.</p>
-      </ion-label>
-      <ion-buttons slot="end">
-        <ion-button fill="clear" (click)="viewReport()">View Report</ion-button>
-      </ion-buttons>
-    </ion-item>
+        
+      <!-- Event Invitation notification item -->
+      <ion-item *ngIf="message.type === 'join_event'">
+        <ion-icon name="calendar"></ion-icon>
+        <ion-label>
+          <h2>Event Invitation</h2>
+          <p>{{ message.message }}</p>
+        </ion-label>
+        <ion-buttons slot="end">
+          <ion-button fill="clear" (click)="acceptInvitation()">Accept</ion-button>
+          <ion-button fill="clear" (click)="rejectInvitation()">Reject</ion-button>
+        </ion-buttons>
+      </ion-item>
+
+      </ng-container>
+    </ng-container>
+
+
+    <!-- Placeholder content when there are no notifications -->
+    <ng-template #noNotifications>
+      <ion-item>
+        <ion-label>
+          <h2>No Notifications</h2>
+          <p>You currently don't have any notifications.</p>
+        </ion-label>
+      </ion-item>
+    </ng-template>
+
+
   </ion-list>
-</ion-content>
+</ion-content> 
 
 <app-footer></app-footer>

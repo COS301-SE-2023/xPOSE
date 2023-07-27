@@ -1,5 +1,7 @@
 import amqp from 'amqplib/callback_api.js';
 import dotenv from 'dotenv';
+import MessageBuilder from './controllers/messagebuilder.js';
+
 dotenv.config();
    
 export function sendMessageToQueue(queue, msg) {
@@ -32,16 +34,14 @@ export function sendMessageToQueue(queue, msg) {
     });
 }
  
-const queueName = 'notifications';
-const message = {
-    data: {
-        message: ' you have a new friend request',
-        senderId: '1234',
-        receiverId: '999',
-        timestamp: Date.now(),
-        status:"pending"
-    }
-};
-sendMessageToQueue(queueName, message);
 
 
+// const queueName = 'notifications';
+
+// const message = new MessageBuilder()
+// .setType("friend_request")
+// .setMessage("Friend request from John Doe")
+// .setSenderId("1818")
+// .setReceiverId("1212")
+// .build();
+// sendMessageToQueue(queueName, message);
