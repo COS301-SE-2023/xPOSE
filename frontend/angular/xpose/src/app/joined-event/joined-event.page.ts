@@ -47,13 +47,14 @@ export class JoinedEventPage implements OnInit {
         // this.populateCards();
         this.applyFilter();
         this.loading = false;
+        
       } else {
         console.log("No user id");
         this.loading = false;
       }
     });
   }
-
+  
   getCurrentUserId(): Observable<string> {
     return this.afAuth.authState.pipe(
       map((user) => {
@@ -100,6 +101,7 @@ export class JoinedEventPage implements OnInit {
     // Call your event service method to fetch joined events
     if (this.events.length === 0) {
       this.cards = []; // Empty the cards list when there are no events
+      
       } else {
       this.cards = this.events.map(event => ({
         title: event.eventName,

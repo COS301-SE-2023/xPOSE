@@ -12,6 +12,7 @@ import { Location } from '@angular/common';
 })
 export class ViewEventPage implements OnInit, AfterViewInit {
   isJoined: boolean = false;
+  loading: boolean = true;
   eventpost: any;
   event_id: any;
   event: any = {}; // Initialize the event object with an empty object
@@ -88,6 +89,7 @@ export class ViewEventPage implements OnInit, AfterViewInit {
           .get(`http://localhost:8000/e/events/${this.event_id}?uid=${uid}`)
           .subscribe((data) => {
             this.event = data;
+            this.loading = false;
   
             // // Dummy participant data for demonstration purposes
             // this.event.participants = [

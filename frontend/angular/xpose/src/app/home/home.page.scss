@@ -1,3 +1,5 @@
+
+
 ion-card {
   background-color: hsl(304, 49%, 82%);
   color: #000000;
@@ -20,26 +22,32 @@ ion-card {
   font-weight: bold;
   padding: 10px;
   color: #000000;
-  font-family: 'Pacifico', sans-serif;
+  // font-family: 'Pacifico', sans-serif;
+  // font-family: "Playfair Display", serif;
+  font-family: 'Pacifico', cursive;
 }
 
 ion-card-content {
   display: inline;
   padding-left: 10px; /* Add some padding between the icon and the location text */
   color: #353535;
+  font-family: "Poppins", sans-serif;
 }
 
 .card-content {
   padding: 10px;
   color: #353535;
+  font-family: "Merriweather", serif;
 }
 
 .card-subtitle {
   color: #3d3d3d;
+  font-family: "Merriweather", serif;
 }
 
 .card-description {
   padding: 10px 0;
+  font-family: "Merriweather", serif;
 }
 
 .card-button-container {
@@ -59,7 +67,7 @@ ion-card-content {
   justify-content: center;
   align-items: center;
   font-size: 18px;
-  font-family: 'Roboto', sans-serif;
+  // font-family: 'Roboto', sans-serif;
   --padding-start: 20px;
   --padding-end: 20px;
   --margin: 5px;
@@ -137,4 +145,16 @@ ion-card-content {
   font-size: 40px;
   box-shadow: #000000;
   text-shadow: #f00;
+}
+.header{
+  font-family: 'Literata', serif;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Add the loading animation to the image */
+.loading-icon {
+  animation: spin 2s linear infinite; /* Change the animation duration as needed */
 }
