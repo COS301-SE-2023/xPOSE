@@ -11,10 +11,14 @@ import { Location } from '@angular/common';
 import { NavigationEnd } from "@angular/router";
 import { GalleryDataService } from './posts/gallery-lightbox/gallery-data.service';
 import { AngularFirestore, AngularFirestoreCollection, DocumentChangeAction } from '@angular/fire/compat/firestore';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera'; 
 
 interface Item {
   imageSrc: string;
   imageAlt: string;
+  uid: string;
+  // id: string;
+  // timestamp: Date;
 }
 
 @Component({
@@ -39,17 +43,17 @@ export class EventPage {
   // ];
 
   data: Item[] = [
-    { imageSrc: '../assets/images/download.jpg', imageAlt: '1' },
-    { imageSrc: '../assets/images/qrcode.png', imageAlt: '2' },
-    { imageSrc: '../assets/images/images.jpg', imageAlt: '3' },
-    { imageSrc: '../assets/images/qrcode.png', imageAlt: '4' },
-    { imageSrc: '../assets/images/image2.webp', imageAlt: '5' },
-    { imageSrc: '../assets/images/image1.webp', imageAlt: '6' },{ imageSrc: '../assets/images/download.jpg', imageAlt: '1' },
-    { imageSrc: '../assets/images/youth.jpg', imageAlt: '7' },
-    { imageSrc: '../assets/images/images.jpg', imageAlt: '8' },
-    { imageSrc: '../assets/images/youth.png', imageAlt: '9' },
-    { imageSrc: '../assets/images/qrcode.png', imageAlt: '10' },
-    { imageSrc: '../assets/images/image2.webp', imageAlt: '11' },
+    // { imageSrc: '../assets/images/download.jpg', imageAlt: '1' },
+    // { imageSrc: '../assets/images/qrcode.png', imageAlt: '2' },
+    // { imageSrc: '../assets/images/images.jpg', imageAlt: '3' },
+    // { imageSrc: '../assets/images/qrcode.png', imageAlt: '4' },
+    // { imageSrc: '../assets/images/image2.webp', imageAlt: '5' },
+    // { imageSrc: '../assets/images/image1.webp', imageAlt: '6' },{ imageSrc: '../assets/images/download.jpg', imageAlt: '1' },
+    // { imageSrc: '../assets/images/youth.jpg', imageAlt: '7' },
+    // { imageSrc: '../assets/images/images.jpg', imageAlt: '8' },
+    // { imageSrc: '../assets/images/youth.png', imageAlt: '9' },
+    // { imageSrc: '../assets/images/qrcode.png', imageAlt: '10' },
+    // { imageSrc: '../assets/images/image2.webp', imageAlt: '11' },
     
     // Add more items as needed...
   ];
@@ -72,11 +76,12 @@ export class EventPage {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private navCtrl: NavController,
-    private currentEventDataService: CurrentEventDataService,
+    // private currentEventDataService: CurrentEventDataService,
 		private afAuth: AngularFireAuth,
     private location: Location,
     private galleryDataService: GalleryDataService,
     private afs: AngularFirestore,
+    // private camera: Camera,
     ) {
 
     this.router.events.subscribe((event) => {
@@ -111,6 +116,7 @@ export class EventPage {
 
   current_event: any;
   url: string | undefined;
+  posts: any;
 
   ngOnInit() {
     this.url = this.location.path();
@@ -135,11 +141,14 @@ export class EventPage {
 
       console.log(`The event id = ${event_id}`);
       this.messagesCollection = this.afs.collection<Message>(`Event-Chats/${event_id}/chats`);
+      this.postsCollection = this.afs.collection<Item>(`Event-Posts/${event_id}/posts`);
       
+
       this.getCurrentUserId().subscribe((uid) => {
         if (uid) {
           this.http.get(`http://localhost:8000/e/events/${event_id}?uid=${uid}`).subscribe((data) => {
             this.retrieveMessages();
+            this.retrievePosts();
             this.current_event = data;
             this.loading = false;
             console.log(this.current_event); 
@@ -171,6 +180,77 @@ export class EventPage {
       //   // this.currentEventDataService.event_id = res._id;
       // });
     });
+  }
+  // import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+  // import { HttpClient } from '@angular/common/http';
+  
+  // ...
+  
+  retrievePosts() {
+    if (this.postsCollection) {
+      this.postsCollection.snapshotChanges().pipe().subscribe((data) => {
+        // this.cards = [];
+        this.data = [];
+        data.forEach((doc) => {
+          const post: any = doc.payload.doc.data();
+          this.data.push({
+            imageSrc: post.image_url,
+            imageAlt: post.timestamp,
+            uid: post.uid,
+            // id: post.id,
+            // timestamp: post.timestamp
+          });
+        });
+        // console.log(this.cards);
+      });
+    }
+  }
+
+  async openImageGallery() {
+    const image = await Camera.getPhoto({
+      quality: 90,
+      allowEditing: true,
+      resultType: CameraResultType.Uri,
+      source: CameraSource.Prompt, // Allow the user to choose between the gallery and camera
+    });
+  
+    if (image && image.webPath) {
+      try {
+        // Convert image to Blob
+        const response = await fetch(image.webPath);
+        const blobImage = await response.blob();
+  
+        // Create FormData and append the image Blob to it
+        const formData = new FormData();
+        formData.append('image', blobImage, 'image.jpg');
+  
+        // Send the FormData to the server
+        this.getCurrentUserId().subscribe((uid) => {
+          if (uid) {
+            this.http.post(`http://localhost:8000/p/${this.current_event.code}?uid=${uid}`, formData).subscribe(
+              (res: any) => {
+                console.log(res);
+              },
+              (error: any) => {
+                console.error(error);
+              }
+            );
+          }
+        });
+      } catch (error) {
+        console.error('Error while processing image:', error);
+      }
+    } else {
+      console.log("No image data available.");
+    }
+  }
+  
+  
+  // Function to handle the image upload
+  uploadImage(imageData: string) {
+    // Add your image upload logic here.
+    // You can use HTTP requests or any other method to upload the image to your server.
+    // Remember to handle the response and update the 'data' array accordingly with the new image.
   }
 
   getEventParticipantsFromAPI() {
@@ -290,7 +370,8 @@ export class EventPage {
       });
     }
   }
-
+  
+  postsCollection: AngularFirestoreCollection<Post> | undefined;
   messagesCollection: AngularFirestoreCollection<Message> | undefined;
   messages: Message[] = [];
 
@@ -361,6 +442,14 @@ interface Message {
   uid: string;
   displayName?: string; // Add displayName property
   message: string;
+  id?: string;
+  timestamp?: Date;
+}
+
+interface Post {
+  uid: string;
+  imageSrc: string; // Add displayName property
+  imageAlt: string;
   id?: string;
   timestamp?: Date;
 }
