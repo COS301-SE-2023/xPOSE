@@ -1,6 +1,5 @@
 // const Sequelize = require("sequelize");
 // const sequelize = require("../sqldb.js");
-
 import { Sequelize } from "sequelize";
 import sequelize from "../../sqldb.js";
 
