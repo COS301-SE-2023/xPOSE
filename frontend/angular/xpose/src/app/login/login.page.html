@@ -5,16 +5,28 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" id="main-content" class="custom-background">
-  <div class="containeri">
-    <img src="../assets/icon/Xp.jpeg" alt="Logo" class="logo-image">
+  <div class="">
+    <img src="../assets/icon/icon.png" alt="Logo" class="logo-image">
   </div>
 
+
+  
+  
   <div class="container">
-    <div class="button-container">
-      <ion-button id="google-button" type="submit" class="custom-bt" (click)="signInWithGoogle()">G</ion-button>
-      <ion-button id="Facebook-button" type="submit" class="custom-bt" (click)="signInWithFacebook()">F</ion-button>
-    </div>
-    <form [formGroup]="loginForm">
+    <ion-row>
+      <a class="log-in-text">Login using social networks</a>
+    </ion-row>
+    
+      <ion-row>
+      <button id="google-button" type="submit" class="custom-bt" (click)="signInWithGoogle()">
+        <ion-icon name="logo-google" class="icon-g"></ion-icon>
+      </button>
+      <div class="or-text">or</div>
+      <button id="Facebook-button" type="submit" class="custom-bt" (click)="signInWithFacebook()">
+        <ion-icon name="logo-facebook" class="icon-g"></ion-icon>
+      </button>
+    </ion-row>
+    <form [formGroup]="loginForm" class="form-class">
       <ion-input 
         label="Email" 
         label-placement="floating" 
@@ -34,10 +46,11 @@
         <a>Forgot Password?</a>
       </ion-note>
     </form>
-    <div class="no-account-link">
-      <p>No account? <a href="/signup">Click here</a></p>
-    </div>
   </div>
+      <div class="no-account-link">
+        <p>No account? <a href="/signup">Click here</a></p>
+      </div> 
+  <!-- </div> -->
 
 </ion-content>
 

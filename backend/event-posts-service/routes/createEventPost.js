@@ -1,13 +1,10 @@
-const admin = require('firebase-admin');
+// const  = require('firebase-admin');
+const { uploadImageToFirebase, admin } = require('../data-access/firebase');
 const db = admin.firestore();
-const uploadImageToFirebase = require('../data-access/firebase');
 
 async function createEventPost(req, res) {
     try {
         const { uid } = req.query;
-
-        
-        
         const { event_id } = req.params;
         const image = req.file;
         

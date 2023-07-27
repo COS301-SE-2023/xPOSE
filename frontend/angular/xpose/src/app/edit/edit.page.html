@@ -9,7 +9,7 @@
 	  <ion-title>Edit Profile</ion-title>
 	</ion-toolbar>
   </ion-header>
-  
+
 	<ion-menu side="end" content-id="main-content">
 		<ion-header>
 			<ion-toolbar>
@@ -35,7 +35,7 @@
 			<img [src]="photoURL" alt="Profile Picture" class="profile-picture">
 			<input type="file" accept="image/*" (change)="onFileSelected($event)" id="fileInput" hidden>
 			
-			<!-- Replace the label with an ion-button -->
+			
 			<ion-button class="custom-file-input" (click)="fileInput.click()">Change image</ion-button>
 			<input type="file" accept="image/*" (change)="onFileSelected($event)" id="fileInput" #fileInput hidden>
 			
@@ -47,12 +47,12 @@
   
 	  <ion-item>
 		<ion-label class="email-label" position="floating">Email</ion-label>
-		<ion-input class="email-input" [(ngModel)]="email"></ion-input>
+		<ion-input class="email-input" [(ngModel)]="email" required ></ion-input>
 	  </ion-item>
 
 	  <div class="account-privacy-container">
 		<ion-label class="account-privacy-label">Account Privacy</ion-label>
-		<ion-toggle class="account-privacy-toggle" [(ngModel)]="isPublic"></ion-toggle>
+		<ion-toggle class="account-privacy-toggle" [(ngModel)]="isPublic" required ></ion-toggle>
 	  </div>
 	 
   
