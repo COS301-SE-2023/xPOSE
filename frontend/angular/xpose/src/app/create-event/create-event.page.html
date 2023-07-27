@@ -10,7 +10,7 @@
 
 <ion-content [fullscreen]="true" id="main-content">
   <div>
-    <form #form="ngForm" (ngSubmit)="CreateEvent()">
+    <form #form="ngForm" [formGroup]="ionicForm" (ngSubmit)="CreateEvent()">
       <ion-grid>
         <ion-row >
           <ion-col size="6">

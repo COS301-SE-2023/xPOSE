@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
-
+import { ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from "@ionic/angular";
 
 import { CreateEventPageRoutingModule } from "./create-event-routing.module";
@@ -13,6 +13,7 @@ import { SharedModule } from "../shared/shared.module";
     declarations: [CreateEventPage],
     imports: [
         CommonModule,
+        ReactiveFormsModule,
         FormsModule,
         IonicModule,
         CreateEventPageRoutingModule,
