@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar class="custom-toolbar">
     <ion-buttons slot="start">
-      <ion-back-button (click)="goBack()" defaultHref="/home"></ion-back-button>
+      <app-backbutton></app-backbutton>
     </ion-buttons>
     <ion-title class="event-title">{{ event?.title }}</ion-title>
   </ion-toolbar>
