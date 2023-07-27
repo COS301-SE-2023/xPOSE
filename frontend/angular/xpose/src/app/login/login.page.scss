@@ -3,7 +3,7 @@ ion-toolbar {
 }
 
 .custom-background {
-  --background: #fceeee;
+  --background: #ffffff;
   background-color: #000000;
   color: #000000;
 }
@@ -20,37 +20,32 @@ ion-toolbar {
   color: #000000;
 }
 
-.button-container {
-  display: flex;
-  flex-direction: row; /* Ensures buttons are aligned horizontally */
-}
+// .button-container {
+//   display: flex;
+//   flex-direction: row; /* Ensures buttons are aligned horizontally */
+  
+// }
 
-.custom-bt {
-  color: white;
-  text-align: center;
-  //margin-left: 40%;
-  position: relative;
-  top: 100px;
-  margin-right: 20px;
-}
+// .custom-bt {
+//   color: white;
+//   text-align: center;
+//   //margin-left: 40%;
+//   position: relative;
+//   top: 100px;
+//   margin-right: 20px;
+// }
 
 .custom-bt:hover {
   background-color: #45a049;
 }
 
-.centered-title {
-    display: block;
-    text-align: center;
-    margin: 0 auto;
-    color: #000000;
-  }
-
   .custom-btn {
     --ion-color-primary: #ff00f0;
     --border-radius: 10px;
     width: 100%;
+    margin-top: 50px;
+    height: 50px;
   }
-
 
   div {
     display: flex;
@@ -65,52 +60,23 @@ ion-toolbar {
     flex-direction: column;
     align-items: center;
     width: 100%;
-    max-width: 285px;
-    padding-top: 135px;
+    max-width: 400px;
+    padding-top: 75px;
   }
 
   ion-input,
   #submitBtn {
     width: 100%;
     margin-bottom: 5px;
-    max-width: 285px;
+    max-width: 500px;
     color: #000000;
   }
 
   .container {
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
-    padding: 10px;
-  }
-
-  @media (min-width: 768px) {
-    .container {
-      max-width: 400px;
-      margin: 0 auto;
-    }
-
-    form {
-      max-width: 400px;
-    }
-
-    ion-input,
-    #submitBtn {
-      max-width: 400px;
-    }
-  }
-
-  .custom-btn {
-    margin-top: 10px;
-    font-size: 16px;
-  }
-
-  @media (min-width: 768px) {
-    .custom-btn {
-      display: block;
-      width: 100%;
-    }
+    align-items: center;
+    height: 40vh;
   }
 
   .no-account-link {
@@ -132,11 +98,47 @@ ion-toolbar {
   .logo-image{
     width: 100px;
     height: 100px;
-    object-fit: contain;
+    // object-fit: contain;
+    align-items: center;
     // background-color: aqua;
-    margin-bottom: -80px;
+    margin-bottom: -150px;
   }
 
-  .icon-g{
-    font-size:40px;
+  // .icon-g {
+  //   font-size: 40px;
+  //   color: hsl(240, 76%, 50%);
+  //   background-color: #ffffff;
+  // }
+  ion-row{
+    height: 0px; /* Change this value to your desired height */
+    border: none;
+    background-color: transparent;
+    padding-top: 160px;
   }
+  form-class{
+    align-items: center;
+    padding-bottom: 150px;
+  }
+
+
+  .button-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .custom-bt {
+    border: none;
+    background-color: transparent;
+  }
+  
+  .icon-g {
+    font-size: 40px;
+    color: hsl(300, 76%, 50%);
+    border-bottom: 2px solid hsl(300, 76%, 50%);
+    padding-bottom: 5px; /* Adjust this value as needed to control the space between the icon and the border */
+  }
+  
+  .or-text {
+    margin: 0 10px; /* Adjust this value as needed to control the space between the buttons and the "or" text */
+  }
+  
