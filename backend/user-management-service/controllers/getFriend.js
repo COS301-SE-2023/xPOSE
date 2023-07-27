@@ -24,10 +24,9 @@ export const getFriend = async (req, res) => {
         if (!friendship) {
           return res.status(200).json({ areFriends: false });
         }
-
         // They are friends return document
-        
-        // Get the user document
+        // Get the user 
+        document
         const userDoc = await admin.firestore().collection('Users').doc(requestId).get();
         // Check if the user exists
         if (!userDoc.exists) {
