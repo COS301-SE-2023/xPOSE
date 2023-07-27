@@ -6,25 +6,16 @@ import { sendMessageToQueue } from '../sender.js';
 
 
 export const searchUser = async (req, res) => {
-    const {fields, values} = req.query;
-
-    if (!fields || !values || !Array.isArray(fields) || !Array.isArray(values) || fields.length !== values.length) {
-        return res.status(400).json({ error: "Invalid parameters" });
-      }
-
-
+    const {field, value} = req.query;
+    if(!field || !value){
+        return res.status(400).json({error: "Invalid parameters"});
+    }
+    
     const db = admin.firestore();
     const usersCollectionRef = db.collection("Users");
 
-    try {
-        let query = usersCollectionRef;
-        // Construct a complex query with multiple conditions for each field-value pair
-        for (let i = 0; i < fields.length; i++) {
-          query = query.where(fields[i], "==", values[i]);
-        }
-    
-        const snapshot = await query.get();
-    
+    try{
+        const snapshot = await usersCollectionRef.where(field, "==",value).get();
 
         if(snapshot.empty) {
             return res.status(404).json({message: "No matching users found"});
