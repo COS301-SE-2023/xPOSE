@@ -2,7 +2,6 @@ import { AfterViewInit,Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from "../shared/services/auth.service";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-edit',
@@ -86,4 +85,9 @@ export class EditPage implements OnInit, AfterViewInit {
     // You may want to show a confirmation modal to confirm the deletion before proceeding.
     console.log('Account deleted');
   }
+
+  goBack(){
+		this.router.navigate(["/profile"]);
+	}
+
 }

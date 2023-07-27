@@ -10,7 +10,7 @@
 
 <ion-content [fullscreen]="true" id="main-content">
   <div>
-    <form #form="ngForm" (ngSubmit)="CreateEvent()">
+    <form #form="ngForm" (ngSubmit)="CreateEvent(form)">
       <ion-grid>
         <ion-row >
           <ion-col size="6">
@@ -38,13 +38,13 @@
       </div>
 
       <label class="label" for="image">Event Name:</label>
-      <ion-input class="ther" name="title" [(ngModel)]="createEvent.title"></ion-input>
+      <ion-input class="ther" name="title" [(ngModel)]="createEvent.title" required></ion-input>
 
       <label class="label" for="image">Description:</label>
       <ion-textarea class="ther" name="description" [(ngModel)]="createEvent.description"></ion-textarea>
 
       <label class="label" for="image">Location</label>
-      <div class="input-container">
+      <div class="input-container" id="location">
         <ion-input class="ther" name="location" [(ngModel)]="createEvent.location" id="locationInput"></ion-input>
       </div>
 
@@ -80,12 +80,10 @@
         </ion-col>
       </ion-row>
 
-      <ion-button id="submitBtn" type="submit" class="custom-btn" [disabled]="buttonClicked || loading">
+      <ion-button id="submitBtn" type="submit" class="custom-btn" [disabled]="buttonClicked || loading || !form.valid">
         <ion-spinner *ngIf="loading"></ion-spinner>
         <span *ngIf="!loading">Create Event</span>
       </ion-button>
     </form>
   </div>
 </ion-content>
-
-<app-footer></app-footer>

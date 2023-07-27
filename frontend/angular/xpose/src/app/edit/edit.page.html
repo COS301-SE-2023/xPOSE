@@ -32,7 +32,7 @@
 	
 	<div class="profile-container">
 		
-		<form #form="ngForm">
+		<form #form="ngForm" (ngSubmit)=(form)>
 			<img [src]="photoURL" alt="Profile Picture" class="profile-picture">
 			<input type="file" accept="image/*" (change)="onFileSelected($event)" id="fileInput" hidden>
 			
