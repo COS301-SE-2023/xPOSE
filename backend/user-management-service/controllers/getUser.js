@@ -1,6 +1,9 @@
 import admin from "firebase-admin";
+import User from '../data-access/models/user.table.js';
+import Friend_request from '../data-access/models/friend_request.table.js';
+import Friendship from '../data-access/models/friendship.table.js';
 
-export const getUser = (req, res) => {
+export const getUser = async (req, res) => {
     const { userId } = req.params;
     const {requestId} = req.query; 
     try{
