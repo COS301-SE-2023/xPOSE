@@ -4,6 +4,7 @@ import User from '../data-access/models/user.table.js';
 import Friend_request from '../data-access/models/friend_request.table.js';
 import Friendship from '../data-access/models/friendship.table.js';
 import { sendMessageToQueue } from '../sender.js';
+import { Op } from "sequelize";
 
 let users = [];
 
@@ -14,7 +15,7 @@ export const getFriend = async (req, res) => {
           // Check if there is a friendship entry between both users
           const friendship = await Friendship.findOne({
             where: {
-                $or: [
+              [Op.or]: [
                     { friend_a_id: userId, friend_b_id: requestId },
                     { friend_a_id: requestId, friend_b_id: userId },
                 ],
