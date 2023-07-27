@@ -1,26 +1,23 @@
-<ion-content [fullscreen]="true" id="main-content" class="custom-backround">
-  <div *ngIf="loading; else loadedContent" class="loading-container">
+<!-- <ion-content [fullscreen]="true" id="main-content" class="custom-backround"> -->
+  <!-- <div *ngIf="loading; else loadedContent" class="loading-container"> -->
     <!-- <ion-spinner></ion-spinner> -->
-    <app-loading-icon></app-loading-icon>
+   
     <!-- <p class="loading-text">Loading...</p> -->
-  </div>
-  <ng-template #loadedContent>
+  <!-- </div> -->
+  <!-- <ng-template #loadedContent> -->
     <ion-header [translucent]="true">
       <ion-toolbar class="custom-toolbar">
         <ion-buttons slot="start">
           <app-backbutton></app-backbutton>
           </ion-buttons>
         <ion-title class="event-title">Event</ion-title>
-      </ion-toolbar>
-      <ion-card class="cover-image">
-        <img src="{{ current_event.image_url }}" alt="Event Cover Image" class="card-image" />
-      </ion-card>
-    
+       </ion-toolbar>  
     </ion-header>
       
       <ion-content [fullscreen]="true" id="main-content" class="custom-backround">
-      
-    
+        <ion-card class="cover-image">
+          <img src="{{ current_event.image_url }}" alt="Event Cover Image" class="card-image" />
+        </ion-card>  
       <ion-segment [(ngModel)]="filterType"  (ionChange)="applyFilter()">
         <ion-segment-button value="posts">
           Posts
@@ -74,7 +71,7 @@
           </ion-toolbar>
         </ion-header>
         
-        <ion-content [fullscreen]="true">
+        <!-- <ion-content [fullscreen]="true"> -->
           <div>
             <ion-card>
               <ion-card-header>
@@ -131,13 +128,9 @@
               </ion-button>
             </ion-buttons>
           </ion-card>
-        </ion-content>
-        
+        <!-- </ion-content> -->
       </ion-list>
 
-
-    
-    
     </ion-content>
     <!-- <ion-footer class="footer-content">
       <ion-toolbar position="fixed">
@@ -168,8 +161,8 @@
       </ion-toolbar>
     </ion-footer> -->
     
-    <ion-text color="danger" *ngIf="errorMessage">
+    <!-- <ion-text color="danger" *ngIf="errorMessage">
       {{ errorMessage }}
     </ion-text>
   </ng-template>
-</ion-content>
+</ion-content> -->
