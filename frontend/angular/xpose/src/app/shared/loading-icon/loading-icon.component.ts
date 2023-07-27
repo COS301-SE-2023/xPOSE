@@ -5,10 +5,6 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './loading-icon.component.html',
   styleUrls: ['./loading-icon.component.scss'],
 })
-export class LoadingIconComponent  implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {}
-
+export class LoadingPageComponent {
+  isLoading: boolean = true;
 }
