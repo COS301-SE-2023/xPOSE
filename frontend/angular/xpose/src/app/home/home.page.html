@@ -1,9 +1,11 @@
 <ion-header [translucent]="true">
-  <ion-toolbar class="custom-toolbar">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap">
+
+  <ion-toolbar class="">
     <ion-buttons slot="end">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>
+    <ion-title class="card-title">
       xPOSE
     </ion-title>
   </ion-toolbar>
@@ -29,23 +31,26 @@
     <ion-searchbar class="button-container" placeholder="Search" (click)="search()"></ion-searchbar>
   </div>
 
-  <div class="loading-container" *ngIf="loading">
+ 
+
+  <!-- <div class="loading-container" *ngIf="loading">
     <ion-spinner></ion-spinner>
     <ion-text>
       <h1>Loading events...</h1>
     </ion-text>
-  </div>
+  </div> -->
 
   <div class="no-cards" *ngIf="cards.length === 0">
     <ion-text>
       <h1>No Events could be loaded...</h1>
+      <app-loading-icon *ngIf="loading"></app-loading-icon>
     </ion-text>
   </div>
 
   <ion-card (click)="eventDetails(card.id)" *ngFor="let card of cards">
     <span class="label-{{ getStatusColor(card?.status) }} label">{{ card?.status }}</span>
     <img [src]="card.image_url" alt="Card Image" class="card-image">
-    <ion-card-header class="card-title">
+    <ion-card-header class="">
       <ion-card-title class="header">
         {{ card?.title }}
       </ion-card-title>
@@ -67,6 +72,7 @@
       </ion-row>
     </ion-card-header>
   </ion-card>
+ 
 </ion-content>
 
 <app-footer></app-footer>

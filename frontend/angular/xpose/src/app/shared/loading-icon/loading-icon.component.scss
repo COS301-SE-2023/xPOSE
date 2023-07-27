@@ -11,7 +11,7 @@
   align-items: center;
   z-index: 99; 
 
-  background-color: #c5c5c5;
+  background-color: #ffffff;
 
   }
 
@@ -21,6 +21,14 @@
     /* Set the initial border color */
     border: 2px solid transparent;
     border-radius: 50%;
+  }
+
+  .loading-message {
+    color: #000000; /* Set the color of the loading message */
+    font-size: 14px; /* Adjust the font size as per your preference */
+    margin-top: 8px; /* Add some space between the image and the message */
+    text-align: center; /* Center the text horizontally */
+    // margin-right: 10px;
   }
   
   .loading-page-container img {

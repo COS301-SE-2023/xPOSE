@@ -1,7 +1,8 @@
 <ion-content [fullscreen]="true" id="main-content" class="custom-backround">
   <div *ngIf="loading; else loadedContent" class="loading-container">
-    <ion-spinner></ion-spinner>
-    <p class="loading-text">Loading...</p>
+    <!-- <ion-spinner></ion-spinner> -->
+    <app-loading-icon></app-loading-icon>
+    <!-- <p class="loading-text">Loading...</p> -->
   </div>
   <ng-template #loadedContent>
     <ion-header [translucent]="true">
@@ -138,7 +139,7 @@
     
     
     </ion-content>
-    <ion-footer class="footer-content">
+    <!-- <ion-footer class="footer-content">
       <ion-toolbar position="fixed">
         <ion-tabs>
           <ion-tab-bar slot="bottom">
@@ -165,7 +166,7 @@
           </ion-tab-bar>
         </ion-tabs>
       </ion-toolbar>
-    </ion-footer>
+    </ion-footer> -->
     
     <ion-text color="danger" *ngIf="errorMessage">
       {{ errorMessage }}

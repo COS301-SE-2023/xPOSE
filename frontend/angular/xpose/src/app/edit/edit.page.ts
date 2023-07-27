@@ -66,7 +66,7 @@ export class EditPage implements OnInit, AfterViewInit {
       this.router.navigate(['/home']);
     }
   }
-
+  
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
     if (file) {
