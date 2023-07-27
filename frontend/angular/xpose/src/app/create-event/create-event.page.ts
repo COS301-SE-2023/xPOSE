@@ -28,7 +28,7 @@ export class CreateEventPage implements OnInit, AfterViewInit {
 		end_date: ' ',
 		location: ' ',
 		description: ' ',
-		privacy_setting: ' ',
+		privacy_setting: 'public',
 		latitude: 0,
 		longitude: 0,
 		
