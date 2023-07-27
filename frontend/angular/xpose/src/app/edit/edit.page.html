@@ -1,11 +1,12 @@
 <ion-header>
 	<ion-toolbar class="custom-toolbar">
-	  <ion-buttons slot="end">
-		<ion-menu-button></ion-menu-button>
-	  </ion-buttons>
 	  <ion-buttons slot="start">
-		<ion-back-button defaultHref="/profile"></ion-back-button>
-	  </ion-buttons>
+		<app-backbutton></app-backbutton>
+		</ion-buttons>
+	  	 <!-- <ion-buttons slot="start"> -->
+		<!-- <ion-back-button defaultHref="" (click)="back()" icon="arrow-back"></ion-back-button> -->
+	  <!-- </ion-buttons> -->
+	  
 	  <ion-title>Edit Profile</ion-title>
 	</ion-toolbar>
   </ion-header>
@@ -31,7 +32,7 @@
 	
 	<div class="profile-container">
 		
-		<form #form="ngForm">
+		<form #form="ngForm" (ngSubmit)=(form)>
 			<img [src]="photoURL" alt="Profile Picture" class="profile-picture">
 			<input type="file" accept="image/*" (change)="onFileSelected($event)" id="fileInput" hidden>
 			

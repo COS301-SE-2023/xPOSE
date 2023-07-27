@@ -9,6 +9,7 @@ import { EventPageRoutingModule } from './event-routing.module';
 import { EventPage } from './event.page';
 
 import { GalleryLightboxPage } from './posts/gallery-lightbox/gallery-lightbox.page';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { GalleryLightboxPage } from './posts/gallery-lightbox/gallery-lightbox.p
     FormsModule,
     IonicModule,
     EventPageRoutingModule,
+    SharedModule
   ],
   declarations: [EventPage,
     GalleryLightboxPage]

@@ -9,6 +9,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./edit.page.scss'],
 })
 export class EditPage implements OnInit, AfterViewInit {
+  private history: string[] = [];
   editForm: FormGroup;
   photoURL: string;
   username: string;
@@ -18,7 +19,8 @@ export class EditPage implements OnInit, AfterViewInit {
   constructor(
     private router: Router,
     private authService: AuthService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private location: Location
   ) {
     this.photoURL = './assets/images/profile picture.jpg';
     this.email = 'johndoe@example.com';
@@ -56,6 +58,15 @@ export class EditPage implements OnInit, AfterViewInit {
     }
   }
 
+  back(): void {
+    this.history.pop();
+    if (this.history.length >= 0) {
+      this.location.back();
+    } else {
+      this.router.navigate(['/home']);
+    }
+  }
+
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
     if (file) {
@@ -74,4 +85,9 @@ export class EditPage implements OnInit, AfterViewInit {
     // You may want to show a confirmation modal to confirm the deletion before proceeding.
     console.log('Account deleted');
   }
+
+  goBack(){
+		this.router.navigate(["/profile"]);
+	}
+
 }

@@ -28,7 +28,7 @@ export class CreateEventPage implements OnInit, AfterViewInit {
 		end_date: ' ',
 		location: ' ',
 		description: ' ',
-		privacy_setting: ' ',
+		privacy_setting: 'public',
 		latitude: 0,
 		longitude: 0,
 		
@@ -50,9 +50,6 @@ export class CreateEventPage implements OnInit, AfterViewInit {
 			this.marker = null;
 		}
 	ngAfterViewInit(): void {
-		// throw new Error("Method not implemented.");
-		// this.displayMap();
-		// this.initAutocomplete();
 		this.initMap();
 	}
 
@@ -61,8 +58,6 @@ export class CreateEventPage implements OnInit, AfterViewInit {
 	onFileSelected(event: any) {
 		const file: File = event.target.files[0];
 		this.createEvent.image = file;
-		// You can perform further operations with the selected file, such as uploading it to a server or displaying a preview.
-		// Remember to update your component's property (e.g., createEvent.coverImage) with the selected file or file data.
 	  }
 
 	  getCurrentUserId(): Observable<string> {
@@ -70,10 +65,7 @@ export class CreateEventPage implements OnInit, AfterViewInit {
 		  map((user) => {
 			if (user) {
 			  return user.uid;
-			} else {
-				// throw error
-				// some extra stuff
-				
+			} else {	
 			  console.log('No user is currently logged in.');
 			  return '';
 			}
@@ -192,7 +184,14 @@ export class CreateEventPage implements OnInit, AfterViewInit {
 	  CreateEvent(form: NgForm) {
 		const formData: FormData = new FormData();
 		formData.append('title', this.createEvent.title);
-		if(this.createEvent.title != " "){
+		formData.append('start_date', this.createEvent.start_date);
+		formData.append('end_date', this.createEvent.end_date);
+		formData.append('location', this.createEvent.location);
+		formData.append('description', this.createEvent.description);
+		formData.append('privacy_setting', this.createEvent.privacy_setting);
+		formData.append('latitude', this.createEvent.latitude.toString());
+		formData.append('longitude', this.createEvent.longitude.toString());
+		if(this.createEvent.title != " " || this.createEvent.start_date != " " || this.createEvent.end_date != " " || this.createEvent.location != " " || this.createEvent.description != " " || this.createEvent.longitude != 0 || this.createEvent.latitude != 0){
 			this.getCurrentUserId().subscribe((userId) => {
 				if(userId){
 					this.buttonClicked = true;
