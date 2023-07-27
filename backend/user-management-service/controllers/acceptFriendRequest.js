@@ -3,6 +3,7 @@ import Friend_request from '../data-access/models/friend_request.table.js';
 import Friendship from '../data-access/models/friendship.table.js';
 import { sendMessageToQueue } from '../sender.js';
 import MessageBuilder from './messagebuilder.js';
+import { Op } from "sequelize";
 
 export const acceptFriendRequest = async (req, res) =>{
     const  requestId = req.params.requestId;
@@ -11,7 +12,7 @@ export const acceptFriendRequest = async (req, res) =>{
         // retrieve friend request details
         const friendRequest = await Friend_request.findOne({
             where: {
-                $or: [
+                [Op.or]: [
                     {friend_a_id: requestId},
                     {friend_b_id: requestId},
                 ]
