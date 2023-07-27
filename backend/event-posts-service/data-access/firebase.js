@@ -61,5 +61,5 @@ async function uploadImageToFirebase(uid, file) {
   }
 
 // Export the functions
-module.exports = uploadImageToFirebase;
+module.exports = { uploadImageToFirebase, admin };
   
