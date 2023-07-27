@@ -67,8 +67,6 @@ export class EditPage implements OnInit, AfterViewInit {
         this.photoURL = reader.result as string;
       };
     }
-    // You can perform further operations with the selected file, such as uploading it to a server or displaying a preview.
-    // Remember to update your component's property (e.g., createEvent.coverImage) with the selected file or file data.
   }
 
   deleteAccount() {

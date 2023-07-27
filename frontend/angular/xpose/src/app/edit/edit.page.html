@@ -1,18 +1,15 @@
 <ion-header>
 	<ion-toolbar class="custom-toolbar">
-		<ion-buttons slot="end">
-			
-			<ion-menu-button></ion-menu-button>
-		
-		  
-		</ion-buttons>
-		<ion-buttons slot="start">
+	  <ion-buttons slot="end">
+		<ion-menu-button></ion-menu-button>
+	  </ion-buttons>
+	  <ion-buttons slot="start">
 		<ion-back-button defaultHref="/profile"></ion-back-button>
-	</ion-buttons>
+	  </ion-buttons>
+	  <ion-title>Edit Profile</ion-title>
+	</ion-toolbar>
+  </ion-header>
 
-		<ion-title>Edit Profile</ion-title>
-	  </ion-toolbar>
-	</ion-header>
 	<ion-menu side="end" content-id="main-content">
 		<ion-header>
 			<ion-toolbar>
@@ -34,33 +31,37 @@
 	
 	<div class="profile-container">
 		
-		
-	  <img [src]="photoURL" alt="Profile Picture" class="profile-picture">
-	  <input type="file" accept="image/*" (change)="onFileSelected($event)"id="fileInput" hidden>
-	  <label for="fileInput" class="custom-file-input">Change image</label>
+		<form #form="ngForm">
+			<img [src]="photoURL" alt="Profile Picture" class="profile-picture">
+			<input type="file" accept="image/*" (change)="onFileSelected($event)" id="fileInput" hidden>
+			
+			
+			<ion-button class="custom-file-input" (click)="fileInput.click()">Change image</ion-button>
+			<input type="file" accept="image/*" (change)="onFileSelected($event)" id="fileInput" #fileInput hidden>
+			
 	  
-  
 	  <ion-item>
 		<ion-label class="username-label" position="floating">Username</ion-label>
-		<ion-input class="username-input" [(ngModel)]="username"></ion-input>
+		<ion-input class="username-input" name = "username"[(ngModel)]="username" required ></ion-input>
 	  </ion-item>
   
 	  <ion-item>
 		<ion-label class="email-label" position="floating">Email</ion-label>
-		<ion-input class="email-input" [(ngModel)]="email"></ion-input>
+		<ion-input class="email-input" [(ngModel)]="email" required ></ion-input>
 	  </ion-item>
 
 	  <div class="account-privacy-container">
 		<ion-label class="account-privacy-label">Account Privacy</ion-label>
-		<ion-toggle class="account-privacy-toggle" [(ngModel)]="isPublic"></ion-toggle>
+		<ion-toggle class="account-privacy-toggle" [(ngModel)]="isPublic" required ></ion-toggle>
 	  </div>
 	 
   
 	  <ion-button expand="ion-button" (click)="saveProfile()">Save Changes</ion-button>
-	</div>
+	</form>
+</div>
+
+<ion-button (click)="deleteAccount()" expand="full" class="pink-button">Delete Account</ion-button>
   </ion-content>
  
 
-  <ion-footer>
-	<ion-button (click)="deleteAccount()" expand="full" class="pink-button">Delete Account</ion-button>
-  </ion-footer>
+  
