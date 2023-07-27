@@ -11,6 +11,7 @@ import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 // import { google } from 'google-maps';
 @Component({
 	selector: "app-create-event",
@@ -18,6 +19,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 	styleUrls: ["./create-event.page.scss"],
 	})
 export class CreateEventPage implements OnInit, AfterViewInit {
+
+	myForm!: FormGroup;
 
 	createEvent: Event = {
 		uid: 0,
@@ -41,6 +44,7 @@ export class CreateEventPage implements OnInit, AfterViewInit {
 	
 
 	constructor(private http: HttpClient,
+		private formBuilder: FormBuilder,
 		private router: Router,
 		private service: Service,
 		private modalController: ModalController,
@@ -55,7 +59,11 @@ export class CreateEventPage implements OnInit, AfterViewInit {
 		this.initMap();
 	}
 
-	ngOnInit(): void {}
+	ngOnInit(): void {
+		this.myForm = this.formBuilder.group({
+			title: ['', Validators.required]
+		});
+	}
 
 	onFileSelected(event: any) {
 		const file: File = event.target.files[0];
