@@ -9,7 +9,11 @@ let users = [];
 
 export const getFriend = async (req, res) => {
     try {
-        const { userId, requestId } = req.params;
+        const {userId} = req.params;
+        const {requestId} = req.query;
+
+
+
     
         // Get the user document
         const userDoc = await admin.firestore().collection('Users').doc(userId).get();
