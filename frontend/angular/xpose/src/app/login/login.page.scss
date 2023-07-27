@@ -40,8 +40,9 @@ ion-toolbar {
 }
 
   .custom-btn {
-    --ion-color-primary: #ff00f0;
+    --ion-color-primary: #ff3cf2;
     --border-radius: 10px;
+    box-shadow: rgb(0, 4, 255);
     width: 100%;
     margin-top: 50px;
     height: 50px;
@@ -113,7 +114,7 @@ ion-toolbar {
     height: 0px; /* Change this value to your desired height */
     border: none;
     background-color: transparent;
-    padding-top: 160px;
+    padding-top: 72px;
   }
   form-class{
     align-items: center;
@@ -132,13 +133,21 @@ ion-toolbar {
   }
   
   .icon-g {
-    font-size: 40px;
-    color: hsl(300, 76%, 50%);
-    border-bottom: 2px solid hsl(300, 76%, 50%);
+    font-size: 50px;
+    color: hsl(256, 100%, 74%);
+    border-bottom: 2px solid hsl(300, 100%, 88%);
     padding-bottom: 5px; /* Adjust this value as needed to control the space between the icon and the border */
+    // border: solid 1px #fd00be;
+    border-radius: 20px;
+    box-sizing: content-box;
   }
   
   .or-text {
     margin: 0 10px; /* Adjust this value as needed to control the space between the buttons and the "or" text */
+  }
+
+  .log-in-text{
+    margin-top: 45px;
+    color: #979797;
   }
   
