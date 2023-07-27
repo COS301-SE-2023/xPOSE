@@ -5,65 +5,50 @@ import { sendMessageToQueue } from '../sender.js';
 import MessageBuilder from './messagebuilder.js';
 
 export const acceptFriendRequest = async (req, res) =>{
+    const  requestId = req.params.requestId;
+
     try{
-        const {userId, requestId} = req.params;
-        
-        // Get the recipient user document
-        const recipientDoc = await admin.firestore().collection('Users').doc(requestId).get();
+        // retrieve friend request details
+        const friendRequest = await Friend_request.findOne({
+            where: {
+                $or: [
+                    {friend_a_id: requestId},
+                    {friend_b_id: requestId},
+                ]
+            }
+        });
 
-        // Check if the recipient exists
-        if (!recipientDoc.exists) {
-            return res.status(404).json({ error: 'Recipient not found' });
-        }
-
-         // Check if the friend request exists and retrieve the request document
-        const requestSnapshot = await admin
-        .firestore()
-        .collection('Users')
-        .doc(requestId)
-        .collection('FriendRequests')
-        .doc(userId)
-        .get();
-
-        // Check if the friend request document exists
-        if (!requestSnapshot.exists) {
+        // user does not exist in the table
+        if(!friendRequest) {
             return res.status(404).json({ error: 'Friend request not found' });
         }
 
-        // Update the status of the friend request to 'accepted'
-        await admin
-            .firestore()
-            .collection('Users')
-            .doc(requestId)
-            .collection('FriendRequests')
-            .doc(userId)
-            .update({
-            status: 'accepted',
+        // Determine which user initiated the friend request and who received it
+        const senderId = friendRequest.friend_a_id;
+        const receiverId = friendRequest.friend_b_id;
+
+        // Create a new entry in the Friendship table
+        await Friendship.create({
+            friend_a_id: senderId,
+            friend_b_id: receiverId
         });
 
-        // Both recipient and sender are now friends Add friend to list of friends
+         // Delete the friend request
+         await friendRequest.destroy();
+        // send a notification to user
+          // Communicate with the notification service
+      const queueName = 'notifications';
+      const message = new MessageBuilder()
+                .setType("friend_accept")
+                .setMessage(`Friend request accepted`)
+                .setSenderId("173")
+                .setReceiverId("999")
+                .build();
 
-        // Add the new friendID to the recipient's friendIds array
-        await admin
-            .firestore()
-            .collection('Users')
-            .doc(requestId)
-            .update({
-            friendIds: admin.firestore.FieldValue.arrayUnion(userId),
-        });
-
-         // Add  new friendID to the sender's friendIds array
-        await admin
-            .firestore()
-            .collection('Users')
-            .doc(userId)
-            .update({
-            friendIds: admin.firestore.FieldValue.arrayUnion(requestId),
-        });
-
+        sendMessageToQueue(queueName, message);
 
         res.status(200).json({ message:`Friend with ${requestId} accepted friend request`});
-    } catch(errror){
+    } catch(error){
         console.error('Error accepting friend request:', error);
         res.status(500).json({ error: 'An error occurred while acepting friend request' });  
     }
