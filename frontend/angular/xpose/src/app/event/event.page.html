@@ -33,10 +33,13 @@
       </ion-segment>
     
       <ion-list *ngIf="filterType === 'posts'" >
-        <ion-content [fullscreen]="true" id="main-content" class="custom-background">
-          <app-gallery-lightbox [galleryData]="data"></app-gallery-lightbox>
-        </ion-content>
+        <!-- Add the "+ Add image" button here -->
+        <ion-button (click)="openImageGallery()">+ Add image</ion-button>
+      
+        <!-- Display the gallery images -->
+        <app-gallery-lightbox [galleryData]="data"></app-gallery-lightbox>
       </ion-list>
+      
     
       <ion-list *ngIf="filterType === 'message-board'" >
         <ion-item class="comment-input">

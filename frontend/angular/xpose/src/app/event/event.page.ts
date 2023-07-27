@@ -11,6 +11,7 @@ import { Location } from '@angular/common';
 import { NavigationEnd } from "@angular/router";
 import { GalleryDataService } from './posts/gallery-lightbox/gallery-data.service';
 import { AngularFirestore, AngularFirestoreCollection, DocumentChangeAction } from '@angular/fire/compat/firestore';
+import { Camera, CameraResultType } from '@capacitor/camera'; 
 
 interface Item {
   imageSrc: string;
@@ -77,6 +78,7 @@ export class EventPage {
     private location: Location,
     private galleryDataService: GalleryDataService,
     private afs: AngularFirestore,
+    // private camera: Camera,
     ) {
 
     this.router.events.subscribe((event) => {
@@ -171,6 +173,30 @@ export class EventPage {
       //   // this.currentEventDataService.event_id = res._id;
       // });
     });
+  }
+
+  async openImageGallery() {
+    const image = await Camera.getPhoto({
+      quality: 90,
+      allowEditing: true,
+      resultType: CameraResultType.Uri
+    });
+  
+    // image.webPath will contain a path that can be set as an image src.
+    // You can access the original file using image.path, which can be
+    // passed to the Filesystem API to read the raw data of the image,
+    // if desired (or pass resultType: CameraResultType.Base64 to getPhoto)
+    var imageUrl = image.webPath;
+    console.log(imageUrl);
+    // Can be set to the src of an image now
+    // imageElement.src = imageUrl;
+  }
+
+  // Function to handle the image upload
+  uploadImage(imageData: string) {
+    // Add your image upload logic here.
+    // You can use HTTP requests or any other method to upload the image to your server.
+    // Remember to handle the response and update the 'data' array accordingly with the new image.
   }
 
   getEventParticipantsFromAPI() {
