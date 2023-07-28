@@ -190,6 +190,7 @@ export class EventPage {
       this.postsCollection.snapshotChanges().pipe().subscribe((data) => {
         // this.cards = [];
         // this.data = [];
+        this.data.length = 0;
         data.forEach((doc) => {
           const post: any = doc.payload.doc.data();
           console.log(post);
