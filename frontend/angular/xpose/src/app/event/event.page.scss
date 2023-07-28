@@ -87,7 +87,7 @@ ion-toolbar.custom-toolbar {
         --background:var(--color);
         padding: 10px 20px;
         border-radius: 10px;
-        background: #555555;
+        background: #b1b1b1;
         --color: #eb0091;
         font-weight: 500;
         font-size: 1.2rem;
@@ -110,3 +110,8 @@ ion-toolbar.custom-toolbar {
   
 }
 
+.leave-button{
+  font-size: 40px;
+  color: #555555;
+
+}
