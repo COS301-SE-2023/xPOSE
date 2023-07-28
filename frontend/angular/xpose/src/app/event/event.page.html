@@ -1,9 +1,11 @@
-<ion-content [fullscreen]="true" id="main-content" class="custom-backround">
-  <div *ngIf="loading; else loadedContent" class="loading-container">
-    <ion-spinner></ion-spinner>
+<!-- <ion-content [fullscreen]="true" id="main-content" class="custom-backround"> -->
+
+<div *ngIf="loading; else loadedContent" class="loading-container">
+  <app-loading-icon></app-loading-icon>
     <p class="loading-text">Loading...</p>
   </div>
-  <ng-template #loadedContent>
+  <ng-template #loadedContent> -->
+    <!-- <app-loading-icon></app-loading-icon> -->
     <ion-header [translucent]="true">
       <ion-toolbar class="custom-toolbar">
         <ion-buttons slot="start">
@@ -18,7 +20,7 @@
     </ion-header>
       
       <ion-content [fullscreen]="true" id="main-content" class="custom-backround">
-      
+        
     
       <ion-segment [(ngModel)]="filterType"  (ionChange)="applyFilter()">
         <ion-segment-button value="posts">
@@ -32,12 +34,15 @@
         </ion-segment-button>
       </ion-segment>
     
+    
       <ion-list *ngIf="filterType === 'posts'" >
         <!-- Add the "+ Add image" button here -->
         <ion-button (click)="openImageGallery()">+ Add image</ion-button>
       
         <!-- Display the gallery images -->
         <app-gallery-lightbox [galleryData]="data"></app-gallery-lightbox>
+
+       
 
         <!-- <ion-fab>
           <ion-fab-button>
@@ -134,11 +139,13 @@
         
       </ion-list>
 
-
+      <ion-text color="danger" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </ion-text>
     
     
     </ion-content>
-    <ion-footer class="footer-content">
+    <!-- <ion-footer class="footer-content">
       <ion-toolbar position="fixed">
         <ion-tabs>
           <ion-tab-bar slot="bottom">
@@ -165,10 +172,8 @@
           </ion-tab-bar>
         </ion-tabs>
       </ion-toolbar>
-    </ion-footer>
+    </ion-footer> -->
     
-    <ion-text color="danger" *ngIf="errorMessage">
-      {{ errorMessage }}
-    </ion-text>
-  </ng-template>
-</ion-content>
+    
+  <!-- </ng-template>
+</ion-content> -->
