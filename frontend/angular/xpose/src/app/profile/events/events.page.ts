@@ -10,8 +10,13 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 })
 export class EventsPage implements OnInit {
   userEvents: any[] | undefined; // Define the userEvents property as an array to hold event data
+  events: any[] = [];
+  cards: any[] = [];
 
-  constructor() { }
+  constructor(
+    private http: HttpClient,
+    private afAuth: AngularFireAuth
+  ) { }
 
   ngOnInit() {
     // Populate the userEvents array with event data
