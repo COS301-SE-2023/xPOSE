@@ -37,10 +37,6 @@
         <input type="file" accept="image/*" (change)="onFileSelected($event)" name="image" id="image">
       </div>
 
-      <div *ngIf="selectedImage" class="image-preview-container">
-        <img [src]="selectedImage" alt="Selected Image">
-      </div>
-
       <label class="label" for="image">Event Name:</label>
       <ion-input class="ther" name="title" [(ngModel)]="createEvent.title" required></ion-input>
 
