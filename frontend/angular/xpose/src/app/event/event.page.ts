@@ -12,7 +12,6 @@ import { NavigationEnd } from "@angular/router";
 import { GalleryDataService } from './posts/gallery-lightbox/gallery-data.service';
 import { AngularFirestore, AngularFirestoreCollection, DocumentChangeAction } from '@angular/fire/compat/firestore';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera'; 
-import { SharedModule } from '../shared/shared.module';
 
 interface Item {
   imageSrc: string;
@@ -36,8 +35,27 @@ export class EventPage {
   loading: boolean = true;
   errorMessage: string | undefined;
   events: any[] = []; // Array to store events data
+  // participants: Participant[] = [
+  //   { name: 'John' },
+  //   { name: 'Thabo' },
+  //   { name: 'Naria' },
+  //   // Add more participant objects as needed
+  // ];
 
   data: Item[] = [
+    // { imageSrc: '../assets/images/download.jpg', imageAlt: '1' },
+    // { imageSrc: '../assets/images/qrcode.png', imageAlt: '2' },
+    // { imageSrc: '../assets/images/images.jpg', imageAlt: '3' },
+    // { imageSrc: '../assets/images/qrcode.png', imageAlt: '4' },
+    // { imageSrc: '../assets/images/image2.webp', imageAlt: '5' },
+    // { imageSrc: '../assets/images/image1.webp', imageAlt: '6' },{ imageSrc: '../assets/images/download.jpg', imageAlt: '1' },
+    // { imageSrc: '../assets/images/youth.jpg', imageAlt: '7' },
+    // { imageSrc: '../assets/images/images.jpg', imageAlt: '8' },
+    // { imageSrc: '../assets/images/youth.png', imageAlt: '9' },
+    // { imageSrc: '../assets/images/qrcode.png', imageAlt: '10' },
+    // { imageSrc: '../assets/images/image2.webp', imageAlt: '11' },
+    
+    // Add more items as needed...
   ];
   // router: any;
 
@@ -63,7 +81,6 @@ export class EventPage {
     private location: Location,
     private galleryDataService: GalleryDataService,
     private afs: AngularFirestore,
-    private sharedModule: SharedModule,
     // private camera: Camera,
     ) {
 
