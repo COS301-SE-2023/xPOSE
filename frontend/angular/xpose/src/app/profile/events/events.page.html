@@ -20,7 +20,7 @@
     </ion-item>
   </ion-list> -->
 
-  <ion-list *ngFor="let event of userEvents">
+  <ion-list *ngFor="let card of cards">
     <ion-card (click)="eventDetails(card.id)" *ngFor="let card of cards">
       <span class="label-{{ getStatusColor(card?.status) }} label">{{ card?.status }}</span>
       <img [src]="card.image_url" alt="Card Image" class="card-image">

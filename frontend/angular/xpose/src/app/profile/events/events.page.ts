@@ -20,11 +20,13 @@ export class EventsPage implements OnInit {
 
   ngOnInit() {
     // Populate the userEvents array with event data
-    this.userEvents = [
-      { name: 'Event 1', description: 'Description 1' },
-      { name: 'Event 2', description: 'Description 2' },
-      // Add more events as needed
-    ];
+    // this.userEvents = [
+    //   { name: 'Event 1', description: 'Description 1' },
+    //   { name: 'Event 2', description: 'Description 2' },
+    //   // Add more events as needed
+    // ];
+
+    this.getEventsFromAPI();
   }
 
   getEventsFromAPI() {
@@ -36,14 +38,9 @@ export class EventsPage implements OnInit {
           this.events = events;
           this.populateCards();
           // this.events.filter((event) => event.status === 'ongoing');
-        });
-        // this.populateCards();
-        this.applyFilter();
-        this.loading = false;
-        
+        });       
       } else {
         console.log("No user id");
-        this.loading = false;
       }
     });
   }
@@ -78,11 +75,6 @@ export class EventsPage implements OnInit {
         start_date: event.start_date,
         end_date: event.end_date,
         status: event.status,
-        // Add event listener to the button
-        buttonClick: () => {
-          // Redirect to event details page
-          this.onCardButtonClick(event.id);
-        },
       }));
     }
   }
