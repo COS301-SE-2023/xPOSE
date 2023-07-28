@@ -1,9 +1,11 @@
-<ion-content [fullscreen]="true" id="main-content" class="custom-backround">
-  <div *ngIf="loading; else loadedContent" class="loading-container">
-    <ion-spinner></ion-spinner>
+<!-- <ion-content [fullscreen]="true" id="main-content" class="custom-backround"> -->
+
+<!-- <div *ngIf="loading; else loadedContent" class="loading-container">
+  <app-loading-icon></app-loading-icon>
     <p class="loading-text">Loading...</p>
-  </div>
-  <ng-template #loadedContent>
+  </div> -->
+  <!-- <ng-template #loadedContent> -->
+    <!-- <app-loading-icon></app-loading-icon> -->
     <ion-header [translucent]="true">
       <ion-toolbar class="custom-toolbar">
         <ion-buttons slot="start">
@@ -18,7 +20,8 @@
     </ion-header>
       
       <ion-content [fullscreen]="true" id="main-content" class="custom-backround">
-      
+      <app-loading-icon *ngIf="loading"></app-loading-icon>
+
     
       <ion-segment [(ngModel)]="filterType"  (ionChange)="applyFilter()">
         <ion-segment-button value="posts">
@@ -32,12 +35,15 @@
         </ion-segment-button>
       </ion-segment>
     
+    
       <ion-list *ngIf="filterType === 'posts'" >
         <!-- Add the "+ Add image" button here -->
         <ion-button (click)="openImageGallery()">+ Add image</ion-button>
       
         <!-- Display the gallery images -->
         <app-gallery-lightbox [galleryData]="data"></app-gallery-lightbox>
+
+       
 
         <!-- <ion-fab>
           <ion-fab-button>
@@ -73,7 +79,7 @@
           </ion-toolbar>
         </ion-header>
         
-        <ion-content [fullscreen]="true">
+        <!-- <ion-content [fullscreen]="true"> -->
           <div>
             <ion-card>
               <ion-card-header>
@@ -130,45 +136,15 @@
               </ion-button>
             </ion-buttons>
           </ion-card>
-        </ion-content>
+        <!-- </ion-content> -->
         
       </ion-list>
 
-
+      <ion-text color="danger" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </ion-text>
     
     
     </ion-content>
-    <ion-footer class="footer-content">
-      <ion-toolbar position="fixed">
-        <ion-tabs>
-          <ion-tab-bar slot="bottom">
-            <ion-tab-button tab="home">
-              <ion-icon name="home-outline"></ion-icon>
-              <ion-label>Home</ion-label>
-            </ion-tab-button>
-            <ion-tab-button tab="joined-events" (click)="onJoinedEvent()">
-              <ion-icon name="people-outline"></ion-icon>
-              <ion-label>Joined Events</ion-label>
-            </ion-tab-button>
-            <ion-tab-button tab="create-event" (click)="onEvent()">
-              <ion-icon name="add-circle-outline" class="big" style="color: deeppink;"></ion-icon>
-              <ion-label>Create Event</ion-label>
-            </ion-tab-button>
-            <ion-tab-button tab="notifications" (click)="onNotifications()">
-              <ion-icon name="notifications-outline"></ion-icon>
-              <ion-label>Notifications</ion-label>
-            </ion-tab-button>
-            <ion-tab-button tab="profile" (click)="onProfile()">
-              <ion-icon name="person-outline"></ion-icon>
-              <ion-label>Profile</ion-label>
-            </ion-tab-button>
-          </ion-tab-bar>
-        </ion-tabs>
-      </ion-toolbar>
-    </ion-footer>
-    
-    <ion-text color="danger" *ngIf="errorMessage">
-      {{ errorMessage }}
-    </ion-text>
-  </ng-template>
-</ion-content>
+ <app-footer></app-footer>
+  <!-- </ng-template> -->
