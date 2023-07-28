@@ -33,21 +33,7 @@
         width: 100%;
         height: 95%;
         background: rgba(143, 139, 139, 0.85);
-        .count {
-            // position: relative;
-            // top: 0;
-            // left: 0;
-            // width: 7%;
-            // height: 10%;
-            // color: #fff;
-            // opacity: 1;
-            // font-size: 18px;
-            // display: flex   ;
-            // justify-content: center;
-            // align-items: center;
-            // margin-left:5px ;
-
-        }
+    
 
         .background-element {
             /* Set CSS properties to hide the background element */
@@ -107,6 +93,7 @@
             .lightbox-img img{
                 width: 100%;
                 border-radius: .35rem;
+                padding-bottom: 1000px;
                 
             }
 
@@ -117,16 +104,13 @@
       .icon-prev{
         font-size: 100px;
         font-weight: bolder;
+        padding-bottom: 1300px;
       }
       .close-btn {
         position: relative;
         left: 85%;
         bottom: 37%;
-        // width: 10px;
-        // height: 5px;
         z-index: 2;
-        // padding-bottom: 10px;
-        // display: none;
         font-size: 50px;
 
     }
