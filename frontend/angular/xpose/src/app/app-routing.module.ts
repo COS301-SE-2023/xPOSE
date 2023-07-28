@@ -26,12 +26,10 @@ const routes: Routes = [
   {
     path: "create-event",
     loadChildren: () => import("./create-event/create-event.module").then(m => m.CreateEventPageModule)
-    , canActivate:[AuthGuard]
   },
   {
     path: "profile",
     loadChildren: () => import("./profile/profile.module").then(m => m.ProfilePageModule)
-    ,canActivate:[AuthGuard]
   },
   {
     path: "settings",
@@ -48,17 +46,14 @@ const routes: Routes = [
   {
     path: "notification",
     loadChildren: () => import("./notification/notification.module").then(m => m.NotificationPageModule)
-    ,canActivate:[AuthGuard]
   },
   {
     path: "joined-event",
     loadChildren: () => import("./joined-event/joined-event.module").then(m => m.JoinedEventPageModule)
-    , canActivate:[AuthGuard]
   },
   {
     path: "post-details",
     loadChildren: () => import("./post-details/post-details.module").then(m => m.PostDetailsPageModule)
-    , canActivate:[AuthGuard]
   },
   { 
     path: 'send-friend-requests', component: SendFriendRequestsComponent 
@@ -78,7 +73,6 @@ const routes: Routes = [
   {
     path: 'user-profile',
     loadChildren: () => import('./user-profile/user-profile.module').then( m => m.UserProfilePageModule)
-    , canActivate:[AuthGuard]
   },
  
 
