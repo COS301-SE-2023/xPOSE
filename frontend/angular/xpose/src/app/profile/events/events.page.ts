@@ -31,9 +31,9 @@ export class EventsPage implements OnInit {
     this.getEventsFromAPI();
   }
 
-  onCardButtonClick(eventId: string) {
-    this.router.navigate(['/view-event'], { queryParams: { id: eventId } });
-  }
+  // onCardButtonClick(eventId: string) {
+  //   this.router.navigate(['../view-event'], { queryParams: { id: eventId } });
+  // }
 
   getEventsFromAPI() {
     this.getCurrentUserId().subscribe((uid) => {
@@ -80,10 +80,6 @@ export class EventsPage implements OnInit {
         start_date: event.start_date,
         end_date: event.end_date,
         status: event.status,
-        buttonClick: () => {
-          // Redirect to event details page
-          this.onCardButtonClick(event.id);
-        },
       }));
     }
   }
