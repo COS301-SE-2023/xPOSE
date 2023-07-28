@@ -1,11 +1,4 @@
-<!-- <ion-content [fullscreen]="true" id="main-content" class="custom-backround"> -->
 
-<!-- <div *ngIf="loading; else loadedContent" class="loading-container">
-  <app-loading-icon></app-loading-icon>
-    <p class="loading-text">Loading...</p>
-  </div> -->
-  <!-- <ng-template #loadedContent> -->
-    <!-- <app-loading-icon></app-loading-icon> -->
     <ion-header [translucent]="true">
       <ion-toolbar class="custom-toolbar">
         <ion-buttons slot="start">
@@ -14,7 +7,7 @@
         <ion-title class="event-title">Event</ion-title>
         <ion-buttons slot="end"> <!-- Add the Leaving Event button here -->
           <ion-button >
-            <ion-icon name="log-out-outline"></ion-icon>
+            <ion-icon class="leave-button" name="log-out-outline"></ion-icon>
             </ion-button>
         </ion-buttons>
       </ion-toolbar>
