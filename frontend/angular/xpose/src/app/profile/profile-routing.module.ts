@@ -16,10 +16,6 @@ const routes: Routes = [
       path: 'events',
       loadChildren: () => import('./events/events.module').then( m => m.EventsPageModule)
     },
-    {
-      path: 'pictures',
-      loadChildren: () => import('./pictures/pictures.module').then( m => m.PicturesPageModule)
-    },
   ]
   },
 ];
