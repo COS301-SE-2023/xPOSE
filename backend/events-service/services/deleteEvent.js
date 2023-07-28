@@ -4,17 +4,18 @@ const admin = require('firebase-admin');
 
 async function deleteEvent(req, res) {
     try {
+        const { uid } = req.query;
         console.log('Deleting event:');
         console.log(req.body);
         // If there's no uid, throw an error
-        if (!req.body.uid) {
-            res.status(400).json({ error: 'No uid provided' });
-            return;
-        }
+        // if (!req.body.uid) {
+        //     res.status(400).json({ error: 'No uid provided' });
+        //     return;
+        // }
 
         const user = await User.findOne({
             where: {
-                uid: req.body.uid,
+                uid: uid,
             },
         });
 

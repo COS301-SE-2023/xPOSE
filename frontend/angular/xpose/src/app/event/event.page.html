@@ -10,19 +10,16 @@
       <ion-toolbar class="custom-toolbar">
         <ion-buttons slot="start">
           <app-backbutton></app-backbutton>
-          </ion-buttons>
+        </ion-buttons>
         <ion-title class="event-title">Event</ion-title>
-        <ion-buttons slot="end"> <!-- Add the Leaving Event button here -->
-          <ion-button >
+        <ion-buttons slot="end">
+          <ion-button (click)="onLogoutClick()">
             <ion-icon name="log-out-outline"></ion-icon>
-            </ion-button>
+          </ion-button>
         </ion-buttons>
       </ion-toolbar>
-      <!-- <ion-card class="cover-image">
-        <img src="{{ current_event.image_url }}" alt="Event Cover Image" class="card-image" />
-      </ion-card> -->
-    
     </ion-header>
+    
       
       <ion-content [fullscreen]="true" id="main-content" class="custom-backround">
       <app-loading-icon *ngIf="loading"></app-loading-icon>
@@ -129,17 +126,17 @@
             </ion-card-header>
             <ion-card-content>
               <h2 class="participant-name">{{ participant?.display_name }}</h2>
-              <p class="participant-timestamp">{{ participant?.timestamp }}</p>
+              <!-- <p class="participant-timestamp">{{ participant?.timestamp }}</p> -->
               <!-- Add other participant details here if needed -->
             </ion-card-content>
-            <ion-buttons>
+            <!-- <ion-buttons>
               <ion-button fill="clear" (click)="removeParticipant(participant)">
                 <ion-icon name="close"></ion-icon>
               </ion-button>
               <ion-button fill="clear" (click)="addParticipant(participant)">
                 <ion-icon name="add"></ion-icon>
               </ion-button>
-            </ion-buttons>
+            </ion-buttons> -->
           </ion-card>
         <!-- </ion-content> -->
         

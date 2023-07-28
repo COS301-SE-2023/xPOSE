@@ -184,6 +184,70 @@ export class EventPage {
   // import { HttpClient } from '@angular/common/http';
   
   // ...
+
+  onLogoutClick() {
+    this.getCurrentUserId().subscribe((uid) => {
+      if (uid) {
+        // Determine the user's event position (owner, participant, or others)
+
+        switch (this.current_event.user_event_position) {
+          case 'owner':
+            // Call the function to delete the event
+            console.log("delete event");
+            this.deleteEvent(uid);
+            break;
+          case 'participant':
+            // Call the function to leave the event
+            console.log("leave event");
+            this.leaveEvent(uid);
+            break;
+          default:
+            // Redirect to the view-event page with the event ID
+            // this.redirectToViewEvent();
+            console.log("redirect to view event");
+            break;
+        };
+      }
+    });
+  }
+
+  deleteEvent(uid: string) {
+    // Implement the API call to delete the event here
+    // Make a request to delete the event using this.current_event.code as the event ID
+    // You can use the http.delete() method for this purpose
+    // Example:
+    this.http.delete(`http://localhost:8000/e/events/${this.current_event.code}?uid=${uid}`).subscribe(
+      (response) => {
+        // Event deleted successfully, handle the response as needed
+        // Redirect to the home page
+        this.navCtrl.navigateBack('/home');
+      },
+      (error) => {
+        console.error('Error deleting event:', error);
+      }
+    );
+  }
+
+  leaveEvent(uid: string) {
+    // Implement the API call to leave the event here
+    // Make a request to remove the current user from the participants list
+    // Use this.current_event.code as the event ID and getCurrentUserId() to get the user's UID
+    // Example:
+    // this.getCurrentUserId().subscribe((uid) => {
+    //   if (uid) {
+        this.http.delete(`http://localhost:8000/e/events/${this.current_event.code}/remove?uid=${uid}`).subscribe(
+          (response) => {
+            // User successfully left the event, handle the response as needed
+            // Redirect to the home page
+            this.navCtrl.navigateBack('/home');
+          },
+          (error) => {
+            console.error('Error leaving event:', error);
+          }
+        );
+    //   }
+    // });
+  }
   
   retrievePosts() {
     if (this.postsCollection) {
