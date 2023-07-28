@@ -20,6 +20,8 @@ import { NgForm } from "@angular/forms";
 	})
 export class CreateEventPage implements OnInit, AfterViewInit {
 
+	selectedImage: string | undefined;
+
 	createEvent: Event = {
 		uid: 0,
 		title: ' ',
