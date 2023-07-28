@@ -64,7 +64,7 @@ export class EventsPage implements OnInit {
     } else {
       this.cards = this.events.map((event) => ({
         title: event.title,
-        location: `(${event.latitude}, ${event.longitude})`,
+        location: `${event.location}`,
         description: '' + event.description,
         button: "Join event",
         image_url: event.image_url,

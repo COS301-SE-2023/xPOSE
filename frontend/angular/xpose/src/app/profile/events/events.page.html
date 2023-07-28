@@ -22,13 +22,28 @@
 
   <ion-list *ngFor="let card of cards">
     <ion-card>
-      <ion-card-header>
-        <ion-card-title>{{ card.title }}</ion-card-title>
+      <img [src]="card.image_url" alt="Card Image" class="card-image">
+      <ion-card-header class="card-title">
+        <ion-card-title class="header">
+          {{ card?.title }}
+        </ion-card-title>
+        <ion-card-content>
+          <ion-icon name="location"></ion-icon>
+          {{ card?.location }}
+        </ion-card-content>
+        <ion-row>
+          <ion-col center text-center>
+            <ion-card-subtitle>
+              {{ card.description }}
+            </ion-card-subtitle>
+          </ion-col>
+          <ion-col class="ion-text-end">
+            <ion-button fill="clear" class="right-aligned-button">
+              <ion-icon class="iconp" name='share'></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
       </ion-card-header>
-      <ion-card-content>
-        <p>{{ card.location }}</p>
-        <p>{{ card.description }}</p>
-      </ion-card-content>
     </ion-card>
   </ion-list>
 </ion-content>
