@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-events',
@@ -15,7 +16,8 @@ export class EventsPage implements OnInit {
 
   constructor(
     private http: HttpClient,
-    private afAuth: AngularFireAuth
+    private afAuth: AngularFireAuth,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -30,7 +32,6 @@ export class EventsPage implements OnInit {
   }
 
   onCardButtonClick(eventId: string) {
-    // Redirect to event details page with the event ID as a query parameter
     this.router.navigate(['/view-event'], { queryParams: { id: eventId } });
   }
 
@@ -42,7 +43,6 @@ export class EventsPage implements OnInit {
           console.log(events);
           this.events = events;
           this.populateCards();
-          // this.events.filter((event) => event.status === 'ongoing');
         });       
       } else {
         console.log("No user id");
