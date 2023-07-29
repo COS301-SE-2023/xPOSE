@@ -24,15 +24,15 @@
 
     }
     .lightbox{
-        display: flex;
+        // display: flex;
         align-items: center;
         // justify-content: center;
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
-        height: 95%;
-        background: rgba(143, 139, 139, 0.85);
+        height: 1000px;
+        background: rgba(185, 0, 0, 0.85);
     
 
         .background-element {
@@ -80,22 +80,23 @@
                 font-size: 10px;
             }
             .lightbox-img {
-                width: 95%;
-                height: 80%;
-                position: absolute;
-                display: flex;
+                width: 100%;
+                height: 100%;
+                position: absolute; /* Change from 'absolute' to 'fixed' */
+                top: 0; /* Position the image at the top of the viewport */
+                left: 0; /* Position the image at the left of the viewport */
+                // display: flex;
                 justify-content: center;
                 align-items: center;
-                padding-left: 27px;
-                padding-bottom: 300px;
-            }
-
-            .lightbox-img img{
-                width: 100%;
+                flex-direction: column;
+              }
+            
+              .lightbox-img img {
+                max-width: 100%; /* Ensure the image doesn't exceed the lightbox width */
+                max-height: 100%px; /* Ensure the image doesn't exceed the lightbox height */
+                // object-fit: contain; /* Fit the image within the container, preserving its aspect ratio */
                 border-radius: .35rem;
-                padding-bottom: 1000px;
-                
-            }
+              }
 
 
     
@@ -104,14 +105,17 @@
       .icon-prev{
         font-size: 100px;
         font-weight: bolder;
-        padding-bottom: 1300px;
+        // padding-bottom: 500px;
+    
       }
       .close-btn {
-        position: relative;
-        left: 85%;
-        bottom: 37%;
-        z-index: 2;
-        font-size: 50px;
+        // position: relative;
+        // left: 85%;
+        // bottom: 37%;
+        // z-index: 2;
+        // font-size: 50px;
+        font-size: 100px;
+        font-weight: bolder;
 
     }
     .icon-p{

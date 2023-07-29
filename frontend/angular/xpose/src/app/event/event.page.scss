@@ -91,6 +91,7 @@ ion-toolbar.custom-toolbar {
         font-size: 1.2rem;
         margin-right: 10px;
         transition: all 0.3s ease-in-out;
+     
         &:hover{
             background: #000;
             color: #fff;
@@ -104,7 +105,18 @@ ion-toolbar.custom-toolbar {
 
   ion-list {
     // padding-bottom: 800px;
+    // display: block;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
     display: block;
+    // contain: content;
+    list-style-type: none;
   
 }
 

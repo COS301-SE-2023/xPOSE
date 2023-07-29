@@ -51,11 +51,15 @@
     
     
       <ion-list *ngIf="filterType === 'posts'" >
-        <!-- Add the "+ Add image" button here -->
+        <ion-card>
+             <!-- Add the "+ Add image" button here -->
         <ion-button (click)="openImageGallery()">+ Add image</ion-button>
       
         <!-- Display the gallery images -->
         <app-gallery-lightbox [galleryData]="data"></app-gallery-lightbox>
+
+        </ion-card>
+     
 
        
 

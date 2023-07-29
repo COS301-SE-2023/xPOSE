@@ -1,4 +1,4 @@
-<div class="gallery-lightox-container">
+<div class="gallery-lightox-container" >
   <!-- Add the upload button here -->
   <!-- <input type="file" (change)="onFileSelected($event)" accept="image/*" /> -->
 
@@ -15,9 +15,9 @@
     <span *ngIf="showCount" class="count">{{currentIndex + 1}}/{{totalImageCount}}</span>
 
     <!-- Close button for lightbox -->
-    <button *ngIf="previewImage" class="close-btn" (click)="onClosePreview()">
-      <ion-icon name="close-outline" class="rev"></ion-icon>
-    </button>
+    <!-- <button *ngIf="previewImage" class="btn-lightbox-carousel btn-prev" (click)="onClosePreview()">
+      <ion-icon name="close-outline" class="icon-prev"></ion-icon>
+    </button> -->
 
     <!-- Previous and Next buttons for lightbox carousel -->
     <button *ngIf="controls" class="btn-lightbox-carousel btn-prev" (click)="prev()">
@@ -30,7 +30,7 @@
     </button>
 
     <!-- Lightbox image display -->
-    <div *ngIf="previewImage" class="lightbox-img">
+    <div *ngIf="previewImage" class="lightbox-img" (click)="onClosePreview()">
       <img [src]="currentLightboxImage.imageSrc" [alt]="currentLightboxImage.imageAlt" />
     </div>
   </div>
