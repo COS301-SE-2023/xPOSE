@@ -90,6 +90,6 @@ export class ProfilePage {
 
   editProfile() {
     // Add logic to navigate to the edit profile page
-    this.router.navigate(['/edit-profile']);
+    this.router.navigate(['/edit']);
   }
 }
