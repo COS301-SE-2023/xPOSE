@@ -113,13 +113,24 @@ ion-toolbar.custom-toolbar {
   color: #555555;
 
 }
-// .comment-input{
-//   margin-top: 10px;
-//   margin-bottom: 10px;
-//   border-radius: 10px;
-//   border: 1px solid #555555;
-//   padding: 10px;
-//   width: 100%;
-//   height: 100px;
-//   resize: none;
-// }
+
+/* Styling the ion-menu */
+ion-menu[side="end"] {
+  --background: #ffffff;
+  --width: 304px;
+    --min-width: auto;
+    --max-width: auto;
+    --height: 20%;
+    --min-height: auto;
+    --max-height: auto;
+      border: solid 0.2px #000;
+      // border-radius: 10px;
+//     --background: var(--ion-background-color, #fff);
+//     inset: 0px;
+//     display: none;
+//     position: absolute;
+//     contain: strict;
+}
+
+
+
