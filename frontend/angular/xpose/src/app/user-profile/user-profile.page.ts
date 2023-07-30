@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../shared/services/auth.service';
 import { Service } from '../service/service';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Observable, map } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-user-profile',
@@ -9,6 +12,10 @@ import { Service } from '../service/service';
   styleUrls: ['./user-profile.page.scss'],
 })
 export class UserProfilePage implements OnInit {
+  userEvents: any[] | undefined;
+  events: any[] = [];
+  cards: any[] = [];
+  selectedSegment: string = 'events';
   user: {
     photoURL: string;
     displayName: string;
@@ -22,6 +29,8 @@ export class UserProfilePage implements OnInit {
     private router: Router,
     public authService: AuthService,
     public userService: Service,
+    private afAuth: AngularFireAuth,
+    private http: HttpClient,
     // private location: Location
   ) {
     this.user = {
@@ -47,6 +56,57 @@ export class UserProfilePage implements OnInit {
         console.log("profile page no user id");
       }
     });
+
+    this.getEventsFromAPI();
+  }
+
+  getEventsFromAPI() {
+    this.getCurrentUserId().subscribe((uid) => {
+      if (uid) {
+        console.log(`We got that ${uid}`);
+        this.http.get<Event[]>(`http://localhost:8000/e/events?uid=${uid}&filter=participant`).subscribe((events: Event[]) => {
+          console.log(events);
+          this.events = events;
+          this.populateCards();
+        });       
+      } else {
+        console.log("No user id");
+      }
+    });
+  }
+  
+  getCurrentUserId(): Observable<string> {
+    return this.afAuth.authState.pipe(
+      map((user) => {
+        if (user) {
+          return user.uid;
+        } else {
+          console.log('No user is currently logged in.');
+          return '';
+        }
+      })
+    );
+  }
+
+  populateCards() {
+    if (this.events.length === 0) {
+      this.cards = []; // Empty the cards list when there are no events
+    } else {
+      this.cards = this.events.map((event) => ({
+        title: event.title,
+        location: `${event.location}`,
+        description: '' + event.description,
+        button: "Join event",
+        image_url: event.image_url,
+        longitude: event.longitude,
+        latitude: event.latitude,
+        id: event.id,
+        created_at: event.createdAt,
+        start_date: event.start_date,
+        end_date: event.end_date,
+        status: event.status,
+      }));
+    }
   }
 
   // back(): void {
@@ -91,4 +151,5 @@ export class UserProfilePage implements OnInit {
     // Add logic to navigate to the edit profile page
     this.router.navigate(['/edit-profile']);
   }
+
 }

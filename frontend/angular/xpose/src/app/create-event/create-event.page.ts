@@ -192,8 +192,8 @@ export class CreateEventPage implements OnInit, AfterViewInit {
 		formData.append('latitude', this.createEvent.latitude.toString());
 		formData.append('longitude', this.createEvent.longitude.toString());
 		if(this.createEvent.title != " " || this.createEvent.start_date != " " || this.createEvent.end_date != " " || this.createEvent.location != " " || this.createEvent.description != " " || this.createEvent.longitude != 0 || this.createEvent.latitude != 0){
-			this.getCurrentUserId().subscribe((userId) => {
-				if(userId){
+			this.getCurrentUserId().subscribe((uid) => {
+				if(uid){
 					this.buttonClicked = true;
 					this.loading = true;
 					const geocoder = new google.maps.Geocoder();
@@ -216,7 +216,7 @@ export class CreateEventPage implements OnInit, AfterViewInit {
 	
 					  // this.createEvent.userId = parseInt(userId);
 					  const formData: FormData = new FormData();
-					  formData.append('uid', userId);
+					  formData.append('uid', uid);
 					  formData.append('title', this.createEvent.title);
 					  if (this.createEvent.image) {
 						formData.append('image', this.createEvent.image, this.createEvent.image.name);
@@ -231,8 +231,8 @@ export class CreateEventPage implements OnInit, AfterViewInit {
 					//   console.log(formData);
 					  console.log(this.createEvent);
 					  // REfactor this to be done in the service class for better decoupling
-					  const url = 'http://localhost:8000/e/events';
-					
+					  const url = `http://localhost:8000/e/events?uid=${uid}`;
+					  
 					  this.http.post(url, formData)
 						.subscribe({
 						  next: (response:any) => {
