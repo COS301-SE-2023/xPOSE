@@ -1,0 +1,13 @@
+openapi: 3.0.0
+info:
+  title: Gateway API
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000
+paths:
+  /:
+    get:
+      summary: Get the status of the Gateway API server
+      responses:
+        '200':
+          description: OK
