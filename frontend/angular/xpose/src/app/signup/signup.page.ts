@@ -29,12 +29,7 @@ export class SignupPage implements OnInit {
 			const email = this.signUpForm.get("email")?.value;
 			const password = this.signUpForm.get("password")?.value;
 			const username = this.signUpForm.get("username")?.value;
-			console.log("Email: ", email);
-			console.log("password: ", password);
-			console.log("username: ", username);
 			this.authService.signUp(email, password, username);
-
-			this.router.navigate(['./login']);
 		}
 	ngOnInit() {
 		// TODO document why this method 'ngOnInit' is empty

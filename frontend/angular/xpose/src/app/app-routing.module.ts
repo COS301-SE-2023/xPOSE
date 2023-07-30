@@ -1,6 +1,5 @@
 import { NgModule } from "@angular/core";
 import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
-
 import { AuthGuard } from "./shared/guard/auth.guard";
 import { SendFriendRequestsComponent } from "./send-friend-requests/send-friend-requests.component";
 
@@ -8,7 +7,7 @@ const routes: Routes = [
   {
     path: "home",
     loadChildren: () => import("./home/home.module").then(m => m.HomePageModule)
-    , canActivate:[AuthGuard]
+    ,canActivate:[AuthGuard]
   },
   {
     path: "",
@@ -26,10 +25,12 @@ const routes: Routes = [
   {
     path: "create-event",
     loadChildren: () => import("./create-event/create-event.module").then(m => m.CreateEventPageModule)
+    ,canActivate:[AuthGuard]
   },
   {
     path: "profile",
     loadChildren: () => import("./profile/profile.module").then(m => m.ProfilePageModule)
+    ,canActivate:[AuthGuard]
   },
   {
     path: "settings",
@@ -46,6 +47,7 @@ const routes: Routes = [
   {
     path: "notification",
     loadChildren: () => import("./notification/notification.module").then(m => m.NotificationPageModule)
+    ,canActivate:[AuthGuard]
   },
   {
     path: "joined-event",
@@ -61,6 +63,7 @@ const routes: Routes = [
   {
     path: 'view-event/:id',
     loadChildren: () => import('./view-event/view-event.module').then( m => m.ViewEventPageModule)
+    ,canActivate:[AuthGuard]
   },
   {
     path: 'edit',
@@ -74,6 +77,7 @@ const routes: Routes = [
     path: 'user-profile',
     loadChildren: () => import('./user-profile/user-profile.module').then( m => m.UserProfilePageModule)
   },
+
 ];
 
 @NgModule({
