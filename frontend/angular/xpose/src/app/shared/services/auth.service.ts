@@ -18,6 +18,7 @@ import { Observable } from "rxjs";
 export class AuthService {
   userData: any;
   isLoggedIn: boolean = false;
+
   constructor(
       public afs: AngularFirestore,  // inject firestore
       public afAuth: AngularFireAuth, // inject firebase Auth services
@@ -25,7 +26,8 @@ export class AuthService {
       public ngZone: NgZone, // remove outside scope warning
       private http: HttpClient // inject HttpClient for making HTTP requests
   ) {
-  
+
+    this.isLoggedIn = localStorage.getItem('user') === 'true';
   }
 
   // sign in with email/password
@@ -38,6 +40,7 @@ export class AuthService {
           if (user) {
             console.log("User has been logged in successfuly");
             this.isLoggedIn = true;
+            localStorage.setItem('user', 'true');
             this.router.navigate(['/home']);
           }
         });
@@ -112,6 +115,7 @@ export class AuthService {
   // Sign in with Google
   signInWithGoogle(): Promise<void> {
     return this.authLogin(new GoogleAuthProvider()).then((res: any) => {
+      this.isLoggedIn = true;
       this.router.navigate(['/home']);
     });
   }
@@ -119,6 +123,7 @@ export class AuthService {
   // Sign in with Facebook
   signInWithFacebook(): Promise<void> {
     return this.authLogin(new FacebookAuthProvider()).then((res: any) => {
+      this.isLoggedIn = true;
       this.router.navigate(['/home']);
     });
   }
