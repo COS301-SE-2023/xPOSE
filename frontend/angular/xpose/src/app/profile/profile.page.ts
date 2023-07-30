@@ -44,6 +44,7 @@ export class ProfilePage {
           this.user.displayName = userData.displayName;
           this.user.email = userData.email;
           this.user.username = userData.uniq_username;
+          this.user.photoURL =userData.photoURL;
           
         });
       }
