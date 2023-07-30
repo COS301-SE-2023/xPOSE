@@ -20,7 +20,7 @@ export const acceptFriendRequest = async (req, res) =>{
         });
 
         // user does not exist in the table
-        if(!friendRequest) {
+        if(!friendRequest || friendRequest.length === 0) {
             return res.status(404).json({ error: 'Friend request not found' });
         }
 
