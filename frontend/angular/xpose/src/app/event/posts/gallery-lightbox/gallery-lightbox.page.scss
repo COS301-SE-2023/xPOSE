@@ -105,19 +105,32 @@
       .icon-prev{
         font-size: 100px;
         font-weight: bolder;
-        // padding-bottom: 500px;
+        padding-top: 350px;
+        color: #fff;
     
       }
-      .close-btn {
-        // position: relative;
-        // left: 85%;
-        // bottom: 37%;
-        // z-index: 2;
-        // font-size: 50px;
-        font-size: 100px;
-        font-weight: bolder;
+      /* ... (previous styles) ... */
 
-    }
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1;
+    font-size: 30px;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    border-radius: 50%;
+    padding: 5px;
+    cursor: pointer;
+  }
+  
+  .icon-close-btn {
+    font-size: 30px;
+  }
+  
+
+    
     .icon-p{
         font-size: 30px;
         font-weight: bolder;
