@@ -31,8 +31,12 @@
     <ion-icon name="chevron-forward-circle-outline" class="icon-prev"></ion-icon>
   </button>
 
+  <button class="close-btn" (click)="onClosePreview()">
+    <ion-icon name="close-circle-outline" class="icon-close-btn"></ion-icon>
+  </button>
+
   <!-- Lightbox image display -->
-  <div *ngIf="previewImage" class="lightbox-img" (click)="onClosePreview()">
+  <div *ngIf="previewImage" class="lightbox-img" >
     <ion-img [src]="currentLightboxImage.imageSrc" [alt]="currentLightboxImage.imageAlt"></ion-img>
     
     <!-- Share button -->
