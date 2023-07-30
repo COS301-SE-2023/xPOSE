@@ -14,6 +14,7 @@ export class ProfilePage {
     photoURL: string;
     displayName: string;
     email: string;
+    username: string;
   };
   selectedTab: any;
   tabs: any;
@@ -29,11 +30,12 @@ export class ProfilePage {
       photoURL: './assets/images/profile picture.jpg',
       displayName: 'John Doe',
       email: 'johndoe@example.com',
+      username:'uniqueUsername'
     };
     this.user.photoURL = './assets/images/profile picture.jpg'; // Updated profile picture URL
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.authService.getCurrentUserId().subscribe((uid) => {
       if (uid) {
         this.userService.GetUser(uid).subscribe((userData) => {
@@ -41,6 +43,7 @@ export class ProfilePage {
           console.log("User email: ", userData.email);
           this.user.displayName = userData.displayName;
           this.user.email = userData.email;
+          this.user.username = userData.uniq_username;
           
         });
       }
