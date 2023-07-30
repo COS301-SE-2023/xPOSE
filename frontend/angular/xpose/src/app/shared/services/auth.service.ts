@@ -4,12 +4,11 @@ import { User } from "../services/user";
 import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { AngularFirestore, AngularFirestoreDocument } from "@angular/fire/compat/firestore";
 import { GoogleAuthProvider, FacebookAuthProvider } from "firebase/auth";
-import {getMessaging, getToken} from "firebase/messaging";
-import { environment } from "../../../environments/environment";
 import { HttpClient } from "@angular/common/http";
 import { HttpHeaders } from '@angular/common/http';
 import { map } from "rxjs";
 import { Observable } from "rxjs";
+import { Location } from "@angular/common";
 
 
 @Injectable({
@@ -24,7 +23,8 @@ export class AuthService {
       public afAuth: AngularFireAuth, // inject firebase Auth services
       public router: Router,
       public ngZone: NgZone, // remove outside scope warning
-      private http: HttpClient // inject HttpClient for making HTTP requests
+      private http: HttpClient, // inject HttpClient for making HTTP requests
+      private location: Location
   ) {
 
     this.isLoggedIn = localStorage.getItem('user') === 'true';
@@ -54,6 +54,7 @@ export class AuthService {
   signUp(email: string, password: string, username: string): Promise<any> {
     const signUpData = {
       displayName: username,
+      uniq_username:"",
       email: email,
       password: password,
       emailVerified: false,
@@ -72,18 +73,20 @@ export class AuthService {
     .toPromise()
     .then((response) => {
       console.log("signed up successfully",response);
-      // Handle success response here
-      this.router.navigate(['/home']);
+      // this.router.navigate(['/login']);
+      // this.router.navigate(['/login'], { replaceUrl: true });
+      window.alert("signed up successfully");
+      this.location.back();
+   
     })
     .catch((error) => {
       // Handle error response here
-      // window.alert(error.message);
+      window.alert(error.message);
       console.log("Error:", error);
       // console.log("Response body:", error.error);
       return Promise.reject(error);
     });
   }
-
 
   // Send email verification when a new user signs up
   sendVerificationMail(): Promise<void> {
@@ -105,12 +108,6 @@ export class AuthService {
           window.alert(error);
         });
   }
-
-  // Returns true if the user is logged in and verified
-  // get isLoggedIn(): boolean {
-  //   const user = JSON.parse(localStorage.getItem('user')!);
-  //   return (user !== null)?true:false; //&& user.emailVerified !== false;
-  // }
 
   // Sign in with Google
   signInWithGoogle(): Promise<void> {
@@ -134,7 +131,7 @@ export class AuthService {
         .signInWithPopup(provider)
         .then((result) => {
           this.setUserData(result.user);
-          this.router.navigate(['/home']);
+          // this.router.navigate(['/home']);
 
         })
         .catch((error) => {

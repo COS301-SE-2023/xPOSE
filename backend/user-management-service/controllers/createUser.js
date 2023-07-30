@@ -14,6 +14,7 @@ export const createUser = async (req, res) => {
 
         const { 
           displayName,
+          uniq_username,
           email, 
           password, 
           emailVerified,
@@ -27,6 +28,7 @@ export const createUser = async (req, res) => {
 
         const user = {
             displayName,
+            uniq_username,
             email,
             emailVerified,
             privacy,
