@@ -63,12 +63,13 @@ export class SearchPage implements OnInit {
             this.searchClicked = false;
             
             this.user = response;
-            console.log("search result", this.user);
+            // console.log("search result", this.user);
             this.search_result = "Search results:";
             
           },
           (error:any) => {
-            console.log(error.error.message);
+            // console.log(error.error.message);
+            this.user = error.error.message;
             this.searchClicked = false;
             
           }
