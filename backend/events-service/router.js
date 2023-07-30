@@ -16,7 +16,7 @@ const {
     userRequestToJoinEvent,
     joinEvent,
     getEventParticipants,
-} = require('./services/index');
+} = require('./routes/index');
 
 // const setupSwagger = require('./swagger');
 // setupSwagger(router);
