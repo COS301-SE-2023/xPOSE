@@ -74,7 +74,7 @@ const routes: Routes = [
     loadChildren: () => import('./search/search.module').then( m => m.SearchPageModule)
   },
   {
-    path: 'user-profile',
+    path: 'user-profile/:id',
     loadChildren: () => import('./user-profile/user-profile.module').then( m => m.UserProfilePageModule)
   },
 

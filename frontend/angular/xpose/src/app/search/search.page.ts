@@ -49,13 +49,12 @@ export class SearchPage implements OnInit {
     if (this.searchQuery.trim() !== '') {
       this.searchClicked = true;
       this.found = true;
-      
+
       if (this.searchType === 'events') {
         // event APi call goes here
 
       } else if (this.searchType === 'users') {
-        console.log("Searched for " + this.searchQuery);
-        // http://localhost:8002/users/search?field=displayName&value=sov
+
         const search_endpoint = `http://localhost:8000/u/users/search?field=uniq_username&value=${this.searchQuery}`;
          this.loading = true;
 
@@ -66,7 +65,6 @@ export class SearchPage implements OnInit {
             this.searchClicked = false;
             
             this.user = response;
-            // console.log("search result", this.user);
             this.search_result = "Search results:";
             
           },
@@ -90,5 +88,9 @@ export class SearchPage implements OnInit {
   closeSearchPage() {
     // Implement the function to close the search page if needed
     this.router.navigate(['/home']);
+  }
+
+  viewUser(userItem: any){
+    this.router.navigate(['/user-profile', userItem.uid]);
   }
 }

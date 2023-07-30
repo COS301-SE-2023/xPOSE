@@ -43,7 +43,7 @@
         <ion-list>
           <ion-item *ngFor="let userItem of this.user">
             <!-- Replace 'displayName' with the actual property you want to display for each user -->
-            <ion-label>{{ userItem.uniq_username }}</ion-label>
+            <ion-label (click)="viewUser(userItem)">{{ userItem.uniq_username }}</ion-label>
           </ion-item>
         </ion-list>
       </div>
