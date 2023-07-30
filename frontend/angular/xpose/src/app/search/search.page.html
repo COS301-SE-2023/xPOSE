@@ -33,6 +33,10 @@
       Please wait searching...
     </div>
 
+    <ng-container *ngIf="!found">
+      <h2 class="ion-text-center">No matching users found.</h2>
+    </ng-container>
+
       <!-- Display user information if available -->
       <div *ngIf="this.user">
         <h2 class="ion-text-center">{{search_result}}</h2>

@@ -21,6 +21,7 @@ export class SearchPage implements OnInit {
   user: any =[];  // store user query result
   loading: boolean = true; // Initial loading state
   search_result = "";
+  found = true;
 
   suggestedItems: any[] = [];
   searchQuery: string = '';
@@ -47,6 +48,8 @@ export class SearchPage implements OnInit {
   onSearch() {
     if (this.searchQuery.trim() !== '') {
       this.searchClicked = true;
+      this.found = true;
+      
       if (this.searchType === 'events') {
         // event APi call goes here
 
@@ -68,8 +71,8 @@ export class SearchPage implements OnInit {
             
           },
           (error:any) => {
-            // console.log(error.error.message);
-            this.user = error.error.message;
+            console.log(error.error.message);
+            this.found = false;
             this.searchClicked = false;
             
           }
