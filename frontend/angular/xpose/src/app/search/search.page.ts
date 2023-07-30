@@ -20,6 +20,7 @@ export class SearchPage implements OnInit {
 
   user: any =[];  // store user query result
   loading: boolean = true; // Initial loading state
+  search_result = "";
 
   suggestedItems: any[] = [];
   searchQuery: string = '';
@@ -52,7 +53,7 @@ export class SearchPage implements OnInit {
       } else if (this.searchType === 'users') {
         console.log("Searched for " + this.searchQuery);
         // http://localhost:8002/users/search?field=displayName&value=sov
-        const search_endpoint = `http://localhost:8000/u/users/search?field=displayName&value=${this.searchQuery}`;
+        const search_endpoint = `http://localhost:8000/u/users/search?field=uniq_username&value=${this.searchQuery}`;
          this.loading = true;
 
         this.http.get<any[]>(search_endpoint).subscribe(
@@ -62,7 +63,8 @@ export class SearchPage implements OnInit {
             this.searchClicked = false;
             
             this.user = response;
-             console.log("search result", this.user);
+            console.log("search result", this.user);
+            this.search_result = "Search results:";
             
           },
           (error:any) => {
