@@ -17,8 +17,8 @@ export const getFriends = async (req, res) => {
         where: {firebase_doc_ref: userId},
       });
 
-      if(!user) {
-        return res.status(404).json({error: 'User not found'});
+      if(!user || user.length === 0) {
+        return res.status(404).json({message: 'User not found'});
       }
 
       // fetch friends form teh friendship table using sequelize
@@ -44,7 +44,7 @@ export const getFriends = async (req, res) => {
           });
         }
       }
-      
+
       res.status(200).json({friends});
       } catch (error) {
         console.error('Error getting friends:', error);

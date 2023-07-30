@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-friends',
@@ -26,9 +28,29 @@ export class FriendsPage implements OnInit {
     // Add more mock friend objects as needed
   ];
 
-  constructor() { }
+  loading:boolean = true; // initial loading state
+
+  constructor( 
+    private http: HttpClient,
+    private authService: AuthService) { }
+
   ngOnInit() {
-    // You can optionally fetch the userFriends array from your data source or API here
+    this.getFriends();
+  }
+
+  getFriends(){
+    const endpoint = 'http://localhost:8000/u/users/';
+    this.loading = true;
+
+    this.http.get<any[]>(`${endpoint}${3434}/friends`).subscribe(
+      (response) => {
+        this.userFriends = response;
+        this.loading = false;
+      },
+      (error) => {
+        console.error("Error:", error);
+      }
+    );
   }
 
   unfriend(friend: any) {

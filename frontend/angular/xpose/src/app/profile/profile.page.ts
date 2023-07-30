@@ -39,8 +39,6 @@ export class ProfilePage {
     this.authService.getCurrentUserId().subscribe((uid) => {
       if (uid) {
         this.userService.GetUser(uid).subscribe((userData) => {
-          console.log("User name: ", userData.displayName);
-          console.log("User email: ", userData.email);
           this.user.displayName = userData.displayName;
           this.user.email = userData.email;
           this.user.username = userData.uniq_username;
