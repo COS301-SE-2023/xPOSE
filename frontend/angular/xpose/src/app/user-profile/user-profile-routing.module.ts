@@ -7,6 +7,14 @@ const routes: Routes = [
   {
     path: '',
     component: UserProfilePage
+  },
+  {
+    path: 'users-events',
+    loadChildren: () => import('./users-events/users-events.module').then( m => m.UsersEventsPageModule)
+  },
+  {
+    path: 'users-friends',
+    loadChildren: () => import('./users-friends/users-friends.module').then( m => m.UsersFriendsPageModule)
   }
 ];
 

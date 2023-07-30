@@ -1,0 +1,40 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Users Events</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content id="main-content">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Users Events</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-list *ngFor="let card of cards">
+    <ion-card>
+      <img [src]="card.image_url" alt="Card Image" class="card-image">
+      <ion-card-header class="card-title">
+        <ion-card-title class="header">
+          {{ card?.title }}
+        </ion-card-title>
+        <ion-card-content>
+          <ion-icon name="location"></ion-icon>
+          {{ card?.location }}
+        </ion-card-content>
+        <ion-row>
+          <ion-col center text-center>
+            <ion-card-subtitle>
+              {{ card.description }}
+            </ion-card-subtitle>
+          </ion-col>
+          <ion-col class="ion-text-end">
+            <ion-button fill="clear" class="right-aligned-button">
+              <ion-icon class="iconp" name='share'></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-card-header>
+    </ion-card>
+  </ion-list>
+</ion-content>

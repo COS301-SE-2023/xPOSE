@@ -1,91 +1,36 @@
 <ion-header [translucent]="true">
   <ion-toolbar class="custom-toolbar">
     <ion-buttons slot="start">
-      <app-backbutton></app-backbutton>
+      <!-- <app-backbutton></app-backbutton> -->
     </ion-buttons>
-    <ion-title>
-      User Profile
-    </ion-title>
+    <ion-title>Profile</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-menu side="end" content-id="main-content">
-  <ion-header>
-    <ion-toolbar>
-      <ion-title>Menu</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <ion-content>
-    <ion-list>
-      <ion-item>Report</ion-item>
-    </ion-list>
-  </ion-content>
-</ion-menu>
 
-<ion-content class="ion-padding">
-  <div class="profile-info">
-    <div class="profile-picture">
-      <!-- Replace 'user.photoURL' with the actual URL or data of the user's profile picture -->
-      <img [src]="user.photoURL" alt="Profile Picture" />
+<div class="profile_div" >
+  <div class="user_div" *ngIf="user">
+    <img [src]="user.photoURL">
+    <div class="first_div">
+      <ion-label class="username">{{ user.displayName }}</ion-label>
+      <br> 
     </div>
-    <h2 class="user-name">Janie Do</h2>
+    <ion-button class="edit_div" routerLink="/edit">Friend</ion-button> 
   </div>
-  <ion-button class="friend-button">Add Friend</ion-button>
-  
-  <ion-segment [(ngModel)]="filterType" (ionChange)="applyFilter()">
-    <ion-segment-button value="Events">
-      Events
-    </ion-segment-button>
-    <ion-segment-button value="Friends">
-      Friends
-    </ion-segment-button>
-  </ion-segment>
+</div>
 
-  <ion-segment *ngIf="filterType === 'Events'" (ionChange)="applyFilter()">
-    <ion-segment-button value="Public" (click)="selectedTab = 'Public'">
-      Public
-    </ion-segment-button>
-    <ion-segment-button value="Private" (click)="selectedTab = 'Private'">
-      Private
-    </ion-segment-button>
-  </ion-segment>
-
-  <div *ngIf="filterType === 'Events'">
-    <!-- Display the content based on the selected tab -->
-    <div *ngIf="selectedTab === 'Public'">
-      <ion-list>
-        <ion-item>
-          <ion-card class="event-cards">
-            <h3>Event Name</h3>
-            <p>Event Info</p>
-          </ion-card>
-        </ion-item>
-      </ion-list>
-    </div>
-    <div *ngIf="selectedTab === 'Private'">
-      <ion-list>
-        <ion-item>
-          <ion-card class="event-cards">
-            <h3>Event Name</h3>
-            <p>Event Info</p>
-          </ion-card>
-        </ion-item>
-      </ion-list>
-    </div>
-  </div>
-
-  <div *ngIf="filterType === 'Friends'">
-    <ion-list>
-      <ion-item>
-        <ion-card class="event-cards">
-          <h3>Friend 1</h3>
-        </ion-card>
-      </ion-item>
-      <ion-item>
-        <ion-card class="event-cards">
-          <h3>Friend 2</h3>
-        </ion-card>
-      </ion-item>
-    </ion-list>
-  </div>
+<ion-content id="main-content">
+  <ion-tabs #tabs (ionTabsDidChange)="setCurrentTab()" class="tabs">
+    <ion-tab-bar>
+      <ion-tab-button tab="users-events">
+        <ion-icon [name]="selectedTab == 'friends' ? 'images' : 'images-outline'"></ion-icon>
+        <ion-label>Events</ion-label>
+      </ion-tab-button>
+      <ion-tab-button tab="users-friends">
+        <ion-icon [name]="selectedTab == 'friends' ? 'people' : 'people-outline'"></ion-icon>
+        <ion-label>Friends</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
 </ion-content>
+
