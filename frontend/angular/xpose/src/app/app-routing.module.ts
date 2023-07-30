@@ -8,7 +8,7 @@ const routes: Routes = [
   {
     path: "home",
     loadChildren: () => import("./home/home.module").then(m => m.HomePageModule)
-    // , canActivate:[AuthGuard]
+    , canActivate:[AuthGuard]
   },
   {
     path: "",
@@ -69,7 +69,8 @@ const routes: Routes = [
   {
     path: 'search',
     loadChildren: () => import('./search/search.module').then( m => m.SearchPageModule)
-  },  {
+  },
+  {
     path: 'user-profile',
     loadChildren: () => import('./user-profile/user-profile.module').then( m => m.UserProfilePageModule)
   },
