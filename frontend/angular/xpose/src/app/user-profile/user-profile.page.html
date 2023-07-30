@@ -41,15 +41,6 @@
     </ion-segment-button>
   </ion-segment>
 
-  <ion-segment *ngIf="filterType === 'Events'" (ionChange)="applyFilter()">
-    <ion-segment-button value="Public" (click)="selectedTab = 'Public'">
-      Public
-    </ion-segment-button>
-    <ion-segment-button value="Private" (click)="selectedTab = 'Private'">
-      Private
-    </ion-segment-button>
-  </ion-segment>
-
   <div *ngIf="filterType === 'Events'">
     
   </div>
