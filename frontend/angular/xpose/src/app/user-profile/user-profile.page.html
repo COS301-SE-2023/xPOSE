@@ -1,36 +1,60 @@
 <ion-header [translucent]="true">
   <ion-toolbar class="custom-toolbar">
-    <ion-buttons slot="start">
-      <!-- <app-backbutton></app-backbutton> -->
-    </ion-buttons>
-    <ion-title>Profile</ion-title>
+    <ion-title>User Profile</ion-title>
   </ion-toolbar>
 </ion-header>
 
-
-<div class="profile_div" >
+<div class="profile_div">
   <div class="user_div" *ngIf="user">
     <img [src]="user.photoURL">
     <div class="first_div">
       <ion-label class="username">{{ user.displayName }}</ion-label>
-      <br> 
+      <br>
     </div>
-    <ion-button class="edit_div" routerLink="/edit">Friend</ion-button> 
+    <ion-button class="edit_div">Friend</ion-button>
   </div>
 </div>
 
 <ion-content id="main-content">
-  <ion-tabs #tabs (ionTabsDidChange)="setCurrentTab()" class="tabs">
-    <ion-tab-bar>
-      <ion-tab-button tab="users-events">
-        <ion-icon [name]="selectedTab == 'friends' ? 'images' : 'images-outline'"></ion-icon>
-        <ion-label>Events</ion-label>
-      </ion-tab-button>
-      <ion-tab-button tab="users-friends">
-        <ion-icon [name]="selectedTab == 'friends' ? 'people' : 'people-outline'"></ion-icon>
-        <ion-label>Friends</ion-label>
-      </ion-tab-button>
-    </ion-tab-bar>
-  </ion-tabs>
-</ion-content>
+  <ion-segment [(ngModel)]="selectedSegment">
+    <ion-segment-button value="events">
+      Events
+    </ion-segment-button>
+    <ion-segment-button value="friends">
+      Friends
+    </ion-segment-button>
+  </ion-segment>
 
+  <div *ngIf="selectedSegment === 'events'">
+    <ion-list>
+      <ion-card *ngFor="let card of cards">
+        <img [src]="card.image_url">
+        <ion-card-header class="card-title">
+          <ion-card-title class="header">{{ card.name }}</ion-card-title>
+          <ion-card-content>
+            <ion-icon name="location"></ion-icon>
+            {{ card.location }}
+          </ion-card-content>
+          <ion-row>
+            <ion-col center text-center>
+              <ion-card-subtitle>
+                {{ card.description }}
+              </ion-card-subtitle>
+            </ion-col>
+            <ion-col class="ion-text-end">
+              <ion-button fill="clear" class="right-aligned-button">
+                <ion-icon class="iconp" name='share'></ion-icon>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-card-header>
+      </ion-card>
+    </ion-list>
+  </div>
+
+  <div *ngIf="selectedSegment === 'friends'">
+    <ion-content>
+      <!-- Add content for the Friends tab -->
+    </ion-content>
+  </div>
+</ion-content>
