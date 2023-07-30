@@ -1,0 +1,32 @@
+name: build
+# on push to any branch
+on:
+  push:
+    branches:
+      - '*'
+
+
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install Angular CLI
+        run: npm install -g @angular/cli
+
+      - name: Installing dependencies
+        working-directory: frontend/angular/xpose
+        run: npm install --legacy-peer-deps
+        
+      - name: Run the Configuration Script
+        working-directory: frontend/angular/xpose/src/
+        run: node config.index.js "the" "quick" "brown" "fox" "jumps" "over" "the" "lazy" "dog" "and" "cat"
+
+      - name: Building Project
+        working-directory: frontend/angular/xpose
+        run: npm run build
