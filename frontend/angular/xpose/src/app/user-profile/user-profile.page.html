@@ -22,41 +22,28 @@
   </ion-content>
 </ion-menu>
 
-<ion-content class="ion-padding">
-  <div class="profile-info">
-    <div class="profile-picture">
-      <!-- Replace 'user.photoURL' with the actual URL or data of the user's profile picture -->
-      <img [src]="user.photoURL" alt="Profile Picture" />
+<div class="profile_div" >
+  <div class="user_div" *ngIf="user">
+    <img [src]="user.photoURL">
+    <div class="first_div">
+      <ion-label class="username">Janie Doe</ion-label>
+      <br> 
     </div>
-    <h2 class="user-name">Janie Do</h2>
+    <ion-button class=".friend-button">Friend</ion-button> 
   </div>
-  <ion-button class="friend-button">Add Friend</ion-button>
-  
-  <ion-segment [(ngModel)]="filterType" (ionChange)="applyFilter()">
-    <ion-segment-button value="Events">
-      Events
-    </ion-segment-button>
-    <ion-segment-button value="Friends">
-      Friends
-    </ion-segment-button>
-  </ion-segment>
+</div>
 
-  <div *ngIf="filterType === 'Events'">
-    
-  </div>
-
-  <div *ngIf="filterType === 'Friends'">
-    <ion-list>
-      <ion-item>
-        <ion-card class="event-cards">
-          <h3>Friend 1</h3>
-        </ion-card>
-      </ion-item>
-      <ion-item>
-        <ion-card class="event-cards">
-          <h3>Friend 2</h3>
-        </ion-card>
-      </ion-item>
-    </ion-list>
-  </div>
+<ion-content id="main-content">
+  <ion-tabs #tabs class="tabs">
+    <ion-tab-bar>
+      <ion-tab-button tab="events">
+        <ion-icon [name]="selectedTab == 'friends' ? 'images' : 'images-outline'"></ion-icon>
+        <ion-label>Events</ion-label>
+      </ion-tab-button>
+      <ion-tab-button tab="friends">
+        <ion-icon [name]="selectedTab == 'friends' ? 'people' : 'people-outline'"></ion-icon>
+        <ion-label>Friends</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
 </ion-content>
