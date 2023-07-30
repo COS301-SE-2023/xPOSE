@@ -20,8 +20,8 @@ const content = (isProduction) => `export const environment = {
 };`;
 
 const folderPath = 'environments';
-const environmentFilePath = `${folderPath}/environment.js`;
-const environmentProdFilePath = `${folderPath}/environment.prod.js`;
+const environmentFilePath = `${folderPath}/environment.ts`;
+const environmentProdFilePath = `${folderPath}/environment.prod.ts`;
 
 // Create the environments folder
 fs.mkdirSync(folderPath, { recursive: true });
