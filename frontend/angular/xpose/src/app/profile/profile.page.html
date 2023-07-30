@@ -26,13 +26,13 @@
   <ion-content id="main-content">
   <ion-tabs #tabs (ionTabsDidChange)="setCurrentTab()" class="tabs">
     <ion-tab-bar slot="bottom">
-      <ion-tab-button tab="friends">
-        <ion-icon [name]="selectedTab == 'friends' ? 'people' : 'people-outline'"></ion-icon>
-        <ion-label>Friends</ion-label>
-      </ion-tab-button>
       <ion-tab-button tab="events">
         <ion-icon [name]="selectedTab == 'friends' ? 'images' : 'images-outline'"></ion-icon>
         <ion-label>Events</ion-label>
+      </ion-tab-button>
+      <ion-tab-button tab="friends">
+        <ion-icon [name]="selectedTab == 'friends' ? 'people' : 'people-outline'"></ion-icon>
+        <ion-label>Friends</ion-label>
       </ion-tab-button>
     </ion-tab-bar>
   </ion-tabs>
