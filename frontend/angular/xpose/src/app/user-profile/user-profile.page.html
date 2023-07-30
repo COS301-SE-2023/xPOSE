@@ -1,13 +1,40 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>user-profile</ion-title>
+  <ion-toolbar class="custom-toolbar">
+    <ion-buttons slot="start">
+      <!-- <app-backbutton></app-backbutton> -->
+    </ion-buttons>
+    <ion-title>Profile</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">user-profile</ion-title>
-    </ion-toolbar>
-  </ion-header>
+
+<div class="profile_div" >
+  <div class="user_div" *ngIf="user">
+    <img [src]="user.photoURL">
+    <div class="first_div">
+      <ion-label class="username">{{ user.displayName }}</ion-label>
+      <br> 
+    </div>
+    <ion-button class="edit_div" routerLink="/edit">Friend</ion-button> 
+  </div>
+</div>
+
+<ion-content id="main-content">
+  <ion-tabs #tabs (ionTabsDidChange)="setCurrentTab()" class="tabs">
+    <ion-tab-bar>
+      <ion-tab-button tab="users-events">
+        <ion-icon [name]="selectedTab == 'friends' ? 'images' : 'images-outline'"></ion-icon>
+        <ion-label>Events</ion-label>
+      </ion-tab-button>
+      <ion-tab-button tab="users-friends">
+        <ion-icon [name]="selectedTab == 'friends' ? 'people' : 'people-outline'"></ion-icon>
+        <ion-label>Friends</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
 </ion-content>
+
+<ion-footer>
+  <ion-button (click)="logout()" expand="full" class="pink-button">Logout</ion-button>
+</ion-footer>
+
