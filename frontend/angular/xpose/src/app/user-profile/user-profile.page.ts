@@ -16,6 +16,7 @@ export class UserProfilePage implements OnInit {
   user: {
     photoURL: string;
   };
+  tabs: any;
 
   constructor(
     private router: Router,
@@ -29,6 +30,12 @@ export class UserProfilePage implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  setCurrentTab() {
+    this.selectedTab = this.tabs?.getSelected();
+    console.log(this.selectedTab);
+    this.applyFilter();
   }
 
   applyFilter() {
