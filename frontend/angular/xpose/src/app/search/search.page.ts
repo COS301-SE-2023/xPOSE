@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
+
 @Component({
   selector: 'app-search',
   templateUrl: './search.page.html',
@@ -17,14 +18,14 @@ export class SearchPage implements OnInit {
     // Add more events as needed
   ];
 
-  user: any  = {} // store user query result
+  user: any =[];  // store user query result
   loading: boolean = true; // Initial loading state
-  
+
   suggestedItems: any[] = [];
   searchQuery: string = '';
   filteredItems: any[] = [];
   showSuggestions: boolean = true;
-  searchIconClicked: boolean = false;
+  searchClicked: boolean = false;
 
   constructor(private router: Router,
     private http: HttpClient
@@ -44,32 +45,34 @@ export class SearchPage implements OnInit {
 
   onSearch() {
     if (this.searchQuery.trim() !== '') {
-      // this.showSuggestions = false;
+      this.searchClicked = true;
       if (this.searchType === 'events') {
+        // event APi call goes here
 
       } else if (this.searchType === 'users') {
         console.log("Searched for " + this.searchQuery);
         // http://localhost:8002/users/search?field=displayName&value=sov
         const search_endpoint = `http://localhost:8000/u/users/search?field=displayName&value=${this.searchQuery}`;
          this.loading = true;
+
         this.http.get<any[]>(search_endpoint).subscribe(
           (response) => {
             this.user =response
             this.loading = false;
+            this.searchClicked = false;
+            
+            this.user = response;
+             console.log("search result", this.user);
+            
+          },
+          (error:any) => {
+            console.log(error.error.message);
+            this.searchClicked = false;
+            
           }
         )
-
-
-
-        // // Filter the users based on the searchQuery
-        // this.filteredItems = this.users.filter(user =>
-        //   user.name.toLowerCase().includes(this.searchQuery.toLowerCase())
-        // );
       }
-    } else {
-      this.showSuggestions = true;
-      this.filteredItems = [];
-    }
+    } 
   }
 
   onSearchTypeChange() {
