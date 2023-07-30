@@ -83,7 +83,7 @@ export class EventPage {
     private afs: AngularFirestore,
     // private camera: Camera,
     ) {
-
+      this.url = "sdafsda";
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.history.push(event.urlAfterRedirects);
@@ -115,11 +115,11 @@ export class EventPage {
   }
 
   current_event: any;
-  url: string | undefined;
+  url: string = window.location.href;
   posts: any;
 
   ngOnInit() {
-    this.url = this.location.path();
+    this.url = "";
     // give messageCollection stub value
     // this.messagesCollection = this.afs.collection<Message>(`Event-Chats/0/chats`);
     this.activatedRoute.paramMap.subscribe(paramMap => {
@@ -146,6 +146,7 @@ export class EventPage {
       this.getCurrentUserId().subscribe((uid) => {
         if (uid) {
           this.http.get(`http://localhost:8000/e/events/${event_id}?uid=${uid}`).subscribe((data) => {
+            this.url = `${window.location.protocol}//${window.location.host}/view-event/${event_id}`;
             this.retrieveMessages();
             this.retrievePosts();
             this.current_event = data;

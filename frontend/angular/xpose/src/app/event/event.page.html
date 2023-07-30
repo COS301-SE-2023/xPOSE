@@ -110,10 +110,9 @@
               <ion-card-header>
                 <ion-card-title>QR Code</ion-card-title>
               </ion-card-header>
-              <ion-card-content>
-                <!-- Display your QR code here -->
-                <img src="./assets/images/qrcode.png" alt="QR Code" class="qrcode" />
-              </ion-card-content>
+                <div class="qrcode-container">
+                  <qrcode [qrdata]="url" [width]="400" [errorCorrectionLevel]="'H'"></qrcode>
+                </div>
             </ion-card>
         
             <!-- Event link -->
@@ -159,5 +158,5 @@
     
     
     </ion-content>
- <app-footer></app-footer>
+ <!-- <app-footer></app-footer> -->
   <!-- </ng-template> -->

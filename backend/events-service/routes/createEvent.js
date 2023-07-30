@@ -1,11 +1,12 @@
-const { sequelize, User, Event, EventInvitation, EventParticipant, EventJoinRequest } = require('../data-access/sequelize');
+const { User, Event, EventInvitation, EventParticipant } = require('../data-access/sequelize');
 const uploadImageToFirebase = require('../data-access/firebase.repository');
 const admin = require('firebase-admin');
 const { generateUniqueCode, EventBuilder } = require('../libs/Events');
 
 async function createEvent(req, res) {
     try {
-        const { uid, title, description, location, latitude, longitude, start_date, end_date, privacy_setting } = req.body;
+        const { uid } = req.query;
+        const { title, description, location, latitude, longitude, start_date, end_date, privacy_setting } = req.body;
         const imageFile = req.file;
 
         // Check if the required fields are provided
@@ -41,7 +42,8 @@ async function createEvent(req, res) {
             image_url = await uploadImageToFirebase(uid, imageFile);
         }
         else{
-            image_url = "https://e0.pxfuel.com/wallpapers/286/336/desktop-wallpaper-random-things-i-cant-explain-eggdog.jpg";
+            // Default image
+            image_url = "https://firebasestorage.googleapis.com/v0/b/xpose-4f48c.appspot.com/o/Defaults%2Fdefault-event-cover.png?alt=media&token=6a058d10-7329-4648-b02f-ce84151af75f";
         }
 
         let status = '';

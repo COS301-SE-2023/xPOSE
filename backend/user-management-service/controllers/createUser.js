@@ -4,7 +4,7 @@ import User from '../data-access/models/user.table.js';
 import Friend_request from '../data-access/models/friend_request.table.js';
 import Friendship from '../data-access/models/friendship.table.js';
 import { sendMessageToQueue } from '../sender.js';
-
+import generateRandomAlphanumeric from './generateRandomAlphanumeric.js';
 
 let users = [];
 export const createUser = async (req, res) => {
@@ -14,6 +14,7 @@ export const createUser = async (req, res) => {
 
         const { 
           displayName,
+          uniq_username,
           email, 
           password, 
           emailVerified,
@@ -24,9 +25,13 @@ export const createUser = async (req, res) => {
         } = req.body;
 
         const uid = uuidv4();
+        // generate unique username
+        const alph = generateRandomAlphanumeric(6);
+        let uniq_username_ = `${displayName}${alph}`;
 
         const user = {
             displayName,
+            uniq_username:uniq_username_,
             email,
             emailVerified,
             privacy,

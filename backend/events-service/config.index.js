@@ -1,0 +1,1 @@
+// add configuration for the events service

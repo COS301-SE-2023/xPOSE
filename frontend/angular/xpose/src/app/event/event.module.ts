@@ -10,6 +10,7 @@ import { EventPage } from './event.page';
 
 import { GalleryLightboxPage } from './posts/gallery-lightbox/gallery-lightbox.page';
 import { SharedModule } from '../shared/shared.module';
+import { QRCodeModule } from 'angularx-qrcode';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { SharedModule } from '../shared/shared.module';
     FormsModule,
     IonicModule,
     EventPageRoutingModule,
-    SharedModule
+    SharedModule,
+    QRCodeModule 
   ],
   declarations: [EventPage,
     GalleryLightboxPage]

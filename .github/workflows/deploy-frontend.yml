@@ -1,7 +1,7 @@
 name: Firebase Continuous Deployment
 
 on:
-  push:
+  pull_request:
     branches:
       - main
 
@@ -20,10 +20,10 @@ jobs:
 
       - name: Installing dependencies
         working-directory: frontend/angular/xpose
-        run: npm install
+        run: npm install --legacy-peer-deps
         
       - name: Run the Configuration Script
-        working-directory: frontend/angular/xpose/src/environments/
+        working-directory: frontend/angular/xpose/src/
         env:
           FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
           FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}

@@ -1,36 +1,139 @@
-/* user-profile.page.scss */
-
-ion-content {
+.profile_div {
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
-  }
-  
-  .profile-info {
-    display: flex;
-    flex-direction: column;
     align-items: center;
-    margin-top: 20px;
+    margin-top: 50px;
   }
   
-  .profile-picture img {
+  .user_div {
+    text-align: center;
+  }
+  
+  .user_div img {
     width: 100px;
-    height: 100px;
     border-radius: 50%;
+    margin-bottom: 20px;
   }
   
-  .user-name {
+  .first_div {
+    margin-bottom: 20px;
+  }
+  
+  .username {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .edit_div {
+    --background: #007bff;
     margin-top: 10px;
   }
-  
-  .friend-button {
-    margin-top: 20px;
-    margin-left: 145px;
-    margin-bottom: 15px;
+ 
+  ion-toolbar.custom-toolbar {
+    --background: #ffffff;
+    color: #000000;
+    font-size: 20px;
+    --min-height: 70px;
   }
 
-  .event-cards{
-    width: 95%;
-    padding: 5px;
+  ion-label{
+    --text-align: center;
+  }
+
+  ion-content#main-content {
+    --background: #ffffff;
+  
+  }
+
+  ion-card {
+    background-color: hsl(304, 49%, 82%);
+    color: #000000;
+    margin-bottom: 20px;
+    height: auto;
+    border: solid 0.1px #adadad;
+    box-shadow: 0 4px 8px rgba(255, 160, 215, 0.1);
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  
+  .card-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+  
+  .card-title {
+    font-size: 24px;
+    font-weight: bold;
+    padding: 10px;
+    color: #000000;
+    font-family: 'Pacifico', sans-serif;
+  }
+  
+  ion-card-content {
+    display: inline;
+    padding-left: 10px;
+    color: #353535;
+  }
+  
+  .card-content {
+    padding: 10px;
+    color: #353535;
+  }
+  
+  .card-subtitle {
+    color: #3d3d3d;
+  }
+  
+  .card-description {
+    padding: 10px 0;
+  }
+  
+  .card-button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+  }
+  
+  .card-button {
+    --color: #ffffff;
+    --background: linear-gradient(135deg, #ff0066, #ea00ff);
+    --box-shadow: none;
+    border: none;
+    --border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    font-family: 'Roboto', sans-serif;
+    --padding-start: 20px;
+    --padding-end: 20px;
+    --margin: 5px;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  .card-button:hover {
+    --background: linear-gradient(135deg, #ea00ff, #ff0066);
+  }
+  
+  .card-button-share {
+    color: #ff0066;
+  }
+  
+  .card-button-view {
+    color: #ea00ff;
+  }
+  
+  .card-label {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: #f00;
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: bold;
   }

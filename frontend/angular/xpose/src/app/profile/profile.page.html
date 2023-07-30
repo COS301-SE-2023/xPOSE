@@ -8,31 +8,27 @@
 </ion-header>
 
 
-  <div class="profile_div" >
-    <div class="user_div" *ngIf="user">
-      <img [src]="user.photoURL">
-
-      <div class="first_div">
-        <ion-label class="username">{{ user.displayName }}</ion-label>
-        
-        <br>
-        
-        
-      </div>
-      <ion-button class="edit_div" (click)="editProfile()" >Edit Profile</ion-button>
-      
+<div class="profile_div" >
+  <div class="user_div" *ngIf="user">
+    <img [src]="user.photoURL">
+    <div class="first_div">
+      <ion-label class="username">{{ user.displayName }}</ion-label>
+      <br> 
     </div>
+    <ion-button class="edit_div" routerLink="/edit">Edit Profile</ion-button> 
   </div>
-  <ion-content id="main-content">
+</div>
+
+<ion-content id="main-content">
   <ion-tabs #tabs (ionTabsDidChange)="setCurrentTab()" class="tabs">
-    <ion-tab-bar slot="bottom">
-      <ion-tab-button tab="friends">
-        <ion-icon [name]="selectedTab == 'friends' ? 'people' : 'people-outline'"></ion-icon>
-        <ion-label>Friends</ion-label>
-      </ion-tab-button>
+    <ion-tab-bar>
       <ion-tab-button tab="events">
         <ion-icon [name]="selectedTab == 'friends' ? 'images' : 'images-outline'"></ion-icon>
         <ion-label>Events</ion-label>
+      </ion-tab-button>
+      <ion-tab-button tab="friends">
+        <ion-icon [name]="selectedTab == 'friends' ? 'people' : 'people-outline'"></ion-icon>
+        <ion-label>Friends</ion-label>
       </ion-tab-button>
     </ion-tab-bar>
   </ion-tabs>
