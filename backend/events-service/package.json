@@ -1,11 +1,11 @@
 {
   "name": "events-service",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "This is the CRUD RESTful api for the events service",
   "main": "index.js",
   "scripts": {
-    "start": "node app.js",
-    "start:dev": "nodemon app.js",
+    "start": "node .",
+    "start:dev": "nodemon .",
     "test": "jest"
   },
   "keywords": [],
