@@ -27,8 +27,14 @@
     (ionChange)="onSearch()"
   ></ion-searchbar>
 
+  <ion-content>
+    <div *ngIf="searchClicked && loading">
+      Please wait searching...
+    </div>
+  </ion-content>
+
   <!-- Display suggested data or filtered search results based on searchType -->
-  <ion-list *ngIf="showSuggestions">
+  <!-- <ion-list *ngIf="showSuggestions">
     <ion-item *ngFor="let suggestion of suggestedItems">
       {{ suggestion.name }}
     </ion-item>
@@ -38,5 +44,5 @@
     <ion-item *ngFor="let item of filteredItems">
       {{ item.name }}
     </ion-item>
-  </ion-list>
+  </ion-list> -->
 </ion-content>
