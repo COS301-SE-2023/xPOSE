@@ -17,7 +17,7 @@ import { GalleryLightboxPage } from './gallery-lightbox/gallery-lightbox.page';
   ],
   declarations: [
     PostsPage,
-    GalleryLightboxPage
+    // GalleryLightboxPage
   ],              
 })
 export class PostsPageModule { }

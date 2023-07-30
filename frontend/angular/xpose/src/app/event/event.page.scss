@@ -1,4 +1,46 @@
-.card-image{
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.loading-text {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #333; /* Adjust the color as per your design */
+}
+
+ion-toolbar.custom-toolbar {
+    --background: #ffffff;
+    color: #000000;
+    font-size: 20px;
+    --min-height: 70px;
+  }
+  .footer-content {
+    background-color: #f2f2f2;
+    padding: 10px;
+    text-align: center;
+    color: #333;
+    font-size: 14px;
+  }
+  
+  ion-content .main-content{
+    --background: #ffffff;
+    background-color: #ffffff;
+  }
+  
+  .custom-background{
+    --background: #ffffff;
+    color: #000000;
+    font-size: 20px;
+    // --min-height: 70px;
+  }
+
+  ///////
+  /// 
+  .card-image{
     height: 200px;
     width: 100%;
     background-size: cover;
@@ -32,7 +74,7 @@
     }
 }
 .tabs{
-    margin-top: 240px;
+    // margin-top: 240px;
     color: #eb0091;
     .tabarea{
         display: flex;
@@ -45,7 +87,7 @@
         --background:var(--color);
         padding: 10px 20px;
         border-radius: 10px;
-        background: #555555;
+        background: #b1b1b1;
         --color: #eb0091;
         font-weight: 500;
         font-size: 1.2rem;
@@ -62,28 +104,21 @@
     }
 }
 
-ion-toolbar.custom-toolbar {
-    --background: #ffffff;
-    color: #000000;
-    font-size: 20px;
-    --min-height: 70px;
-  }
-  .footer-content {
-    background-color: #f2f2f2;
-    padding: 10px;
-    text-align: center;
-    color: #333;
-    font-size: 14px;
-  }
+  ion-list {
+    // padding-bottom: 800px;
+    display: block;
   
-  ion-content .main-content{
-    --background: #ffffff;
-    background-color: #ffffff;
-  }
-  
-  .custom-background{
-    --background: #ffffff;
-    color: #000000;
-    font-size: 20px;
-    // --min-height: 70px;
-  }
+}
+
+.leave-button{
+  font-size: 40px;
+  color: #555555;
+
+}
+
+// .qrcode-container {
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   height: 100%;
+// }

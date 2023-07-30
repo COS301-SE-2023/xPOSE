@@ -8,12 +8,19 @@ import { JoinedEventPageRoutingModule } from './joined-event-routing.module';
 
 import { JoinedEventPage } from './joined-event.page';
 
+import { SharedModule } from '../shared/shared.module';
+
+
+
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    JoinedEventPageRoutingModule
+    JoinedEventPageRoutingModule,
+    SharedModule,
+  
   ],
   declarations: [JoinedEventPage]
 })

@@ -1,6 +1,52 @@
 const { sequelize, User, Event, EventInvitation, EventParticipant, EventJoinRequest } = require('../data-access/sequelize');
 const uploadImageToFirebase = require('../data-access/firebase.repository');
 const admin = require('firebase-admin');
+const { sendMessageToQueue } = require('../libs/sender');
+// const MessageBuilder = require('../libs/MessageBuilder');
+
+class MessageBuilder {
+    constructor() {
+      this.message = {
+        data: {
+          type: "",
+          message: "",
+          senderId: "",
+          receiverId: "",
+          timestamp: Date.now(),
+          status: "pending",
+        },
+      };
+    }
+  
+    setType(type) {
+      this.message.data.type = type;
+      return this;
+    }
+  
+    setMessage(message) {
+      this.message.data.message = message;
+      return this;
+    }
+  
+    setSenderId(senderId) {
+      this.message.data.senderId = senderId;
+      return this;
+    }
+  
+    setReceiverId(receiverId) {
+      this.message.data.receiverId = receiverId;
+      return this;
+    }
+  
+    setStatus(status) {
+      this.message.data.status = status;
+      return this;
+    }
+  
+    build() {
+      return this.message;
+    }
+}
 
 async function userRequestToJoinEvent(req, res) {
     try {
@@ -53,6 +99,17 @@ async function userRequestToJoinEvent(req, res) {
             response: 'pending',
             timestamp: new Date(),
         });
+
+        // send message to notification queue using rabbitmq
+        const queueName = 'notifications';
+        const message = new MessageBuilder()
+                    .setType("join_event")
+                    .setMessage(`You got invited to an event called ${event.title}`)
+                    .setSenderId("173")
+                    .setReceiverId("999")
+                    .build();
+
+        sendMessageToQueue('notifications', message);
 
         res.json(joinRequest);
     } catch (error) {

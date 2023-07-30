@@ -1,6 +1,8 @@
 const { sequelize, User, Event, EventInvitation, EventParticipant, EventJoinRequest } = require('../data-access/sequelize');
 const uploadImageToFirebase = require('../data-access/firebase.repository');
 const admin = require('firebase-admin');
+const MessageBuilder = require('../libs/MessageBuilder');
+const sender = require('../libs/sender');
 
 async function inviteUserToEvent(req, res) {
     try {
@@ -16,8 +18,15 @@ async function inviteUserToEvent(req, res) {
 
         // If user doesn't exist, throw an error
         if (!user) {
-            res.status(404).json({ error: 'User not found' });
-            return;
+            const firestoreUserDoc = await admin.firestore().collection('Users').doc(uid).get();
+
+            if (firestoreUserDoc.exists) {
+              // Create the user in the Users table
+              user = await User.create({ uid: uid });
+            } else {
+              res.status(400).json({ error: 'Invalid user' });
+              return;
+            }
         }
 
         // Find the event with the provided event code
@@ -47,6 +56,17 @@ async function inviteUserToEvent(req, res) {
             return;
         }
 
+        // 
+        const queueName = 'notifications';
+        const message = new MessageBuilder()
+                    .setType("join_event")
+                    .setMessage(`You got invited to an event called ${event.title}`)
+                    .setSenderId("173")
+                    .setReceiverId("999")
+                    .build();
+
+        sender.send(queueName, message);
+        
         // Create a new invitation
         const invitation = await EventInvitation.create({
             user_id_fk: user.id,

@@ -4,7 +4,7 @@ const admin = require('firebase-admin');
 
 async function removeUserFromEvent(req, res) {
     try {
-        const { uid } = req.body;
+        const { uid } = req.query;
         const { code } = req.params;
 
         // Find the user with the provided uid

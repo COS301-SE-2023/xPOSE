@@ -61,6 +61,10 @@ const Event = sequelize.define('event', {
     type: Sequelize.DATE,
     allowNull: false,
   },
+  status: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
   start_date: {
     type: Sequelize.DATE,
     allowNull: false

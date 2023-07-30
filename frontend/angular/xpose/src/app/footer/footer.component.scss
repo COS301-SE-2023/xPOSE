@@ -1,0 +1,25 @@
+// /* src/global-styles.css */
+.big {
+    font-size: 50px; /* Adjust the size as desired */
+    color: rgb(134, 134, 134); /* Customize the color as desired */
+    position: absolute;
+    bottom: 7px; /* Adjust the distance from the bottom of the ion-toolbar */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2; /* Set a higher z-index to place the icon above the ion-toolbar */
+    // background-color: ;
+    border: 1px solid rgb(255, 211, 251);
+    border-radius: 50%;
+  }
+  /* Custom CSS to fill the selected icon */
+ion-tab-button[selected] ion-icon {
+    color: rgb(255, 0, 0); /* Customize the color as desired */
+  }
+  ion-icon{
+    font-size: 35px;
+  }
+
+  ion-toolbar{
+    height: 50px;
+  }
+  

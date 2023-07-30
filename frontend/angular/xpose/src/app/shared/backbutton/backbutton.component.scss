@@ -1,0 +1,16 @@
+/* Assuming this is your component's CSS or SCSS file */
+ion-tabs {
+    border-radius: 30px; /* Adjust the value to control the oval shape */
+    overflow: hidden; /* Hide any content outside the rounded border */
+  }
+  
+  ion-tab-button {
+    --border-radius: 30px; /* Match the border radius to the parent ion-tabs */
+  }
+  
+  /* Apply custom styles to the selected tab */
+  ion-tab-button[aria-selected="true"] {
+    background-color: deeppink; /* Set the background color for the selected tab */
+    color: white; /* Set the text color for the selected tab */
+  }
+  

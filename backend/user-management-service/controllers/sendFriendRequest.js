@@ -2,6 +2,7 @@ import User from '../data-access/models/user.table.js';
 import Friend_request from '../data-access/models/friend_request.table.js';
 import Friendship from '../data-access/models/friendship.table.js';
 import { sendMessageToQueue } from '../sender.js';
+import MessageBuilder from './messagebuilder.js';
 
 export const sendFriendRequest = async (req, res) => {
     try {
@@ -17,18 +18,12 @@ export const sendFriendRequest = async (req, res) => {
       
       // Communicate with the notification service
       const queueName = 'notifications';
-      const message = {
-          from: 'user_service',
-          type: 'friend_request',
-          data: {
-              message: `New friend request from ${username}`,
-              senderId: userId,
-              receiverId: requestId,
-              timestamp: Date.now(),
-              status: ' pending'
-          },
-          responses: ['accepted', 'rejected']
-      };
+      const message = new MessageBuilder()
+                .setType("friend_request")
+                .setMessage(`Friend request from ${username}`)
+                .setSenderId(userId)
+                .setReceiverId(requestId)
+                .build();
     
         sendMessageToQueue(queueName, message);
       // finallly message feedback

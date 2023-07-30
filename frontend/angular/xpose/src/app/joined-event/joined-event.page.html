@@ -1,8 +1,8 @@
 <ion-header [translucent]="true">
   <ion-toolbar class="custom-toolbar">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/home"></ion-back-button>
-    </ion-buttons>
+      <app-backbutton></app-backbutton>
+      </ion-buttons>
     <ion-title>Joined events</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -27,7 +27,7 @@
 
   <ion-list *ngIf="filterType === 'Ongoing'" class="custom-backround">
     <!-- Mock Private Events -->
-    <ion-card  *ngFor="let card of cards">
+    <!-- <ion-card  *ngFor="let card of cards">
       <img [src]="card.image_url" alt="Card Image" class="card-image">
       <ion-card-header class="card-title">
         <ion-card-title class="header">{{ card.title }}</ion-card-title>
@@ -39,82 +39,96 @@
         <ion-icon name="location"></ion-icon>
         {{ card.description }}
       </ion-card-content>
-      <!-- <ion-button class="button-style"  (click)="eventDetails()">
+       <ion-button class="button-style"  (click)="eventDetails()">
         View eventt
       </ion-button> -->
+    <!-- </ion-card> --> 
+    <ion-card (click)="eventDetails(card.id)" *ngFor="let card of cards">
+      <span class="label-{{ getStatusColor(card?.status) }} label">{{ card?.status }}</span>
+      <img [src]="card.image_url" alt="Card Image" class="card-image">
+      <ion-card-header class="card-title">
+        <ion-card-title class="header">
+          {{ card?.title }}
+        </ion-card-title>
+        <ion-card-content>
+          <ion-icon name="location"></ion-icon>
+          {{ truncateText(card.location, 4) }}
+        </ion-card-content>
+        <ion-row>
+          <ion-col center text-center>
+            <ion-card-subtitle>
+              {{ card.description }}
+            </ion-card-subtitle>
+          </ion-col>
+          <ion-col class="ion-text-end">
+            <ion-button fill="clear" class="right-aligned-button">
+              <ion-icon class="iconp" name='share'></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-card-header>
     </ion-card>
   </ion-list>
 
   <ion-list *ngIf="filterType === 'Upcoming'">
     <!-- Mock Public Events -->
-    <ion-card  *ngFor="let card of cards">
+    <ion-card (click)="eventDetails(card.id)" *ngFor="let card of cards">
+      <span class="label-{{ getStatusColor(card?.status) }} label">{{ card?.status }}</span>
       <img [src]="card.image_url" alt="Card Image" class="card-image">
       <ion-card-header class="card-title">
-        <ion-card-title class="header">{{ card.title }}</ion-card-title>
+        <ion-card-title class="header">
+          {{ card?.title }}
+        </ion-card-title>
         <ion-card-content>
-            {{card.longitude}} {{card.latitude}}
+          <ion-icon name="location"></ion-icon>
+          {{ truncateText(card.location, 4) }}
         </ion-card-content>
+        <ion-row>
+          <ion-col center text-center>
+            <ion-card-subtitle>
+              {{ card.description }}
+            </ion-card-subtitle>
+          </ion-col>
+          <ion-col class="ion-text-end">
+            <ion-button fill="clear" class="right-aligned-button">
+              <ion-icon class="iconp" name='share'></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
       </ion-card-header>
-      <ion-card-content>
-        <ion-icon name="location"></ion-icon>
-        {{ card.description }}
-      </ion-card-content>
-      <ion-button class="button-style"  (click)="	eventDetails()">
-        <!-- {{ card.button }} -->
-        View eventt
-      </ion-button>
     </ion-card>
   </ion-list>
 
     <ion-list *ngIf="filterType === 'Ended'">
     <!-- Mock Public Events -->
-    <ion-card  *ngFor="let card of cards">
+    <ion-card (click)="eventDetails(card.id)" *ngFor="let card of cards">
+      <span class="label-{{ getStatusColor(card?.status) }} label">{{ card?.status }}</span>
       <img [src]="card.image_url" alt="Card Image" class="card-image">
       <ion-card-header class="card-title">
-        <ion-card-title class="header">{{ card.title }}</ion-card-title>
+        <ion-card-title class="header">
+          {{ card?.title }}
+        </ion-card-title>
         <ion-card-content>
-            {{card.longitude}} {{card.latitude}}
+          <ion-icon name="location"></ion-icon>
+          {{ truncateText(card.location, 4) }}
         </ion-card-content>
+        <ion-row>
+          <ion-col center text-center>
+            <ion-card-subtitle>
+              {{ card.description }}
+            </ion-card-subtitle>
+          </ion-col>
+          <ion-col class="ion-text-end">
+            <ion-button fill="clear" class="right-aligned-button">
+              <ion-icon class="iconp" name='share'></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
       </ion-card-header>
-      <ion-card-content>
-        <ion-icon name="location"></ion-icon>
-        {{ card.description }}
-      </ion-card-content>
-      <ion-button class="button-style"  (click)="	eventDetails()">
-        <!-- {{ card.button }} -->
-        View eventt
-      </ion-button>
     </ion-card>
   </ion-list>
-
+  <app-loading-icon *ngIf="loading"></app-loading-icon>
 </ion-content>
 
-<ion-footer>
-  <ion-toolbar position="fixed">
-    <ion-tabs>
-      <ion-tab-bar slot="bottom">
-        <ion-tab-button tab="home" (click)="onHome()">
-          <ion-icon name="home-outline"></ion-icon>
-          <ion-label>Home</ion-label>
-        </ion-tab-button>
-        <ion-tab-button tab="joined-events" (click)="onJoinedEvent()" >
-        <!-- <ion-tab-button tab="joined-events" (click)="onJoinedEvent()" [class.active]="filterType === 'private' || filterType === 'public'"> -->
-          <ion-icon name="people-outline"></ion-icon>
-          <ion-label>Joined Events</ion-label>
-        </ion-tab-button>
-        <ion-tab-button tab="create-event" (click)="onEvent()">
-          <ion-icon name="add-circle-outline"></ion-icon>
-          <ion-label>Create Event</ion-label>
-        </ion-tab-button>
-        <ion-tab-button tab="notifications" (click)="onNotifications()">
-          <ion-icon name="notifications-outline"></ion-icon>
-          <ion-label>Notifications</ion-label>
-        </ion-tab-button>
-        <ion-tab-button tab="profile" (click)="onProfile()">
-          <ion-icon name="person-outline"></ion-icon>
-          <ion-label>Profile</ion-label>
-        </ion-tab-button>
-      </ion-tab-bar>
-    </ion-tabs>
-  </ion-toolbar>
-</ion-footer>
+<app-footer></app-footer>
+

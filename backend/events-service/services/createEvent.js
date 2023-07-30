@@ -44,6 +44,17 @@ async function createEvent(req, res) {
             image_url = "https://e0.pxfuel.com/wallpapers/286/336/desktop-wallpaper-random-things-i-cant-explain-eggdog.jpg";
         }
 
+        let status = '';
+        const obj_start_date = new Date(start_date);
+        const obj_end_date = new Date(end_date);
+        if (Date.now() < obj_start_date) {
+            status = 'upcoming';
+        } else if (Date.now() >= obj_start_date && Date.now() <= obj_end_date) {
+            status = 'ongoing';
+        } else {
+            status = 'ended';
+        }
+
         // Build the event object
         const event = await Event.create({
             title: title,
@@ -58,6 +69,7 @@ async function createEvent(req, res) {
             timestamp: Date.now(),
             owner_id_fk: user.id,
             code: generateUniqueCode(),
+            status: status,
         });
 
         // Add the owner as a participant to the event

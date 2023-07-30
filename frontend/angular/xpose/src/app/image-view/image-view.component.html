@@ -1,0 +1,9 @@
+<div class="image-lightbox" id="lightbox-image-{{ index }}"> <!-- Use index property -->
+  <div class="image-lightbox-wrapper">
+    <a href="javascript:void(0)" class="close" (click)="closeLightbox()"></a>
+    <a href="javascript:void(0)" class="arrow-left" (click)="navigateLightbox(prevIndex(index))"></a> <!-- Use index property -->
+    <a href="javascript:void(0)" class="arrow-right" (click)="navigateLightbox(nextIndex(index))"></a> <!-- Use index property -->
+    <img [src]="_albums[index]?.src" [alt]="_albums[index]?.caption" /> <!-- Use index property -->
+    <div class="image-title">{{_albums[index]?.caption}}</div> <!-- Use index property -->
+  </div>
+</div>

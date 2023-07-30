@@ -1,51 +1,151 @@
-<ion-header [translucent]="true">
-  <ion-toolbar class="custom-toolbar">
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/view-event"></ion-back-button>
-    </ion-buttons>
-    <ion-title class="event-title">Event</ion-title>
-  </ion-toolbar>
-</ion-header>
+<!-- <ion-content [fullscreen]="true" id="main-content" class="custom-backround"> -->
 
-<ion-content id="main-content" class="custom-background" >
-  <div class="cover-page">
-    <!-- Display the event's cover image -->
-    <ion-card class="cover-image">
-      <img src="{{ current_event.image_url }}" alt="Event Cover Image" class="card-image" />
-    </ion-card>
+<!-- <div *ngIf="loading; else loadedContent" class="loading-container">
+  <app-loading-icon></app-loading-icon>
+    <p class="loading-text">Loading...</p>
+  </div> -->
+  <!-- <ng-template #loadedContent> -->
+    <!-- <app-loading-icon></app-loading-icon> -->
+    <ion-header [translucent]="true">
+      <ion-toolbar class="custom-toolbar">
+        <ion-buttons slot="start">
+          <app-backbutton></app-backbutton>
+        </ion-buttons>
+        <ion-title class="event-title">Event</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="onLogoutClick()">
+            <ion-icon name="log-out-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    
+      
+      <ion-content [fullscreen]="true" id="main-content" class="custom-backround">
+      <app-loading-icon *ngIf="loading"></app-loading-icon>
 
-    <ion-tabs #tabs (ionTabsDidChange)="setCurrentTab()" class="tabs">
-      <!-- Tab buttons -->
-      <ion-tab-bar slot="top" class="tabarea">
-        <!-- Posts tab -->
-        <ion-tab-button tab="posts">
-          <ion-icon [name]="selectedTab == 'posts' ? 'images' : 'images-outline'"></ion-icon>
-          <ion-label>Posts</ion-label>
-        </ion-tab-button>
+    
+      <ion-segment [(ngModel)]="filterType"  (ionChange)="applyFilter()">
+        <ion-segment-button value="posts">
+          Posts
+        </ion-segment-button>
+        <ion-segment-button value="message-board">
+          Comments
+        </ion-segment-button>
+        <ion-segment-button  value="details">
+          Details
+        </ion-segment-button>
+      </ion-segment>
+    
+    
+      <ion-list *ngIf="filterType === 'posts'" >
+        <!-- Add the "+ Add image" button here -->
+        <ion-button (click)="openImageGallery()">+ Add image</ion-button>
+      
+        <!-- Display the gallery images -->
+        <app-gallery-lightbox [galleryData]="data"></app-gallery-lightbox>
 
-        <!-- Message Board tab -->
-        <ion-tab-button tab="message-board">
-          <ion-icon [name]="selectedTab == 'message-board' ? 'chatbox' : 'chatbox-outline'"></ion-icon>
-          <ion-label>Message Board</ion-label>
-        </ion-tab-button>
+       
 
-        <!-- Details tab -->
-        <ion-tab-button tab="details">
-          <ion-icon [name]="selectedTab == 'details' ? 'information-circle' : 'information-circle-outline'"></ion-icon>
-          <ion-label>Details</ion-label>
-        </ion-tab-button>
-      </ion-tab-bar>
-    </ion-tabs>
-  </div>
+        <!-- <ion-fab>
+          <ion-fab-button>
+            <ion-icon name="add"></ion-icon>
+          </ion-fab-button>
+        </ion-fab> -->
+      </ion-list>
+      
+    
+      <ion-list *ngIf="filterType === 'message-board'" >
+        <ion-item class="comment-input">
+          <ion-input [(ngModel)]="newMessage" placeholder="Type your comment"></ion-input>
+          <ion-button (click)="createMessage()">Send</ion-button>
+        </ion-item>
+      
+        <ion-list class="now">
+          <ion-item class="comment-item" *ngFor="let message of messages">
+            <ion-avatar slot="start">
+              <!-- <img src="{{ message.avatar }}" alt="User Avatar"> -->
+            </ion-avatar>
+            <ion-label class="text-white">
+              <h2 class="h2">{{ message.displayName }}</h2>
+              <p class="comment-message">{{ message.message }}</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-list>
+    
+       <ion-list *ngIf="filterType === 'details'" >
+        <ion-header [translucent]="true">
+          <ion-toolbar>
+            <ion-title>{{ current_event?.title }}</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        
+        <!-- <ion-content [fullscreen]="true"> -->
+          <div>
+            <ion-card>
+              <ion-card-header>
+                <ion-card-subtitle>Date</ion-card-subtitle>
+                <ion-card-title> {{ current_event?.start_date }} - {{ current_event?.end_date }} ({{ current_event?.status }}) </ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                <ion-card-subtitle>Location</ion-card-subtitle>
+                <ion-card-title> {{ current_event?.location }} </ion-card-title>
+              </ion-card-content>
+            </ion-card>
+        
+            <!-- QR Code -->
+            <ion-card>
+              <ion-card-header>
+                <ion-card-title>QR Code</ion-card-title>
+              </ion-card-header>
+                <div class="qrcode-container">
+                  <qrcode [qrdata]="url" [width]="400" [errorCorrectionLevel]="'H'"></qrcode>
+                </div>
+            </ion-card>
+        
+            <!-- Event link -->
+            <ion-card>
+              <ion-card-header>
+                <ion-card-title>Event link</ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                <!-- Display your event link here -->
+                <p style="color: blue;">{{ this.url }}</p>
+              </ion-card-content>
+            </ion-card>
+          </div>
+        
+          <h1 class="section-title">Participants</h1>
+          <ion-card class="participant-card" *ngFor="let participant of participants" (click)="onCardClick(participant)">
+            <ion-card-header>
+              <ion-avatar>
+                <ion-img [src]="participant?.avatar_url"></ion-img>
+              </ion-avatar>
+            </ion-card-header>
+            <ion-card-content>
+              <h2 class="participant-name">{{ participant?.display_name }}</h2>
+              <!-- <p class="participant-timestamp">{{ participant?.timestamp }}</p> -->
+              <!-- Add other participant details here if needed -->
+            </ion-card-content>
+            <!-- <ion-buttons>
+              <ion-button fill="clear" (click)="removeParticipant(participant)">
+                <ion-icon name="close"></ion-icon>
+              </ion-button>
+              <ion-button fill="clear" (click)="addParticipant(participant)">
+                <ion-icon name="add"></ion-icon>
+              </ion-button>
+            </ion-buttons> -->
+          </ion-card>
+        <!-- </ion-content> -->
+        
+      </ion-list>
 
-  
-</ion-content>
-
- <!-- <ion-footer> -->
-    <!-- Your footer content goes here -->
-    <!-- <div class="footer-content">
-      <p>xPose</p>
-    </div>
-  </ion-footer> -->
-
-  
+      <ion-text color="danger" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </ion-text>
+    
+    
+    </ion-content>
+ <!-- <app-footer></app-footer> -->
+  <!-- </ng-template> -->

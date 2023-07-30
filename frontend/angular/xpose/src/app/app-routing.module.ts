@@ -36,10 +36,6 @@ const routes: Routes = [
     loadChildren: () => import("./settings/settings.module").then(m => m.SettingsPageModule)
   },
   {
-    path: "footer",
-    loadChildren: () => import("./footer/footer.module").then(m => m.FooterPageModule)
-  },
-  {
     path: "header",
     loadChildren: () => import("./header/header.module").then(m => m.HeaderPageModule)
   },
@@ -69,7 +65,8 @@ const routes: Routes = [
   {
     path: 'edit',
     loadChildren: () => import('./edit/edit.module').then( m => m.EditPageModule)
-  },  {
+  },
+  {
     path: 'search',
     loadChildren: () => import('./search/search.module').then( m => m.SearchPageModule)
   },
@@ -77,6 +74,7 @@ const routes: Routes = [
     path: 'user-profile',
     loadChildren: () => import('./user-profile/user-profile.module').then( m => m.UserProfilePageModule)
   },
+ 
 
 
 

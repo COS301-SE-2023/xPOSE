@@ -109,4 +109,42 @@ export class GalleryLightboxPage implements OnInit {
     }
   }
 
+  downloadImage() {
+    if (this.previewImage && this.currentLightboxImage) {
+      const imageSrc = this.currentLightboxImage.imageSrc;
+  
+      // Check if the image source is valid
+      if (!imageSrc || typeof imageSrc !== 'string') {
+        console.error('Invalid image source.');
+        return;
+      }
+  
+      const a = document.createElement('a');
+      a.href = imageSrc;
+  
+      // Use the imageAlt as the suggested file name, or 'image' if imageAlt is not available
+      a.download = this.currentLightboxImage.imageAlt || 'image';
+  
+      // Append the anchor element to the DOM to trigger the download
+      document.body.appendChild(a);
+  
+      // Programatically click the anchor element to trigger the download
+      a.click();
+  
+      // Remove the anchor element from the DOM after the click
+      document.body.removeChild(a);
+    }
+  }
+  
+
+  // Function to share the current lightbox image
+  shareImage() {
+    if (this.previewImage && this.currentLightboxImage) {
+      const imageSrc = this.currentLightboxImage.imageSrc;
+      // Implement your sharing logic here, e.g., using a social sharing plugin or navigator.share API.
+      // For this example, I'll just display the image URL in an alert.
+      alert('Share this image: ' + imageSrc);
+    }
+  }
+
 }

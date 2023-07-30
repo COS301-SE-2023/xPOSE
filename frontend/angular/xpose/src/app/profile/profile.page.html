@@ -1,8 +1,8 @@
 <ion-header [translucent]="true">
   <ion-toolbar class="custom-toolbar">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/home"></ion-back-button>
-    </ion-buttons>
+      <app-backbutton></app-backbutton>
+      </ion-buttons>
     <ion-title>Profile</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -33,10 +33,6 @@
       <ion-tab-button tab="events">
         <ion-icon [name]="selectedTab == 'friends' ? 'images' : 'images-outline'"></ion-icon>
         <ion-label>Events</ion-label>
-      </ion-tab-button>
-      <ion-tab-button tab="pictures">
-        <ion-icon [name]="selectedTab == 'friends' ? 'images' : 'images-outline'"></ion-icon>
-        <ion-label>My pictures</ion-label>
       </ion-tab-button>
     </ion-tab-bar>
   </ion-tabs>

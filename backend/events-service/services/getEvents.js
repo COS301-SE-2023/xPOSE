@@ -4,8 +4,8 @@ const admin = require('firebase-admin');
 
 async function getEvents(req, res) {
     try {
-        const { uid } = req.query;
-
+        const { uid, filter } = req.query;
+      
         if(!uid) {
             res.status(400).json({ error: 'Missing required fields' });
             return;
@@ -30,19 +30,58 @@ async function getEvents(req, res) {
                 return;
             }
         }
+        
+        // find all the events if the filter is set to 'all'
+        let events = [];
 
-        const events = await Event.findAll({
-            include: {
-                model: User,
-                attributes: ['uid'], 
-                as: 'owner',
-            },
-        });
+        // if filter is not set, set it to 'all'
+        if (!filter) {
+            events = await Event.findAll({
+               include: {
+                   model: User,
+                   attributes: ['uid'], 
+                   as: 'owner',
+               },
+           });
+        }
+        // find all the events the user is a participant of if the filter is set to 'participant'
+        else if (filter === 'participant') {
+            const participantEvents = await EventParticipant.findAll({
+                where: {
+                    user_id_fk: user.id,
+                },
+            });
+
+            const participantEventIds = participantEvents.map((event) => event.event_id_fk);
+
+            events = await Event.findAll({
+                where: {
+                    id: participantEventIds,
+                },
+                include: {
+                    model: User,
+                    attributes: ['uid'],
+                    as: 'owner',
+                },
+            });
+        }
 
         // Transform the events to replace 'owner_id_fk' with 'uid'
         const transformedEvents = [];
         for (let i = 0; i < events.length; i++) {
           const event = events[i];
+          // update event status
+          let status = '';
+          const obj_start_date = new Date(event.start_date);
+          const obj_end_date = new Date(event.end_date);
+          if (Date.now() < obj_start_date) {
+            status = 'upcoming';
+          } else if (Date.now() >= obj_start_date && Date.now() <= obj_end_date) {
+            status = 'ongoing';
+          } else {
+            status = 'ended';
+          }
+
           const { owner_id_fk, ...eventData } = event.toJSON();
         
           // Check if user is the owner

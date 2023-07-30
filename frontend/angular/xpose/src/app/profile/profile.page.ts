@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from "../shared/services/auth.service";
 import { Service } from '../service/service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-profile',
@@ -16,11 +17,13 @@ export class ProfilePage {
   };
   selectedTab: any;
   tabs: any;
+  private history: string[] = [];
 
   constructor (
     private router: Router,
     public authService: AuthService,
-    public userService: Service
+    public userService: Service,
+    private location: Location
   ) {
     this.user = {
       photoURL: './assets/images/profile picture.jpg',
@@ -45,6 +48,15 @@ export class ProfilePage {
         console.log("profile page no user id");
       }
     });
+  }
+
+  back(): void {
+    this.history.pop();
+    if (this.history.length >= 0) {
+      this.location.back();
+    } else {
+      this.router.navigate(['/home']);
+    }
   }
 
   setCurrentTab() {

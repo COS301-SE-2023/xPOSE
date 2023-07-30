@@ -9,6 +9,7 @@ import { get } from "http";
 
 
 
+
 @Component({
 	selector: "app-home",
 	templateUrl: "./home.page.html",
@@ -42,15 +43,22 @@ export class HomePage {
 			this.http.get<Event[]>(`http://localhost:8000/e/events?uid=${uid}`).subscribe((events: Event[]) => {
 				console.log(events);
 				  this.events = events;
+				//   this.loading = false;
 				this.populateCards();
 			  });
-			  this.loading = false;
+			//   this.loading = false;
 		}
 		else {
 			console.log("no user id");
-			this.loading = false;
+			
 		}
 	});
+  }
+
+  truncateText(text: string, words: number): string {
+	if (!text) return '';
+	const wordsArray = text.trim().split(' ');
+	return wordsArray.slice(0, words).join(' ');
   }
 
   getCurrentUserId(): Observable<string> {
@@ -66,34 +74,50 @@ export class HomePage {
 		}
 	  })
 	);
+	
   }
+
+  // Function to handle status label color
+  getStatusColor(status: string) {
+	if (status === 'ongoing') {
+		return 'success';
+	} else if (status === 'upcoming') {
+		return 'warning';
+	} else {
+		return 'danger';
+	}
+	  }
 
  populateCards() {
 	if (this.events.length === 0) {
-		this.cards = []; // Empty the cards list when there are no events
+		this.cards = [];
 	  } else {
 		this.cards = this.events.map(event => ({
 		  title: event.title,
-		  location: `(${event.latitude}, ${event.longitude})`,
+		  location: event.location,
 		  description: '' + event.description,
 		  button: "Join event",
 		  image_url: event.image_url,
 		  longitude: event.longitude,
 		  latitude: event.latitude,
+		  status: event.status,
 		  id: event.code,
 		  created_at: event.createdAt,
 		  start_date: event.start_date,
 		  end_date: event.end_date,
+		  
 		  // Add event listener to the button
 		  buttonClick: function() {
 			// Redirect to event details page
 			console.log("Redirecting to event details page: ", event.id)
+			
 			// window.location.href = "/view-event/" + event.id;
 		  }
 		}));
 	  }
   }
   events: any[] = [];
+  
 
   cards: any[] = [
 

@@ -1,0 +1,70 @@
+.loading-page-container {
+    /* Set the width and height of the container to match the image size */
+    width: 100%;
+  height: 100%;
+  /* Center the container horizontally and vertically */
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99; 
+
+  background-color: #ffffff;
+
+  }
+
+  .loading-icon-wrapper {
+    /* Define the animation properties for the border */
+    animation: border-wave 2s linear infinite;
+    /* Set the initial border color */
+    border: 2px solid transparent;
+    border-radius: 50%;
+  }
+
+  .loading-message {
+    color: #000000; /* Set the color of the loading message */
+    font-size: 14px; /* Adjust the font size as per your preference */
+    margin-top: 8px; /* Add some space between the image and the message */
+    text-align: center; /* Center the text horizontally */
+    // margin-right: 10px;
+  }
+  
+  .loading-page-container img {
+    /* Define the animation properties */
+    animation-name: wave; /* Name of the animation */
+    animation-duration: 0.3s; /* Duration of the animation */
+    animation-timing-function: linear; /* Linear timing function for constant speed */
+    animation-iteration-count: infinite; /* Infinite iterations for continuous animation */
+    width: 50px; /* Adjust the width to your desired size */
+    height: 50px; 
+    // border: solid 1px #000;
+    // border-radius: 50%;
+  }
+  
+  /* Define the keyframes for the wave animation */
+  @keyframes wave {
+    0% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-8px); /* Move the image up by 8 pixels at the midpoint */
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+  @keyframes border-wave {
+    0% {
+      border-color: #ff0000; /* Red */
+    }
+    50% {
+      border-color: #00ff00; /* Green */
+    }
+    100% {
+      border-color: #ff0000; /* Red */
+    }
+  }
+  
+  

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../shared/services/auth.service';
 import { Observable, map } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-joined-event',
@@ -18,11 +19,12 @@ export class JoinedEventPage implements OnInit {
   constructor(
     public authService: AuthService,
     private router: Router,
-    private afAuth: AngularFireAuth
+    private afAuth: AngularFireAuth,
+    private http: HttpClient
   ) {}
 
   ngOnInit() {
-    this.getEventsFromMockData();
+    this.getEventsFromAPI();
   }
 
     // Function to handle the card button click
@@ -32,68 +34,27 @@ export class JoinedEventPage implements OnInit {
   }
 
   // Get events from mock data and display
-  getEventsFromMockData() {
+  getEventsFromAPI() {
     this.getCurrentUserId().subscribe((uid) => {
       if (uid) {
         console.log(`We got that ${uid}`);
-        // Replace this.events with mock data array
-        this.events = [
-          {
-            title: 'Event 1',
-            description: 'Description of Event 1',
-            latitude: 40.7128,
-            longitude: -74.0060,
-            image_url: 'assets/images/download.jpg',
-            id: 'event1',
-            createdAt: '2023-07-01T12:00:00Z',
-            start_date: '2023-07-10T18:00:00Z',
-            end_date: '2023-07-10T22:00:00Z',
-          },
-          {
-            title: 'Event 2',
-            description: 'Description of Event 2',
-            latitude: 34.0522,
-            longitude: -118.2437,
-            image_url: 'https://example.com/event2.jpg',
-            id: 'event2',
-            createdAt: '2023-07-02T12:00:00Z',
-            start_date: '2023-07-15T10:00:00Z',
-            end_date: '2023-07-15T16:00:00Z',
-          }, 
-          {
-            title: 'Event 3',
-            description: 'Description of Event 1',
-            latitude: 40.7128,
-            longitude: -74.0060,
-            image_url: 'https://example.com/event1.jpg',
-            id: 'event1',
-            createdAt: '2023-07-01T12:00:00Z',
-            start_date: '2023-08-10T18:00:00Z',
-            end_date: '2023-09-10T22:00:00Z',
-          },
-          {
-            title: 'Event 4',
-            description: 'Description of Event 2',
-            latitude: 34.0522,
-            longitude: -118.2437,
-            image_url: 'https://example.com/event2.jpg',
-            id: 'event2',
-            createdAt: '2023-07-02T12:00:00Z',
-            start_date: '2023-07-15T10:00:00Z',
-            end_date: '2023-10-15T16:00:00Z',
-          },
-          // Add more mock events as needed
-        ];
-        
-        this.populateCards();
+        this.http.get<Event[]>(`http://localhost:8000/e/events?uid=${uid}&filter=participant`).subscribe((events: Event[]) => {
+          console.log(events);
+          this.events = events;
+          this.populateCards();
+          // this.events.filter((event) => event.status === 'ongoing');
+        });
+        // this.populateCards();
+        this.applyFilter();
         this.loading = false;
+        
       } else {
         console.log("No user id");
         this.loading = false;
       }
     });
   }
-
+  
   getCurrentUserId(): Observable<string> {
     return this.afAuth.authState.pipe(
       map((user) => {
@@ -123,6 +84,7 @@ export class JoinedEventPage implements OnInit {
         created_at: event.createdAt,
         start_date: event.start_date,
         end_date: event.end_date,
+        status: event.status,
         // Add event listener to the button
         buttonClick: () => {
           // Redirect to event details page
@@ -139,6 +101,7 @@ export class JoinedEventPage implements OnInit {
     // Call your event service method to fetch joined events
     if (this.events.length === 0) {
       this.cards = []; // Empty the cards list when there are no events
+      
       } else {
       this.cards = this.events.map(event => ({
         title: event.eventName,
@@ -157,11 +120,11 @@ export class JoinedEventPage implements OnInit {
   }
   applyFilter() {
     if (this.filterType === 'Ongoing') {
-      this.cards = this.events.filter((event) => new Date(event.start_date) <= new Date() && new Date(event.end_date) >= new Date());
+      this.cards = this.events.filter((event) => event.status === 'ongoing');
     } else if (this.filterType === 'Upcoming') {
-      this.cards = this.events.filter((event) => new Date(event.start_date) > new Date());
+      this.cards = this.events.filter((event) => event.status === 'upcoming');
     } else if (this.filterType === 'Ended') {
-      this.cards = this.events.filter((event) => new Date(event.end_date) < new Date());
+      this.cards = this.events.filter((event) => event.status === 'ended' || event.status === 'finished');
     }
   }
   
@@ -169,14 +132,17 @@ export class JoinedEventPage implements OnInit {
 		this.router.navigateByUrl('/search');
 	}
   
-  eventDetails() {
-		this.router.navigate(['/event']);
-	}
+  // eventDetails() {
+	// 	this.router.navigate(['/event']);
+	// }
 
   onEvent() {
     this.router.navigate(['/create-event']);
   }
 
+  eventDetails(event_id: string) {
+		this.router.navigate(['/view-event', event_id]);
+	}
   onNotifications() {
     this.router.navigate(['/notification']);
   }
@@ -192,4 +158,19 @@ export class JoinedEventPage implements OnInit {
   onHome() {
     this.router.navigate(['/home']);
   }
+  getStatusColor(status: string) {
+    if (status === 'ongoing') {
+      return 'success';
+    } else if (status === 'upcoming') {
+      return 'warning';
+    } else {
+      return 'danger';
+    }
+      }
+
+      truncateText(text: string, words: number): string {
+        if (!text) return '';
+        const wordsArray = text.trim().split(' ');
+        return wordsArray.slice(0, words).join(' ');
+        }
 }

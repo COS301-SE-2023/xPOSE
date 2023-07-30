@@ -6,10 +6,14 @@ async function processReceivedMessage() {
     try{
         const queueName = 'notifications';
         const receivedMsg = await receiveMessageFromQueue(queueName);
-        console.log("Received message:", receivedMsg);
+        if(receivedMsg !== null){
+            console.log("Received message:", receivedMsg);
+            handleNotification(receivedMsg);
+        }else {
+            console.log("No messages received...");
+        }
         
-        handleNotification(receivedMsg);
-        
+
         /*switch (receivedMsg.type) {
             case 'notification':
                 handleNotificationMessage(message);
@@ -33,13 +37,18 @@ const intervalTime = 10000; // 10 seconds (adjust this as needed)
 setInterval(processReceivedMessage, intervalTime);
 
 export function handleNotification(message) {
-    console.log("Listening to incoming messages...")
-    // Extract required data from the message
-    const {responses, userId, data } = message;
+    console.log("Listening to incoming messages...");
 
+    if (!message) {
+        console.error("No messages.");
+        return; // Return early if message is null
+    }
+
+    // Extract required data from the message
+    const {data } = message;
     // Store the message in the Notification collection
     const db = admin.firestore();
-    const notificationRef = db.collection('Notifications').doc(data.senderId);
+    const notificationRef = db.collection('Notifications').doc(data.receiverId);
     // Store the message in the MyNotifications subcollection
     notificationRef.collection('MyNotifications').add(data)
             .then(()=> {
@@ -48,6 +57,7 @@ export function handleNotification(message) {
             .catch((error) => {
                 console.error("Error adding document: ", error);
             });
+
   }
 
 

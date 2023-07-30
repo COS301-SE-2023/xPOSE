@@ -33,41 +33,13 @@
         width: 100%;
         height: 95%;
         background: rgba(143, 139, 139, 0.85);
-        .count {
-            // position: relative;
-            // top: 0;
-            // left: 0;
-            // width: 7%;
-            // height: 10%;
-            // color: #fff;
-            // opacity: 1;
-            // font-size: 18px;
-            // display: flex   ;
-            // justify-content: center;
-            // align-items: center;
-            // margin-left:5px ;
-
-        }
+    
 
         .background-element {
             /* Set CSS properties to hide the background element */
             display: none; /* or visibility: hidden; or opacity: 0; or any other appropriate styling */
           }
-        .close-btn {
-            position: relative;
-            left: 90%;
-            bottom: 40%;
-            width: 7%;
-            height: 5%;
-            z-index: 2;
-            padding-bottom: 10px;
-            // display: none;
-
-            .fa-times {
-                font-size: 25px;
-            }
-
-        }
+       
         .btn-lightbox-carousel{
             position: absolute;
             display: flex;
@@ -77,20 +49,21 @@
             width: 8%;
             height: 8%;
             padding: 0;
-            color:#fff;
+            color:#000000;
             text-align: center;
             background: 0 0;
             border: 0;
             cursor: pointer;
             }
-            .btn-prev{
-                left: 0;
-            }
+            // .btn-prev{
+            //     left: 0;
+            //     font-size: 30px;
+            // }
             .btn-next{
                 right: 0;
             }
             .icon-lightbox-carousel {
-                color:#ffffff;
+                // color:#ffffff;
                 opacity: 0.5;
                 transition: all 0.15s ease;
 
@@ -120,16 +93,35 @@
             .lightbox-img img{
                 width: 100%;
                 border-radius: .35rem;
+                padding-bottom: 1000px;
                 
             }
 
 
     
     }
-    .footer-content {
-        background-color: #f2f2f2;
-        padding: 10px;
-        text-align: center;
-        color: #333;
-        font-size: 14px;
+    
+      .icon-prev{
+        font-size: 100px;
+        font-weight: bolder;
+        padding-bottom: 1300px;
       }
+      .close-btn {
+        position: relative;
+        left: 85%;
+        bottom: 37%;
+        z-index: 2;
+        font-size: 50px;
+
+    }
+    .icon-p{
+        font-size: 30px;
+        font-weight: bolder;
+    }
+
+    .style-create-icon{
+        font-size: 200px;
+        color: deeppink;
+        // font-weight: bolder;
+        // padding-bottom: 1300px;
+    }

@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-view-event',
@@ -11,6 +12,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 })
 export class ViewEventPage implements OnInit, AfterViewInit {
   isJoined: boolean = false;
+  loading: boolean = true;
   eventpost: any;
   event_id: any;
   event: any = {}; // Initialize the event object with an empty object
@@ -19,7 +21,8 @@ export class ViewEventPage implements OnInit, AfterViewInit {
     private router: Router,
     private route: ActivatedRoute,
     private http: HttpClient,
-    private afAuth: AngularFireAuth
+    private afAuth: AngularFireAuth,
+    private location: Location
   ) {
     this.map = null;
     this.marker = null;
@@ -33,6 +36,10 @@ export class ViewEventPage implements OnInit, AfterViewInit {
     console.log(this.event_id);
     this.getEventDataFromAPI();
     this.getEventParticipantsFromAPI();
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 
 
@@ -82,6 +89,7 @@ export class ViewEventPage implements OnInit, AfterViewInit {
           .get(`http://localhost:8000/e/events/${this.event_id}?uid=${uid}`)
           .subscribe((data) => {
             this.event = data;
+            this.loading = false;
   
             // // Dummy participant data for demonstration purposes
             // this.event.participants = [

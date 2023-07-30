@@ -2,6 +2,7 @@
     "/c": "http://localhost:8001",
     "/p": "http://localhost:8005",
     "/e": "http://localhost:8004",
-    "/u": "http://localhost:8002"
+    "/u": "http://localhost:8002",
+    "/n": "http://localhost:8006"
 }
   
