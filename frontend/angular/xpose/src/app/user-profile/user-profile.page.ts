@@ -39,10 +39,15 @@ export class UserProfilePage implements OnInit {
   }
 
   applyFilter() {
-    if (this.filterType === 'Events') {
-      this.cards = this.events.filter((event) => event.status === 'events');
-    } else if (this.filterType === 'Friends') {
-      this.cards = this.events.filter((event) => event.status === 'friends');
+    if(this.selectedTab === 'events'){
+      if (this.filterType === 'Events') {
+        this.cards = this.events.filter((event) => event.status === 'events');
+      } else if (this.filterType === 'Friends') {
+        this.cards = this.events.filter((event) => event.status === 'friends');
+      }
+      else{
+        this.cards = [];
+      }
     }
-  }
+  }   
 }
