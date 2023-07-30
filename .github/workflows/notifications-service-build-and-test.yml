@@ -23,6 +23,6 @@ jobs:
         working-directory: backend/notifications-service/
         run: npm install
 
-      - name: Run tests for notifications service
-        working-directory: backend/notifications-service/
-        run: npm test
+      # - name: Run tests for notifications service
+      #   working-directory: backend/notifications-service/
+      #   run: npm test

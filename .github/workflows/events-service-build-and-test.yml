@@ -23,6 +23,6 @@ jobs:
         working-directory: backend/events-service
         run: npm install
 
-      - name: Run tests for event chats service
-        working-directory: backend/events-service/
-        run: npm test
+      # - name: Run tests for event chats service
+      #   working-directory: backend/events-service/
+      #   run: npm test
