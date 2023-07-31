@@ -1,26 +1,38 @@
-<!-- <ion-content [fullscreen]="true" id="main-content" class="custom-backround"> -->
 
-<!-- <div *ngIf="loading; else loadedContent" class="loading-container">
-  <app-loading-icon></app-loading-icon>
-    <p class="loading-text">Loading...</p>
-  </div> -->
-  <!-- <ng-template #loadedContent> -->
-    <!-- <app-loading-icon></app-loading-icon> -->
     <ion-header [translucent]="true">
+     
       <ion-toolbar class="custom-toolbar">
+        <ion-buttons slot="end">
+          <ion-menu-button></ion-menu-button>
+        </ion-buttons>
         <ion-buttons slot="start">
           <app-backbutton></app-backbutton>
         </ion-buttons>
         <ion-title class="event-title">Event</ion-title>
         <ion-buttons slot="end">
-          <ion-button (click)="onLogoutClick()">
+          <!-- <ion-button (click)="onLogoutClick()">
             <ion-icon name="log-out-outline"></ion-icon>
-          </ion-button>
+          </ion-button> -->
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
     
-      
+    
+<ion-menu side="end" content-id="main-content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item>Edit event</ion-item>
+      <ion-item>Leave event</ion-item>
+      <ion-item>Delete event</ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>  
+
       <ion-content [fullscreen]="true" id="main-content" class="custom-backround">
       <app-loading-icon *ngIf="loading"></app-loading-icon>
 
@@ -39,19 +51,18 @@
     
     
       <ion-list *ngIf="filterType === 'posts'" >
-        <!-- Add the "+ Add image" button here -->
+        <ion-card>
+             <!-- Add the "+ Add image" button here -->
         <ion-button (click)="openImageGallery()">+ Add image</ion-button>
       
         <!-- Display the gallery images -->
         <app-gallery-lightbox [galleryData]="data"></app-gallery-lightbox>
 
+        </ion-card>
+     
+
        
 
-        <!-- <ion-fab>
-          <ion-fab-button>
-            <ion-icon name="add"></ion-icon>
-          </ion-fab-button>
-        </ion-fab> -->
       </ion-list>
       
     

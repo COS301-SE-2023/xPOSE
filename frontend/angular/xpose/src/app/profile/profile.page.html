@@ -12,7 +12,10 @@
   <div class="user_div" *ngIf="user">
     <img [src]="user.photoURL">
     <div class="first_div">
-      <ion-label class="username">{{ user.displayName }}</ion-label>
+      <ion-label class="username">Name: {{user.displayName }}</ion-label><br>
+      <ion-label class="username">email: {{user.email }}</ion-label><br>
+      <ion-label class="username">search token:{{user.username}}</ion-label><br>
+      
       <br> 
     </div>
     <ion-button class="edit_div" (click)="editProfile()">Edit Profile</ion-button> 

@@ -27,8 +27,34 @@
     (ionChange)="onSearch()"
   ></ion-searchbar>
 
+  <ion-content>
+
+    <div class="ion-text-center" *ngIf="searchClicked && loading">
+      Please wait searching...
+    </div>
+
+    <ng-container *ngIf="!found">
+      <h2 class="ion-text-center">No matching users found.</h2>
+    </ng-container>
+
+      <!-- Display user information if available -->
+      <div *ngIf="this.user">
+        <h2 class="ion-text-center">{{search_result}}</h2>
+        <ion-list>
+          <ion-item *ngFor="let userItem of this.user">
+            <!-- Replace 'displayName' with the actual property you want to display for each user -->
+            <ion-label (click)="viewUser(userItem)">{{ userItem.uniq_username }}</ion-label>
+          </ion-item>
+        </ion-list>
+      </div>
+
+  </ion-content>
+  
+
+  
+
   <!-- Display suggested data or filtered search results based on searchType -->
-  <ion-list *ngIf="showSuggestions">
+  <!-- <ion-list *ngIf="showSuggestions">
     <ion-item *ngFor="let suggestion of suggestedItems">
       {{ suggestion.name }}
     </ion-item>
@@ -38,5 +64,5 @@
     <ion-item *ngFor="let item of filteredItems">
       {{ item.name }}
     </ion-item>
-  </ion-list>
+  </ion-list> -->
 </ion-content>
