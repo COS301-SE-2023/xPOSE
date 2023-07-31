@@ -493,7 +493,7 @@ export class EventPage {
   }
 
   onSearchClick() {
-    // this.router.navigate(['/search']);
+    this.router.navigate(['/search-image']);
   }
 
 }

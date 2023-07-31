@@ -1,17 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+// import { Router } from 'express';
 import { ApiService } from '../service/api.service';
-
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-search',
-  templateUrl: './search.page.html',
-  styleUrls: ['./search.page.scss'],
+  selector: 'app-search-image',
+  templateUrl: './search-image.page.html',
+  styleUrls: ['./search-image.page.scss'],
 })
-export class SearchPage implements OnInit {
-  // Define the search types (tabs)
-  
+export class SearchImagePage implements OnInit {
+
   searchType: 'events' | 'users' = 'events';
   events: any[] = [
     { name: 'Event 1' },
@@ -96,4 +95,6 @@ export class SearchPage implements OnInit {
   viewUser(userItem: any){
     this.router.navigate(['/user-profile', userItem.uid]);
   }
+
+
 }
