@@ -50,8 +50,8 @@ export class SendFriendRequestsComponent implements OnInit {
           const requestId = user.uid;
           const endpoint = `http://localhost:8000/u/users/${userId}/friend-requests/${requestId}`;
   
-          console.log("My sender id is: " + userId);
-          console.log("My recipient id is: " + requestId);
+          // console.log("My sender id is: " + userId);
+          // console.log("My recipient id is: " + requestId);
   
           // Get the sender's name from Firestore
           this.firestore.collection("Users").doc(userId).get().subscribe(

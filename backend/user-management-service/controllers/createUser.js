@@ -20,7 +20,7 @@ export const createUser = async (req, res) => {
           emailVerified,
           privacy, 
           bio,
-          photoObject,
+          photoURL,
           visibility 
         } = req.body;
 
@@ -36,7 +36,7 @@ export const createUser = async (req, res) => {
             emailVerified,
             privacy,
             bio,
-            photoObject,
+            photoURL: `https://firebasestorage.googleapis.com/v0/b/xpose-4f48c.appspot.com/o/profiles%2Falexander-shatov-kmYw-PkX5M4-unsplash.jpg?alt=media&token=a60cc25d-2a94-4b51-8f97-6f67399a7568`,
             uid,
             visibility
           };

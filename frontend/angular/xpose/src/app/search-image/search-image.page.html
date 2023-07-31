@@ -1,0 +1,68 @@
+<ion-content [fullscreen]="true">
+  <ion-header [translucent]="true">
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <app-backbutton></app-backbutton>
+       </ion-buttons>
+      <ion-title>Search</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="closeSearchPage()">Close</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-segment [(ngModel)]="searchType" (ionChange)="onSearchTypeChange()">
+    <ion-segment-button value="events">
+      Images
+    </ion-segment-button>
+    <ion-segment-button value="users">
+      Users
+    </ion-segment-button>
+  </ion-segment>
+
+  <ion-searchbar
+    #searchBar
+    placeholder="Search"
+    [(ngModel)]="searchQuery"
+    (ionChange)="onSearch()"
+  ></ion-searchbar>
+
+  <ion-content>
+
+    <div class="ion-text-center" *ngIf="searchClicked && loading">
+      Please wait searching...
+    </div>
+
+    <ng-container *ngIf="!found">
+      <h2 class="ion-text-center">No matching users found.</h2>
+    </ng-container>
+
+      <!-- Display user information if available -->
+      <div *ngIf="this.user">
+        <h2 class="ion-text-center">{{search_result}}</h2>
+        <ion-list>
+          <ion-item *ngFor="let userItem of this.user">
+            <!-- Replace 'displayName' with the actual property you want to display for each user -->
+            <ion-label (click)="viewUser(userItem)">{{ userItem.uniq_username }}</ion-label>
+          </ion-item>
+        </ion-list>
+      </div>
+
+  </ion-content>
+  
+
+  
+
+  <!-- Display suggested data or filtered search results based on searchType -->
+  <!-- <ion-list *ngIf="showSuggestions">
+    <ion-item *ngFor="let suggestion of suggestedItems">
+      {{ suggestion.name }}
+    </ion-item>
+  </ion-list>
+
+  <ion-list *ngIf="!showSuggestions">
+    <ion-item *ngFor="let item of filteredItems">
+      {{ item.name }}
+    </ion-item>
+  </ion-list> -->
+</ion-content>

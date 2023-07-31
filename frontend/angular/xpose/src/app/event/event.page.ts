@@ -12,6 +12,7 @@ import { NavigationEnd } from "@angular/router";
 import { GalleryDataService } from './posts/gallery-lightbox/gallery-data.service';
 import { AngularFirestore, AngularFirestoreCollection, DocumentChangeAction } from '@angular/fire/compat/firestore';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera'; 
+import { ApiService } from '../service/api.service';
 
 interface Item {
   imageSrc: string;
@@ -82,6 +83,7 @@ export class EventPage {
     private galleryDataService: GalleryDataService,
     private afs: AngularFirestore,
     // private camera: Camera,
+    private api: ApiService
     ) {
       this.url = "sdafsda";
     this.router.events.subscribe((event) => {
@@ -145,7 +147,7 @@ export class EventPage {
 
       this.getCurrentUserId().subscribe((uid) => {
         if (uid) {
-          this.http.get(`http://localhost:8000/e/events/${event_id}?uid=${uid}`).subscribe((data) => {
+          this.http.get(`${this.api.apiUrl}/e/events/${event_id}?uid=${uid}`).subscribe((data) => {
             this.url = `${window.location.protocol}//${window.location.host}/view-event/${event_id}`;
             this.retrieveMessages();
             this.retrievePosts();
@@ -173,8 +175,8 @@ export class EventPage {
       // console.log(event_id);
 
       console.log('Hello from event page');
-      // // make api call to http://localhost:8000/e/events/{event_id}
-      // this.http.get('http://localhost:8000/e/events/' + event_id).subscribe((res : any) => {
+      // // make api call to ${this.api.apiUrl}/e/events/{event_id}
+      // this.http.get('${this.api.apiUrl}/e/events/' + event_id).subscribe((res : any) => {
       //   console.log(res);
       //   this.event = res;
       //   // this.currentEventDataService.event_id = res._id;
@@ -217,7 +219,7 @@ export class EventPage {
     // Make a request to delete the event using this.current_event.code as the event ID
     // You can use the http.delete() method for this purpose
     // Example:
-    this.http.delete(`http://localhost:8000/e/events/${this.current_event.code}?uid=${uid}`).subscribe(
+    this.http.delete(`${this.api.apiUrl}/e/events/${this.current_event.code}?uid=${uid}`).subscribe(
       (response) => {
         // Event deleted successfully, handle the response as needed
         // Redirect to the home page
@@ -236,7 +238,7 @@ export class EventPage {
     // Example:
     // this.getCurrentUserId().subscribe((uid) => {
     //   if (uid) {
-        this.http.delete(`http://localhost:8000/e/events/${this.current_event.code}/remove?uid=${uid}`).subscribe(
+        this.http.delete(`${this.api.apiUrl}/e/events/${this.current_event.code}/remove?uid=${uid}`).subscribe(
           (response) => {
             // User successfully left the event, handle the response as needed
             // Redirect to the home page
@@ -293,7 +295,7 @@ export class EventPage {
         // Send the FormData to the server
         this.getCurrentUserId().subscribe((uid) => {
           if (uid) {
-            this.http.post(`http://localhost:8000/p/${this.current_event.code}?uid=${uid}`, formData).subscribe(
+            this.http.post(`${this.api.apiUrl}/p/${this.current_event.code}?uid=${uid}`, formData).subscribe(
               (res: any) => {
                 console.log(res);
               },
@@ -323,7 +325,7 @@ export class EventPage {
     this.getCurrentUserId().subscribe((uid) => {
       if(uid) {
         this.http
-          .get(`http://localhost:8000/e/events/${this.current_event.code}/participants?uid=${uid}`)
+          .get(`${this.api.apiUrl}/e/events/${this.current_event.code}/participants?uid=${uid}`)
           .subscribe((data) => {
             this.participants = data;
 
@@ -430,7 +432,7 @@ export class EventPage {
         const formData: FormData = new FormData();
         formData.append('message', message.message);
 
-        this.http.post(`http://localhost:8000/c/chats/${event_id}?uid=${uid}`, formData).subscribe((res) => {
+        this.http.post(`${this.api.apiUrl}/c/chats/${event_id}?uid=${uid}`, formData).subscribe((res) => {
           console.log(res);
         });
       });
@@ -490,6 +492,10 @@ export class EventPage {
     }
   }
 
+  onSearchClick() {
+    this.router.navigate(['/search-image']);
+  }
+
 }
 
 interface Event {
@@ -519,3 +525,4 @@ interface Post {
   id?: string;
   timestamp?: Date;
 }
+

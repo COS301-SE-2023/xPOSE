@@ -22,7 +22,7 @@ export const getFriend = async (req, res) => {
             },
         });
 
-        if (!friendship) {
+        if (!friendship || friendship.length === 0) {
           return res.status(200).json({ areFriends: false });
         }
         // They are friends return document

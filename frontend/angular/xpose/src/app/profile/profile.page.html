@@ -10,11 +10,11 @@
 
 <div class="profile_div" >
   <div class="user_div" *ngIf="user">
-    <img [src]="user.photoURL">
+    <img class="profile-image" [src]="user.photoURL">
     <div class="first_div">
-      <ion-label class="username">Name: {{user.displayName }}</ion-label><br>
-      <ion-label class="username">email: {{user.email }}</ion-label><br>
-      <ion-label class="username">search token:{{user.username}}</ion-label><br>
+      <ion-label class="username">Name: {{user.displayName}}</ion-label><br>
+      <ion-label class="username">Email: {{user.email}}</ion-label><br>
+      <ion-label class="username">Unique Code:{{user.username}}</ion-label><br>
       
       <br> 
     </div>

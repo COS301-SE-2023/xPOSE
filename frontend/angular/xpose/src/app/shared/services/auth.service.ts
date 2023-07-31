@@ -60,7 +60,7 @@ export class AuthService {
       emailVerified: false,
       privacy:false,
       bio:" Default bio",
-      photoObject:{},
+      photoURL:{},
       visibility: true
     };
     

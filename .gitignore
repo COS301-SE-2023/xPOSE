@@ -21,4 +21,4 @@ firebase-debug.log
 **/environments/**
 frontend/angular/xpose/src/environments/environment.prod.ts
 frontend/angular/xpose/src/environments/environment.ts
-package-lock.json
+**/package-lock.json

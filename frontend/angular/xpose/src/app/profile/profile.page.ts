@@ -27,10 +27,10 @@ export class ProfilePage {
     private location: Location
   ) {
     this.user = {
-      photoURL: './assets/images/profile picture.jpg',
-      displayName: 'John Doe',
-      email: 'johndoe@example.com',
-      username:'uniqueUsername'
+      photoURL: '',
+      displayName: 'loading...',
+      email: 'loading...',
+      username:'loading...'
     };
     this.user.photoURL = './assets/images/profile picture.jpg'; // Updated profile picture URL
   }
@@ -39,11 +39,10 @@ export class ProfilePage {
     this.authService.getCurrentUserId().subscribe((uid) => {
       if (uid) {
         this.userService.GetUser(uid).subscribe((userData) => {
-          console.log("User name: ", userData.displayName);
-          console.log("User email: ", userData.email);
           this.user.displayName = userData.displayName;
           this.user.email = userData.email;
           this.user.username = userData.uniq_username;
+          this.user.photoURL =userData.photoURL;
           
         });
       }
@@ -64,7 +63,7 @@ export class ProfilePage {
 
   setCurrentTab() {
     this.selectedTab = this.tabs?.getSelected();
-    console.log(this.selectedTab);
+    // console.log(this.selectedTab);
   }
 
   logout() {
