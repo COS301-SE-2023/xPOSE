@@ -53,8 +53,6 @@ export const getFriends = async (req, res) => {
         }
       }
 
-      console.log("FRIENDS!!!!",friends);
-
       res.status(200).json(friends);
       } catch (error) {
         console.error('Error getting friends:', error);
