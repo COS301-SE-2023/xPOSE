@@ -8,11 +8,11 @@
   <ion-list *ngIf="userFriends && userFriends.length > 0"> <!-- Add ngIf here -->
     <ion-item *ngFor="let friend of userFriends">
       <ion-thumbnail slot="start">
-        <img [src]="friend.profilePicUrl">
+        <img [src]="friend.photoURL">
       </ion-thumbnail>
       <ion-label>
-        <h2>{{ friend.name }}</h2>
-        <p>{{ friend.location }}</p>
+        <h2>{{ friend.displayName }}</h2>
+        <p>{{ friend.uniq_username }}</p>
       </ion-label>
       <ion-button slot="end" (click)="unfriend(friend)">
         Unfriend
