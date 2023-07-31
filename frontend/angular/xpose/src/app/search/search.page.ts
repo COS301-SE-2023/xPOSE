@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { ApiService } from '../service/api.service';
+
 
 @Component({
   selector: 'app-search',
@@ -15,18 +18,22 @@ export class SearchPage implements OnInit {
     { name: 'Event 3' },
     // Add more events as needed
   ];
-  users: any[] = [
-    { name: 'User 1' },
-    { name: 'User 2' },
-    { name: 'User 3' },
-    // Add more users as needed
-  ];
+
+  user: any =[];  // store user query result
+  loading: boolean = true; // Initial loading state
+  search_result = "";
+  found = true;
+
   suggestedItems: any[] = [];
   searchQuery: string = '';
   filteredItems: any[] = [];
   showSuggestions: boolean = true;
+  searchClicked: boolean = false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router,
+    private http: HttpClient,
+    private api: ApiService
+    ) {}
 
   ngOnInit() {
     // Initialize the filteredItems with all events on page load
@@ -42,22 +49,36 @@ export class SearchPage implements OnInit {
 
   onSearch() {
     if (this.searchQuery.trim() !== '') {
-      this.showSuggestions = false;
+      this.searchClicked = true;
+      this.found = true;
+
       if (this.searchType === 'events') {
-        // Filter the events based on the searchQuery
-        this.filteredItems = this.events.filter(event =>
-          event.name.toLowerCase().includes(this.searchQuery.toLowerCase())
-        );
+        // event APi call goes here
+
       } else if (this.searchType === 'users') {
-        // Filter the users based on the searchQuery
-        this.filteredItems = this.users.filter(user =>
-          user.name.toLowerCase().includes(this.searchQuery.toLowerCase())
-        );
+
+        const search_endpoint = `${this.api.apiUrl}/u/users/search?field=uniq_username&value=${this.searchQuery}`;
+         this.loading = true;
+
+        this.http.get<any[]>(search_endpoint).subscribe(
+          (response) => {
+            this.user =response
+            this.loading = false;
+            this.searchClicked = false;
+            
+            this.user = response;
+            this.search_result = "Search results:";
+            
+          },
+          (error:any) => {
+            console.log(error.error.message);
+            this.found = false;
+            this.searchClicked = false;
+            
+          }
+        )
       }
-    } else {
-      this.showSuggestions = true;
-      this.filteredItems = [];
-    }
+    } 
   }
 
   onSearchTypeChange() {
@@ -69,5 +90,9 @@ export class SearchPage implements OnInit {
   closeSearchPage() {
     // Implement the function to close the search page if needed
     this.router.navigate(['/home']);
+  }
+
+  viewUser(userItem: any){
+    this.router.navigate(['/user-profile', userItem.uid]);
   }
 }

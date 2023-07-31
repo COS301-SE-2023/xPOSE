@@ -12,19 +12,6 @@ async function processReceivedMessage() {
         }else {
             console.log("No messages received...");
         }
-        
-
-        /*switch (receivedMsg.type) {
-            case 'notification':
-                handleNotificationMessage(message);
-                break;
-            case 'request':
-                handleRequestMessage(message);
-                break;
-            default:
-                console.log('Received an unknown message type');
-        }*/
-    
 
     } catch(error){
         console.error("Error while receiving message", error);
@@ -33,7 +20,7 @@ async function processReceivedMessage() {
 
 processReceivedMessage();
 // Set up an interval to periodically check for new messages in the queue
-const intervalTime = 10000; // 10 seconds (adjust this as needed)
+const intervalTime = 5000; // 5 seconds (adjust this as needed)
 setInterval(processReceivedMessage, intervalTime);
 
 export function handleNotification(message) {

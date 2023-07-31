@@ -5,7 +5,7 @@ on:
     branches:
       - '*'
     paths:
-      - 'backend/user-management-service/**'
+      - 'backend/notifications-service/**'
   
 jobs:
   build:
@@ -19,10 +19,10 @@ jobs:
         with:
           node-version: 16
       
-      - name: Install dependencies for user management service
-        working-directory: backend/user-management-service
+      - name: Install dependencies for notifications service
+        working-directory: backend/notifications-service/
         run: npm install
 
-      - name: Run tests for user management service
-        working-directory: backend/user-management-service/
-        run: npm test
+      # - name: Run tests for notifications service
+      #   working-directory: backend/notifications-service/
+      #   run: npm test

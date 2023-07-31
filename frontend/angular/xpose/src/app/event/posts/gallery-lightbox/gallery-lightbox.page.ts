@@ -137,14 +137,17 @@ export class GalleryLightboxPage implements OnInit {
   }
   
 
-  // Function to share the current lightbox image
   shareImage() {
-    if (this.previewImage && this.currentLightboxImage) {
-      const imageSrc = this.currentLightboxImage.imageSrc;
-      // Implement your sharing logic here, e.g., using a social sharing plugin or navigator.share API.
-      // For this example, I'll just display the image URL in an alert.
-      alert('Share this image: ' + imageSrc);
-    }
+    // Replace this with the actual share functionality code
+    // For example, you can use a social media sharing library to implement the share feature
+    alert('Share functionality to be implemented.');
+  }
+
+  // Delete button functionality
+  deleteImage() {
+    // Replace this with the actual delete functionality code
+    // For example, you can remove the image from the galleryData array or make an API call to delete the image
+    alert('Delete functionality to be implemented.');
   }
 
 }

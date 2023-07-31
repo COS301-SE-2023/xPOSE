@@ -14,6 +14,7 @@ export class ProfilePage {
     photoURL: string;
     displayName: string;
     email: string;
+    username: string;
   };
   selectedTab: any;
   tabs: any;
@@ -26,21 +27,22 @@ export class ProfilePage {
     private location: Location
   ) {
     this.user = {
-      photoURL: './assets/images/profile picture.jpg',
-      displayName: 'John Doe',
-      email: 'johndoe@example.com',
+      photoURL: '',
+      displayName: 'loading...',
+      email: 'loading...',
+      username:'loading...'
     };
     this.user.photoURL = './assets/images/profile picture.jpg'; // Updated profile picture URL
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.authService.getCurrentUserId().subscribe((uid) => {
       if (uid) {
         this.userService.GetUser(uid).subscribe((userData) => {
-          console.log("User name: ", userData.displayName);
-          console.log("User email: ", userData.email);
           this.user.displayName = userData.displayName;
           this.user.email = userData.email;
+          this.user.username = userData.uniq_username;
+          this.user.photoURL =userData.photoURL;
           
         });
       }
@@ -61,7 +63,7 @@ export class ProfilePage {
 
   setCurrentTab() {
     this.selectedTab = this.tabs?.getSelected();
-    console.log(this.selectedTab);
+    // console.log(this.selectedTab);
   }
 
   logout() {
@@ -90,6 +92,6 @@ export class ProfilePage {
 
   editProfile() {
     // Add logic to navigate to the edit profile page
-    this.router.navigate(['/edit-profile']);
+    this.router.navigate(['/edit']);
   }
 }

@@ -40,6 +40,11 @@ async function responseToEventInvite(req, res) {
             },
         });
 
+        // Check if event exists
+        if(!event) {
+            res.status(404).json({ error: 'Event not found' });
+        }
+
         // Find the invitation with pending status for the given event code and user id
         const invitation = await EventInvitation.findOne({
             where: {
