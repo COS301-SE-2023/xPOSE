@@ -12,6 +12,7 @@ import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { ViewChild } from "@angular/core";
 import { NgForm } from "@angular/forms";
+import { ApiService } from "../service/api.service";
 // import { google } from 'google-maps';
 @Component({
 	selector: "app-create-event",
@@ -43,7 +44,7 @@ export class CreateEventPage implements OnInit, AfterViewInit {
 
 	constructor(private http: HttpClient,
 		private router: Router,
-		private service: Service,
+		private api: ApiService,
 		private modalController: ModalController,
 		private afAuth: AngularFireAuth) {
 			this.map = null;
@@ -231,7 +232,7 @@ export class CreateEventPage implements OnInit, AfterViewInit {
 					//   console.log(formData);
 					  console.log(this.createEvent);
 					  // REfactor this to be done in the service class for better decoupling
-					  const url = `http://localhost:8000/e/events?uid=${uid}`;
+					  const url = `${this.api.apiUrl}/e/events?uid=${uid}`;
 					  
 					  this.http.post(url, formData)
 						.subscribe({
@@ -296,7 +297,7 @@ export class CreateEventPage implements OnInit, AfterViewInit {
 			}
 		});
 	
-	await modal.present();
+		await modal.present();
 	}
 	
 }
