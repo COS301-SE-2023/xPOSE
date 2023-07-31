@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { ApiService } from '../service/api.service';
 
 
 @Component({
@@ -30,7 +31,8 @@ export class SearchPage implements OnInit {
   searchClicked: boolean = false;
 
   constructor(private router: Router,
-    private http: HttpClient
+    private http: HttpClient,
+    private api: ApiService
     ) {}
 
   ngOnInit() {
@@ -55,7 +57,7 @@ export class SearchPage implements OnInit {
 
       } else if (this.searchType === 'users') {
 
-        const search_endpoint = `http://localhost:8000/u/users/search?field=uniq_username&value=${this.searchQuery}`;
+        const search_endpoint = `${this.api.apiUrl}/u/users/search?field=uniq_username&value=${this.searchQuery}`;
          this.loading = true;
 
         this.http.get<any[]>(search_endpoint).subscribe(
