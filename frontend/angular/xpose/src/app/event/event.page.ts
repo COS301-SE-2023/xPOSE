@@ -492,6 +492,10 @@ export class EventPage {
     }
   }
 
+  onSearchClick() {
+    // this.router.navigate(['/search']);
+  }
+
 }
 
 interface Event {
@@ -521,3 +525,4 @@ interface Post {
   id?: string;
   timestamp?: Date;
 }
+
