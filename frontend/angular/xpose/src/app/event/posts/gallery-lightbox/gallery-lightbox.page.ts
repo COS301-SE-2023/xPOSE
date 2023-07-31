@@ -8,12 +8,17 @@ import {
     trigger,
     AnimationEvent,
     } from '@angular/animations';
+import { ApiService } from 'src/app/service/api.service';
+import { HttpClient } from '@angular/common/http';
 // import { MatIconModule } from '@angular/material/icon';
 
 
 interface Item {
   imageSrc: string;
   imageAlt: string;
+  event_id: string;
+  uid: string;
+  id: string;
 }
 
 @Component({
@@ -44,10 +49,13 @@ export class GalleryLightboxPage implements OnInit {
   @Input() galleryData: Item[] = [];
   @Input() showCount = false;
 
-  constructor(private galleryDataService: GalleryDataService) {}
+  constructor(private galleryDataService: GalleryDataService,
+    private api: ApiService,
+    private http: HttpClient
+    ) {}
 
   ngOnInit() {
-    this.galleryData = this.galleryDataService.getData();
+    // this.galleryData = this.galleryDataService.getData();
     this.totalImageCount = this.galleryData.length;
   }
 
@@ -103,13 +111,13 @@ export class GalleryLightboxPage implements OnInit {
         const imageSrc = reader.result as string;
         const imageAlt = file.name; // You can set a default alt text here, or ask the user to provide one.
         // Now you can add the new image to the galleryData array
-        this.galleryData.push({ imageSrc, imageAlt });
+        // this.galleryData.push({ imageSrc, imageAlt,  });
       };
       reader.readAsDataURL(file);
     }
   }
 
-  downloadImage() {
+  downloadImage(item: Item) {
     if (this.previewImage && this.currentLightboxImage) {
       const imageSrc = this.currentLightboxImage.imageSrc;
   
@@ -137,17 +145,23 @@ export class GalleryLightboxPage implements OnInit {
   }
   
 
-  shareImage() {
+  shareImage(item: Item) {
     // Replace this with the actual share functionality code
     // For example, you can use a social media sharing library to implement the share feature
-    alert('Share functionality to be implemented.');
+    console.log(item);
+    // alert('Share functionality to be implemented.');
   }
 
   // Delete button functionality
-  deleteImage() {
+  deleteImage(item: Item) {
     // Replace this with the actual delete functionality code
     // For example, you can remove the image from the galleryData array or make an API call to delete the image
-    alert('Delete functionality to be implemented.');
+    // console.log(item);
+    // alert('Delete functionality to be implemented.');
+    this.http.delete(`${this.api.apiUrl}/p/${item.event_id}/${item.id}`).subscribe((res) => {
+      console.log(res);
+      this.onClosePreview();
+    });
   }
 
 }
