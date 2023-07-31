@@ -76,7 +76,11 @@ const routes: Routes = [
   {
     path: 'user-profile/:id',
     loadChildren: () => import('./user-profile/user-profile.module').then( m => m.UserProfilePageModule)
+  },  {
+    path: 'search-image',
+    loadChildren: () => import('./search-image/search-image.module').then( m => m.SearchImagePageModule)
   },
+
 
 ];
 
