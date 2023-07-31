@@ -2,7 +2,7 @@ import { AfterViewInit,Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from "../shared/services/auth.service";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { CommonModule, Location } from '@angular/common';
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.page.html',
@@ -78,7 +78,7 @@ export class EditPage implements OnInit, AfterViewInit {
   }
 
   goBack(){
-		this.router.navigate(["/profile"]);
+		this.location.back();
 	}
 
 }

@@ -4,6 +4,8 @@ import { NavigationEnd } from '@angular/router';
 import { Location } from '@angular/common';
 import { AngularFirestore } from "@angular/fire/compat/firestore";
 import { AuthService } from '../shared/services/auth.service';
+import { HttpClient } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-notification',
@@ -18,7 +20,8 @@ export class NotificationPage implements OnInit {
   constructor(private router: Router,
      private location: Location,
      private firestore: AngularFirestore,
-     public authService: AuthService) { 
+     public authService: AuthService,
+     private http: HttpClient) { 
 
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -90,11 +93,30 @@ export class NotificationPage implements OnInit {
   }
   
   
-  acceptRequest() {
-    // Handle accept request logic here
+  acceptRequest(user:any) {
+    // /:userId/friend-requests/:requestId/accept'
+    const endpoint = "http://localhost:8000/u/users/";
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+    const requestBody = JSON.stringify(user);
+    return this.http.post<any>(`${endpoint}${user.senderId}/friend-requests/${user.receiverId}/accept`, requestBody, {headers})
+    .toPromise()
+    .then((response) => {
+      console.log("Friend request accepted",response);   
+    })
+    .catch((error) => {
+      // Handle error response here
+      window.alert(error.error.error);
+      console.log("Error:", error);
+      // console.log("Response body:", error.error);
+      return Promise.reject(error);
+    });
+
+    console.log("User object", user);
+    // this.http
   }
 
-  rejectRequest() {
+  rejectRequest(user:any) {
     // Handle reject request logic here
   }
 

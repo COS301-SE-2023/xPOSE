@@ -4,6 +4,7 @@ import { AuthService } from '../shared/services/auth.service';
 import { Observable, map } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { HttpClient } from '@angular/common/http';
+import { ApiService } from '../service/api.service';
 
 @Component({
   selector: 'app-joined-event',
@@ -20,7 +21,8 @@ export class JoinedEventPage implements OnInit {
     public authService: AuthService,
     private router: Router,
     private afAuth: AngularFireAuth,
-    private http: HttpClient
+    private http: HttpClient,
+    private api: ApiService
   ) {}
 
   ngOnInit() {
@@ -38,7 +40,7 @@ export class JoinedEventPage implements OnInit {
     this.getCurrentUserId().subscribe((uid) => {
       if (uid) {
         console.log(`We got that ${uid}`);
-        this.http.get<Event[]>(`http://localhost:8000/e/events?uid=${uid}&filter=participant`).subscribe((events: Event[]) => {
+        this.http.get<Event[]>(`${this.api.apiUrl}/e/events?uid=${uid}&filter=participant`).subscribe((events: Event[]) => {
           console.log(events);
           this.events = events;
           this.populateCards();

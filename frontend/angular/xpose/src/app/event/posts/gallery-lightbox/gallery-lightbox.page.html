@@ -1,37 +1,57 @@
-<div class="gallery-lightox-container">
+<!-- Assuming you have imported the required components and styles for ion-card -->
+
+<div class="gallery-lightox-container" >
   <!-- Add the upload button here -->
   <!-- <input type="file" (change)="onFileSelected($event)" accept="image/*" /> -->
 
-  <div class="gallery">
-    <!-- ngFor loop to display images in the gallery -->
-    <div *ngFor="let item of galleryData; let i=index">
-      <img (click)="onPreviewImage(i)" [src]="item.imageSrc" [alt]="item.imageAlt" class="gallery-img" />
+  <!-- <ion-card> -->
+    <div class="gallery">
+      <!-- ngFor loop to display images in the gallery -->
+      <!-- <ion-card> -->
+        <div *ngFor="let item of galleryData; let i=index">
+          <ion-card (click)="onPreviewImage(i)">
+            <ion-img [src]="item.imageSrc" [alt]="item.imageAlt" class="gallery-img"></ion-img>
+          </ion-card>
+        </div>
+      <!-- </ion-card> -->
     </div>
-  </div>
+  <!-- </ion-card> -->
 
-  <!-- Lightbox section -->
-  <div *ngIf="showMask" class="lightbox">
-    <!-- Show image count if showCount is true -->
-    <span *ngIf="showCount" class="count">{{currentIndex + 1}}/{{totalImageCount}}</span>
+<!-- Lightbox section -->
+<div *ngIf="showMask" class="lightbox">
+  <!-- Show image count if showCount is true -->
+  <span *ngIf="showCount" class="count">{{currentIndex + 1}}/{{totalImageCount}}</span>
 
-    <!-- Close button for lightbox -->
-    <button *ngIf="previewImage" class="close-btn" (click)="onClosePreview()">
-      <ion-icon name="close-outline" class="rev"></ion-icon>
+  <!-- Previous and Next buttons for lightbox carousel -->
+  <button *ngIf="controls" class="btn-lightbox-carousel btn-prev" (click)="prev()">
+    <ion-icon name="chevron-back-circle-outline" class="icon-prev"></ion-icon>
+  </button>
+
+  <button *ngIf="controls" class="btn-lightbox-carousel btn-next" (click)="next()">
+    <ion-icon name="chevron-forward-circle-outline" class="icon-prev"></ion-icon>
+  </button>
+
+  <button class="close-btn" (click)="onClosePreview()">
+    <ion-icon name="close-circle-outline" class="icon-close-btn"></ion-icon>
+  </button>
+
+  <!-- Lightbox image display -->
+  <div *ngIf="previewImage" class="lightbox-img" >
+    <ion-img [src]="currentLightboxImage.imageSrc" [alt]="currentLightboxImage.imageAlt"></ion-img>
+    
+    <!-- Share button -->
+    <button class="btn-lightbox-control btn-share" (click)="shareImage()">
+      <ion-icon name="share-outline" class="icon-lightbox-control"></ion-icon>
     </button>
 
-    <!-- Previous and Next buttons for lightbox carousel -->
-    <button *ngIf="controls" class="btn-lightbox-carousel btn-prev" (click)="prev()">
-      <ion-icon name="chevron-back-circle-outline" class="icon-prev"></ion-icon>
+    <button class="btn-lightbox-control btn-download" (click)="downloadImage()">
+      <ion-icon name="download-outline" class="icon-lightbox-control"></ion-icon>
     </button>
     
 
-    <button *ngIf="controls" class="btn-lightbox-carousel btn-next" (click)="next()">
-      <ion-icon name="chevron-forward-circle-outline" class="icon-prev"></ion-icon>
+    <!-- Delete button -->
+    <button class="btn-lightbox-control btn-delete" (click)="deleteImage()">
+      <ion-icon name="trash-outline" class="icon-lightbox-control"></ion-icon>
     </button>
-
-    <!-- Lightbox image display -->
-    <div *ngIf="previewImage" class="lightbox-img">
-      <img [src]="currentLightboxImage.imageSrc" [alt]="currentLightboxImage.imageAlt" />
-    </div>
   </div>
 </div>

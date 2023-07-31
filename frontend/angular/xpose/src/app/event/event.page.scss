@@ -37,9 +37,7 @@ ion-toolbar.custom-toolbar {
     font-size: 20px;
     // --min-height: 70px;
   }
-
-  ///////
-  /// 
+ 
   .card-image{
     height: 200px;
     width: 100%;
@@ -93,6 +91,7 @@ ion-toolbar.custom-toolbar {
         font-size: 1.2rem;
         margin-right: 10px;
         transition: all 0.3s ease-in-out;
+     
         &:hover{
             background: #000;
             color: #fff;
@@ -106,7 +105,18 @@ ion-toolbar.custom-toolbar {
 
   ion-list {
     // padding-bottom: 800px;
+    // display: block;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
     display: block;
+    // contain: content;
+    list-style-type: none;
   
 }
 
@@ -116,9 +126,58 @@ ion-toolbar.custom-toolbar {
 
 }
 
+/* Styling the ion-menu */
+ion-menu[side="end"] {
+  --background: #ffffff;
+  --width: 304px;
+    --min-width: auto;
+    --max-width: auto;
+    --height: 20%;
+    --min-height: auto;
+    --max-height: auto;
+      border: solid 0.2px #000;
+      // border-radius: 10px;
+//     --background: var(--ion-background-color, #fff);
+//     inset: 0px;
+//     display: none;
+//     position: absolute;
+//     contain: strict;
+}
+
+
+
 // .qrcode-container {
 //   display: flex;
 //   justify-content: center;
 //   align-items: center;
 //   height: 100%;
 // }
+
+.image-container {
+  position: relative; /* Make sure the container is positioned relatively */
+  display: inline-block; /* Or use any other layout property suitable for your case */
+}
+
+.fixed-button {
+  position: absolute;
+  bottom: 20px; /* Adjust this value to set the distance from the bottom */
+  right: 20px; /* Adjust this value to set the distance from the right */
+}
+.icon-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 45%;
+  border: solid 0.2px #666666;
+  border-radius: 35px;
+  color: #eb0091;
+}
+
+.cloud {
+  font-size: 50px;
+
+  justify-content: center;
+  align-items: center;
+}
+
+

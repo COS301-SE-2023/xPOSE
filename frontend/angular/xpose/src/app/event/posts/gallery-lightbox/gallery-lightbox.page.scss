@@ -24,15 +24,15 @@
 
     }
     .lightbox{
-        display: flex;
+        // display: flex;
         align-items: center;
         // justify-content: center;
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
-        height: 95%;
-        background: rgba(143, 139, 139, 0.85);
+        height: 1050px;
+        background: rgba(146, 146, 146, 0.85);
     
 
         .background-element {
@@ -80,22 +80,23 @@
                 font-size: 10px;
             }
             .lightbox-img {
-                width: 95%;
-                height: 80%;
-                position: absolute;
-                display: flex;
+                width: 100%;
+                height: 100%;
+                position: absolute; /* Change from 'absolute' to 'fixed' */
+                top: 0; /* Position the image at the top of the viewport */
+                left: 0; /* Position the image at the left of the viewport */
+                // display: flex;
                 justify-content: center;
                 align-items: center;
-                padding-left: 27px;
-                padding-bottom: 300px;
-            }
-
-            .lightbox-img img{
-                width: 100%;
+                flex-direction: column;
+              }
+            
+              .lightbox-img img {
+                max-width: 100%; /* Ensure the image doesn't exceed the lightbox width */
+                max-height: 100%px; /* Ensure the image doesn't exceed the lightbox height */
+                // object-fit: contain; /* Fit the image within the container, preserving its aspect ratio */
                 border-radius: .35rem;
-                padding-bottom: 1000px;
-                
-            }
+              }
 
 
     
@@ -104,16 +105,32 @@
       .icon-prev{
         font-size: 100px;
         font-weight: bolder;
-        padding-bottom: 1300px;
+        padding-top: 350px;
+        color: #fff;
+    
       }
-      .close-btn {
-        position: relative;
-        left: 85%;
-        bottom: 37%;
-        z-index: 2;
-        font-size: 50px;
+      /* ... (previous styles) ... */
 
-    }
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1;
+    font-size: 30px;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    border-radius: 50%;
+    padding: 5px;
+    cursor: pointer;
+  }
+  
+  .icon-close-btn {
+    font-size: 30px;
+  }
+  
+
+    
     .icon-p{
         font-size: 30px;
         font-weight: bolder;
@@ -125,3 +142,46 @@
         // font-weight: bolder;
         // padding-bottom: 1300px;
     }
+    .btn-lightbox-carousel,
+.btn-lightbox-control {
+  cursor: pointer;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  padding: 10px;
+  font-size: 20px;
+  margin: 5px;
+}
+
+.btn-lightbox-control {
+  font-size: 20px;
+}
+
+.btn-lightbox-carousel:hover,
+.btn-lightbox-control:hover {
+  background-color: #555;
+}
+
+/* Add custom styles for the download button */
+.btn-lightbox-control.btn-download {
+  cursor: pointer;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  padding: 10px;
+  font-size: 20px;
+  margin: 5px;
+}
+
+.btn-lightbox-control.btn-download {
+  font-size: 20px;
+}
+
+.btn-lightbox-control.btn-download:hover {
+  background-color: #555;
+}
+
+/* You can add other styles as needed for the download button */
+

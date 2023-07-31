@@ -41,7 +41,8 @@ export class UserProfilePage implements OnInit {
     this.user.photoURL = './assets/images/profile picture.jpg'; // Updated profile picture URL
   }
 
-  ngOnInit(){
+  ngOnInit() {
+    
     this.authService.getCurrentUserId().subscribe((uid) => {
       if (uid) {
         this.userService.GetUser(uid).subscribe((userData) => {

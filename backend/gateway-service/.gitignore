@@ -1,2 +1,4 @@
 node_modules
 permissions.json
+*.pem
+package-lock.json
