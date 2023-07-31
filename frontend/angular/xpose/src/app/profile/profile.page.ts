@@ -63,7 +63,7 @@ export class ProfilePage {
 
   setCurrentTab() {
     this.selectedTab = this.tabs?.getSelected();
-    console.log(this.selectedTab);
+    // console.log(this.selectedTab);
   }
 
   logout() {

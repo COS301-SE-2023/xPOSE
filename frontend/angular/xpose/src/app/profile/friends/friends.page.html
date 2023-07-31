@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
+  <ion-list *ngIf="userFriends && userFriends.length > 0"> <!-- Add ngIf here -->
     <ion-item *ngFor="let friend of userFriends">
       <ion-thumbnail slot="start">
         <img [src]="friend.profilePicUrl">
@@ -19,4 +19,7 @@
       </ion-button>
     </ion-item>
   </ion-list>
+  <div *ngIf="!userFriends || userFriends.length === 0"> <!-- Add another ngIf for no friends -->
+    <p  class="ion-text-center">No friends to display.</p>
+  </div>
 </ion-content>
