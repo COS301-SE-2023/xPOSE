@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const [projectId, appId, databaseURL, storageBucket, locationId, apiKey, authDomain, messagingSenderId, measurementId, vapidKey, googleMapsAPIKey] = process.argv.slice(2);
+const [projectId, appId, databaseURL, storageBucket, locationId, apiKey, authDomain, messagingSenderId, measurementId, vapidKey, googleMapsAPIKey, apiUrl] = process.argv.slice(2);
 
 const content = (isProduction) => `export const environment = {
   firebase: {
@@ -16,7 +16,8 @@ const content = (isProduction) => `export const environment = {
     vapidKey: "${vapidKey}"
   },
   googleMapsAPIKey: "${googleMapsAPIKey}",
-  production: ${isProduction}
+  production: ${isProduction},
+  apiUrl: "${apiUrl}"
 };`;
 
 const folderPath = 'environments';

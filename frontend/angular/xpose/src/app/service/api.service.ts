@@ -14,7 +14,7 @@ export class ApiService {
     private authService: AuthService,
     private http: HttpClient
   ) { 
-    this.apiUrl = environment.gatewayIpAddress;
+    this.apiUrl = environment.apiUrl;
   }
 
   createEvent(eventData: any): Observable<any> {
