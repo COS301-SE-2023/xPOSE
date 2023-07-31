@@ -6,6 +6,8 @@ const axios = require('axios');
 const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
 const swaggerDocument = YAML.load('./swagger.yaml');
+const fs = require('fs');
+const https = require('https');
 
 const app = express();
 
