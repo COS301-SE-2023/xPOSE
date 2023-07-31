@@ -27,10 +27,10 @@ export class ProfilePage {
     private location: Location
   ) {
     this.user = {
-      photoURL: './assets/images/profile picture.jpg',
-      displayName: 'John Doe',
-      email: 'johndoe@example.com',
-      username:'uniqueUsername'
+      photoURL: '',
+      displayName: 'loading...',
+      email: 'loading...',
+      username:'loading...'
     };
     this.user.photoURL = './assets/images/profile picture.jpg'; // Updated profile picture URL
   }

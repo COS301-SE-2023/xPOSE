@@ -8,14 +8,15 @@ export const sendFriendRequest = async (req, res) => {
     try {
       const { userId, requestId } = req.params;
       const {username} = req.body;
-      
+
       // send friemd request
-      // await Friend_request.create({
-      //   friend_a_id: userId,
-      //   friend_b_id: requestId,
-      //   response: "pending"
-      // });
-      
+      await Friend_request.create({
+        friend_a_id: userId,
+        friend_b_id: requestId,
+        response: "pending"
+      });
+
+    
       // Communicate with the notification service
       const queueName = 'notifications';
       const message = new MessageBuilder()
