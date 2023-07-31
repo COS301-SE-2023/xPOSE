@@ -18,7 +18,8 @@ interface Item {
   imageSrc: string;
   imageAlt: string;
   uid: string;
-  // id: string;
+  id: string;
+  event_id: string;
   // timestamp: Date;
 }
 
@@ -43,21 +44,7 @@ export class EventPage {
   //   // Add more participant objects as needed
   // ];
 
-  data: Item[] = [
-    // { imageSrc: '../assets/images/download.jpg', imageAlt: '1' },
-    // { imageSrc: '../assets/images/qrcode.png', imageAlt: '2' },
-    // { imageSrc: '../assets/images/images.jpg', imageAlt: '3' },
-    // { imageSrc: '../assets/images/qrcode.png', imageAlt: '4' },
-    // { imageSrc: '../assets/images/image2.webp', imageAlt: '5' },
-    // { imageSrc: '../assets/images/image1.webp', imageAlt: '6' },{ imageSrc: '../assets/images/download.jpg', imageAlt: '1' },
-    // { imageSrc: '../assets/images/youth.jpg', imageAlt: '7' },
-    // { imageSrc: '../assets/images/images.jpg', imageAlt: '8' },
-    // { imageSrc: '../assets/images/youth.png', imageAlt: '9' },
-    // { imageSrc: '../assets/images/qrcode.png', imageAlt: '10' },
-    // { imageSrc: '../assets/images/image2.webp', imageAlt: '11' },
-    
-    // Add more items as needed...
-  ];
+  data: Item[] = [];
   // router: any;
 
   // constructor(private galleryDataService: GalleryDataService) {
@@ -260,12 +247,16 @@ export class EventPage {
         this.data.length = 0;
         data.forEach((doc) => {
           const post: any = doc.payload.doc.data();
+
           console.log(post);
           this.data.push({
             imageSrc: post.image_url,
             imageAlt: post.timestamp,
             uid: post.uid,
-            // id: post.id,
+            // add document id
+            // doc_id: ,
+            id: doc.payload.doc.id,
+            event_id: this.current_event.code,
             // timestamp: post.timestamp
           });
         });
