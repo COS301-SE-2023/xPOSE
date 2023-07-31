@@ -180,4 +180,41 @@ ion-menu[side="end"] {
   align-items: center;
 }
 
+/* Style for the pop-up container */
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Style for the close button */
+.close-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  z-index: 999;
+  font-size: 20px;
+  color: #555;
+  border-radius: 50%;
+
+  /* Add a background color when hovering over the close button */
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+}
+
 
