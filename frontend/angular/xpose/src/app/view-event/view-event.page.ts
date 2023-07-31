@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Location } from '@angular/common';
+import { ApiService } from '../service/api.service';
 
 @Component({
   selector: 'app-view-event',
@@ -22,7 +23,8 @@ export class ViewEventPage implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private http: HttpClient,
     private afAuth: AngularFireAuth,
-    private location: Location
+    private location: Location,
+    private api: ApiService
   ) {
     this.map = null;
     this.marker = null;
@@ -47,7 +49,7 @@ export class ViewEventPage implements OnInit, AfterViewInit {
   //   this.getCurrentUserId().subscribe((uid) => {
   //     if (uid) {
   //       this.http
-  //         .get(`http://localhost:8000/e/events/${this.event_id}?uid=${uid}`)
+  //         .get(`${this.api.apiUrl}/e/events/${this.event_id}?uid=${uid}`)
   //         .subscribe((data) => {
   //           this.event = data;
 
@@ -68,7 +70,7 @@ export class ViewEventPage implements OnInit, AfterViewInit {
     this.getCurrentUserId().subscribe((uid) => {
       if(uid) {
         this.http
-          .get(`http://localhost:8000/e/events/${this.event_id}/participants?uid=${uid}`)
+          .get(`${this.api.apiUrl}/e/events/${this.event_id}/participants?uid=${uid}`)
           .subscribe((data) => {
             this.event.participants = data;
 
@@ -86,7 +88,7 @@ export class ViewEventPage implements OnInit, AfterViewInit {
     this.getCurrentUserId().subscribe((uid) => {
       if (uid) {
         this.http
-          .get(`http://localhost:8000/e/events/${this.event_id}?uid=${uid}`)
+          .get(`${this.api.apiUrl}/e/events/${this.event_id}?uid=${uid}`)
           .subscribe((data) => {
             this.event = data;
             this.loading = false;
@@ -225,7 +227,7 @@ export class ViewEventPage implements OnInit, AfterViewInit {
           const formData = new FormData();
           formData.append('response', 'accepted'); // will make this dynamic
           this.http
-            .put(`http://localhost:8000/e/events/${this.event_id}/invite?uid=${uid}`, formData)
+            .put(`${this.api.apiUrl}/e/events/${this.event_id}/invite?uid=${uid}`, formData)
             .subscribe((data) => {
               console.log(data);
               this.router.navigate(['/event', this.event.code]);
@@ -246,7 +248,7 @@ export class ViewEventPage implements OnInit, AfterViewInit {
           const formData = new FormData();
           formData.append('response', 'accepted'); // will make this dynamic
           this.http
-            .post(`http://localhost:8000/e/events/${this.event_id}/join?uid=${uid}`, formData)
+            .post(`${this.api.apiUrl}/e/events/${this.event_id}/join?uid=${uid}`, formData)
             .subscribe((data) => {
               console.log(data);
               this.router.navigate(['/event', this.event.code]);
@@ -264,7 +266,7 @@ export class ViewEventPage implements OnInit, AfterViewInit {
           const formData = new FormData();
           formData.append('response', 'accepted'); // will make this dynamic
           this.http
-            .post(`http://localhost:8000/e/events/${this.event_id}/request?uid=${uid}`, formData)
+            .post(`${this.api.apiUrl}/e/events/${this.event_id}/request?uid=${uid}`, formData)
             .subscribe((data) => {
               // change the button label to "Request Sent"
               console.log(data);

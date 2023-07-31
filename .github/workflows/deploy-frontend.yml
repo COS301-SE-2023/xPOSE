@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    name: Install Angular
+    name: build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -36,7 +36,8 @@ jobs:
           FIREBASE_MEASUREMENT_ID: ${{ secrets.FIREBASE_MEASUREMENT_ID }}
           FIREBASE_VAPID_KEY: ${{ secrets.FIREBASE_VAPID_KEY }}
           GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
-        run: node config.index.js $FIREBASE_PROJECT_ID $FIREBASE_APP_ID $FIREBASE_DATABASE_URL $FIREBASE_STORAGE_BUCKET $FIREBASE_LOCATION_ID $FIREBASE_API_KEY $FIREBASE_AUTH_DOMAIN $FIREBASE_MESSAGING_SENDER_ID $FIREBASE_MEASUREMENT_ID $FIREBASE_VAPID_KEY $GOOGLE_MAPS_API_KEY
+          API_URL: ${{ secrets.API_URL }}
+        run: node config.index.js $FIREBASE_PROJECT_ID $FIREBASE_APP_ID $FIREBASE_DATABASE_URL $FIREBASE_STORAGE_BUCKET $FIREBASE_LOCATION_ID $FIREBASE_API_KEY $FIREBASE_AUTH_DOMAIN $FIREBASE_MESSAGING_SENDER_ID $FIREBASE_MEASUREMENT_ID $FIREBASE_VAPID_KEY $GOOGLE_MAPS_API_KEY $API_URL
 
       - name: Building Project
         working-directory: frontend/angular/xpose

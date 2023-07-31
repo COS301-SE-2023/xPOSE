@@ -6,6 +6,7 @@ import { HttpClient } from "@angular/common/http";
 import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { Observable, map } from "rxjs";
 import { get } from "http";
+import { ApiService } from "../service/api.service";
 
 
 
@@ -25,7 +26,8 @@ export class HomePage {
 		public authService: AuthService,
 		private router: Router,
 		private http: HttpClient,
-		private afAuth: AngularFireAuth
+		private afAuth: AngularFireAuth,
+		private api: ApiService
 		) {
 	
 	   }
@@ -40,7 +42,7 @@ export class HomePage {
 	this.getCurrentUserId().subscribe((uid) => {
 		if(uid){
 			console.log(`We got that ${uid}`);
-			this.http.get<Event[]>(`http://localhost:8000/e/events?uid=${uid}`).subscribe((events: Event[]) => {
+			this.http.get<Event[]>(`${this.api.apiUrl}/e/events?uid=${uid}`).subscribe((events: Event[]) => {
 				console.log(events);
 				  this.events = events;
 				//   this.loading = false;
