@@ -43,7 +43,7 @@
         View eventt
       </ion-button> -->
     <!-- </ion-card> --> 
-    <ion-card (click)="eventDetails(card.id)" *ngFor="let card of cards">
+    <ion-card (click)="eventDetails(card.code)" *ngFor="let card of cards">
       <span class="label-{{ getStatusColor(card?.status) }} label">{{ card?.status }}</span>
       <img [src]="card.image_url" alt="Card Image" class="card-image">
       <ion-card-header class="card-title">
@@ -72,7 +72,7 @@
 
   <ion-list *ngIf="filterType === 'Upcoming'">
     <!-- Mock Public Events -->
-    <ion-card (click)="eventDetails(card.id)" *ngFor="let card of cards">
+    <ion-card (click)="eventDetails(card.code)" *ngFor="let card of cards">
       <span class="label-{{ getStatusColor(card?.status) }} label">{{ card?.status }}</span>
       <img [src]="card.image_url" alt="Card Image" class="card-image">
       <ion-card-header class="card-title">
@@ -101,7 +101,7 @@
 
     <ion-list *ngIf="filterType === 'Ended'">
     <!-- Mock Public Events -->
-    <ion-card (click)="eventDetails(card.id)" *ngFor="let card of cards">
+    <ion-card (click)="eventDetails(card.code)" *ngFor="let card of cards">
       <span class="label-{{ getStatusColor(card?.status) }} label">{{ card?.status }}</span>
       <img [src]="card.image_url" alt="Card Image" class="card-image">
       <ion-card-header class="card-title">
