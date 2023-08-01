@@ -49,7 +49,7 @@ export class EditPage implements OnInit, AfterViewInit {
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
     if (file) {
-      // we can implement your own logic to upload the image to your storage or server
+      
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => {
@@ -59,8 +59,6 @@ export class EditPage implements OnInit, AfterViewInit {
   }
 
   deleteAccount() {
-    // Add your logic here to delete the user account.
-    // You may want to show a confirmation modal to confirm the deletion before proceeding.
     console.log('Account deleted');
   }
 
