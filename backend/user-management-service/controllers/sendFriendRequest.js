@@ -25,7 +25,6 @@ export const sendFriendRequest = async (req, res) => {
                 .setSenderId(userId)
                 .setReceiverId(requestId)
                 .build();
-    
         sendMessageToQueue(queueName, message);
       // finallly message feedback
       res.status(200).json({ message: `Friend request sent successfully to user with id ${requestId}` });
