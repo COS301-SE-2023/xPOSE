@@ -102,7 +102,8 @@ export class NotificationPage implements OnInit {
     return this.http.post<any>(`${endpoint}${user.senderId}/friend-requests/${user.receiverId}/accept`, requestBody, {headers})
     .toPromise()
     .then((response) => {
-      console.log("Friend request accepted",response);   
+      console.log("Friend request accepted",response);
+      this.removeNotification(user);   
     })
     .catch((error) => {
       // Handle error response here
@@ -111,8 +112,6 @@ export class NotificationPage implements OnInit {
       // console.log("Response body:", error.error);
       return Promise.reject(error);
     });
-
-    this.removeNotification(user);
   }
 
   rejectRequest(user:any) {
@@ -149,14 +148,13 @@ export class NotificationPage implements OnInit {
     this.router.navigate(['/home']);
   }
 
-  rejectInvitation() {
-    // Handle reject invitation logic here
+  rejectInvitation(user:any) {
+    this.removeNotification(user);  
   }
 
-  acceptInvitation() {
-    // Handle accept invitation logic here
+  acceptInvitation(user:any) {
+    this.removeNotification(user);  
   }
-
   viewReport() {
     // Handle view report logic here
   }

@@ -40,22 +40,10 @@ export class EditPage implements OnInit, AfterViewInit {
   ngOnInit() {}
 
   saveProfile() {
-    if (this.editForm.valid) {
-      // Get the updated values from the form
-      const updatedProfile = this.editForm.value;
-      console.log('Updated Profile:', updatedProfile);
-      console.log('Account Privacy:', this.isPublic ? 'Public' : 'Private');
 
-      // Call a service method to update the profile
-      // Your service logic goes here
-
-      // Navigate back to the profile page after saving
-      this.router.navigate(['/profile']);
-    }
-    else{
-      console.log("Invalid form submission");
-      return;
-    }
+    console.log('Username:', this.username);
+    console.log('Account Privacy:', this.isPublic);
+    
   }
   
   onFileSelected(event: any) {
