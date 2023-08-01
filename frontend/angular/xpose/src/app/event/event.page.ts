@@ -186,6 +186,7 @@ export class EventPage {
   
   // ...
 
+  
   onLogoutClick() {
     this.getCurrentUserId().subscribe((uid) => {
       if (uid) {
@@ -195,12 +196,12 @@ export class EventPage {
           case 'owner':
             // Call the function to delete the event
             console.log("delete event");
-            this.deleteEvent(uid);
+            // this.deleteEvent(uid);
             break;
           case 'participant':
             // Call the function to leave the event
             console.log("leave event");
-            this.leaveEvent(uid);
+            // this.leaveEvent(uid);
             break;
           default:
             // Redirect to the view-event page with the event ID
@@ -212,42 +213,51 @@ export class EventPage {
     });
   }
 
-  deleteEvent(uid: string) {
+  deleteEvent() {
     // Implement the API call to delete the event here
     // Make a request to delete the event using this.current_event.code as the event ID
     // You can use the http.delete() method for this purpose
     // Example:
-    this.http.delete(`${this.api.apiUrl}/e/events/${this.current_event.code}?uid=${uid}`).subscribe(
-      (response) => {
-        // Event deleted successfully, handle the response as needed
-        // Redirect to the home page
-        this.navCtrl.navigateBack('/home');
-      },
-      (error) => {
-        console.error('Error deleting event:', error);
+
+    this.getCurrentUserId().subscribe((uid) => {
+      if(uid !== this.current_event.owner_id) {
+        console.log("You are not the owner of this event");
+        return;
       }
-    );
+
+      this.http.delete(`${this.api.apiUrl}/e/events/${this.current_event.code}?uid=${uid}`).subscribe(
+        (response) => {
+          // Event deleted successfully, handle the response as needed
+          // Redirect to the home page
+          this.navCtrl.navigateBack('/home');
+        },
+        (error) => {
+          console.error('Error deleting event:', error);
+        }
+      );
+    });
   }
 
-  leaveEvent(uid: string) {
+  leaveEvent() {
     // Implement the API call to leave the event here
     // Make a request to remove the current user from the participants list
     // Use this.current_event.code as the event ID and getCurrentUserId() to get the user's UID
     // Example:
-    // this.getCurrentUserId().subscribe((uid) => {
-    //   if (uid) {
+    this.getCurrentUserId().subscribe((uid) => {
+      if (uid) {
         this.http.delete(`${this.api.apiUrl}/e/events/${this.current_event.code}/remove?uid=${uid}`).subscribe(
           (response) => {
             // User successfully left the event, handle the response as needed
             // Redirect to the home page
+            console.log("User successfully left the event");
             this.navCtrl.navigateBack('/home');
           },
           (error) => {
             console.error('Error leaving event:', error);
           }
         );
-    //   }
-    // });
+      }
+    });
   }
   
   retrievePosts() {
