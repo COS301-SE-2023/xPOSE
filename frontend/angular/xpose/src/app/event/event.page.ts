@@ -14,6 +14,8 @@ import { AngularFirestore, AngularFirestoreCollection, DocumentChangeAction } fr
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera'; 
 import { ApiService } from '../service/api.service';
 
+import { ModalController } from '@ionic/angular';
+
 interface Item {
   imageSrc: string;
   imageAlt: string;
@@ -56,6 +58,7 @@ export class EventPage {
   selectedTab: any;
   // participants: never[];
   qrCodeImage: string | undefined;
+  isGalleryOpen: boolean = false;
   // http: any;
 
   
@@ -70,7 +73,8 @@ export class EventPage {
     private galleryDataService: GalleryDataService,
     private afs: AngularFirestore,
     // private camera: Camera,
-    private api: ApiService
+    private api: ApiService,
+    private modalController: ModalController 
     ) {
       this.url = "sdafsda";
     this.router.events.subscribe((event) => {
@@ -302,6 +306,8 @@ export class EventPage {
     } else {
       console.log("No image data available.");
     }
+
+    this.isGalleryOpen = true;
   }
   
   
@@ -405,6 +411,10 @@ export class EventPage {
 
   onHome() {
     this.router.navigate(['/home']);
+  }
+
+  closeGallery() {
+    this.isGalleryOpen = false;
   }
 
   // Code to create and send messages
