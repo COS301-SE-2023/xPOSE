@@ -9,7 +9,7 @@ export const sendFriendRequest = async (req, res) => {
       const { userId, requestId } = req.params;
       const {username} = req.body;
 
-      // send friend request
+      // send friemd request
       await Friend_request.create({
         friend_a_id: userId,
         friend_b_id: requestId,
@@ -26,7 +26,7 @@ export const sendFriendRequest = async (req, res) => {
                 .setReceiverId(requestId)
                 .build();
         sendMessageToQueue(queueName, message);
-
+        
       // finallly message feedback
       res.status(200).json({ message: `Friend request sent successfully to user with id ${requestId}` });
     } catch (error) {

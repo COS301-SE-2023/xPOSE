@@ -1,69 +1,77 @@
-import { removeFriend } from './removeFriend';
 import admin from 'firebase-admin';
+import { removeFriend } from '../controllers/removeFriend.js'; // Replace with the correct path to the function
 
-
-jest.mock('firebase-admin', () => ({
-  firestore: () => ({
-    collection: (collectionName) => ({
-      doc: (docId) => ({
-        update: jest.fn(() => Promise.resolve()),
-        delete: jest.fn(() => Promise.resolve()),
-      }),
-    }),
-    FieldValue: {
-      arrayRemove: jest.fn(),
-    },
-  }),
-}));
+// Mock Firebase Firestore interactions
+jest.mock('firebase-admin', () => {
+  const firestore = jest.fn();
+  firestore.collection = jest.fn(() => firestore);
+  firestore.doc = jest.fn(() => firestore);
+  firestore.update = jest.fn();
+  firestore.delete = jest.fn();
+  firestore.FieldValue = {
+    arrayRemove: jest.fn(),
+  };
+  return { firestore };
+});
 
 describe('removeFriend', () => {
-  test('should remove friend and friend requests', async () => {
-    const req = {
+  let req;
+  let res;
+
+  beforeEach(() => {
+    // Initialize req and res objects for each test
+    req = {
       params: {
-        userId: 'userA',
-        requestId: 'userB',
+        userId: 'mock-user-id',
+        requestId: 'mock-request-id',
       },
     };
-    const res = {
-      status: jest.fn().mockReturnThis(),
+
+    res = {
+      status: jest.fn(() => res),
       json: jest.fn(),
     };
-
-    await removeFriend(req, res);
-
-    expect(res.status).toHaveBeenCalledWith(200);
-    expect(res.json).toHaveBeenCalledWith({
-      message: 'Friend with id userB removed',
-    });
-
-    expect(admin.firestore().collection().doc().update).toHaveBeenCalledTimes(2);
-    expect(admin.firestore().FieldValue.arrayRemove).toHaveBeenCalledTimes(2);
-    expect(admin.firestore().collection().doc().delete).toHaveBeenCalledTimes(2);
   });
 
-  test('should return 500 for any unexpected error', async () => {
-    const req = {
-      params: {
-        userId: 'userA',
-        requestId: 'userB',
-      },
-    };
-    const res = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn(),
-    };
+  afterEach(() => {
+    // Clear all mocks after each test
+    jest.clearAllMocks();
+  });
 
-    
-    const errorMessage = 'Something went wrong';
-    admin.firestore().collection().doc().update.mockRejectedValue(new Error(errorMessage));
-    admin.firestore().collection().doc().delete.mockRejectedValue(new Error(errorMessage));
-
+  it('should remove a friend', async () => {
+    // Call the function with mocked dependencies
     await removeFriend(req, res);
 
-    
-    expect(res.status).toHaveBeenCalledWith(500);
-    expect(res.json).toHaveBeenCalledWith({
-      error: 'An error occurred while removing friend',
+    // Check if Firestore was called correctly
+    expect(admin.firestore().collection).toHaveBeenCalledWith('Users');
+    expect(admin.firestore().doc).toHaveBeenCalledWith('mock-user-id');
+    expect(admin.firestore().doc().update).toHaveBeenCalledWith({
+      friendIds: admin.firestore.FieldValue.arrayRemove('mock-request-id'),
     });
+    expect(admin.firestore().doc).toHaveBeenCalledWith('mock-request-id');
+    expect(admin.firestore().doc().update).toHaveBeenCalledWith({
+      friendIds: admin.firestore.FieldValue.arrayRemove('mock-user-id'),
+    });
+    expect(admin.firestore().doc().collection).toHaveBeenCalledWith('FriendRequests');
+    expect(admin.firestore().doc().collection().doc).toHaveBeenCalledWith('mock-request-id');
+    expect(admin.firestore().doc().collection().doc().delete).toHaveBeenCalled();
+    expect(admin.firestore().doc().collection().doc).toHaveBeenCalledWith('mock-user-id');
+    expect(admin.firestore().doc().collection().doc().delete).toHaveBeenCalled();
+
+    // Check if the response was sent correctly
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith({ message: 'Friend with id mock-request-id removed' });
+  });
+
+  it('should handle errors', async () => {
+    // Mock Firestore interaction to throw an error
+    admin.firestore().doc().update.mockRejectedValue(new Error('Firestore error'));
+
+    // Call the function with mocked dependencies
+    await removeFriend(req, res);
+
+    // Check if the function handled errors correctly
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.json).toHaveBeenCalledWith({ error: 'An error occurred while removing friend' });
   });
 });

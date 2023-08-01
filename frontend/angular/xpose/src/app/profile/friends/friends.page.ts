@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { ApiService } from 'src/app/service/api.service';
 
 @Component({
   selector: 'app-friends',
@@ -31,7 +32,8 @@ export class FriendsPage implements OnInit {
 
   constructor( 
     private http: HttpClient,
-    private authService: AuthService) { }
+    private authService: AuthService,
+    private api: ApiService) { }
 
   ngOnInit() {
     this.authService.getCurrentUserId().subscribe((uid) => {
@@ -47,7 +49,7 @@ export class FriendsPage implements OnInit {
   }
 
   getFriends(uid:string){
-    const endpoint = 'http://localhost:8000/u/users/';
+    const endpoint = `${this.api.apiUrl}/u/users/`;
     this.loading = true;
 
     this.http.get<any[]>(`${endpoint}${uid}/friends`).subscribe(

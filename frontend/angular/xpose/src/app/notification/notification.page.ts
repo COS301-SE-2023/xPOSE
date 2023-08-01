@@ -6,6 +6,7 @@ import { AngularFirestore } from "@angular/fire/compat/firestore";
 import { AuthService } from '../shared/services/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
+import { ApiService } from '../service/api.service';
 
 @Component({
   selector: 'app-notification',
@@ -21,7 +22,8 @@ export class NotificationPage implements OnInit {
      private location: Location,
      private firestore: AngularFirestore,
      public authService: AuthService,
-     private http: HttpClient) { 
+     private http: HttpClient,
+     private api: ApiService) { 
 
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -95,7 +97,7 @@ export class NotificationPage implements OnInit {
   
   acceptRequest(user:any) {
     // /:userId/friend-requests/:requestId/accept'
-    const endpoint = "http://localhost:8000/u/users/";
+    const endpoint = `${this.api.apiUrl}/u/users/`;
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
 
     const requestBody = JSON.stringify(user);
