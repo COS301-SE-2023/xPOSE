@@ -57,33 +57,34 @@
       <ion-row>
         <!-- Start date -->
         <ion-col size="6">
-          <ion-item>
+          <!-- <ion-item> -->
             <p>Start Date</p>
             <ion-input
               type="date"
               [(ngModel)]="createEvent.start_date"
               name="start_date"
             ></ion-input>
-          </ion-item>
+          <!-- </ion-item> -->
         </ion-col>
       
         <!-- End date -->
         <ion-col size="6">
-          <ion-item>
+          <!-- <ion-item> -->
             <p>End Date</p>
             <ion-input
               type="date"
               [(ngModel)]="createEvent.end_date"
               name="end_date"
             ></ion-input>
-          </ion-item>
+          <!-- </ion-item> -->
         </ion-col>
       </ion-row>
-
+      <div class="centrr">
       <ion-button id="submitBtn" type="submit" class="custom-btn" [disabled]="buttonClicked || loading || !form.valid">
         <ion-spinner *ngIf="loading"></ion-spinner>
         <span *ngIf="!loading">Create Event</span>
       </ion-button>
+    </div>
     </form>
   </div>
 </ion-content>

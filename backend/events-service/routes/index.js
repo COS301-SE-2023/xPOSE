@@ -10,6 +10,7 @@ const updateEvent = require('./updateEvent');
 const userRequestToJoinEvent = require('./userRequestToJoinEvent');
 const joinEvent = require('./joinEvent');
 const getEventParticipants = require('./getEventParticipants');
+const searchEvents = require('./searchEvents');
 
 // export all 
 module.exports = {
@@ -25,4 +26,5 @@ module.exports = {
     userRequestToJoinEvent,
     joinEvent,
     getEventParticipants,
+    searchEvents
 };
