@@ -220,7 +220,7 @@ export class EventPage {
     // Example:
 
     this.getCurrentUserId().subscribe((uid) => {
-      if(uid !== this.current_event.owner_id) {
+      if(uid !== this.current_event.owner) {
         console.log("You are not the owner of this event");
         return;
       }
