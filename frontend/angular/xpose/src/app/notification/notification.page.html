@@ -35,7 +35,7 @@
         </ion-item>
 
         
-      <!-- Event Invitation notification item -->
+      <!-- Event Invitation notification item --> 
       <ion-item *ngIf="message.type === 'join_event'">
         <ion-icon name="calendar"></ion-icon>
         <ion-label>
@@ -43,10 +43,24 @@
           <p>{{ message.message }}</p>
         </ion-label>
         <ion-buttons slot="end">
-          <ion-button fill="clear" (click)="acceptInvitation()">Accept</ion-button>
-          <ion-button fill="clear" (click)="rejectInvitation()">Reject</ion-button>
+          <ion-button fill="clear" (click)="acceptInvitation(message)">Accept</ion-button>
+          <ion-button fill="clear" (click)="rejectInvitation(message)">Reject</ion-button>
         </ion-buttons>
       </ion-item>
+
+      <!-- Friend request accept -->
+      <ion-item *ngIf="message.type === 'friend_accept'">
+        <!-- <ion-icon name="calendar"></ion-icon> -->
+        <ion-label>
+          <h2>Request accepted</h2>
+          <p>{{ message.message }}</p>
+        </ion-label>
+        <ion-buttons slot="end">
+          <ion-button fill="clear" (click)="removeNotification(message)">clear</ion-button>
+        </ion-buttons>
+      </ion-item>
+
+      
 
       </ng-container>
     </ng-container>

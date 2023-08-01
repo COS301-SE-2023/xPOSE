@@ -10,7 +10,7 @@ export const acceptFriendRequest = async (req, res) =>{
     const  {requestId} = req.params;
     const {senderId: requestSenderId, notificationUid_: notificationId}  = req.body;
 
-    try{
+    try {
         // retrieve friend request details
         const friendRequest = await Friend_request.findOne({
             where: /*{*/
@@ -64,8 +64,8 @@ export const acceptFriendRequest = async (req, res) =>{
       const message = new MessageBuilder()
                 .setType("friend_accept")
                 .setMessage(`Friend request accepted`)
-                .setSenderId("173")
-                .setReceiverId("999")
+                .setSenderId(senderId)
+                .setReceiverId(requestSenderId)
                 .build();
 
         sendMessageToQueue(queueName, message);

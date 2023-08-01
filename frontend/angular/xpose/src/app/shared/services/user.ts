@@ -4,5 +4,6 @@ export interface User {
   displayName: string;
   photoURL: string;
   emailVerified: boolean;
-  friendIds: string[];
+  uniq_username: string;
+  visibility: boolean;
 }

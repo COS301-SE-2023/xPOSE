@@ -1,3 +1,11 @@
+.profile-image {
+  width: 100px; /* Set the desired width */
+  height: 100px; /* Set the desired height */
+  border-radius: 50%; /* Create a circular shape */
+  object-fit: cover; /* Ensure the image covers the entire circle */
+  border: 2px solid #ccc; /* Add a border (optional) */
+}
+
 .profile_div {
     display: flex;
     justify-content: center;

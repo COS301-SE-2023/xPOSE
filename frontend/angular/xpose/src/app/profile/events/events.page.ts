@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
+import { ApiService } from 'src/app/service/api.service';
 
 @Component({
   selector: 'app-events',
@@ -18,6 +19,7 @@ export class EventsPage implements OnInit {
     private http: HttpClient,
     private afAuth: AngularFireAuth,
     private router: Router,
+    private api: ApiService
   ) { }
 
   ngOnInit() {
@@ -39,7 +41,7 @@ export class EventsPage implements OnInit {
     this.getCurrentUserId().subscribe((uid) => {
       if (uid) {
         console.log(`We got that ${uid}`);
-        this.http.get<Event[]>(`http://localhost:8000/e/events?uid=${uid}&filter=participant`).subscribe((events: Event[]) => {
+        this.http.get<Event[]>(`${this.api.apiUrl}/e/events?uid=${uid}&filter=participant`).subscribe((events: Event[]) => {
           console.log(events);
           this.events = events;
           this.populateCards();

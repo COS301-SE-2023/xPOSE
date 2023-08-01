@@ -20,7 +20,7 @@ async function processReceivedMessage() {
 
 processReceivedMessage();
 // Set up an interval to periodically check for new messages in the queue
-const intervalTime = 5000; // 5 seconds (adjust this as needed)
+const intervalTime = 10000; // 5 seconds (adjust this as needed)
 setInterval(processReceivedMessage, intervalTime);
 
 export function handleNotification(message) {

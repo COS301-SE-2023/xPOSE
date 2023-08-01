@@ -31,7 +31,10 @@ export const getFriends = async (req, res) => {
           [Op.or]: [
             {friend_a_id: userId},
           {friend_b_id: userId} ]
-        }
+        },
+        attributes: ['friend_a_id', 'friend_b_id'],
+        raw: true,
+        distinct: true
       });
 
       // console.log("======== TTTTT6 ");

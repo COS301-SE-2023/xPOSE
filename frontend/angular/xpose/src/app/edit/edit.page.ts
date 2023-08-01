@@ -40,28 +40,16 @@ export class EditPage implements OnInit, AfterViewInit {
   ngOnInit() {}
 
   saveProfile() {
-    if (this.editForm.valid) {
-      // Get the updated values from the form
-      const updatedProfile = this.editForm.value;
-      console.log('Updated Profile:', updatedProfile);
-      console.log('Account Privacy:', this.isPublic ? 'Public' : 'Private');
 
-      // Call a service method to update the profile
-      // Your service logic goes here
-
-      // Navigate back to the profile page after saving
-      this.router.navigate(['/profile']);
-    }
-    else{
-      console.log("Invalid form submission");
-      return;
-    }
+    console.log('Username:', this.username);
+    console.log('Account Privacy:', this.isPublic);
+    
   }
   
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
     if (file) {
-      // we can implement your own logic to upload the image to your storage or server
+      
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => {
@@ -71,8 +59,6 @@ export class EditPage implements OnInit, AfterViewInit {
   }
 
   deleteAccount() {
-    // Add your logic here to delete the user account.
-    // You may want to show a confirmation modal to confirm the deletion before proceeding.
     console.log('Account deleted');
   }
 

@@ -6,6 +6,7 @@ import { AngularFirestore } from "@angular/fire/compat/firestore";
 import { AuthService } from '../shared/services/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
+import { ApiService } from '../service/api.service';
 
 @Component({
   selector: 'app-notification',
@@ -21,7 +22,8 @@ export class NotificationPage implements OnInit {
      private location: Location,
      private firestore: AngularFirestore,
      public authService: AuthService,
-     private http: HttpClient) { 
+     private http: HttpClient,
+     private api: ApiService) { 
 
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -95,14 +97,15 @@ export class NotificationPage implements OnInit {
   
   acceptRequest(user:any) {
     // /:userId/friend-requests/:requestId/accept'
-    const endpoint = "http://localhost:8000/u/users/";
+    const endpoint = `${this.api.apiUrl}/u/users/`;
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
 
     const requestBody = JSON.stringify(user);
     return this.http.post<any>(`${endpoint}${user.senderId}/friend-requests/${user.receiverId}/accept`, requestBody, {headers})
     .toPromise()
     .then((response) => {
-      console.log("Friend request accepted",response);   
+      console.log("Friend request accepted",response);
+      this.removeNotification(user);   
     })
     .catch((error) => {
       // Handle error response here
@@ -111,8 +114,6 @@ export class NotificationPage implements OnInit {
       // console.log("Response body:", error.error);
       return Promise.reject(error);
     });
-
-    this.removeNotification(user);
   }
 
   rejectRequest(user:any) {
@@ -149,14 +150,13 @@ export class NotificationPage implements OnInit {
     this.router.navigate(['/home']);
   }
 
-  rejectInvitation() {
-    // Handle reject invitation logic here
+  rejectInvitation(user:any) {
+    this.removeNotification(user);  
   }
 
-  acceptInvitation() {
-    // Handle accept invitation logic here
+  acceptInvitation(user:any) {
+    this.removeNotification(user);  
   }
-
   viewReport() {
     // Handle view report logic here
   }

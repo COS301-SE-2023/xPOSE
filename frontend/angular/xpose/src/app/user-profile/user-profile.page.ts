@@ -5,6 +5,8 @@ import { Service } from '../service/service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Observable, map } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { AngularFirestore } from "@angular/fire/compat/firestore";
+import { ApiService } from '../service/api.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -20,7 +22,11 @@ export class UserProfilePage implements OnInit {
     photoURL: string;
     displayName: string;
     email: string;
+    username: string;
+    uid: string;
   };
+  
+  isFriend: boolean = false;
   selectedTab: any;
   tabs: any;
   private history: string[] = [];
@@ -31,41 +37,50 @@ export class UserProfilePage implements OnInit {
     public userService: Service,
     private afAuth: AngularFireAuth,
     private http: HttpClient,
+    private firestore: AngularFirestore,
+    private api: ApiService,
     // private location: Location
   ) {
     this.user = {
-      photoURL: './assets/images/profile picture.jpg',
-      displayName: 'John Doe',
-      email: 'johndoe@example.com',
+      photoURL: '',
+      displayName: 'loading...',
+      email: 'loading...',
+      username:'loading...',
+      uid:""
     };
     this.user.photoURL = './assets/images/profile picture.jpg'; // Updated profile picture URL
   }
 
   ngOnInit() {
-    
-    this.authService.getCurrentUserId().subscribe((uid) => {
-      if (uid) {
-        this.userService.GetUser(uid).subscribe((userData) => {
-          console.log("User name: ", userData.displayName);
-          console.log("User email: ", userData.email);
-          this.user.displayName = userData.displayName;
-          this.user.email = userData.email;
-          
-        });
-      }
-      else {
-        console.log("profile page no user id");
-      }
+
+    let id = window.location.href;
+    // Split the URL by slashes (/)
+    const urlParts = id .split('/');
+    // Get the last part of the URL, which should be the uid
+    const uid = urlParts[urlParts.length - 1];
+    this.user.uid = uid;
+    this.userService.GetUser(uid).subscribe((userData) => {
+      this.user.displayName = userData.displayName;
+      this.user.email = userData.email;
+      this.user.username = userData.uniq_username;
+      this.user.photoURL =userData.photoURL;
+      
     });
 
     this.getEventsFromAPI();
   }
 
+
+  handleFunction(){
+    this.sendFriendRequest()
+  }
+
   getEventsFromAPI() {
-    this.getCurrentUserId().subscribe((uid) => {
+    // this.getCurrentUserId().subscribe((uid) => {
+      let uid = this.user.uid;
       if (uid) {
         console.log(`We got that ${uid}`);
-        this.http.get<Event[]>(`http://localhost:8000/e/events?uid=${uid}&filter=participant`).subscribe((events: Event[]) => {
+        this.http.get<Event[]>(`${this.api.apiUrl}/e/events?uid=${uid}&filter=participant`).subscribe((events: Event[]) => {
           console.log(events);
           this.events = events;
           this.populateCards();
@@ -73,7 +88,44 @@ export class UserProfilePage implements OnInit {
       } else {
         console.log("No user id");
       }
-    });
+    // });
+  }
+
+  sendFriendRequest() {
+    this.authService.getCurrentUserId().subscribe(
+      (userId) => {
+        if (userId) {
+          const requestId = this.user.uid;
+          const endpoint = `${this.api.apiUrl}/u/users/${userId}/friend-requests/${requestId}`;
+          
+          // Get the sender's name from Firestore
+          this.firestore.collection("Users").doc(userId).get().subscribe(
+            (senderData) => {
+              const senderName = senderData.get("displayName");
+              console.log("Sender name: " + senderName);
+  
+              // HTTP POST request with the senderName included
+              this.http.post(endpoint, { username: senderName }).subscribe(
+                (response) => {
+                  console.log(response);
+
+                  console.log("Friendship request done successfully!");
+
+                },
+                (error) => {
+                  console.error('Error sending friend request:', error);
+                }
+              );
+            },
+            (error) => {
+              console.log("Error fetching sender data:", error);
+            }
+          );
+        } else {
+          console.log('No user is currently logged in.');
+        }
+      }
+    );
   }
   
   getCurrentUserId(): Observable<string> {
