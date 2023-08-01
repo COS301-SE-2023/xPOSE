@@ -34,9 +34,9 @@
   </ion-header>
   <ion-content>
     <ion-list>
-      <ion-item>Edit event</ion-item>
-      <ion-item>Leave event</ion-item>
-      <ion-item>Delete event</ion-item>
+      <!-- <ion-item (click)="onLogoutClick()">Edit event</ion-item> -->
+      <ion-item (click) = "leaveEvent()">Leave event</ion-item>
+      <ion-item (click) = "deleteEvent()">Delete event</ion-item>
     </ion-list>
   </ion-content>
 </ion-menu>  
@@ -70,11 +70,13 @@
           <ion-input [(ngModel)]="newMessage" placeholder="Type your comment"></ion-input>
           <ion-button (click)="createMessage()">Send</ion-button>
         </ion-item>
-      
+        
         <ion-list class="now">
           <ion-item class="comment-item" *ngFor="let message of messages">
             <ion-avatar slot="start">
               <!-- <img src="{{ message.avatar }}" alt="User Avatar"> -->
+              <!-- <ion-img [src]="generateAvatar(message.displayName)"></ion-img> -->
+              <ion-img [src]="generateAvatar(message.displayName)"></ion-img>
             </ion-avatar>
             <ion-label class="text-white">
               <h2 class="h2">{{ message.displayName }}</h2>
@@ -127,35 +129,21 @@
           </div>
         
           <h1 class="section-title">Participants</h1>
-          <ion-card class="participant-card" *ngFor="let participant of participants" (click)="onCardClick(participant)">
-            <ion-card-header>
-              <ion-avatar>
-                <ion-img [src]="participant?.avatar_url"></ion-img>
-              </ion-avatar>
-            </ion-card-header>
-            <ion-card-content>
-              <h2 class="participant-name">{{ participant?.display_name }}</h2>
-              <!-- <p class="participant-timestamp">{{ participant?.timestamp }}</p> -->
-              <!-- Add other participant details here if needed -->
-            </ion-card-content>
-            <!-- <ion-buttons>
-              <ion-button fill="clear" (click)="removeParticipant(participant)">
-                <ion-icon name="close"></ion-icon>
-              </ion-button>
-              <ion-button fill="clear" (click)="addParticipant(participant)">
-                <ion-icon name="add"></ion-icon>
-              </ion-button>
-            </ion-buttons> -->
-          </ion-card>
-        <!-- </ion-content> -->
-        
+          <div class="participants-container">
+            <ul class="participant-list">
+              <ion-card class="participant-card" *ngFor="let participant of participants" (click)="onCardClick(participant)">
+                <ion-avatar class="participant-avatar" >
+                  <ion-img src="../assets/images/image1.jpg"></ion-img>
+                </ion-avatar>
+                <h2 class="participant-name">{{ participant?.display_name }}</h2>
+              </ion-card>
+            </ul>
+          </div>
       </ion-list>
 
       <ion-text color="danger" *ngIf="errorMessage">
         {{ errorMessage }}
       </ion-text>
-    
-    
     </ion-content>
  
     <ion-footer *ngIf="filterType === 'posts'">

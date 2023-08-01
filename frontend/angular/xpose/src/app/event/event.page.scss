@@ -217,4 +217,126 @@ ion-menu[side="end"] {
   }
 }
 
+/* Style the content wrapper */
+.content-wrapper {
+  padding: 20px;
+}
+
+/* Style the event card container */
+.event-card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  justify-items: center;
+  margin-bottom: 20px;
+}
+
+/* Style the event cards */
+.event-card {
+  max-width: 300px;
+  width: 100%;
+}
+
+/* Style the QR code container */
+.qrcode-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+/* Style the event link */
+.event-link {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+
+/* Style the participants container */
+.participants-container {
+  padding: 10px 0;
+}
+
+/* Style the participant list */
+.participant-list {
+  list-style: none;
+  padding: 0;
+}
+
+/* Style the participant list items (li) */
+.participant-card {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 1px;
+  margin-bottom: 1px;
+}
+
+/* Style the participant avatar */
+.participant-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 10px;
+}
+
+/* Style the participant name */
+.participant-name {
+  font-size: 16px;
+  margin: 0;
+}
+
+
+
+/* Styling for the comment input section */
+.comment-input {
+  display: flex;
+  align-items: center;
+  padding: 1px;
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  margin: 1px;
+}
+
+.comment-input ion-input {
+  flex: 1; /* Take available space */
+  margin-right: 10px;
+}
+
+.comment-input ion-button {
+  --background: #007bff;
+  color: white;
+  --ion-ripple-color: white;
+}
+
+/* Styling for individual comment items */
+.comment-item {
+  background-color: #e9e9e9;
+  border-radius: 10px;
+  margin: 2px 2px;
+  padding: 2px;
+}
+
+.comment-item ion-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.comment-item .text-white {
+  color: #ffffff;
+}
+
+.comment-item h2 {
+  font-size: 16px;
+  margin-bottom: 5px;
+  color: #ff00ff;
+}
+
+.comment-item .comment-message {
+  font-size: 14px;
+}
+
 

@@ -6,6 +6,7 @@ async function responseToEventJoinRequest(req, res) {
     try {
         const { uid } = req.query;
         const { response } = req.body; // Remove request_id from req.body
+        const { code } = req.params;
 
         // Check if required fields are present in the request body
         if (!uid || !response) {
@@ -35,7 +36,7 @@ async function responseToEventJoinRequest(req, res) {
         // Find the event
         const event = await Event.findOne({
             where: {
-                code: req.params.code,
+                code: code,
             },
         });
 
