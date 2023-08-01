@@ -1,7 +1,7 @@
 {
-    "/c": "http://localhost:8001",
-    "/p": "http://localhost:8005",
-    "/e": "http://localhost:8004",
+    "/c": "https://event-chats-service-dkk7eohcwq-uc.a.run.app",
+    "/p": "https://event-posts-service-dkk7eohcwq-uc.a.run.app",
+    "/e": "https://events-service-dkk7eohcwq-uc.a.run.app",
     "/u": "http://localhost:8002",
     "/n": "http://localhost:8006"
 }
