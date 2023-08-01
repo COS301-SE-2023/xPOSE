@@ -16,6 +16,10 @@ import { ApiService } from '../service/api.service';
 
 import { ModalController } from '@ionic/angular';
 
+
+
+
+
 interface Item {
   imageSrc: string;
   imageAlt: string;
@@ -74,7 +78,7 @@ export class EventPage {
     private afs: AngularFirestore,
     // private camera: Camera,
     private api: ApiService,
-    private modalController: ModalController 
+
     ) {
       this.url = "sdafsda";
     this.router.events.subscribe((event) => {
