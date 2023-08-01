@@ -45,7 +45,6 @@ export class HomePage {
 			this.http.get<Event[]>(`${this.api.apiUrl}/e/events?uid=${uid}`).subscribe((events: Event[]) => {
 				console.log(events);
 				  this.events = events;
-				//   this.loading = false;
 				this.populateCards();
 			  });
 			//   this.loading = false;
