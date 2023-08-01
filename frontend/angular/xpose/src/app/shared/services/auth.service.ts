@@ -38,7 +38,7 @@ export class AuthService {
         // this.setUserData(result.user);
         this.afAuth.authState.subscribe((user) => {
           if (user) {
-            console.log("User has been logged in successfuly");
+            // console.log("User has been logged in successfuly");
             this.isLoggedIn = true;
             localStorage.setItem('user', 'true');
             this.router.navigate(['/home']);
@@ -63,11 +63,9 @@ export class AuthService {
       photoURL:{},
       visibility: true
     };
-    
-    // console.log("User data:::::", signUpData);
+   
     const requestBody = JSON.stringify(signUpData);
-    // console.log("User data stringified:::::", requestBody);
-
+    
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     return this.http.post<any>("http://localhost:8000/u/users", requestBody, {headers})
     .toPromise()
@@ -120,7 +118,6 @@ export class AuthService {
   // Sign in with Facebook
   signInWithFacebook(): Promise<void> {
     return this.authLogin(new FacebookAuthProvider()).then((res: any) => {
-      this.isLoggedIn = true;
       this.router.navigate(['/home']);
     });
   }
@@ -131,7 +128,9 @@ export class AuthService {
         .signInWithPopup(provider)
         .then((result) => {
           this.setUserData(result.user);
-          // this.router.navigate(['/home']);
+
+          this.isLoggedIn = true;
+          localStorage.setItem('user', 'true');
 
         })
         .catch((error) => {
@@ -140,18 +139,30 @@ export class AuthService {
   }
 
   setUserData(user: any): Promise<void> {
-    const userRef: AngularFirestoreDocument<any> = this.afs.doc(`Users/${user.uid}`);
-    const userData: User = {
+        // generate unique username
+      const alph = this.generateRandomAlphanumeric(6);  
+      const userRef: AngularFirestoreDocument<any> = this.afs.doc(`Users/${user.uid}`);
+      const userData: User = {
       uid: user.uid,
       email: user.email,
       displayName: user.displayName,
       photoURL: user.photoURL,
       emailVerified: user.emailVerified,
-      friendIds: []
+      uniq_username: `${user.displayName}${alph}`,
+      visibility: true
     };
     return userRef.set(userData, { merge: true });
   }
 
+   generateRandomAlphanumeric(length: number) {
+    const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    for (let i = 0; i < length; i++) {
+      const randomIndex = Math.floor(Math.random() * charset.length);
+      result += charset[randomIndex];
+    }
+    return result;
+  };
 
   getCurrentUserId(): Observable<string> {
 		return this.afAuth.authState.pipe(

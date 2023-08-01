@@ -39,7 +39,7 @@ export const acceptFriendRequest = async (req, res) =>{
             friend_b_id: receiverId
         });
 
-        const db = admin.firestore();
+        /*const db = admin.firestore();
         const notificationRef = db.collection('Notifications').doc(senderId);
         // Get the reference to the existing document in the MyNotifications subcollection
         const myNotificationRef = notificationRef.collection('MyNotifications').doc(notificationId);
@@ -51,7 +51,7 @@ export const acceptFriendRequest = async (req, res) =>{
             })
             .catch((error) => {
                 console.error("Error updating status: ", error);
-            });
+            });*/
 
          // Delete the friend request
          await friendRequest.destroy();
@@ -60,7 +60,7 @@ export const acceptFriendRequest = async (req, res) =>{
         // send a notification to user
           // Communicate with the notification service
 
-      /*const queueName = 'notifications';
+      const queueName = 'notifications';
       const message = new MessageBuilder()
                 .setType("friend_accept")
                 .setMessage(`Friend request accepted`)
@@ -68,7 +68,7 @@ export const acceptFriendRequest = async (req, res) =>{
                 .setReceiverId("999")
                 .build();
 
-        sendMessageToQueue(queueName, message);*/
+        sendMessageToQueue(queueName, message);
 
         res.status(200).json({ message:`Friend with ${requestId} accepted friend request`});
     } catch(error){
