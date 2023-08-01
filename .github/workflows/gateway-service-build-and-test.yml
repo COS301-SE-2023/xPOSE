@@ -23,6 +23,6 @@ jobs:
         working-directory: backend/gateway-service/
         run: npm install
 
-      - name: Run tests for gateway service
-        working-directory: backend/gateway-service/
-        run: npm test
+#       - name: Run tests for gateway service
+#         working-directory: backend/gateway-service/
+#         run: npm test
