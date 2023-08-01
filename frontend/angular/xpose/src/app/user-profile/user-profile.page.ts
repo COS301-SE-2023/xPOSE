@@ -96,7 +96,7 @@ export class UserProfilePage implements OnInit {
       (userId) => {
         if (userId) {
           const requestId = this.user.uid;
-          const endpoint = `http://localhost:8000/u/users/${userId}/friend-requests/${requestId}`;
+          const endpoint = `${this.api.apiUrl}/u/users/${userId}/friend-requests/${requestId}`;
           
           // Get the sender's name from Firestore
           this.firestore.collection("Users").doc(userId).get().subscribe(
