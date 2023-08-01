@@ -94,6 +94,7 @@ export class HomePage {
 	if (this.events.length === 0) {
 		this.cards = [];
 	  } else {
+		this.events.sort((a,b) => new Date(b.id).getTime() - new Date(a.id).getTime());
 		this.cards = this.events.map(event => ({
 		  title: event.title,
 		  location: event.location,
