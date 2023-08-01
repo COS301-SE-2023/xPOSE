@@ -54,6 +54,21 @@ export class CreateEventPage implements OnInit, AfterViewInit {
 		this.initMap();
 	}
 
+	onPrivacyChange() {
+
+
+
+		// if(this.createEvent.privacy_setting == 'public'){
+		// 	this.createEvent.privacy_setting = 'public';
+		// }else if(this.createEvent.privacy_setting == 'private'){
+		// 	this.createEvent.privacy_setting = 'private';
+		// }
+		console.log('Privacy changed:', this.createEvent.privacy_setting);
+		// You can perform any actions here based on the selected privacy setting.
+
+		
+	  }
+
 	ngOnInit(): void {}
 
 	onFileSelected(event: any) {

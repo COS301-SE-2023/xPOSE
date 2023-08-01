@@ -3,11 +3,12 @@ import Friend_request from '../data-access/models/friend_request.table.js';
 import Friendship from '../data-access/models/friendship.table.js';
 import { sendMessageToQueue } from '../sender.js';
 import MessageBuilder from './messagebuilder.js';
+import admin from "firebase-admin";
 import { Op } from "sequelize";
 
 export const acceptFriendRequest = async (req, res) =>{
     const  {requestId} = req.params;
-    const { senderId: requestSenderId }  = req.body;
+    const {senderId: requestSenderId, notificationUid_: notificationId}  = req.body;
 
     try{
         // retrieve friend request details
@@ -38,10 +39,27 @@ export const acceptFriendRequest = async (req, res) =>{
             friend_b_id: receiverId
         });
 
+        /*const db = admin.firestore();
+        const notificationRef = db.collection('Notifications').doc(senderId);
+        // Get the reference to the existing document in the MyNotifications subcollection
+        const myNotificationRef = notificationRef.collection('MyNotifications').doc(notificationId);
+        
+        // Update the status field to "processed"
+        myNotificationRef.update({ "status": "processed" })
+            .then(() => {
+                console.log("Status updated to processed successfully!");
+            })
+            .catch((error) => {
+                console.error("Error updating status: ", error);
+            });*/
+
          // Delete the friend request
          await friendRequest.destroy();
+
+         
         // send a notification to user
           // Communicate with the notification service
+
       const queueName = 'notifications';
       const message = new MessageBuilder()
                 .setType("friend_accept")

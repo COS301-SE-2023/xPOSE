@@ -40,12 +40,17 @@
     <ion-img [src]="currentLightboxImage.imageSrc" [alt]="currentLightboxImage.imageAlt"></ion-img>
     
     <!-- Share button -->
-    <button class="btn-lightbox-control btn-share" (click)="shareImage()">
+    <button class="btn-lightbox-control btn-share" (click)="shareImage(currentLightboxImage)">
       <ion-icon name="share-outline" class="icon-lightbox-control"></ion-icon>
     </button>
 
+    <button class="btn-lightbox-control btn-download" (click)="downloadImage(currentLightboxImage)">
+      <ion-icon name="download-outline" class="icon-lightbox-control"></ion-icon>
+    </button>
+    
+    <!-- //commented out the delete button -->
     <!-- Delete button -->
-    <button class="btn-lightbox-control btn-delete" (click)="deleteImage()">
+    <button class="btn-lightbox-control btn-delete" (click)="deleteImage(currentLightboxImage)">
       <ion-icon name="trash-outline" class="icon-lightbox-control"></ion-icon>
     </button>
   </div>

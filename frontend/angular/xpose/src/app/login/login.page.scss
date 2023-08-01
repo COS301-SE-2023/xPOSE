@@ -52,8 +52,8 @@ ion-toolbar {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    margin-top: 10px;
+    // justify-content: center;
+    margin-top: 35px;
   }
 
   form {
@@ -150,4 +150,7 @@ ion-toolbar {
     margin-top: 45px;
     color: #979797;
   }
-  
+  ion-note{
+    color: #979797;
+    padding-top: 33px;
+  }

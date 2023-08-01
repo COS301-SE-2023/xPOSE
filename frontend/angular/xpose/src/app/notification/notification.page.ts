@@ -112,14 +112,23 @@ export class NotificationPage implements OnInit {
       return Promise.reject(error);
     });
 
-    console.log("User object", user);
-    // this.http
+    this.removeNotification(user);
   }
 
   rejectRequest(user:any) {
-    // Handle reject request logic here
+    this.removeNotification(user);
   }
 
+
+  removeNotification(message: any) {
+    // Find the index of the message in the array
+    const index = this.messages.indexOf(message);
+
+    // If the message is found in the array, remove it
+    if (index !== -1) {
+      this.messages.splice(index, 1);
+    }
+  }
   onEvent() {
     this.router.navigate(['/create-event']);
   }
