@@ -6,6 +6,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Observable, map } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { AngularFirestore } from "@angular/fire/compat/firestore";
+import { ApiService } from '../service/api.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -36,7 +37,8 @@ export class UserProfilePage implements OnInit {
     public userService: Service,
     private afAuth: AngularFireAuth,
     private http: HttpClient,
-    private firestore: AngularFirestore
+    private firestore: AngularFirestore,
+    private api: ApiService,
     // private location: Location
   ) {
     this.user = {
@@ -78,7 +80,7 @@ export class UserProfilePage implements OnInit {
       let uid = this.user.uid;
       if (uid) {
         console.log(`We got that ${uid}`);
-        this.http.get<Event[]>(`http://localhost:8000/e/events?uid=${uid}&filter=participant`).subscribe((events: Event[]) => {
+        this.http.get<Event[]>(`${this.api.apiUrl}/e/events?uid=${uid}&filter=participant`).subscribe((events: Event[]) => {
           console.log(events);
           this.events = events;
           this.populateCards();
