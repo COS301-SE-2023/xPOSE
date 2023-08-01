@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { LoadingIconComponent } from './loading-icon.component';
+import { LoadingPageComponent } from './loading-icon.component';
 
 describe('LoadingIconComponent', () => {
-  let component: LoadingIconComponent;
-  let fixture: ComponentFixture<LoadingIconComponent>;
+  let component: LoadingPageComponent;
+  let fixture: ComponentFixture<LoadingPageComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoadingIconComponent ],
+      declarations: [ LoadingPageComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(LoadingIconComponent);
+    fixture = TestBed.createComponent(LoadingPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

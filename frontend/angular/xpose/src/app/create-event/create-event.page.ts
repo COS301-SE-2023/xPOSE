@@ -13,7 +13,11 @@ import { map } from "rxjs/operators";
 import { ViewChild } from "@angular/core";
 import { NgForm } from "@angular/forms";
 import { ApiService } from "../service/api.service";
-// import { google } from 'google-maps';
+
+// import { google } from '@types/googlemaps';
+
+
+
 @Component({
 	selector: "app-create-event",
 	templateUrl: "./create-event.page.html",
@@ -95,7 +99,7 @@ export class CreateEventPage implements OnInit, AfterViewInit {
 			zoom: 15,
 		});
 
-		this.map.addListener('click', (e) => {
+		this.map.addListener('click', (e:google.maps.MouseEvent) => {
 			this.placeMarker(e.latLng);
 		});
 

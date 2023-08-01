@@ -76,8 +76,9 @@ export class EventPage {
     private api: ApiService,
     private modalController: ModalController 
     ) {
+      // click the 
       this.url = "sdafsda";
-    this.router.events.subscribe((event) => {
+    this.router.events.subscribe((event: any) => {
       if (event instanceof NavigationEnd) {
         this.history.push(event.urlAfterRedirects);
       }
@@ -112,10 +113,13 @@ export class EventPage {
   posts: any;
 
   ngOnInit() {
+    // click the element with id of posts_tab
+    document.getElementById("posts_tab")?.click();
+
     this.url = "";
     // give messageCollection stub value
     // this.messagesCollection = this.afs.collection<Message>(`Event-Chats/0/chats`);
-    this.activatedRoute.paramMap.subscribe(paramMap => {
+    this.activatedRoute.paramMap.subscribe((paramMap: any) => {
       if (!paramMap.has('id')) {
         // Redirect to home page if no event id is available
         this.navCtrl.navigateBack('/home');
