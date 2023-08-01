@@ -100,16 +100,24 @@ async function userRequestToJoinEvent(req, res) {
             timestamp: new Date(),
         });
 
+        const eventOwner = await User.findOne({
+            where: {
+                id: event.owner_id_fk,
+            },
+        });
+
+        const eventOwnerUid = eventOwner.uid;
+
         // send message to notification queue using rabbitmq
         const queueName = 'notifications';
         const message = new MessageBuilder()
-                    .setType("join_event")
-                    .setMessage(`You got invited to an event called ${event.title}`)
-                    .setSenderId("173")
-                    .setReceiverId("999")
-                    .build();
+          .setType("join_event")
+          .setMessage(`${event.title} Request to join!`)
+          .setSenderId(uid)
+          .setReceiverId(eventOwnerUid)
+          .build();
 
-        sendMessageToQueue('notifications', message);
+        sendMessageToQueue(queueName, message);
 
         res.json(joinRequest);
     } catch (error) {
