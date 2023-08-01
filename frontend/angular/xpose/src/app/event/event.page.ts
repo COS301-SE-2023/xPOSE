@@ -15,6 +15,8 @@ import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { ApiService } from '../service/api.service';
 
 import { ModalController } from '@ionic/angular';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+
 
 interface Item {
   imageSrc: string;
@@ -74,7 +76,8 @@ export class EventPage {
     private afs: AngularFirestore,
     // private camera: Camera,
     private api: ApiService,
-    private modalController: ModalController 
+    private modalController: ModalController,
+    private sanitizer: DomSanitizer
     ) {
       // click the 
       this.url = "sdafsda";
@@ -500,6 +503,41 @@ export class EventPage {
   onSearchClick() {
     this.router.navigate(['/search-image']);
   }
+//  ramdom
+    // Function to generate the random avatar based on initials
+    generateAvatar(displayName: string | undefined): string {
+      // const initials = this.getInitials(name);
+      // const color = this.getRandomColor();
+  
+      // You can customize the avatar appearance (size, font size, background color) here
+    //   const avatarUrl = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='100' width='100'%3E%3Crect width='100' height='100' fill='${color}'/%3E%3Ctext x='50' y='55' font-size='48' fill='white' text-anchor='middle' dy='.3em' font-family='Arial, sans-serif'%3E${initials}%3C/text%3E%3C/svg%3E`;
+      
+    //   return this.sanitizer.bypassSecurityTrustResourceUrl(avatarUrl);
+    // }
+  
+    // Function to get the initials from a name
+    const defaultAvatarUrl = 'path/to/default/avatar.jpg';
+    return displayName ? `path/to/avatar/${displayName}.jpg` : defaultAvatarUrl;
+    }
+
+    getInitials(name: string): string {
+      const names = name.split(' ');
+      let initials = '';
+      for (const name of names) {
+        initials += name.charAt(0);
+      }
+      return initials.toUpperCase();
+    }
+  
+    // Function to generate random colors
+    getRandomColor(): string {
+      const letters = '0123456789ABCDEF';
+      let color = '#';
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
 
 }
 
