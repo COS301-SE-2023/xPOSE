@@ -11,14 +11,9 @@ import { ApiService } from '../service/api.service';
 })
 export class SearchPage implements OnInit {
   // Define the search types (tabs)
-  
+
   searchType: 'events' | 'users' = 'events';
-  events: any[] = [
-    { name: 'Event 1' },
-    { name: 'Event 2' },
-    { name: 'Event 3' },
-    // Add more events as needed
-  ];
+  events: any[] = [];
 
   user: any =[];  // store user query result
   loading: boolean = true; // Initial loading state
@@ -54,8 +49,22 @@ export class SearchPage implements OnInit {
       this.found = true;
 
       if (this.searchType === 'events') {
-        // event APi call goes here
+        const search_endpoint = `${this.api.apiUrl}/e/search?q=${this.searchQuery}`;
+        this.loading = true;
 
+        this.http.get<any[]>(search_endpoint).subscribe(
+          (response) => {
+            this.loading = false;
+            this.searchClicked = false;
+            this.events = response;
+            this.search_result = "Search results:";
+            console.log(this.events);
+          },
+          (error:any) => {
+            console.log(error.error.message);
+            this.found = false;
+            this.searchClicked = false;
+          });
       } else if (this.searchType === 'users') {
 
         const search_endpoint = `${this.api.apiUrl}/u/users/search?field=uniq_username&value=${this.searchQuery}`;
@@ -95,5 +104,9 @@ export class SearchPage implements OnInit {
 
   viewUser(userItem: any){
     this.router.navigate(['/user-profile', userItem.uid]);
+  }
+
+  viewEvent(eventItem: any){
+    this.router.navigate(['/view-event', eventItem.code]);
   }
 }
