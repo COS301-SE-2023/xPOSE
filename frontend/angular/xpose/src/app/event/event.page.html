@@ -131,12 +131,12 @@
           <h1 class="section-title">Participants</h1>
           <div class="participants-container">
             <ul class="participant-list">
-              <li class="participant-card" *ngFor="let participant of participants" (click)="onCardClick(participant)">
+              <ion-card class="participant-card" *ngFor="let participant of participants" (click)="onCardClick(participant)">
                 <ion-avatar class="participant-avatar" >
                   <ion-img src="../assets/images/image1.jpg"></ion-img>
                 </ion-avatar>
                 <h2 class="participant-name">{{ participant?.display_name }}</h2>
-              </li>
+              </ion-card>
             </ul>
           </div>
       </ion-list>

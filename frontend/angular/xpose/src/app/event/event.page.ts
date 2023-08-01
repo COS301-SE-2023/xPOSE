@@ -365,9 +365,17 @@ export class EventPage {
 
   onCardClick(participant: any) {
     console.log('Card clicked');
-    console.log(participant);
-    this.router.navigateByUrl('/user-profile')
-    // this.router.navigate(['/participant', participant.id]);
+    console.log(participant.id);
+    // this.router.navigateByUrl('/user-profile')
+    // / Check if participant object and participant.id are defined and not null
+    if (participant) {
+      // Navigate to the user profile page with the participant's ID
+      this.router.navigate(['/user-profile', participant.uid]);
+    } else {
+      // Handle the case where participant object or participant.id is invalid or missing
+      console.error('Invalid participant data.');
+      // Optionally, you can show an error message or handle the situation differently.
+    }
 
   }
 
