@@ -3,7 +3,7 @@ import generateRandomAlphanumeric from './generateRandomAlphanumeric';
 
 describe('generateRandomAlphanumeric', () => {
   test('should generate a random alphanumeric string of the specified length', () => {
-    // Test cases
+   
     const length1 = 10;
     const length2 = 15;
     const length3 = 5;
@@ -12,7 +12,7 @@ describe('generateRandomAlphanumeric', () => {
     const result2 = generateRandomAlphanumeric(length2);
     const result3 = generateRandomAlphanumeric(length3);
 
-    // Assertions
+    
     expect(result1).toHaveLength(length1);
     expect(result2).toHaveLength(length2);
     expect(result3).toHaveLength(length3);
