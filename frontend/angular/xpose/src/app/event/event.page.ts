@@ -14,11 +14,14 @@ import { AngularFirestore, AngularFirestoreCollection, DocumentChangeAction } fr
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera'; 
 import { ApiService } from '../service/api.service';
 
+import { ModalController } from '@ionic/angular';
+
 interface Item {
   imageSrc: string;
   imageAlt: string;
   uid: string;
-  // id: string;
+  id: string;
+  event_id: string;
   // timestamp: Date;
 }
 
@@ -43,21 +46,7 @@ export class EventPage {
   //   // Add more participant objects as needed
   // ];
 
-  data: Item[] = [
-    // { imageSrc: '../assets/images/download.jpg', imageAlt: '1' },
-    // { imageSrc: '../assets/images/qrcode.png', imageAlt: '2' },
-    // { imageSrc: '../assets/images/images.jpg', imageAlt: '3' },
-    // { imageSrc: '../assets/images/qrcode.png', imageAlt: '4' },
-    // { imageSrc: '../assets/images/image2.webp', imageAlt: '5' },
-    // { imageSrc: '../assets/images/image1.webp', imageAlt: '6' },{ imageSrc: '../assets/images/download.jpg', imageAlt: '1' },
-    // { imageSrc: '../assets/images/youth.jpg', imageAlt: '7' },
-    // { imageSrc: '../assets/images/images.jpg', imageAlt: '8' },
-    // { imageSrc: '../assets/images/youth.png', imageAlt: '9' },
-    // { imageSrc: '../assets/images/qrcode.png', imageAlt: '10' },
-    // { imageSrc: '../assets/images/image2.webp', imageAlt: '11' },
-    
-    // Add more items as needed...
-  ];
+  data: Item[] = [];
   // router: any;
 
   // constructor(private galleryDataService: GalleryDataService) {
@@ -69,6 +58,7 @@ export class EventPage {
   selectedTab: any;
   // participants: never[];
   qrCodeImage: string | undefined;
+  isGalleryOpen: boolean = false;
   // http: any;
 
   
@@ -83,7 +73,8 @@ export class EventPage {
     private galleryDataService: GalleryDataService,
     private afs: AngularFirestore,
     // private camera: Camera,
-    private api: ApiService
+    private api: ApiService,
+    private modalController: ModalController 
     ) {
       this.url = "sdafsda";
     this.router.events.subscribe((event) => {
@@ -260,12 +251,16 @@ export class EventPage {
         this.data.length = 0;
         data.forEach((doc) => {
           const post: any = doc.payload.doc.data();
+
           console.log(post);
           this.data.push({
             imageSrc: post.image_url,
             imageAlt: post.timestamp,
             uid: post.uid,
-            // id: post.id,
+            // add document id
+            // doc_id: ,
+            id: doc.payload.doc.id,
+            event_id: this.current_event.code,
             // timestamp: post.timestamp
           });
         });
@@ -311,6 +306,8 @@ export class EventPage {
     } else {
       console.log("No image data available.");
     }
+
+    this.isGalleryOpen = true;
   }
   
   
@@ -414,6 +411,10 @@ export class EventPage {
 
   onHome() {
     this.router.navigate(['/home']);
+  }
+
+  closeGallery() {
+    this.isGalleryOpen = false;
   }
 
   // Code to create and send messages

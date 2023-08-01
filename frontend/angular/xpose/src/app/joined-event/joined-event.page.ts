@@ -82,7 +82,7 @@ export class JoinedEventPage implements OnInit {
         image_url: event.image_url,
         longitude: event.longitude,
         latitude: event.latitude,
-        id: event.id,
+        id: event.code,
         created_at: event.createdAt,
         start_date: event.start_date,
         end_date: event.end_date,
@@ -111,7 +111,7 @@ export class JoinedEventPage implements OnInit {
         description: '' + event.eventLocation,
         // button: "Join event",
         imageURL: event.imageUrl,
-        id: event.id,
+        id: event.code,
         // Add event listener to the button
         // buttonClick: function() {
         // // Redirect to event details page

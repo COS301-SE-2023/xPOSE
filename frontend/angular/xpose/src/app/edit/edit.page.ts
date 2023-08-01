@@ -2,14 +2,14 @@ import { AfterViewInit,Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from "../shared/services/auth.service";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { CommonModule, Location } from '@angular/common';
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.page.html',
   styleUrls: ['./edit.page.scss'],
 })
 export class EditPage implements OnInit, AfterViewInit {
-  private history: string[] = [];
+ public history: string[] = [];
   editForm: FormGroup;
   photoURL: string;
   username: string;
@@ -61,8 +61,7 @@ export class EditPage implements OnInit, AfterViewInit {
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
     if (file) {
-      // You can implement your own logic to upload the image to your storage or server
-      // For now, we'll just set the photoURL to a local object URL for demonstration purposes.
+      // we can implement your own logic to upload the image to your storage or server
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => {
@@ -78,7 +77,7 @@ export class EditPage implements OnInit, AfterViewInit {
   }
 
   goBack(){
-		this.router.navigate(["/profile"]);
+		this.location.back();
 	}
 
 }

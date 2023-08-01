@@ -34,12 +34,23 @@
     </div>
 
     <ng-container *ngIf="!found">
-      <h2 class="ion-text-center">No matching users found.</h2>
+      <h2 class="ion-text-center">No matches found.</h2>
     </ng-container>
+
+    <!-- Display  array of events information if available -->
+    <h2 class="ion-text-center" *ngIf="search_result" >{{search_result}}</h2>
+    <div *ngIf="this.events">
+      <ion-list>
+        <ion-item *ngFor="let eventItem of this.events">
+          <!-- Replace 'displayName' with the actual property you want to display for each event -->
+          <ion-label (click)="viewEvent(eventItem)">{{ eventItem.title }}</ion-label>
+        </ion-item>
+      </ion-list>
+    </div>
 
       <!-- Display user information if available -->
       <div *ngIf="this.user">
-        <h2 class="ion-text-center">{{search_result}}</h2>
+        <!-- <h2 class="ion-text-center">{{search_result}}</h2> -->
         <ion-list>
           <ion-item *ngFor="let userItem of this.user">
             <!-- Replace 'displayName' with the actual property you want to display for each user -->
