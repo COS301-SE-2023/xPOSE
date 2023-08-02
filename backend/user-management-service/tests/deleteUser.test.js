@@ -18,7 +18,7 @@ describe('deleteUser', () => {
   test('should delete the user account and document', async () => {
     const req = {
       params: {
-        userId: 'userA',
+        userId: 'jfd5rthfgdr',
       },
     };
     const res = {
@@ -30,17 +30,17 @@ describe('deleteUser', () => {
 
     // Assertions
     expect(res.status).toHaveBeenCalledWith(200);
-    expect(res.send).toHaveBeenCalledWith('User with the id userA deleted from DB successfuly');
+    expect(res.send).toHaveBeenCalledWith('User with the id jfd5rthfgdr deleted from DB successfuly');
 
     
-    expect(admin.auth().deleteUser).toHaveBeenCalledWith('userA');
+    expect(admin.auth().deleteUser).toHaveBeenCalledWith('jfd5rthfgdr');
     expect(admin.firestore().collection().doc().delete).toHaveBeenCalledWith();
   });
 
   test('should return 500 for any unexpected error', async () => {
     const req = {
       params: {
-        userId: 'userA',
+        userId: 'jfd5rthfgdr',
       },
     };
     const res = {
