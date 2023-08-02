@@ -22,9 +22,35 @@
       <ion-note *ngIf="signUpForm.get('email')?.hasError('email') && signUpForm.get('email')?.touched" color="danger">
         Invalid email format.
       </ion-note>
-      <ion-input type="password" label="Password" label-placement="floating" fill="outline" placeholder="Password" name="password" formControlName="password"></ion-input>
+      <ion-input type="password"
+       label="Password"
+       label-placement="floating"
+       fill="outline"
+       placeholder="Password"
+       name="password"
+       formControlName="password"
+       type="password"
+       required
+       ></ion-input>
+       <ion-note *ngIf="signUpForm.get('password')?.hasError('required') && signUpForm.get('password')?.touched" color="danger">
+        Password is required.
+      </ion-note>
+      <ion-note *ngIf="signUpForm.get('password')?.hasError('passwordLength') && signUpForm.get('password')?.touched" color="danger">
+        Password must be at least 8 characters long.
+      </ion-note>
+      <ion-note *ngIf="signUpForm.get('password')?.hasError('passwordRequirements') && signUpForm.get('password')?.touched" color="danger">
+        Password must contain at least one uppercase letter, one lowercase letter, and one digit.
+      </ion-note>
       <!-- <ion-input type="password" label="Confirm Password" label-placement="floating" fill="outline" placeholder="Confirm Password" name="confirm_password" formControlName="conf-password"></ion-input> -->
-      <ion-input type="password" label="Confirm Password" label-placement="floating" fill="outline" placeholder="Confirm Password" name="conf-password" formControlName="conf-password"></ion-input>
+      <ion-input type="password"
+       label="Confirm Password"
+       label-placement="floating"
+       fill="outline"
+       placeholder="Confirm Password"
+       name="conf-password"
+       formControlName="conf-password"
+       type="password"
+       ></ion-input>
       
 
 

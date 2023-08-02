@@ -19,7 +19,7 @@ export class SignupPage implements OnInit {
 		) {
 			this.signUpForm = this.formBuilder.group({
 				email: ["", [Validators.required, Validators.email, this.customEmailValidator()]],
-				password: ["", [Validators.required]],
+				password: ["", [Validators.required, this.customPasswordValidator()]],
 				username: ["", [Validators.required]]
 			 });
 
@@ -47,6 +47,38 @@ export class SignupPage implements OnInit {
 			const username = this.signUpForm.get("username")?.value;
 			this.authService.signUp(email, password, username);
 		}
+
+		// Custom password validator function
+		customPasswordValidator(): ValidatorFn {
+			return (control: AbstractControl): { [key: string]: any } | null => {
+			  // Regular expressions to check password requirements
+			  const lengthRegex = /.{8}/;
+			  const uppercaseRegex = /[A-Z]/;
+			  const lowercaseRegex = /[a-z]/;
+			  const digitRegex = /\d/;
+		
+			  // Get the password value from the form control
+			  const password = control.value;
+		
+			  // Check if the password meets all the requirements
+			  const isLengthValid = lengthRegex.test(password);
+			  const hasUppercase = uppercaseRegex.test(password);
+			  const hasLowercase = lowercaseRegex.test(password);
+			  const hasDigit = digitRegex.test(password);
+		
+			  // Return validation errors if the password is not valid
+			  if (!isLengthValid) {
+				return { passwordLength: true };
+			  }
+			  if (!hasUppercase || !hasLowercase || !hasDigit) {
+				return { passwordRequirements: true };
+			  }
+		
+			  return null; // Password is valid
+			};
+		  }
+
+
 	ngOnInit() {
 		// TODO document why this method 'ngOnInit' is empty
   
