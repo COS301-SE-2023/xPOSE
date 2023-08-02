@@ -6,7 +6,7 @@ jest.mock('../data-access/sequelize', () => {
   const dbMock = new SequelizeMock();
 
   const User = dbMock.define('User', {
-    uid: 'userA',
+    uid: 'fdsd54tfd',
   });
 
   const Event = dbMock.define('Event', {
@@ -31,7 +31,7 @@ jest.mock('firebase-admin', () => ({
       doc: (docId) => ({
         get: jest.fn(() =>
           Promise.resolve({
-            exists: docId === 'userA',
+            exists: docId === 'fdsd54tfd',
             data: () => ({ displayName: 'John Doe' }),
           })
         ),
@@ -44,7 +44,7 @@ describe('getEvent', () => {
   test('should get the event details for an existing event and user', async () => {
     const req = {
       query: {
-        uid: 'userA',
+        uid: 'fdsd54tfd',
       },
       params: {
         code: 'eventCode',
@@ -71,7 +71,7 @@ describe('getEvent', () => {
   test('should return 404 when the event does not exist', async () => {
     const req = {
       query: {
-        uid: 'userA',
+        uid: 'fdsd54tfd',
       },
       params: {
         code: 'nonExistingCode',
