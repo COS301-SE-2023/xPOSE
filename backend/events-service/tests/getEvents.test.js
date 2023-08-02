@@ -6,19 +6,19 @@ jest.mock('../data-access/sequelize', () => {
   const dbMock = new SequelizeMock();
 
   const User = dbMock.define('User', {
-    uid: 'userA',
+    uid: 'dgfydgsy5wf',
   });
 
   const Event = dbMock.define('Event', {
-    code: 'eventCode',
-    owner_id_fk: 'userA', 
+    code: 'sftdtfy3fsf',
+    owner_id_fk: 'dgfydgsy5wf', 
     start_date: '2023-08-01T12:00:00.000Z',
     end_date: '2023-08-02T12:00:00.000Z',
   });
 
   const EventParticipant = dbMock.define('EventParticipant', {
-    user_id_fk: 'userA',
-    event_id_fk: 'eventCode',
+    user_id_fk: 'dgfydgsy5wf',
+    event_id_fk: 'sftdtfy3fsf',
   });
 
  
@@ -38,7 +38,7 @@ jest.mock('firebase-admin', () => ({
       doc: (docId) => ({
         get: jest.fn(() =>
           Promise.resolve({
-            exists: docId === 'userA',
+            exists: docId === 'dgfydgsy5wf',
             data: () => ({ displayName: 'John Doe' }),
           })
         ),
@@ -51,7 +51,7 @@ describe('getEvents', () => {
   test('should get all events', async () => {
     const req = {
       query: {
-        uid: 'userA',
+        uid: 'dgfydgsy5wf',
       },
     };
     const res = {
@@ -64,9 +64,9 @@ describe('getEvents', () => {
     expect(res.json).toHaveBeenCalledWith([
       
       {
-        code: 'eventCode',
+        code: 'sftdtfy3fsf',
         user_event_position: 'owner',
-        owner: 'userA',
+        owner: 'dgfydgsy5wf',
         
       },
     ]);
@@ -75,7 +75,7 @@ describe('getEvents', () => {
   test('should get participant events', async () => {
     const req = {
       query: {
-        uid: 'userA',
+        uid: 'dgfydgsy5wf',
         filter: 'participant',
       },
     };
@@ -89,9 +89,9 @@ describe('getEvents', () => {
     expect(res.json).toHaveBeenCalledWith([
       
       {
-        code: 'eventCode',
+        code: 'sftdtfy3fsf',
         user_event_position: 'participant',
-        owner: 'userA',
+        owner: 'dgfydgsy5wf',
         
       },
     ]);
