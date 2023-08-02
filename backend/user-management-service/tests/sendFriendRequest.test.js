@@ -33,11 +33,11 @@ describe('sendFriendRequest', () => {
     // Initialize req and res objects for each test
     req = {
       params: {
-        userId: 'mock-user-id',
-        requestId: 'mock-request-id',
+        userId: 'fue7t67yf873u8',
+        requestId: 'gygdt7yr82uq',
       },
       body: {
-        username: 'mock-username',
+        username: 'ygeyguf32jro',
       },
     };
 
@@ -61,8 +61,8 @@ describe('sendFriendRequest', () => {
 
     // Check if the Friend_request was created with the correct data
     expect(Friend_request.create).toHaveBeenCalledWith({
-      friend_a_id: 'mock-user-id',
-      friend_b_id: 'mock-request-id',
+      friend_a_id: 'fue7t67yf873u8',
+      friend_b_id: 'gygdt7yr82uq',
       response: 'pending',
     });
 
@@ -70,8 +70,8 @@ describe('sendFriendRequest', () => {
     expect(MessageBuilder).toHaveBeenCalled();
     expect(MessageBuilder().setType).toHaveBeenCalledWith('friend_request');
     expect(MessageBuilder().setMessage).toHaveBeenCalledWith('Friend request from mock-username');
-    expect(MessageBuilder().setSenderId).toHaveBeenCalledWith('mock-user-id');
-    expect(MessageBuilder().setReceiverId).toHaveBeenCalledWith('mock-request-id');
+    expect(MessageBuilder().setSenderId).toHaveBeenCalledWith('fue7t67yf873u8');
+    expect(MessageBuilder().setReceiverId).toHaveBeenCalledWith('gygdt7yr82uq');
     expect(MessageBuilder().build).toHaveBeenCalled();
 
     // Check if the sendMessageToQueue was called with the correct data

@@ -14,13 +14,13 @@ describe('MessageBuilder', () => {
   });
 
   test('should build a message object with the correct senderId', () => {
-    const senderId = 'user123';
+    const senderId = 'jrfijer9k73g';
     const message = new MessageBuilder().setSenderId(senderId).build();
     expect(message.data.senderId).toBe(senderId);
   });
 
   test('should build a message object with the correct receiverId', () => {
-    const receiverId = 'user456';
+    const receiverId = 'hsuugw7gew65';
     const message = new MessageBuilder().setReceiverId(receiverId).build();
     expect(message.data.receiverId).toBe(receiverId);
   });
