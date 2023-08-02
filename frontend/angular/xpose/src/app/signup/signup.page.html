@@ -15,10 +15,18 @@
   <div class="container">
     <form [formGroup]="signUpForm">
       <ion-input label="Username" label-placement="floating" fill="outline" placeholder="Username" name="username" formControlName="username"></ion-input>
-      <ion-input label="Email" label-placement="floating" fill="outline" placeholder="Email" name="email" formControlName="email"></ion-input>
+      <ion-input label="Email" label-placement="floating" fill="outline" placeholder="xpose@gmail.com" name="email" formControlName="email"></ion-input>
+      <ion-note *ngIf="signUpForm.get('email')?.hasError('required') && signUpForm.get('email')?.touched" color="danger">
+        Email is required.
+      </ion-note>
+      <ion-note *ngIf="signUpForm.get('email')?.hasError('email') && signUpForm.get('email')?.touched" color="danger">
+        Invalid email format.
+      </ion-note>
       <ion-input type="password" label="Password" label-placement="floating" fill="outline" placeholder="Password" name="password" formControlName="password"></ion-input>
       <!-- <ion-input type="password" label="Confirm Password" label-placement="floating" fill="outline" placeholder="Confirm Password" name="confirm_password" formControlName="conf-password"></ion-input> -->
       <ion-input type="password" label="Confirm Password" label-placement="floating" fill="outline" placeholder="Confirm Password" name="conf-password" formControlName="conf-password"></ion-input>
+      
+
 
       <ion-button id="submitBtn" type="submit" class="custom-btn" (click)="signUp()">Sign Up</ion-button>
     </form>

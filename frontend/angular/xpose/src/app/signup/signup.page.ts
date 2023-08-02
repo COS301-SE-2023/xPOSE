@@ -1,5 +1,5 @@
 import { Component, OnInit,NgZone } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from "@angular/forms";
 import { Router } from '@angular/router';
 
 import { AuthService } from "../shared/services/auth.service";
@@ -18,12 +18,28 @@ export class SignupPage implements OnInit {
 		private router: Router
 		) {
 			this.signUpForm = this.formBuilder.group({
-				email: ["", [Validators.required, Validators.email]],
+				email: ["", [Validators.required, Validators.email, this.customEmailValidator()]],
 				password: ["", [Validators.required]],
 				username: ["", [Validators.required]]
 			 });
 
 		}
+
+		customEmailValidator(): ValidatorFn {
+			return (control: AbstractControl): { [key: string]: any } | null => {
+			  // Regular expression to match the custom email format
+			  const emailRegex = /^[a-zA-Z0-9._%+-]+@...\.com$/;
+		
+			  // Get the email value from the form control
+			  const email = control.value;
+		
+			  // Check if the email matches the custom format
+			  const isValid = emailRegex.test(email);
+		
+			  // Return validation error if the email is not valid
+			  return isValid ? null : { customEmail: true };
+			};
+		  }
 
 		signUp() {
 			const email = this.signUpForm.get("email")?.value;
