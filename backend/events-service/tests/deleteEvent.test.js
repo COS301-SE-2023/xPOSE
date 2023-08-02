@@ -6,7 +6,7 @@ jest.mock('../data-access/sequelize', () => {
   const dbMock = new SequelizeMock();
 
   const User = dbMock.define('User', {
-    uid: 'userA',
+    uid: 'gfcyw45gdf',
   });
 
   const Event = dbMock.define('Event', {
@@ -36,7 +36,7 @@ describe('deleteEvent', () => {
   test('should delete the event when the user owns it', async () => {
     const req = {
       query: {
-        uid: 'userA',
+        uid: 'gfcyw45gdf',
       },
       params: {
         code: 'eventCode',
@@ -57,7 +57,7 @@ describe('deleteEvent', () => {
   test('should return 404 when the event does not exist', async () => {
     const req = {
       query: {
-        uid: 'userA',
+        uid: 'gfcyw45gdf',
       },
       params: {
         code: 'nonExistingCode',
@@ -120,7 +120,7 @@ describe('deleteEvent', () => {
   test('should return 500 for any unexpected error', async () => {
     const req = {
       query: {
-        uid: 'userA',
+        uid: 'gfcyw45gdf',
       },
       params: {
         code: 'eventCode',
