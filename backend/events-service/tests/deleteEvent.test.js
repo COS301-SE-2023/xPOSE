@@ -99,7 +99,7 @@ describe('deleteEvent', () => {
   test('should return 400 when the user does not own the event', async () => {
     const req = {
       query: {
-        uid: 'userB', 
+        uid: 'ftde45rx6t', 
       },
       params: {
         code: 'eventCode',
