@@ -163,3 +163,19 @@ ion-card-content {
 .loading-icon {
   animation: spin 2s linear infinite; /* Change the animation duration as needed */
 }
+
+.date-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 5px;
+}
+
+.calendar-icon {
+  font-size: 20px;
+  margin-right: 5px;
+}
+
+.date-text {
+  font-weight: bold;
+}
