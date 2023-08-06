@@ -35,17 +35,23 @@
 }
 
 .edit_div {
-  --background: #007bff; /* Set the background color for the Edit Profile button */
+  background-color: #ff00ff; /* Set the background color for the Edit Profile button */
   // --color: #fff; /* Set the text color for the Edit Profile button */
-  margin-top: 10px;
+  margin-top: 30px;
+  padding: 10px;
+  border-radius: 10px;
+  color: #ffffff;
 }
 
 .pink-button {
-  --background: #ff43d6; /* Set the background color for the pink button */
+  --background: #919191; /* Set the background color for the pink button */
   --color: white; /* Set the text color for the pink button */
   font-size: 19px;
 }
 
+.menu{
+  background-color: #919191;
+}
 
 ion-toolbar.custom-toolbar {
   --background: #ffffff;
@@ -60,4 +66,7 @@ ion-label{
 ion-content#main-content {
   --background: #ffffff;
 
+}
+.button{
+  background-color: #ff43d6;
 }

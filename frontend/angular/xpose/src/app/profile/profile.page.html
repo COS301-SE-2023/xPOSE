@@ -3,9 +3,28 @@
     <ion-buttons slot="start">
       <app-backbutton></app-backbutton>
       </ion-buttons>
-    <ion-title>Profile</ion-title>
+    <!-- <ion-title>Profile</ion-title> -->
+    <ion-menu-button slot="end" class="menu"></ion-menu-button>
   </ion-toolbar>
 </ion-header>
+
+<ion-menu side="end" content-id="main-content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Settings</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item>Change Profile</ion-item>
+      <ion-item>Logout</ion-item>
+      <ion-item>About Us</ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+<!-- <ion-footer>
+  <ion-button (click)="logout()" expand="full" class="pink-button">Logout</ion-button>
+</ion-footer> -->
 
 
 <div class="profile_div" >
@@ -18,7 +37,7 @@
       
       <br> 
     </div>
-    <ion-button class="edit_div" (click)="editProfile()">Edit Profile</ion-button> 
+    <button class="edit_div" (click)="editProfile()">Edit Profile</button> 
   </div>
 </div>
 
@@ -37,6 +56,4 @@
   </ion-tabs>
 </ion-content>
 
-<ion-footer>
-  <ion-button (click)="logout()" expand="full" class="pink-button">Logout</ion-button>
-</ion-footer>
+
