@@ -56,6 +56,10 @@
           <ion-card-title class="header">
             {{ card?.title }}
           </ion-card-title>
+          <div class="date-container">
+            <ion-icon name="calendar" class="calendar-icon"></ion-icon>
+            <span class="date-text">{{ card.date | date: 'mediumDate' }}</span>
+          </div>
           <ion-card-content>
             <ion-icon name="location"></ion-icon>
             {{ truncateText(card.location, 4) }}
@@ -64,9 +68,6 @@
             <ion-col center text-center>
               <ion-card-subtitle>
                 {{ card.description }}
-              </ion-card-subtitle>
-              <ion-card-subtitle>
-                {{ card.date | date: 'mediumDate' }}
               </ion-card-subtitle>
             </ion-col>
             <ion-col class="ion-text-end">
