@@ -13,7 +13,7 @@
 
 <ion-menu side="end" content-id="main-content">
   <ion-header>
-    <ion-toolbar>
+    <ion-toolbar> 
       <ion-title>Menu</ion-title>
     </ion-toolbar>
   </ion-header>
@@ -47,31 +47,35 @@
     </ion-text>
   </div>
 
-  <ion-card (click)="eventDetails(card.id)" *ngFor="let card of cards">
-    <span class="label-{{ getStatusColor(card?.status) }} label">{{ card?.status }}</span>
-    <img [src]="card.image_url" alt="Card Image" class="card-image">
-    <ion-card-header class="">
-      <ion-card-title class="header">
-        {{ card?.title }}
-      </ion-card-title>
-      <ion-card-content>
-        <ion-icon name="location"></ion-icon>
-        {{ truncateText(card.location, 4) }}
-      </ion-card-content>
-      <ion-row>
-        <ion-col center text-center>
-          <ion-card-subtitle>
-            {{ card.description }}
-          </ion-card-subtitle>
-        </ion-col>
-        <ion-col class="ion-text-end">
-          <ion-button fill="clear" class="right-aligned-button">
-            <!-- <ion-icon class="iconp" name='share'></ion-icon> -->
-          </ion-button>
-        </ion-col>
-      </ion-row>
-    </ion-card-header>
-  </ion-card>
+  <ion-row>
+    <ion-col size="12" size-sm="6" size-md="4" size-lg="3" *ngFor="let card of cards">
+      <ion-card (click)="eventDetails(card.id)">
+        <span class="label-{{ getStatusColor(card?.status) }} label">{{ card?.status }}</span>
+        <img [src]="card.image_url" alt="Card Image" class="card-image">
+        <ion-card-header class="">
+          <ion-card-title class="header">
+            {{ card?.title }}
+          </ion-card-title>
+          <ion-card-content>
+            <ion-icon name="location"></ion-icon>
+            {{ truncateText(card.location, 4) }}
+          </ion-card-content>
+          <ion-row>
+            <ion-col center text-center>
+              <ion-card-subtitle>
+                {{ card.description }}
+              </ion-card-subtitle>
+            </ion-col>
+            <ion-col class="ion-text-end">
+              <ion-button fill="clear" class="right-aligned-button">
+                <!-- <ion-icon class="iconp" name='share'></ion-icon> -->
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-card-header>
+      </ion-card>
+    </ion-col>
+  </ion-row>
  
 </ion-content>
 
