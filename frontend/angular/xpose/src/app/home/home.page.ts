@@ -107,7 +107,7 @@ export class HomePage {
 		  created_at: event.createdAt,
 		  start_date: event.start_date,
 		  end_date: event.end_date,
-		  
+		  date: new Date(event.start_date).toDateString(),		  
 		  // Add event listener to the button
 		  buttonClick: function() {
 			// Redirect to event details page

@@ -65,6 +65,9 @@
               <ion-card-subtitle>
                 {{ card.description }}
               </ion-card-subtitle>
+              <ion-card-subtitle>
+                {{ card.date | date: 'mediumDate' }}
+              </ion-card-subtitle>
             </ion-col>
             <ion-col class="ion-text-end">
               <ion-button fill="clear" class="right-aligned-button">
