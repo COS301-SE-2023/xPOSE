@@ -50,7 +50,7 @@
 }
 
 .menu{
-  background-color: #919191;
+  background-color: #ffffff;
 }
 
 ion-toolbar.custom-toolbar {
@@ -59,6 +59,7 @@ ion-toolbar.custom-toolbar {
   font-size: 20px;
   /* Add more custom styles as needed */
   --min-height: 50px;
+  
 }
 ion-label{
   --text-align: center;
@@ -67,6 +68,19 @@ ion-content#main-content {
   --background: #ffffff;
 
 }
-.button{
-  background-color: #ff43d6;
+button{
+  background-color: #b4b4b4;
+  width: 100%;
+  align-items: center;
+  font-size: 15px;
+  padding: 10px;
 }
+.enu-buttons{
+  align-items: center;
+  background-color: #919191
+  color( red green blue);
+}
+// ion-button{
+//   --background-color: #919191;
+
+// }

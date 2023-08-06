@@ -16,9 +16,11 @@
   </ion-header>
   <ion-content>
     <ion-list>
-      <ion-item>Change Profile</ion-item>
-      <ion-item>Logout</ion-item>
-      <ion-item>About Us</ion-item>
+      <button class="button" expand="full">Change Profile</button>
+      <button expand="full">Logout</button>
+      <button (click)="logout()" expand="full">Logout</button>
+      <button expand="full">About Us</button>
+      
     </ion-list>
   </ion-content>
 </ion-menu>
