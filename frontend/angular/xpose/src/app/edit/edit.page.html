@@ -33,18 +33,20 @@
 	<div class="profile-container">
 		<!-- <div> -->
 		<form #form="ngForm" (ngSubmit)=(form)>
-			<img [src]="photoURL" alt="Profile Picture" class="profile-picture">
-			<input type="file" accept="image/*" (change)="onFileSelected($event)" id="fileInput" hidden>
-			
-			
-			<button class="custom-file-input" (click)="fileInput.click()">Change image</button>
+			<img (click)="fileInput.click()" [src]="photoURL" alt="Profile Picture" class="profile-picture">
+			<!-- <input type="file" accept="image/*" (change)="onFileSelected($event)" id="fileInput" hidden> -->
+			<!-- <button (click)="fileInput.click()">Change image</button> -->
 			<input type="file" accept="image/*" (change)="onFileSelected($event)" id="fileInput" #fileInput hidden>
-			
-	  
-	  <ion-item>
-		<ion-label class="username-label" position="floating">Username</ion-label>
-		<ion-input class="username-input" name = "username"[(ngModel)]="username" required ></ion-input>
-	  </ion-item>
+		<!-- <ion-item> -->
+			<ion-card>
+			<ion-label class="username-label" position="floating">Username</ion-label>
+			<ion-input class="username-input" name = "username"[(ngModel)]="username" required ></ion-input>
+		<!-- </ion-item> -->
+		<!-- <ion-item> -->
+			<ion-label class="username-label" position="floating">Email</ion-label>
+			<ion-input class="username-input" name = "username"[(ngModel)]="username" required ></ion-input>
+	  <!-- </ion-item> -->
+	`</ion-card>
   
 	  <!-- <div class="account-privacy-container">
 		<ion-label class="account-privacy-label">Account Privacy</ion-label>
