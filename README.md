@@ -10,6 +10,9 @@
 [Coding Standards](https://docs.google.com/document/d/1rUBPHHAdf_QrWDmDg7RYuaua1JRfoRZ5cQ5lRM0aEzg/edit?usp=sharing)\
 [Project Board](https://github.com/orgs/COS301-SE-2023/projects/33)\
 [Technical installation manual](https://docs.google.com/document/d/1qnxa1F8AP8EpryEYgJlkma4I1rv0TalAjX16g_LHoh0/edit)
+
+will add more here...
+
 ## Technology Stack
 Our technology stack still isn't finalized and we're still researching
 | Technology | Description | Testing |
