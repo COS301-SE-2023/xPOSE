@@ -1,63 +1,3 @@
-// .profile_div {
-//   width: 100%;
-//   background: #faaef6;
-//   height: 150px;
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   justify-content: center;
-
-//   .user_div {
-//     display: flex;
-//     align-items: center;
-//     justify-content: center;
-
-//     img {
-//       padding-top: 10px;
-//       margin-right: 10px;
-//     }
-
-//     .first_div {
-//       display: flex;
-//       flex-direction: column;
-//       align-items: center;
-//       justify-content: center;
-
-//       .username {
-//         font-size: 20px;
-//         font-weight: 600;
-//         color: #fff;
-//         text-align: center;
-//         margin-bottom: 10px;
-//       }
-
-//       .edit_div {
-//         font-size: 21px;
-//         font-weight: 600;
-//         color: #fff;
-//         text-align: center;
-//       }
-//     }
-//   }
-// }
-
-// body {
-//   background-color: #fff;
-// }
-  
-// ion-toolbar {
-//   --background: #ff43d6; /* Set the toolbar background color */
-//   color: white; /* Set the toolbar text color */
-// }
-
-// ion-content{
-//   --background: #fff;
-//   border: #fff;
-
-// }
-// ion-content {
-//   --background: #f4f4f4; /* Set the background color for the content area */
-// }
 
 .profile-image {
   width: 100px; /* Set the desired width */
@@ -71,7 +11,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 50px;
+  margin-top: 20px;
 }
 
 .user_div {
@@ -81,38 +21,45 @@
 .user_div img {
   width: 100px;
   border-radius: 50%;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .first_div {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .username {
   font-size: 20px;
-  font-weight: bold;
+  // font-weight: bold;
   color: #333;
 }
 
 .edit_div {
-  --background: #007bff; /* Set the background color for the Edit Profile button */
+  background-color: #ff00ff; /* Set the background color for the Edit Profile button */
   // --color: #fff; /* Set the text color for the Edit Profile button */
-  margin-top: 10px;
+  // margin-top: 20px;
+  padding: 10px;
+  border-radius: 10px;
+  color: #ffffff;
 }
 
 .pink-button {
-  --background: #ff43d6; /* Set the background color for the pink button */
+  --background: #919191; /* Set the background color for the pink button */
   --color: white; /* Set the text color for the pink button */
   font-size: 19px;
 }
 
+.menu{
+  background-color: #ffffff;
+}
 
 ion-toolbar.custom-toolbar {
   --background: #ffffff;
   color: #000000;
   font-size: 20px;
   /* Add more custom styles as needed */
-  --min-height: 70px;
+  --min-height: 50px;
+  
 }
 ion-label{
   --text-align: center;
@@ -121,3 +68,19 @@ ion-content#main-content {
   --background: #ffffff;
 
 }
+button{
+  background-color: #b4b4b4;
+  width: 100%;
+  align-items: center;
+  font-size: 15px;
+  padding: 10px;
+}
+.enu-buttons{
+  align-items: center;
+  background-color: #919191
+  color( red green blue);
+}
+// ion-button{
+//   --background-color: #919191;
+
+// }

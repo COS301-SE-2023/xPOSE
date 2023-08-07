@@ -32,8 +32,8 @@ describe('getFriend', () => {
   test('should return the friend data when they are friends', async () => {
     const req = {
       params: {
-        userId: 'userA',
-        requestId: 'userB',
+        userId: 'Z2wxae2wxz2wA',
+        requestId: 'gdhguhrhgofi2',
       },
     };
     const res = {
@@ -42,7 +42,7 @@ describe('getFriend', () => {
     };
 
     const Friendship = {
-      findOne: jest.fn(() => Promise.resolve({ friend_a_id: 'userA', friend_b_id: 'userB' })),
+      findOne: jest.fn(() => Promise.resolve({ friend_a_id: 'Z2wxae2wxz2wA', friend_b_id: 'userB' })),
     };
 
 
@@ -58,8 +58,8 @@ describe('getFriend', () => {
   test('should return "areFriends: false" when they are not friends', async () => {
     const req = {
       params: {
-        userId: 'userA',
-        requestId: 'userB',
+        userId: 'Z2wxae2wxz2wA',
+        requestId: 'gdhguhrhgofi2',
       },
     };
     const res = {
@@ -85,7 +85,7 @@ describe('getFriend', () => {
   test('should return "User not found" when the user does not exist', async () => {
     const req = {
       params: {
-        userId: 'userA',
+        userId: 'Z2wxae2wxz2wA',
         requestId: 'nonExistingUserId',
       },
     };
@@ -104,7 +104,7 @@ describe('getFriend', () => {
   test('should return "Friend document not found" when the friend document does not exist', async () => {
     const req = {
       params: {
-        userId: 'userA',
+        userId: 'Z2wxae2wxz2wA',
         requestId: 'existingUserId', 
       },
     };
@@ -123,8 +123,8 @@ describe('getFriend', () => {
   test('should return 500 for any unexpected error', async () => {
     const req = {
       params: {
-        userId: 'userA',
-        requestId: 'userB',
+        userId: 'Z2wxae2wxz2wA',
+        requestId: 'gdhguhrhgofi2',
       },
     };
     const res = {

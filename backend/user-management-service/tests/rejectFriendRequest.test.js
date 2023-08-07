@@ -30,8 +30,8 @@ describe('rejectFriendRequest', () => {
   test('should reject the friend request and update friendIds arrays', async () => {
     const req = {
       params: {
-        userId: 'userA',
-        requestId: 'userB',
+        userId: 'sgfeydw4f5',
+        requestId: 'ygfyuueek3eb',
       },
     };
     const res = {
@@ -44,7 +44,7 @@ describe('rejectFriendRequest', () => {
 
     expect(res.status).toHaveBeenCalledWith(200);
     expect(res.json).toHaveBeenCalledWith({
-      message: `Friend request from user with ID userA rejected`,
+      message: `Friend request from user with ID sgfeydw4f5 rejected`,
     });
 
     expect(admin.firestore().collection().doc().get).toHaveBeenCalledTimes(2);
@@ -57,7 +57,7 @@ describe('rejectFriendRequest', () => {
     const req = {
       params: {
         userId: 'nonExistingUserId',
-        requestId: 'userB',
+        requestId: 'ygfyuueek3eb',
       },
     };
     const res = {
@@ -94,8 +94,8 @@ describe('rejectFriendRequest', () => {
   test('should return 500 for any unexpected error', async () => {
     const req = {
       params: {
-        userId: 'userA',
-        requestId: 'userB',
+        userId: 'sgfeydw4f5',
+        requestId: 'ygfyuueek3eb',
       },
     };
     const res = {

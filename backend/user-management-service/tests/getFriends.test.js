@@ -32,7 +32,7 @@ describe('getFriends', () => {
   test('should return an array of friend data when the user exists and has friends', async () => {
     const req = {
       params: {
-        userId: 'userA',
+        userId: 'Z2wxae2wxz2wA',
       },
     };
     const res = {
@@ -42,10 +42,10 @@ describe('getFriends', () => {
 
    
     const User = {
-      findAll: jest.fn(() => Promise.resolve([{ firebase_doc_ref: 'userA' }])),
+      findAll: jest.fn(() => Promise.resolve([{ firebase_doc_ref: 'Z2wxae2wxz2wA' }])),
     };
     const Friendship = {
-      findAll: jest.fn(() => Promise.resolve([{ friend_a_id: 'userA', friend_b_id: 'userB' }])),
+      findAll: jest.fn(() => Promise.resolve([{ friend_a_id: 'Z2wxae2wxz2wA', friend_b_id: 'userB' }])),
     };
 
   
@@ -62,7 +62,7 @@ describe('getFriends', () => {
   test('should return an empty array when the user exists but has no friends', async () => {
     const req = {
       params: {
-        userId: 'userA',
+        userId: 'Z2wxae2wxz2wA',
       },
     };
     const res = {
@@ -72,7 +72,7 @@ describe('getFriends', () => {
 
     
     const User = {
-      findAll: jest.fn(() => Promise.resolve([{ firebase_doc_ref: 'userA' }])),
+      findAll: jest.fn(() => Promise.resolve([{ firebase_doc_ref: 'Z2wxae2wxz2wA' }])),
     };
     const Friendship = {
       findAll: jest.fn(() => Promise.resolve([])),
@@ -116,7 +116,7 @@ describe('getFriends', () => {
   test('should return 500 for any unexpected error', async () => {
     const req = {
       params: {
-        userId: 'userA',
+        userId: 'Z2wxae2wxz2wA',
       },
     };
     const res = {

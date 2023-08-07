@@ -9,9 +9,9 @@ jest.mock('firebase-admin', () => ({
         Promise.resolve({
           forEach: (callback) => {
             const fakeUserData = [
-              { name: 'User1' },
-              { name: 'User2' },
-              { name: 'User3' },
+              { name: 'dyhgyguhw8ure9' },
+              { name: 'hwguhfiunwifgi' },
+              { name: 'yegw939jpojfoe' },
             ];
             fakeUserData.forEach((user) => callback({ data: () => user }));
           },
@@ -35,9 +35,9 @@ describe('getUsers', () => {
     await getUsers(req, res);
 
     expect(res.json).toHaveBeenCalledWith([
-      { name: 'User1' },
-      { name: 'User2' },
-      { name: 'User3' },
+      { name: 'dyhgyguhw8ure9' },
+      { name: 'hwguhfiunwifgi' },
+      { name: 'yegw939jpojfoe' },
     ]);
   });
 

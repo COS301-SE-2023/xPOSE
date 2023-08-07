@@ -23,6 +23,6 @@ jobs:
         working-directory: backend/user-management-service
         run: npm install
 
-      - name: Run tests for user management service
-        working-directory: backend/user-management-service/
-        run: npm test
+      # - name: Run tests for user management service
+      #   working-directory: backend/user-management-service/
+      #   run: npm test

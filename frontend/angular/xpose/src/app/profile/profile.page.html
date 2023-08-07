@@ -3,22 +3,43 @@
     <ion-buttons slot="start">
       <app-backbutton></app-backbutton>
       </ion-buttons>
-    <ion-title>Profile</ion-title>
+    <!-- <ion-title>Profile</ion-title> -->
+    <ion-menu-button slot="end" class="menu"></ion-menu-button>
   </ion-toolbar>
 </ion-header>
+
+<ion-menu side="end" content-id="main-content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Settings</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <button class="button" expand="full">Change Profile</button>
+      <button expand="full">Logout</button>
+      <button (click)="logout()" expand="full">Logout</button>
+      <button expand="full">About Us</button>
+      
+    </ion-list>
+  </ion-content>
+</ion-menu>
+<!-- <ion-footer>
+  <ion-button (click)="logout()" expand="full" class="pink-button">Logout</ion-button>
+</ion-footer> -->
 
 
 <div class="profile_div" >
   <div class="user_div" *ngIf="user">
     <img class="profile-image" [src]="user.photoURL">
     <div class="first_div">
-      <ion-label class="username">Name: {{user.displayName}}</ion-label><br>
-      <ion-label class="username">Email: {{user.email}}</ion-label><br>
-      <ion-label class="username">Unique Code:{{user.username}}</ion-label><br>
+      <ion-label class="username">{{user.displayName}}</ion-label><br>
+      <ion-label class="username_1">{{user.email}}</ion-label><br>
+      <ion-label class="username_1">_{{user.username}}</ion-label><br>
       
       <br> 
     </div>
-    <ion-button class="edit_div" (click)="editProfile()">Edit Profile</ion-button> 
+    <button class="edit_div" (click)="editProfile()">Edit Profile</button> 
   </div>
 </div>
 
@@ -37,6 +58,4 @@
   </ion-tabs>
 </ion-content>
 
-<ion-footer>
-  <ion-button (click)="logout()" expand="full" class="pink-button">Logout</ion-button>
-</ion-footer>
+

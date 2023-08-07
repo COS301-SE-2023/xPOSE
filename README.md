@@ -8,8 +8,8 @@
 [Testing Policy](https://docs.google.com/document/d/1Ab1zMd81ROiW-urUJvYy-PWgHxSgn5k45UFNmQqLJ7s/edit?usp=sharing)\
 [User manual](https://docs.google.com/document/d/18gCuaYONhQpCSjoKtuTwk3QOS1ra_-FtLNl8ir54I7c/edit?usp=sharing)\
 [Coding Standards](https://docs.google.com/document/d/1rUBPHHAdf_QrWDmDg7RYuaua1JRfoRZ5cQ5lRM0aEzg/edit?usp=sharing)\
-[Project Board](https://github.com/orgs/COS301-SE-2023/projects/33)
-
+[Project Board](https://github.com/orgs/COS301-SE-2023/projects/33)\
+[Technical installation manual](https://docs.google.com/document/d/1qnxa1F8AP8EpryEYgJlkma4I1rv0TalAjX16g_LHoh0/edit)
 ## Technology Stack
 Our technology stack still isn't finalized and we're still researching
 | Technology | Description | Testing |
