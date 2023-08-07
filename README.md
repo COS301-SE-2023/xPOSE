@@ -4,15 +4,12 @@
 
 ## Links for Documentation and Project Management
 [Software Requirements Specifications](https://docs.google.com/document/d/1AV8hmgdBZ6FmjpaAfmGA63bMOqiWW4F-_2o7MoCvCT0/edit?usp=sharing)\
-[xPOSE GitHub Project Board](https://github.com/orgs/COS301-SE-2023/projects/33/views/1)\
 [Architectural Requirements](https://docs.google.com/document/d/1YoSeht_d0vz5lK-ZFnmmHecyxw9szGn9NituXYBYW4E/edit?usp=sharing)\
 [Testing Policy](https://docs.google.com/document/d/1Ab1zMd81ROiW-urUJvYy-PWgHxSgn5k45UFNmQqLJ7s/edit?usp=sharing)\
 [User manual](https://docs.google.com/document/d/18gCuaYONhQpCSjoKtuTwk3QOS1ra_-FtLNl8ir54I7c/edit?usp=sharing)\
 [Coding Standards](https://docs.google.com/document/d/1rUBPHHAdf_QrWDmDg7RYuaua1JRfoRZ5cQ5lRM0aEzg/edit?usp=sharing)\
 [Project Board](https://github.com/orgs/COS301-SE-2023/projects/33)\
 [Technical installation manual](https://docs.google.com/document/d/1qnxa1F8AP8EpryEYgJlkma4I1rv0TalAjX16g_LHoh0/edit)
-
-
 ## Technology Stack
 Our technology stack still isn't finalized and we're still researching
 | Technology | Description | Testing |
