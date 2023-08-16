@@ -5,12 +5,15 @@ ion-content {
 
 /* Container for the profile details */
 .profile-container {
+  display: grid;
+  place-items: center;
   display: flex;
-  flex-direction: column;
+  // flex-direction: column;
   align-items: center;
-  padding: 20px;
+  // padding: 20px;
   margin-top: 20px;
   font-size: 16px;
+  padding-left: 33%;
 }
 
 /* Profile picture */
@@ -87,9 +90,6 @@ ion-button {
   
    /* Make the toggle take available space within the container */
 }
-
-
-
 ion-label,
 ion-toggle {
 font-size: 20px; /* Adjust the font size to your preference */
@@ -105,12 +105,23 @@ font-size: 20px; /* Adjust the font size for the Username and Email labels */
 font-size: 20px; /* Adjust the font size for the Username and Email inputs */
 
 }
-
-
-
-
 .pink-button {
   --background: #ff43d6; /* Set the background color for the pink button */
   --color: white; /* Set the text color for the pink button */
   font-size: 19px;
+}
+button{
+  background-color: #ff43d6;
+  align-items: center;
+  padding: 10px;
+  border-radius: 10px;
+  color: #aaa9a9;
+}
+ion-card{
+  align-items: center;
+  align-content: center;
+  margin-left: -65px;
+  align-items: center;
+ border: solid 1px rgb(255, 255, 255);
+ border-radius: 10px;
 }

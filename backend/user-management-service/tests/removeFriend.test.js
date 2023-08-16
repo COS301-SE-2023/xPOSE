@@ -22,8 +22,8 @@ describe('removeFriend', () => {
     // Initialize req and res objects for each test
     req = {
       params: {
-        userId: 'mock-user-id',
-        requestId: 'mock-request-id',
+        userId: 'udyy7ey8ru3i',
+        requestId: 'hgf7y39kokfoi9',
       },
     };
 
@@ -44,23 +44,23 @@ describe('removeFriend', () => {
 
     // Check if Firestore was called correctly
     expect(admin.firestore().collection).toHaveBeenCalledWith('Users');
-    expect(admin.firestore().doc).toHaveBeenCalledWith('mock-user-id');
+    expect(admin.firestore().doc).toHaveBeenCalledWith('gy733839ork');
     expect(admin.firestore().doc().update).toHaveBeenCalledWith({
-      friendIds: admin.firestore.FieldValue.arrayRemove('mock-request-id'),
+      friendIds: admin.firestore.FieldValue.arrayRemove('fyet67ure74'),
     });
-    expect(admin.firestore().doc).toHaveBeenCalledWith('mock-request-id');
+    expect(admin.firestore().doc).toHaveBeenCalledWith('fq6ey8iroi24');
     expect(admin.firestore().doc().update).toHaveBeenCalledWith({
-      friendIds: admin.firestore.FieldValue.arrayRemove('mock-user-id'),
+      friendIds: admin.firestore.FieldValue.arrayRemove('yasftr6wqy8i9e'),
     });
     expect(admin.firestore().doc().collection).toHaveBeenCalledWith('FriendRequests');
-    expect(admin.firestore().doc().collection().doc).toHaveBeenCalledWith('mock-request-id');
+    expect(admin.firestore().doc().collection().doc).toHaveBeenCalledWith('yr62trt27trq');
     expect(admin.firestore().doc().collection().doc().delete).toHaveBeenCalled();
-    expect(admin.firestore().doc().collection().doc).toHaveBeenCalledWith('mock-user-id');
+    expect(admin.firestore().doc().collection().doc).toHaveBeenCalledWith('e6tujnfjw8iru');
     expect(admin.firestore().doc().collection().doc().delete).toHaveBeenCalled();
 
     // Check if the response was sent correctly
     expect(res.status).toHaveBeenCalledWith(200);
-    expect(res.json).toHaveBeenCalledWith({ message: 'Friend with id mock-request-id removed' });
+    expect(res.json).toHaveBeenCalledWith({ message: 'Friend with id gfy7ey7t83i removed' });
   });
 
   it('should handle errors', async () => {

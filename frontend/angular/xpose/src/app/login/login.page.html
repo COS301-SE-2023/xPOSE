@@ -31,9 +31,17 @@
         label="Email" 
         label-placement="floating" 
         fill="outline" 
+        type ="email"
         placeholder="email" 
-        formControlName="email"></ion-input>
-
+        formControlName="email"
+        required
+        ></ion-input>
+        <ion-note *ngIf="loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched" color="danger">
+          Email is required.
+        </ion-note>
+        <ion-note *ngIf="loginForm.get('email')?.hasError('email') && loginForm.get('email')?.touched" color="danger">
+          Invalid email format.
+        </ion-note>
       <ion-input
         type="password"
         label="Password" 
