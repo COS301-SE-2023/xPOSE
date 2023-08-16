@@ -58,9 +58,7 @@
           </ion-card-title>
           <ion-card-content>
             <ion-icon name="calendar"></ion-icon>
-            {{ card.date | date: 'mediumDate' }}
-          </ion-card-content>
-          <ion-card-content>
+            {{ card.date | date: 'mediumDate' }}<br>
             <ion-icon name="location"></ion-icon>
             {{ truncateText(card.location, 4) }}
           </ion-card-content>
@@ -82,6 +80,3 @@
   </ion-row>
  
 </ion-content>
-
-<app-footer></app-footer>
-
