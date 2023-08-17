@@ -17,7 +17,6 @@
   <ion-content>
     <ion-list>
       <button class="button" expand="full">Change Profile</button>
-      <button expand="full">Logout</button>
       <button (click)="logout()" expand="full">Logout</button>
       <button expand="full">About Us</button>
       
@@ -35,7 +34,8 @@
     <div class="first_div">
       <ion-label class="username">{{user.displayName}}</ion-label><br>
       <ion-label class="username_1">{{user.email}}</ion-label><br>
-      <ion-label class="username_1">_{{user.username}}</ion-label><br>
+      <ion-label class="username_1">{{user.username}}</ion-label><br>
+      <ion-label class="username_1">Account: {{user.visibility}}</ion-label>
       
       <br> 
     </div>

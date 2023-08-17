@@ -15,7 +15,7 @@ export class LoginPage implements OnInit {
 	loading!: HTMLIonLoadingElement;
 
 	loginForm: FormGroup;
-	constructor( 
+	constructor ( 
 		private formBuilder: FormBuilder,
 		public authService: AuthService,
 		private router: Router,
@@ -47,7 +47,7 @@ export class LoginPage implements OnInit {
 	async signIn() {
 		const email = this.loginForm.get("email")?.value;
 		const password = this.loginForm.get("password")?.value;
-		this.authService.signIn(email, password);
+		// this.authService.signIn(email, password);
 
 		try {
 			this.loading = await this.loadingController.create({

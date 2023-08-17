@@ -15,6 +15,7 @@ export class ProfilePage {
     displayName: string;
     email: string;
     username: string;
+    visibility: string
   };
   selectedTab: any;
   tabs: any;
@@ -30,7 +31,8 @@ export class ProfilePage {
       photoURL: '',
       displayName: 'loading...',
       email: 'loading...',
-      username:'loading...'
+      username:'loading...',
+      visibility: ''
     };
     this.user.photoURL = './assets/images/profile picture.jpg'; // Updated profile picture URL
   }
@@ -43,7 +45,7 @@ export class ProfilePage {
           this.user.email = userData.email;
           this.user.username = userData.uniq_username;
           this.user.photoURL =userData.photoURL;
-          
+          this.user.visibility = userData.visibility;          
         });
       }
       else {
