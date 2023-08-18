@@ -1,0 +1,43 @@
+.modal-content {
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .modal-navigation {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    z-index: 1;
+  }
+  
+  .modal-navigation button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #000;
+    cursor: pointer;
+  }
+
+  .modal-image-container {
+    position: relative; /* Ensure relative positioning for the image */
+    flex-grow: 1; /* Take available space, pushing navigation to the bottom */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Hide any overflow from large images */
+    max-height: 75vh; /* Take up 75% of the viewport height */
+  }
+  
+  ion-img {
+    width: auto; /* Allow the image to resize itself */
+    max-height: 100%; /* Auto-resize the image to fit within the container */
+    object-fit: contain; /* Maintain aspect ratio */
+  }

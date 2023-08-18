@@ -16,6 +16,7 @@ import { ApiService } from '../service/api.service';
 
 import { ModalController } from '@ionic/angular';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { GalleryModalComponent } from '../gallery-modal/gallery-modal.component';
 
 
 interface Item {
@@ -327,6 +328,16 @@ export class EventPage {
     this.isGalleryOpen = true;
   }
   
+  async openGalleryModal(imageSrc: string) {
+    const modal = await this.modalController.create({
+      component: GalleryModalComponent,
+      componentProps: {
+        selectedImage: imageSrc,
+      },
+    });
+  
+    await modal.present();
+  }
   
   // Function to handle the image upload
   uploadImage(imageData: string) {
