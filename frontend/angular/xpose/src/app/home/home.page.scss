@@ -163,35 +163,3 @@ ion-card-content {
   max-height: 100vh;
   overflow-y: auto;
 }
-
-.sidebar {
-  background-color: #f0f0f0;
-  height: 100%;
-  overflow-y: auto;
-}
-
-.sidebar ion-header {
-  background-color: #ffffff;
-  border-bottom: 1px solid #ccc;
-}
-
-.sidebar ion-content {
-  padding: 10px;
-}
-
-.scrollable-content {
-  max-height: 100vh;
-  overflow-y: auto;
-}
-
-.sidebar-link {
-  display: block;
-  text-decoration: none;
-  color: #000;
-  margin-bottom: 10px;
-  cursor: pointer;
-}
-
-.sidebar-link ion-icon {
-  margin-right: 5px;
-}
