@@ -184,3 +184,11 @@ ion-card-content {
 .home-link ion-icon {
   margin-right: 5px;
 }
+
+.sidebar-link {
+  display: block;
+  text-decoration: none;
+  color: #333;
+  margin-bottom: 10px;
+  cursor: pointer; /* Add pointer cursor on hover */
+}
