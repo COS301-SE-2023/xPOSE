@@ -9,6 +9,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { map } from "rxjs";
 import { Observable } from "rxjs";
 import { Location } from "@angular/common";
+import { environment } from "src/environments/environment";
 
 
 @Injectable({
@@ -17,6 +18,7 @@ import { Location } from "@angular/common";
 export class AuthService {
   userData: any;
   isLoggedIn: boolean = false;
+  apiUrl: string;
 
   constructor(
       public afs: AngularFirestore,  // inject firestore
@@ -28,6 +30,7 @@ export class AuthService {
   ) {
 
     this.isLoggedIn = localStorage.getItem('user') === 'true';
+    this.apiUrl = environment.apiUrl;
   }
 
   // sign in with email/password
@@ -67,7 +70,7 @@ export class AuthService {
     const requestBody = JSON.stringify(signUpData);
     
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    return this.http.post<any>("http://localhost:8000/u/users", requestBody, {headers})
+    return this.http.post<any>(`${this.apiUrl}/u/users`, requestBody, {headers})
     .toPromise()
     .then((response) => {
       console.log("signed up successfully",response);

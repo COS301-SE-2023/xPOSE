@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { ImageViewComponent } from './image-view.component';
+import { GalleryModalComponent } from './gallery-modal.component';
 
-describe('ImageViewComponent', () => {
-  let component: ImageViewComponent;
-  let fixture: ComponentFixture<ImageViewComponent>;
+describe('GalleryModalComponent', () => {
+  let component: GalleryModalComponent;
+  let fixture: ComponentFixture<GalleryModalComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ ImageViewComponent ],
+      declarations: [ GalleryModalComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ImageViewComponent);
+    fixture = TestBed.createComponent(GalleryModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

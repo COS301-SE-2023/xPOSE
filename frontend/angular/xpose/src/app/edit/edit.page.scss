@@ -3,114 +3,165 @@ ion-content {
   --ion-background-color: #f2f2f2;
 }
 
-/* Container for the profile details */
+// /* Container for the profile details */
 .profile-container {
+  display: grid;
+  place-items: center;
   display: flex;
-  flex-direction: column;
+  // flex-direction: column;
   align-items: center;
-  padding: 20px;
+  // padding: 20px;
   margin-top: 20px;
   font-size: 16px;
+  padding-left: 33%;
+}
+
+/* Form input fields */
+// ion-item {
+//   margin-bottom: 40px;
+// }
+
+// ion-toolbar.custom-toolbar {
+//   --background: #ffffff;
+//   color: #000000;
+//   font-size: 20px;
+//   /* Add more custom styles as needed */
+//   --min-height: 70px;
+// }
+
+// .custom-file-input {
+  
+//   background-color: #007bff;
+//   color: #fff;
+//   margin-top: 70px;
+//   border-radius: 50px;
+//   font-size: 12px;
+//   border: none;
+//   outline: none;
+//   text-align: center;
+//   display: inline-block;
+//   margin-top: 5px;
+//   margin-right: 220px;
+// }
+
+// .custom-file-input:hover {
+//   background-color: #0056b3;
+// }
+
+// .custom-file-input:active {
+//   background-color: #004085;
+// }
+
+// /* Save button */
+// ion-button {
+//   margin-top: 81px;
+//   --background: #007bff; /* Set the background color for the Edit Profile button */
+//   // --color: #fff; /* Set the text color for the Edit Profile button */
+//   font-size: 16px;
+//   justify-content: center;
+// }
+
+// .account-privacy-container {
+ 
+//   align-items: center; /* Vertically align the elements within the container */
+//   margin-bottom: 0px; 
+//   margin-left: 12px;
+// }
+
+// .account-privacy-label {
+//   flex: 1; 
+//   margin-right: 10px; /* Make the label take available space within the container */
+// }
+
+// .account-privacy-toggle {
+//   flex: 1; 
+//   zoom: 0.9;
+//   transform: translateY(5px);/* Make the toggle take available space within the container */
+
+  
+//    /* Make the toggle take available space within the container */
+// }
+// ion-label,
+// ion-toggle {
+// font-size: 20px; /* Adjust the font size to your preference */
+// }
+
+// .username-label,
+// .email-label {
+// font-size: 20px; /* Adjust the font size for the Username and Email labels */
+// }
+
+// .username-input,
+// .email-input {
+// font-size: 20px; /* Adjust the font size for the Username and Email inputs */
+
+// }
+// .pink-button {
+//   --background: #ff43d6; /* Set the background color for the pink button */
+//   --color: white; /* Set the text color for the pink button */
+//   font-size: 19px;
+// }
+// button{
+//   background-color: #ff43d6;
+//   align-items: center;
+//   padding: 10px;
+//   border-radius: 10px;
+//   color: #aaa9a9;
+// }
+// ion-card{
+//   align-items: center;
+//   align-content: center;
+//   margin-left: -65px;
+//   align-items: center;
+//  border: solid 1px rgb(255, 255, 255);
+//  border-radius: 10px;
+// }
+
+// /* edit-profile.component.scss */
+
+// ion-avatar img {
+//   width: 150px;
+//   height: 150px;
+//   border-radius: 50%;
+//   border: 2px solid #ccc;
+//   display: block;
+//   margin: 0 auto 16px;
+// }
+
+ .file-input{
+  display: none;
+}
+
+.file-label {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 8px;
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.file-label:hover {
+  background-color: #0056b3;
+}
+.save-button:hover {
+  background-color: #0056b3;
+}
+.name-section{
+  margin-top: 90px;
 }
 
 /* Profile picture */
 .profile-picture {
-  width: 120px;
-  height: 120px;
+  display: block;
+  position: relative;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
-  object-fit: cover;
-  margin-bottom: 20px;
-}
-
-/* Form input fields */
-ion-item {
-  margin-bottom: 40px;
-}
-
-ion-toolbar.custom-toolbar {
-  --background: #ffffff;
-  color: #000000;
-  font-size: 20px;
-  /* Add more custom styles as needed */
-  --min-height: 70px;
-}
-
-.custom-file-input {
-  
-  background-color: #007bff;
-  color: #fff;
-  margin-top: 70px;
-  border-radius: 50px;
-  font-size: 12px;
-  border: none;
-  outline: none;
-  text-align: center;
-  display: inline-block;
-  margin-top: 5px;
-  margin-right: 220px;
-}
-
-.custom-file-input:hover {
-  background-color: #0056b3;
-}
-
-.custom-file-input:active {
-  background-color: #004085;
-}
-
-/* Save button */
-ion-button {
-  margin-top: 81px;
-  --background: #007bff; /* Set the background color for the Edit Profile button */
-  // --color: #fff; /* Set the text color for the Edit Profile button */
-  font-size: 16px;
-  justify-content: center;
-}
-
-.account-privacy-container {
- 
-  align-items: center; /* Vertically align the elements within the container */
-  margin-bottom: 0px; 
-  margin-left: 12px;
-}
-
-.account-privacy-label {
-  flex: 1; 
-  margin-right: 10px; /* Make the label take available space within the container */
-}
-
-.account-privacy-toggle {
-  flex: 1; 
-  zoom: 0.9;
-  transform: translateY(5px);/* Make the toggle take available space within the container */
-
-  
-   /* Make the toggle take available space within the container */
-}
-
-
-
-ion-label,
-ion-toggle {
-font-size: 20px; /* Adjust the font size to your preference */
-}
-
-.username-label,
-.email-label {
-font-size: 20px; /* Adjust the font size for the Username and Email labels */
-}
-
-.username-input,
-.email-input {
-font-size: 20px; /* Adjust the font size for the Username and Email inputs */
-
-}
-
-
-
-
-.pink-button {
-  --background: #ff43d6; /* Set the background color for the pink button */
-  --color: white; /* Set the text color for the pink button */
-  font-size: 19px;
+  border: 2px solid #ccc;
+  display: block;
+  margin: 0 auto 16px;
 }

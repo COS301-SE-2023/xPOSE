@@ -1,63 +1,64 @@
 <ion-header>
-	<ion-toolbar class="custom-toolbar">
-	  <ion-buttons slot="start">
-		<app-backbutton></app-backbutton>
-		</ion-buttons>
-	  	 <!-- <ion-buttons slot="start"> -->
-		<!-- <ion-back-button defaultHref="" (click)="back()" icon="arrow-back"></ion-back-button> -->
-	  <!-- </ion-buttons> -->
-	  
+	<ion-toolbar>
 	  <ion-title>Edit Profile</ion-title>
+	  <app-backbutton></app-backbutton>
 	</ion-toolbar>
   </ion-header>
 
-	<ion-menu side="end" content-id="main-content">
-		<ion-header>
-			<ion-toolbar>
-				<ion-title>Settings</ion-title>
-			  </ion-toolbar>
-		</ion-header>
-		<ion-content>
-		  <ion-list>
-			<ion-item>Help & Support</ion-item>
-			<ion-item>Report</ion-item>
-			<ion-item>Favourite</ion-item>
-		  </ion-list>
-		</ion-content>
-	  </ion-menu>
-
-	  <link rel="stylesheet" href="edit.page.scss">
-  
   <ion-content>
-	
-	<div class="profile-container">
-		
-		<form #form="ngForm" (ngSubmit)=(form)>
-			<img [src]="photoURL" alt="Profile Picture" class="profile-picture">
-			<input type="file" accept="image/*" (change)="onFileSelected($event)" id="fileInput" hidden>
-			
-			
-			<ion-button class="custom-file-input" (click)="fileInput.click()">Change image</ion-button>
-			<input type="file" accept="image/*" (change)="onFileSelected($event)" id="fileInput" #fileInput hidden>
-			
-	  
-	  <ion-item>
-		<ion-label class="username-label" position="floating">Username</ion-label>
-		<ion-input class="username-input" name = "username"[(ngModel)]="username" required ></ion-input>
-	  </ion-item>
-  
-	  <div class="account-privacy-container">
-		<ion-label class="account-privacy-label">Account Privacy</ion-label>
-		<ion-toggle class="account-privacy-toggle" [(ngModel)]="isPublic" required ></ion-toggle>
-	  </div>
-	 
-  
-	  <ion-button expand="ion-button" (click)="saveProfile()">Save Changes</ion-button>
-	</form>
-</div>
-
-<ion-button (click)="deleteAccount()" expand="full" class="pink-button">Delete Account</ion-button>
+	<ion-grid>
+	  <ion-row>
+		<ion-col size="12" class="ion-text-center">
+			<img [src]="photoURL" alt="Profile Picture" class ="profile-picture"/>
+		</ion-col>
+	  </ion-row>
+	  <ion-row>
+		<ion-col size = "12">
+			<label class="file-label">
+			  Choose profile picture
+			  <input class="file-input" type="file" accept="image/*"
+				[(ngModel)]="selectedFile"
+			  (change)="onProfilePictureChange($event)" />
+			</label>
+		  </ion-col>
+	  </ion-row>
+	  <ion-row class ="name-section">
+		<ion-col size="12">
+		  <ion-item>
+			<ion-label position="floating">Name</ion-label>
+			<ion-input [(ngModel)]="username" name="fullName" type="text"></ion-input>
+		  </ion-item>
+		</ion-col>
+	  </ion-row>
+	  <ion-row>
+		<ion-col size="12">
+		  <ion-item>
+			<ion-label>Account Privacy</ion-label>
+			<ion-select [(ngModel)]="isPublic" name="accountPrivacy">
+			  <ion-select-option value="public">Public</ion-select-option>
+			  <ion-select-option value="private">Private</ion-select-option>
+			</ion-select>
+		  </ion-item>
+		</ion-col>
+	  </ion-row>
+	  <ion-row>
+		<ion-col size ="12" class ="ion-text-center">
+			<ion-button (click)="saveChanges()" expand="block" class="save-button">
+				  Save
+			</ion-button> 
+		</ion-col>
+	  </ion-row>
+	</ion-grid>
   </ion-content>
- 
 
   
+
+
+
+
+
+
+
+
+
+

@@ -1,10 +1,11 @@
 import admin from "firebase-admin";
+import generateRandomAlphanumeric from './generateRandomAlphanumeric.js';
 
 export const updateUser = async (req, res) => {
 
     try {
         const { userId } = req.params;
-        const { displayName, photoURL } = req.body;
+        const { displayName, photoURL, visibility } = req.body;
 
          // Retrieve the user document from the Users collection
         const userRef = admin.firestore().collection('Users').doc(userId);
@@ -17,13 +18,18 @@ export const updateUser = async (req, res) => {
 
          // Update the user document fields based on the provided values
         const updatedFields = {};
-        if (displayName) updatedFields.displayName = displayName;
-        if (photoURL) updatedFields.photoURL = photoURL;
+        if (displayName || displayName != "") updatedFields.displayName = displayName;
+        if (photoURL || photoURL !="") updatedFields.photoURL = photoURL;
+        if (visibility) updatedFields.visibility = visibility;
+
+        const alph = generateRandomAlphanumeric(6);
+        let uniq_username_ = `${displayName}${alph}`;
+        updatedFields.uniq_username = uniq_username_;
         
         // Update the user document with the new values
         await userRef.update(updatedFields);
 
-        res.status(200).send(`User with the id ${userId} has been updated`);
+        res.status(200).json({message:`User with the id ${userId} has been updated`});
 
     } catch(error) {
         console.error('Error updating user: ', error);

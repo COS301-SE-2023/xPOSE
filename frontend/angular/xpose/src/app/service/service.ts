@@ -2,13 +2,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable, Subject } from 'rxjs';
 import { AngularFirestore, AngularFirestoreDocument, DocumentSnapshot } from "@angular/fire/compat/firestore";
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class Service {
 
-  apiUrl = 'http://localhost:8000/'
+  apiUrl:string;
 
   httpOptions ={
     headers: new HttpHeaders({
@@ -18,10 +19,12 @@ export class Service {
     constructor(
       private httpClient: HttpClient,
       private firestore: AngularFirestore
-      ) { }
+      ) { 
+        this.apiUrl = environment.apiUrl;
+      }
 
   CreateEvent(event:any): Observable<any>{
-    return this.httpClient.post(`${this.apiUrl}e/events`, event,this.httpOptions)
+    return this.httpClient.post(`${this.apiUrl}/e/events`, event,this.httpOptions)
     .pipe(map(result => result))
   }
 
@@ -35,5 +38,38 @@ export class Service {
         return userData;
       })
     );
+  }
+
+ async UpdateUserDetails(requestBody:any, uid:string) {  
+    try {
+        const headers = new HttpHeaders().set('Content-Type', 'application/json');
+      const response = await this.httpClient.patch(`${this.apiUrl}/u/users/${uid}`, requestBody, { headers }).toPromise();
+      console.log("Response from server:", response);
+      console.log("User profile updated successfully");
+      return response;
+    } catch (error) {
+      console.log("Error in calling function");
+      console.log("Error:", error);
+      // console.log("Response body:", error.error);
+      return Promise.reject(error);
+    }
+
+
+
+
+
+    // const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    // return this.httpClient.patch(`${this.apiUrl}/u/users/${uid}`, requestBody, {headers})
+    // .toPromise()
+    // .then((Response) => {
+    //   console.log("User profile updated successfully")
+    //   window.alert("User profile updated successfully");
+    // })
+    // .catch((error) => {
+    //   console.log("Error in calling function");
+    //   console.log("Error:", error);
+    //   // console.log("Response body:", error.error);
+    //   return Promise.reject(error);
+    // })
   }
 }
