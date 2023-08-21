@@ -3,7 +3,7 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" id="main-content" class="custom-background" class="content">
-  <ion-row class="page-row">
+  <ion-row>
     <ion-col size="3">
       <!-- Sidebar content goes here -->
       <div class="sidebar">
@@ -59,7 +59,7 @@
         </ion-text>
       </div>
 
-      <div class="scrollable-row">
+      <div class="scrollable-content">
         <ion-row>
           <ion-col size="12" size-sm="6" size-md="4" size-lg="3" *ngFor="let card of cards">
             <ion-card (click)="eventDetails(card.id)">
