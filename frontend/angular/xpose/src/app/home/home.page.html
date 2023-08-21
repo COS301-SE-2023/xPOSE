@@ -3,7 +3,7 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" id="main-content" class="custom-background" class="content">
-  <ion-row>
+  <ion-row class="page-row">
     <ion-col size="3">
       <!-- Sidebar content goes here -->
       <div class="sidebar">
@@ -59,37 +59,39 @@
         </ion-text>
       </div>
 
-      <ion-row>
-        <ion-col size="12" size-sm="6" size-md="4" size-lg="3" *ngFor="let card of cards">
-          <ion-card (click)="eventDetails(card.id)">
-            <span class="label-{{ getStatusColor(card?.status) }} label">{{ card?.status }}</span>
-            <img [src]="card.image_url" alt="Card Image" class="card-image">
-            <ion-card-header class="">
-              <ion-card-title class="header">
-                {{ card?.title }}
-              </ion-card-title>
-              <ion-card-content>
-                <ion-icon name="calendar"></ion-icon>
-                {{ card.date | date: 'mediumDate' }}<br>
-                <ion-icon name="location"></ion-icon>
-                {{ truncateText(card.location, 4) }}
-              </ion-card-content>
-              <ion-row>
-                <ion-col center text-center>
-                  <ion-card-subtitle>
-                    {{ card.description }}
-                  </ion-card-subtitle>
-                </ion-col>
-                <ion-col class="ion-text-end">
-                  <ion-button fill="clear" class="right-aligned-button">
-                    <!-- <ion-icon class="iconp" name='share'></ion-icon> -->
-                  </ion-button>
-                </ion-col>
-              </ion-row>
-            </ion-card-header>
-          </ion-card>
-        </ion-col>
-      </ion-row>
+      <div class="scrollable-row">
+        <ion-row>
+          <ion-col size="12" size-sm="6" size-md="4" size-lg="3" *ngFor="let card of cards">
+            <ion-card (click)="eventDetails(card.id)">
+              <span class="label-{{ getStatusColor(card?.status) }} label">{{ card?.status }}</span>
+              <img [src]="card.image_url" alt="Card Image" class="card-image">
+              <ion-card-header class="">
+                <ion-card-title class="header">
+                  {{ card?.title }}
+                </ion-card-title>
+                <ion-card-content>
+                  <ion-icon name="calendar"></ion-icon>
+                  {{ card.date | date: 'mediumDate' }}<br>
+                  <ion-icon name="location"></ion-icon>
+                  {{ truncateText(card.location, 4) }}
+                </ion-card-content>
+                <ion-row>
+                  <ion-col center text-center>
+                    <ion-card-subtitle>
+                      {{ card.description }}
+                    </ion-card-subtitle>
+                  </ion-col>
+                  <ion-col class="ion-text-end">
+                    <ion-button fill="clear" class="right-aligned-button">
+                      <!-- <ion-icon class="iconp" name='share'></ion-icon> -->
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-card-header>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </div>
     </ion-col>
   </ion-row>
 </ion-content>
