@@ -1,14 +1,12 @@
-
-
 ion-card {
   background-color: hsl(304, 49%, 82%);
   color: #000000;
   margin-bottom: 20px;
-  height: auto; /* Remove fixed height to allow variable card height based on content */
+  height: auto;
   border: solid 0.1px #adadad;
   box-shadow: 0 4px 8px rgba(255, 160, 215, 0.1);
   border-radius: 5px;
-  overflow: hidden; /* To prevent content from overflowing outside the card */
+  overflow: hidden;
 }
 
 .card-image {
@@ -22,14 +20,12 @@ ion-card {
   font-weight: bold;
   padding: 10px;
   color: #000000;
-  // font-family: 'Pacifico', sans-serif;
-  // font-family: "Playfair Display", serif;
   font-family: 'Pacifico', cursive;
 }
 
 ion-card-content {
   display: inline;
-  padding-left: 10px; /* Add some padding between the icon and the location text */
+  padding-left: 10px;
   color: #353535;
   font-family: "Poppins", sans-serif;
 }
@@ -67,7 +63,6 @@ ion-card-content {
   justify-content: center;
   align-items: center;
   font-size: 18px;
-  // font-family: 'Roboto', sans-serif;
   --padding-start: 20px;
   --padding-end: 20px;
   --margin: 5px;
@@ -90,8 +85,8 @@ ion-card-content {
   position: absolute;
   bottom: 10px;
   right: 10px;
-  background-color: #f00; /* Replace with the desired background color for the label */
-  color: #fff; /* Replace with the desired text color for the label */
+  background-color: #f00;
+  color: #fff;
   padding: 6px 10px;
   border-radius: 4px;
   font-size: 14px;
@@ -121,14 +116,11 @@ ion-card-content {
 .label-danger {
   background-color: #e74c3c;
 }
+
 .label{
-  // background-color: #ff0066;
   position: absolute;
   top: 0;
   right: 0;
-  // bottom: 0;
-  // left: 0;
-  // background-color: #ff0066; /* Set the desired background color */
   color: #fff;
   padding: 6px 10px;
   border-radius: 4px;
@@ -136,44 +128,39 @@ ion-card-content {
   font-weight: bold;
   display: flex;
   align-items: center;
-
 }
+
 .iconp{
   color: #ff00bfa8;
-  // background-color: #d1d1d1;
-  // margin-right: 5px;
   font-size: 40px;
   box-shadow: #000000;
   text-shadow: #f00;
 }
+
 .header{
   font-family: 'Literata', serif;
   font-size: 30px;
-  // font-weight: bold;
   text-shadow: #3d3d3d;
   color: #1d1d1d;
-  // text-decoration: #ff0000;
 }
+
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
 
-/* Add the loading animation to the image */
 .loading-icon {
-  animation: spin 2s linear infinite; /* Change the animation duration as needed */
+  animation: spin 2s linear infinite;
 }
-
-/* Rest of your CSS styles */
 
 .sidebar {
   background-color: #f0f0f0;
   height: 100%;
-  overflow-y: auto; /* Add scroll if content exceeds the height */
+  overflow-y: auto;
 }
 
 .sidebar ion-header {
-  background-color: #ffffff; /* Customize sidebar header color */
+  background-color: #ffffff;
   border-bottom: 1px solid #ccc;
 }
 
@@ -190,5 +177,9 @@ ion-card-content {
   text-decoration: none;
   color: #333;
   margin-bottom: 10px;
-  cursor: pointer; /* Add pointer cursor on hover */
+  cursor: pointer;
+}
+
+.sidebar-link ion-icon {
+  margin-right: 5px;
 }
