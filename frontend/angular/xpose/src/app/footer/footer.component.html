@@ -1,29 +1,29 @@
-<ion-footer class="footer-content">
-  <ion-toolbar position="fixed">
-    <ion-tabs>
-      <ion-tab-bar slot="bottom">
-        <ion-tab-button tab="home" (click)="onHome()">
-          <ion-icon name="home-outline"></ion-icon>
-          <ion-label>Home</ion-label>
-        </ion-tab-button>
-        <ion-tab-button tab="joined-events" (click)="onJoinedEvent()">
-          <ion-icon name="people-outline"></ion-icon>
-          <ion-label>Joined Events</ion-label>
-        </ion-tab-button>
-        <ion-tab-button tab="create-event" (click)="onEvent()">
-          <ion-icon name="add-circle" class="big" style="color: rgb(156, 156, 156);"></ion-icon>
-          <!-- <ion-label>Create Event</ion-label> -->
-          <!-- <ion-icon name="add-circle"></ion-icon> -->
-        </ion-tab-button>
-        <ion-tab-button tab="notifications" (click)="onNotifications()">
-          <ion-icon name="notifications-outline"></ion-icon>
-          <ion-label>Notifications</ion-label>
-        </ion-tab-button>
-        <ion-tab-button tab="profile" (click)="onProfile()">
-          <ion-icon name="person-outline"></ion-icon>
-          <ion-label>Profile</ion-label>
-        </ion-tab-button>
-      </ion-tab-bar>
-    </ion-tabs>
-  </ion-toolbar>
-</ion-footer>
+<ion-content [fullscreen]="true" class="footer-content">
+  <div class="sidebar-container">
+    <div class="sidebar">
+      <ion-button (click)="onHome()">
+        <ion-icon name="home-outline"></ion-icon>
+        Home
+      </ion-button>
+      <ion-button (click)="onJoinedEvent()">
+        <ion-icon name="people-outline"></ion-icon>
+        Joined Events
+      </ion-button>
+      <ion-button (click)="onEvent()">
+        <ion-icon name="add-circle" class="big" style="color: rgb(156, 156, 156);"></ion-icon>
+        Create Event
+      </ion-button>
+      <ion-button (click)="onNotifications()">
+        <ion-icon name="notifications-outline"></ion-icon>
+        Notifications
+      </ion-button>
+      <ion-button (click)="onProfile()">
+        <ion-icon name="person-outline"></ion-icon>
+        Profile
+      </ion-button>
+    </div>
+    <div class="content">
+      <!-- Your main content goes here -->
+    </div>
+  </div>
+</ion-content>

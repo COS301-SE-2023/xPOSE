@@ -163,3 +163,24 @@ ion-card-content {
 .loading-icon {
   animation: spin 2s linear infinite; /* Change the animation duration as needed */
 }
+
+/* Rest of your CSS styles */
+
+.sidebar {
+  background-color: #f0f0f0;
+  height: 100%;
+  overflow-y: auto; /* Add scroll if content exceeds the height */
+}
+
+.sidebar ion-header {
+  background-color: #ffffff; /* Customize sidebar header color */
+  border-bottom: 1px solid #ccc;
+}
+
+.sidebar ion-content {
+  padding: 10px;
+}
+
+.home-link ion-icon {
+  margin-right: 5px;
+}
