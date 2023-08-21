@@ -148,9 +148,15 @@ export class HomePage {
 	onHome(){
 		this.router.navigate(['/home']);
 	}
+	onSettings(){
+		this.router.navigate(['/settings']);
+	}
 	signOut(){
 		console.log("Signing out...");
 		this.authService.signOut();
 		// console.log(this.authService.signOut());
    }
+   logout() {
+    this.authService.signOut();
+  }
 }
