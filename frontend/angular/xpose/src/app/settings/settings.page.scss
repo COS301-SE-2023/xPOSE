@@ -1,0 +1,13 @@
+.button-col,
+.image-col {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.image-col img {
+  max-width: 100%;
+  height: auto;
+}
