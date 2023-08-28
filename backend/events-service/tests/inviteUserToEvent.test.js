@@ -12,7 +12,7 @@ jest.mock('../data-access/sequelize', () => {
   const Event = dbMock.define('Event', {
     code: 'eventCode',
     title: 'Test Event',
-    // Other event properties...
+    
   });
 
   const EventInvitation = dbMock.define('EventInvitation', {
@@ -22,14 +22,14 @@ jest.mock('../data-access/sequelize', () => {
     timestamp: new Date(),
   });
 
-  // Define other Sequelize models if required
+  
 
   return {
     sequelize: dbMock,
     User,
     Event,
     EventInvitation,
-    // Export other models here if required
+   
   };
 });
 
