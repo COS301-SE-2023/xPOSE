@@ -19,6 +19,7 @@
     "firebase-admin": "^11.9.0",
     "mysql2": "^3.5.1",
     "sequelize": "^6.32.1",
+    "username-generator": "^1.1.0",
     "uuid": "^9.0.0"
   },
   "devDependencies": {

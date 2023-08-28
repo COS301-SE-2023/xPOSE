@@ -7,6 +7,7 @@ import { AuthService } from '../shared/services/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { ApiService } from '../service/api.service';
+import { error } from 'console';
 
 @Component({
   selector: 'app-notification',
@@ -93,8 +94,7 @@ export class NotificationPage implements OnInit {
       this.router.navigate(['/home']);
     }
   }
-  
-  
+
   acceptRequest(user:any) {
     // /:userId/friend-requests/:requestId/accept'
     const endpoint = `${this.api.apiUrl}/u/users/`;
@@ -105,7 +105,8 @@ export class NotificationPage implements OnInit {
     .toPromise()
     .then((response) => {
       console.log("Friend request accepted",response);
-      this.removeNotification(user);   
+      // window.alert("Friend request accepted" + response);
+      // this.removeNotification(user);   
     })
     .catch((error) => {
       // Handle error response here
@@ -117,15 +118,37 @@ export class NotificationPage implements OnInit {
   }
 
   rejectRequest(user:any) {
+    const endpoint = `${this.api.apiUrl}/u/users/`;
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+    const requestBody = JSON.stringify(user);
+    return this.http.post<any>(`${endpoint}${user.senderId}/friend-requests/${user.receiverId}/reject`, requestBody, {headers})
+    .toPromise()
+    .then((response) => {
+      console.log("Friend request rejected",response);  
+    })
+    .catch((error) => {
+      // Handle error response here
+      console.log("Error:", error);
+      // console.log("Response body:", error.error);
+      return Promise.reject(error);
+    });
     this.removeNotification(user);
   }
 
-
   removeNotification(message: any) {
+    const notificationRef = this.firestore.collection("Notifications").doc(message.receiverId).collection("MyNotifications").doc(message.notificationId);
+          // Delete the notification document
+           notificationRef.delete().then(() =>{
+                console.log(`Notification document with ID ${message.notificationId} successfully deleted`);
+              }).catch(error =>{
+                console.error(`Error deleting notification document with ID ${message.notificationId}:`, error);
+              });
+              
     // Find the index of the message in the array
     const index = this.messages.indexOf(message);
 
-    // If the message is found in the array, remove it
+    // // If the message is found in the array, remove it
     if (index !== -1) {
       this.messages.splice(index, 1);
     }

@@ -17,7 +17,7 @@
       <br>
     </div>
      <!-- Use a ternary operator to conditionally set the button label -->
-     <ion-button class="edit_div" (click)="handleFunction()">{{ isFriend ? 'Unfriend' : 'Request Friendship' }}</ion-button>
+     <ion-button class="edit_div" (click)="handleFunction(user)">{{ isFriend? 'Unfriend': requestSent? 'Request Sent':'Request Friendship' }}</ion-button>
   </div>
 </div>
 

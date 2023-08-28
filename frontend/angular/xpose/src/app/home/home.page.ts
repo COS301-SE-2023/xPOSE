@@ -38,6 +38,7 @@ export class HomePage {
 	   // get events from firebase and display
 	   
   getEventsFromAPI() {
+
 	this.getCurrentUserId().subscribe((uid) => {
 		if(uid){
 			console.log(`We got that ${uid}`);
