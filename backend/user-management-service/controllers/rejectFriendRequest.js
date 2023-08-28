@@ -1,49 +1,34 @@
 import admin from "firebase-admin";
 import User from '../data-access/models/user.table.js';
-import Friend_request from '../data-access/models/friend_request.table.js';
 import Friendship from '../data-access/models/friendship.table.js';
 import { sendMessageToQueue } from '../sender.js';
+import { Op, Sequelize } from "sequelize";
 
 export const rejectFriendRequest = async (req, res) => {
     try {
         const { userId, requestId } = req.params;
-        // Check if the user document exists
-        const userDoc = await admin.firestore().collection('Users').doc(userId).get();
-        if (!userDoc.exists) {
-          return res.status(404).json({ error: 'User not found' });
-        }
-    
-        // Check if the friend request document exists
-        const friendRequestDoc = await admin
-          .firestore()
-          .collection('Users')
-          .doc(requestId)
-          .collection('FriendRequests')
-          .doc(userId)
-          .get();
-    
-        if (!friendRequestDoc.exists) {
-          return res.status(404).json({ error: 'Friend request not found' });
-        }
-    
-        // Delete the friend request document
-        await admin
-          .firestore()
-          .collection('Users')
-          .doc(requestId)
-          .collection('FriendRequests')
-          .doc(userId)
-          .delete();
+        const {senderId: requestSenderId, notificationId: notificationUid}  = req.body;
 
-        // Remove requestId from the friendIds array in the sender's document
-            await admin.firestore().collection('Users').doc(userId).update({
-                friendIds: admin.firestore.FieldValue.arrayRemove(requestId)
-        });
+          await Friendship.destroy({
+            where: {
+              [Sequelize.Op.or]: [
+                {userID1: userId, userID2: requestId},
+                {userID1: requestId, userID2: userId},
+              ]
+            }
+          });
+          
+            // delete this users notification document
+            const db = admin.firestore();
+            const notificationRef = db.collection("Notifications").doc(requestId).collection("MyNotifications").doc(notificationUid);
 
-        // Remove userId from the friendIds array in the recipient's document
-           await admin.firestore().collection('Users').doc(requestId).update({
-            friendIds: admin.firestore.FieldValue.arrayRemove(userId)
-        });
+            // Delete the notification document
+            try {
+                await notificationRef.delete();
+                console.log(`Notification document with ID ${notificationUid} successfully deleted`);
+            } catch(error){
+                console.error(`Error deleting notification document with ID ${notificationUid}:`, error);
+            }
 
         res.status(200).json({ message: `Friend request from user with ID ${userId} rejected` });
      
