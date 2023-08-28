@@ -13,20 +13,14 @@ const Friendship = sequelize.define("friendships", {
       primaryKey: true,
       autoIncrement: true,
     },
-    timestamp: {
-      type: Sequelize.DATE,
-      defaultValue: Sequelize.NOW,
+    Status: {
+      type: Sequelize.STRING,
+      defaultValue: 'Pending'
     }
-    // friend_a_id: {
-    //     type: Sequelize.STRING
-    // },
-    // friend_b_id: {
-    //     type: Sequelize.STRING
-    // }
   });
-  
-  Friendship.belongsTo(User, { foreignKey: "friend_a_id", targetKey: "firebase_doc_ref" });
-  Friendship.belongsTo(User, { foreignKey: "friend_b_id", targetKey: "firebase_doc_ref" });
+  // Friendship.belongsToMany(User, {through: Friendship, as: 'Friends', foreignKey:"firebase_doc_ref"});
+  Friendship.belongsTo(User, { foreignKey: "userID1" });
+  Friendship.belongsTo(User, { foreignKey: "userID2" });
   
   // module.exports = Friendship;
 export default Friendship;

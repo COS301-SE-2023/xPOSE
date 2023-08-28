@@ -38,6 +38,7 @@ export class HomePage {
 	   // get events from firebase and display
 	   
   getEventsFromAPI() {
+
 	this.getCurrentUserId().subscribe((uid) => {
 		if(uid){
 			console.log(`We got that ${uid}`);
@@ -148,9 +149,15 @@ export class HomePage {
 	onHome(){
 		this.router.navigate(['/home']);
 	}
+	onSettings(){
+		this.router.navigate(['/settings']);
+	}
 	signOut(){
 		console.log("Signing out...");
 		this.authService.signOut();
 		// console.log(this.authService.signOut());
    }
+   logout() {
+    this.authService.signOut();
+  }
 }
