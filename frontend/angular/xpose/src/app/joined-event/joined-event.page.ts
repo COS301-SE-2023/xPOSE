@@ -13,9 +13,10 @@ import { ApiService } from '../service/api.service';
 })
 export class JoinedEventPage implements OnInit {
   loading: boolean = true;
-  events: any[] = []; // Array to store events data
-  cards: any[] = []; // Array to store cards data
+  events: any[] = [];
+  cards: any[] = [];
   filterType: string = 'Ongoing';
+  filteredCards: any[] = [];
 
   constructor(
     public authService: AuthService,
@@ -44,12 +45,9 @@ export class JoinedEventPage implements OnInit {
           console.log(events);
           this.events = events;
           this.populateCards();
-          // this.events.filter((event) => event.status === 'ongoing');
-        });
-        // this.populateCards();
-        this.applyFilter();
-        this.loading = false;
-        
+          this.applyFilter();
+          this.loading = false;
+        });        
       } else {
         console.log("No user id");
         this.loading = false;
@@ -95,9 +93,6 @@ export class JoinedEventPage implements OnInit {
       }));
     }
   }
-
-  // Other methods remain unchanged
-  // ...
   
   loadJoinedEvents() {
     // Call your event service method to fetch joined events
@@ -109,34 +104,27 @@ export class JoinedEventPage implements OnInit {
         title: event.eventName,
         subtitle: event.eventDescription,
         description: '' + event.eventLocation,
-        // button: "Join event",
         imageURL: event.imageUrl,
         id: event.code,
-        // Add event listener to the button
-        // buttonClick: function() {
-        // // Redirect to event details page
-        // window.location.href = "/event?id=" + event.id;
-        // }
       }));
       }
   }
+  
   applyFilter() {
     if (this.filterType === 'Ongoing') {
-      this.cards = this.events.filter((event) => event.status === 'ongoing');
+      this.filteredCards = this.cards.filter(card => card.status.toLowerCase() === 'ongoing');
     } else if (this.filterType === 'Upcoming') {
-      this.cards = this.events.filter((event) => event.status === 'upcoming');
+      this.filteredCards = this.cards.filter(card => card.status.toLowerCase() === 'upcoming');
     } else if (this.filterType === 'Ended') {
-      this.cards = this.events.filter((event) => event.status === 'ended' || event.status === 'finished');
+      this.filteredCards = this.cards.filter(card => card.status.toLowerCase() === 'ended');
+    } else {
+      this.filteredCards = this.cards; // Show all cards when no specific filter is selected
     }
   }
   
   search() {
 		this.router.navigateByUrl('/search');
 	}
-  
-  // eventDetails() {
-	// 	this.router.navigate(['/event']);
-	// }
 
   onEvent() {
     this.router.navigate(['/create-event']);
@@ -145,6 +133,7 @@ export class JoinedEventPage implements OnInit {
   eventDetails(event_id: string) {
 		this.router.navigate(['/view-event', event_id]);
 	}
+
   onNotifications() {
     this.router.navigate(['/notification']);
   }
@@ -160,6 +149,7 @@ export class JoinedEventPage implements OnInit {
   onHome() {
     this.router.navigate(['/home']);
   }
+  
   getStatusColor(status: string) {
     if (status === 'ongoing') {
       return 'success';
