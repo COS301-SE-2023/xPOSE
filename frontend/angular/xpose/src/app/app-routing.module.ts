@@ -81,8 +81,6 @@ const routes: Routes = [
     path: 'search-image',
     loadChildren: () => import('./search-image/search-image.module').then( m => m.SearchImagePageModule)
   },
-
-
 ];
 
 @NgModule({

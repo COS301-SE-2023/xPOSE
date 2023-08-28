@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Image Modal</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="modal-content">
+    <div class="modal-image-container">
+      <ion-img [src]="galleryData[currentIndex].imageSrc" [alt]="galleryData[currentIndex].imageAlt"></ion-img>
+      <!-- Display additional information or buttons here -->
+    </div>
+  </div>
+  
+  <div class="modal-navigation">
+    <button (click)="prev()">
+      <ion-icon name="arrow-back"></ion-icon>
+    </button>
+    <button (click)="next()">
+      <ion-icon name="arrow-forward"></ion-icon>
+    </button>
+  </div>
+</ion-content>

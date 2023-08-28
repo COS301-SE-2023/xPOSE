@@ -10,6 +10,8 @@ import {
     } from '@angular/animations';
 import { ApiService } from 'src/app/service/api.service';
 import { HttpClient } from '@angular/common/http';
+import { ModalController } from '@ionic/angular';
+import { GalleryModalComponent } from 'src/app/gallery-modal/gallery-modal.component';
 // import { MatIconModule } from '@angular/material/icon';
 
 
@@ -51,7 +53,8 @@ export class GalleryLightboxPage implements OnInit {
 
   constructor(private galleryDataService: GalleryDataService,
     private api: ApiService,
-    private http: HttpClient
+    private http: HttpClient,
+    private modalController: ModalController
     ) {}
 
   ngOnInit() {
@@ -68,6 +71,17 @@ export class GalleryLightboxPage implements OnInit {
   totalImageCount = 0;
   
 
+  async openImageModal(item: any, index: number) {
+    const modal = await this.modalController.create({
+      component: GalleryModalComponent,
+      componentProps: {
+        galleryData: this.galleryData,
+      initialIndex: index
+      }
+    });
+
+    return await modal.present();
+  }
 
   onPreviewImage(index: number): void {
     //shows image in lightbox
