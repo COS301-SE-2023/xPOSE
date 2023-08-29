@@ -354,5 +354,16 @@ ion-menu[side="end"] {
   /* other styles for the icon */
 }
 
-
+ion-segment-button{
+  // --background: #ff00aa;
+  --color: #000000;
+  --border-radius: 10px;
+  // --border: 8px solid #ff00aa;
+  --padding-start: 20px;
+  --padding-end: 20px;
+  --margin: 5px;
+  --font-size: 18px;
+  --font-family: 'Roboto', sans-serif;
+  --color-checked: #ff00aa;
+}
 
