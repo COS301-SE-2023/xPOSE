@@ -260,6 +260,10 @@ export class EventPage {
       }
     });
   }
+
+  editEvent() {
+    this.router.navigateByUrl('/events-settings');
+  }
   
   retrievePosts() {
     if (this.postsCollection) {
