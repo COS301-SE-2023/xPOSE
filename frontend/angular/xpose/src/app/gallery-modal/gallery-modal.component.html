@@ -1,28 +1,89 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar>
     <ion-title>Image Modal</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="closeModal()">
-        <ion-icon slot="icon-only" name="close"></ion-icon>
-      </ion-button>
+      <ion-menu-button autoHide="false" menu="end">
+        <ion-button>
+          <ion-icon slot="icon-only" name="ellipsis-vertical"></ion-icon>
+        </ion-button>
+       
+      </ion-menu-button>
+      <button (click)="closeModal()">
+        <ion-icon class="icon-close" name="close-circle-outline"></ion-icon>
+      </button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
+<ion-menu side="end" content-id="main-content" type="overlay" id="end">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Image Options</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item (click)="downloadImage()">
+        <ion-label>Download</ion-label>
+      </ion-item>
+      <ion-item (click)="deleteImage()">
+        <ion-label>Delete</ion-label>
+      </ion-item>
+      <ion-item (click)="shareImage('')">
+        <ion-label>Share</ion-label>
+      </ion-item>
+       
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+
 <ion-content>
   <div class="modal-content">
-    <div class="modal-image-container">
-      <ion-img [src]="galleryData[currentIndex].imageSrc" [alt]="galleryData[currentIndex].imageAlt"></ion-img>
-      <!-- Display additional information or buttons here -->
-    </div>
+        <div class="modal-image-container">
+          <ion-img [src]="galleryData[currentIndex].imageSrc" [alt]="galleryData[currentIndex].imageAlt"></ion-img>
+      < Display additional information or buttons here -->
+    <!-- </div>
+  </div> -->
+
+
+<!-- </ion-content> -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <button  (click)="closeModal()" data-dismiss="modal" >
+              <ion-icon name="close-outline"></ion-icon>
+     </button>
+    <div class="modal-dialog" role="document">
+    <!-- <div class="modal-title"> -->
+              
+      <!--       </div> -->
+      <div class="modal-content">
+        <div class="modal-body">
+          <div id="carouselExample" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                  <div class="modal-image-container">
+                   <ion-img [src]="galleryData[currentIndex].imageSrc" [alt]="galleryData[currentIndex].imageAlt"></ion-img>
+              </div>
+            </div>
+              <!-- Add other carousel items -->
+            </div>
+            <div class="modal-navigation">
+            <button (click)="prev()">
+              <ion-icon class="icon-nev" name="chevron-back-outline"></ion-icon>
+            </button>
+            <button (click)="next()">
+              <ion-icon class="icon-nev" name="chevron-forward-outline"></ion-icon>
+            </button>
+          </div>
+           <div class="modal-footer">
+              <ion-icon name="heart-outline"></ion-icon>
+              <ion-textarea placeholder="Add a comment"></ion-textarea>
+            </div> 
+          </div>
+  
+        </div>
+         
+      </div>
+    </div>
   </div>
   
-  <div class="modal-navigation">
-    <button (click)="prev()">
-      <ion-icon name="arrow-back"></ion-icon>
-    </button>
-    <button (click)="next()">
-      <ion-icon name="arrow-forward"></ion-icon>
-    </button>
-  </div>
-</ion-content>

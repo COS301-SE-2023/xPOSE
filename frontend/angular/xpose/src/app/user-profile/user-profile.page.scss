@@ -34,7 +34,7 @@
   }
   
   .edit_div {
-    --background: #007bff;
+    --background: #ff008c;
     margin-top: 10px;
   }
  
@@ -144,4 +144,25 @@
     border-radius: 4px;
     font-size: 14px;
     font-weight: bold;
+  }
+
+  .edit_div{
+    background: #ff5fca;
+    margin-top: 10px;
+    font-size: 18px ;
+    border-radius: 10px;
+    border: 8px solid #ff5fca;
+
+  }
+  ion-segment-button{
+    // --background: #ff00aa;
+    --color: #000000;
+    --border-radius: 10px;
+    // --border: 8px solid #ff00aa;
+    --padding-start: 20px;
+    --padding-end: 20px;
+    --margin: 5px;
+    --font-size: 18px;
+    --font-family: 'Roboto', sans-serif;
+    --color-checked: #ff00aa;
   }

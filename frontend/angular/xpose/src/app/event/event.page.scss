@@ -339,4 +339,31 @@ ion-menu[side="end"] {
   font-size: 14px;
 }
 
+.remove {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-left: 100px;
+  background-color: #ffffff;
+  /* other styles for the button */
+}
+
+.remove ion-icon {
+  color: #eb0091;
+  font-size: 31px;
+  /* other styles for the icon */
+}
+
+ion-segment-button{
+  // --background: #ff00aa;
+  --color: #000000;
+  --border-radius: 10px;
+  // --border: 8px solid #ff00aa;
+  --padding-start: 20px;
+  --padding-end: 20px;
+  --margin: 5px;
+  --font-size: 18px;
+  --font-family: 'Roboto', sans-serif;
+  --color-checked: #ff00aa;
+}
 
