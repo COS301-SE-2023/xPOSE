@@ -157,7 +157,7 @@ export class UserProfilePage implements OnInit {
                   console.log(response);
                   console.log("Friendship request done successfully!");
 
-                  this.isFriend = true;
+                  // this.isFriend = true;
                   this.requestSent = true;
 
                 },

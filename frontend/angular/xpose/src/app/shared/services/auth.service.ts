@@ -10,7 +10,7 @@ import { map } from "rxjs";
 import { Observable } from "rxjs";
 import { Location } from "@angular/common";
 import { environment } from "src/environments/environment";
-
+// import User from '../data-access/models/user.table.js';
 
 @Injectable({
   providedIn: "root"
@@ -38,7 +38,6 @@ export class AuthService {
     return this.afAuth
       .signInWithEmailAndPassword(email, password)
       .then((result) => {
-        // this.setUserData(result.user);
         this.afAuth.authState.subscribe((user) => {
           if (user) {
             // console.log("User has been logged in successfuly");
@@ -154,6 +153,8 @@ export class AuthService {
       uniq_username: `${user.displayName}${alph}`,
       visibility: true
     };
+    // add userId to sql table
+    
     return userRef.set(userData, { merge: true });
   }
 

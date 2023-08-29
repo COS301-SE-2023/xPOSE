@@ -28,6 +28,9 @@ export const acceptFriendRequest = async (req, res) => {
             attributes:['userName']
         });
 
+        console.log("RequestId::::::::",requestId);
+        console.log("NotifificationUID:::::::", notificationUid);
+
         // delete this users notification document
         const db = admin.firestore();
         const notificationRef = db.collection("Notifications").doc(requestId).collection("MyNotifications").doc(notificationUid);
