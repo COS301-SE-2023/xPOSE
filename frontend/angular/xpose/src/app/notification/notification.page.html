@@ -50,7 +50,7 @@
             <ion-label>
               <h2>Friend Request accepted</h2>
               <p>
-                <a [routerLink]="['/user-profile', message.senderId]">
+                <a [routerLink]="['/user-profile', message.senderId, message.receiverId]">
                   {{ message.message }}
                 </a>
                 </p>

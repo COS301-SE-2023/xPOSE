@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { ApiService } from '../service/api.service';
+import { AuthService } from '../shared/services/auth.service';
 
 
 @Component({
@@ -25,13 +26,28 @@ export class SearchPage implements OnInit {
   filteredItems: any[] = [];
   showSuggestions: boolean = true;
   searchClicked: boolean = false;
+  currentUserId: string = "";
 
   constructor(private router: Router,
     private http: HttpClient,
-    private api: ApiService
+    private api: ApiService,
+    private authService: AuthService
     ) {}
 
   ngOnInit() {
+        this.authService.getCurrentUserId().subscribe((uid) => {
+      if (uid) {
+        this.currentUserId = uid;
+        console.log("Testing viewing profile:::", this.currentUserId);
+      }
+      else {
+        console.log("user id not found at all");
+      }
+    });
+
+    // get id of user searching
+
+
     // Initialize the filteredItems with all events on page load
     this.filteredItems = this.events;
     // Initialize suggestedItems with some suggested data
@@ -103,7 +119,8 @@ export class SearchPage implements OnInit {
   }
 
   viewUser(userItem: any){
-    this.router.navigate(['/user-profile', userItem.uid]);
+    console.log("Testing viewed profile:::", userItem.uid);
+    this.router.navigate(['/user-profile', userItem.uid, this.currentUserId]);
   }
 
   viewEvent(eventItem: any){

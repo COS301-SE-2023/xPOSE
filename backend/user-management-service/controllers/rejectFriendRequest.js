@@ -19,16 +19,19 @@ export const rejectFriendRequest = async (req, res) => {
           });
           
             // delete this users notification document
-            const db = admin.firestore();
-            const notificationRef = db.collection("Notifications").doc(requestId).collection("MyNotifications").doc(notificationUid);
-
-            // Delete the notification document
-            try {
-                await notificationRef.delete();
-                console.log(`Notification document with ID ${notificationUid} successfully deleted`);
-            } catch(error){
-                console.error(`Error deleting notification document with ID ${notificationUid}:`, error);
+            if(!notificationUid) {
+              const db = admin.firestore();
+              const notificationRef = db.collection("Notifications").doc(requestId).collection("MyNotifications").doc(notificationUid);
+  
+              // Delete the notification document
+              try {
+                  await notificationRef.delete();
+                  console.log(`Notification document with ID ${notificationUid} successfully deleted`);
+              } catch(error){
+                  console.error(`Error deleting notification document with ID ${notificationUid}:`, error);
+              }
             }
+         
 
         res.status(200).json({ message: `Friend request from user with ID ${userId} rejected` });
      

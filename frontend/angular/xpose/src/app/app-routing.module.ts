@@ -74,13 +74,18 @@ const routes: Routes = [
     loadChildren: () => import('./search/search.module').then( m => m.SearchPageModule)
   },
   {
-    path: 'user-profile/:id',
+    path: 'user-profile/:id/:id',
     loadChildren: () => import('./user-profile/user-profile.module').then( m => m.UserProfilePageModule)
   },
   {
+  path: 'user-profile/:id',
+  loadChildren: () => import('./user-profile/user-profile.module').then( m => m.UserProfilePageModule)
+},
+  {
     path: 'search-image',
     loadChildren: () => import('./search-image/search-image.module').then( m => m.SearchImagePageModule)
-  },  {
+  },
+  {
     path: 'events-settings',
     loadChildren: () => import('./events-settings/events-settings.module').then( m => m.EventsSettingsPageModule)
   },
