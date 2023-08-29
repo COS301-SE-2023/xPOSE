@@ -38,7 +38,7 @@ export class FooterComponent  implements OnInit {
 	}
 
 	onSettings(){
-		this.router.navigate(['/settings']);
+		this.router.navigate(['/events-settings']);
 	}
 	
    logout() {
