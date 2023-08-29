@@ -34,7 +34,7 @@
   }
   
   .edit_div {
-    --background: #007bff;
+    --background: #ff008c;
     margin-top: 10px;
   }
  
@@ -144,4 +144,13 @@
     border-radius: 4px;
     font-size: 14px;
     font-weight: bold;
+  }
+
+  .edit_div{
+    background: #ff00aa;
+    margin-top: 10px;
+    font-size: 18px ;
+    border-radius: 10px;
+    border: 8px solid #ff00aa;
+
   }

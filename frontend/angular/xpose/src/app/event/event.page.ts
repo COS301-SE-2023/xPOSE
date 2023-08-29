@@ -528,6 +528,7 @@ export class EventPage {
       this.participants.splice(index, 1);
     }
   }
+  
 
   onSearchClick() {
     this.router.navigate(['/search-image']);

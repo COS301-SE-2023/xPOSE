@@ -96,9 +96,11 @@ export class UserProfilePage implements OnInit {
     if(this.isFriend){
       // unfriend users
       this.removeFriendRequest(user);
+      this.isFriend = false;
     } else {
       // send friend request
       this.sendFriendRequest()
+      this.requestSent = true;
     }
   }
 
