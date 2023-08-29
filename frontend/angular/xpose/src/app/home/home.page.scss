@@ -165,6 +165,22 @@ ion-card-content {
 }
 
 .scrollable-content {
-  max-height: calc(100vh - 56px); /* 56px is the default height of the Ionic header */
+  max-height: calc(100vh - 56px);
   overflow-y: auto;
+}
+
+.custom-toolbar {
+  display: block;
+}
+
+@media screen and (max-width: 768px) {
+  .custom-toolbar ion-title {
+    display: none;
+  }
+  
+  .custom-toolbar ion-menu-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
