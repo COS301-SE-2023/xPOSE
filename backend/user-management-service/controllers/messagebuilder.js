@@ -8,6 +8,7 @@ class MessageBuilder {
           receiverId: "",
           timestamp: Date.now(),
           status: "pending",
+          values: []
         },
       };
     }
@@ -15,6 +16,9 @@ class MessageBuilder {
     setType(type) {
       this.message.data.type = type;
       return this;
+    }
+    setValue(value){
+      this.message.data.values.push(value);
     }
   
     setMessage(message) {
