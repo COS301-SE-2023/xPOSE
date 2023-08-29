@@ -1,106 +1,7 @@
-// .custom-backround{
-//   --background: #ffffff;
-//   color: #000000;
-//   font-size: 20px;
-//   // --min-height: 70px;
-// }
-
-// .notification-list {
-//     margin-top: 10px;
-//   }
-//   ion-list {
-//     margin-top:0px;
-//     color: #ea00ff;
-//     background-color: #fcddff;
-//   }
- 
-//   ion-icon {
-//     color: black;
-//   }
-  
-//   h2 {
-//     font-size: 15px;
-//     margin-bottom: 5px;
-//     margin-left: 11px;
-//     color: #000000;
-//   }
-  
-//   p {
-//     font-size: 14px;
-//     color: gray;
-//     margin-left: 13px;
-//     color: #000000;
-//   }
-  
-//   ion-tab-bar {
-//     --border-top-width: 0px;
-//   }
-  
-//   ion-tab-button.tab-selected {
-//     color: rgb(218, 51, 51);
-//   }
-  
-// ion-item{
-//   --background: #f4f5f8;
-//   border-radius: 15px;
-//   --padding-start: 10px;
-//   --padding-end: 10px;
-//   --padding-top: 10px;
-//   --padding-bottom: 10px;
-//   --margin-bottom: 10px;
-//   --margin-top: 10px;
-//   --margin-left: 10px;
-//   --margin-right: 10px;
-//   --border-width: 0px;
-//   --border-color: #f4f5f8;
-//   --box-shadow: 0 0 0 0;
-//   --box-shadow: none;
-//   border: solid 1px #ffcefb;
-// }
-// /* app.component.scss */
-
-// ion-toolbar.custom-toolbar {
-//   --background: #ffffff;
-//   color: #000000;
-//   font-size: 20px;
-//   /* Add more custom styles as needed */
-//   --min-height: 70px;
-// }
-
-
-// ion-footer {
-//   background: #ffffff;
-// }
-// ion-tab-button{
-//   background: #ffffff;
-//   border: #ea00ff;
-//   border-color: #ea00ff;
-//   color: #000000;
-// }
-// ion-label{
-//   color: #000000;
-
-// }
-
-// ion-content .main-content{
-//   --background: #ffffff;
-//   background-color: #ffffff;
-// }
-// ion-buttons{
-//   color: #000000;
-// }
-// ion-toolbar.custom-toolbar {
-//   --background: #ffffff;
-//   color: #000000;
-//   font-size: 20px;
-//   /* Add more custom styles as needed */
-//   --min-height: 70px;
-// }
 .custom-backround{
   --background: #ffffff;
   color: #000000;
   font-size: 20px;
-  // --min-height: 70px;
 }
 
 .notification-list {
@@ -155,42 +56,73 @@ ion-item{
   --box-shadow: none;
   border: solid 1px #ffcefb;
 }
-/* app.component.scss */
 
 ion-toolbar.custom-toolbar {
   --background: #ffffff;
   color: #000000;
   font-size: 20px;
-  /* Add more custom styles as needed */
   --min-height: 70px;
 }
-
 
 ion-footer {
   background: #ffffff;
 }
+
 ion-tab-button{
   background: #ffffff;
   border: #ea00ff;
   border-color: #ea00ff;
   color: #000000;
 }
+
 ion-label{
   color: #000000;
-
 }
 
 ion-content .main-content{
   --background: #ffffff;
   background-color: #ffffff;
 }
+
 ion-buttons{
   color: #000000;
 }
+
 ion-toolbar.custom-toolbar {
   --background: #ffffff;
   color: #000000;
   font-size: 20px;
-  /* Add more custom styles as needed */
   --min-height: 70px;
+}
+
+.sidebar {
+  background-color: #f0f0f0;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.sidebar ion-header {
+  background-color: #ffffff;
+  border-bottom: 1px solid #ccc;
+}
+
+.sidebar ion-content {
+  padding: 10px;
+}
+
+.scrollable-content {
+  max-height: 100vh;
+  overflow-y: auto;
+}
+
+.sidebar-link {
+  display: block;
+  text-decoration: none;
+  color: #000;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.sidebar-link ion-icon {
+  margin-right: 5px;
 }
