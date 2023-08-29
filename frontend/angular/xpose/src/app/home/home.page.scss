@@ -163,3 +163,8 @@ ion-card-content {
   max-height: 100vh;
   overflow-y: auto;
 }
+
+.scrollable-content {
+  max-height: calc(100vh - 56px); /* 56px is the default height of the Ionic header */
+  overflow-y: auto;
+}

@@ -2,8 +2,8 @@
   <ion-toolbar class="custom-toolbar">
     <ion-buttons slot="start">
       <app-backbutton></app-backbutton>
-      </ion-buttons>
-    <ion-title >Notifications</ion-title>
+    </ion-buttons>
+    <ion-title>Notifications</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -15,6 +15,7 @@
     </ion-col>
     <ion-col size="10">
       <ion-list>
+         <!-- <ion-item> -->
         <ng-container *ngIf="messages.length > 0; else noNotifications">
           <ng-container *ngFor="let message of messages">
     
@@ -73,4 +74,4 @@
       </ion-list>
     </ion-col>
   </ion-row>
-</ion-content>
+</ion-content> 
