@@ -133,7 +133,7 @@
             <ul class="participant-list">
               <ion-card class="participant-card" *ngFor="let participant of participants; let i = index" (click)="onCardClick(participant)">
                 <ion-avatar class="participant-avatar" >
-                  <ion-img src="../assets/images/image1.jpg"></ion-img>
+                  <ion-img src="../assets/images/image1.jpg"  loading="lazy"></ion-img>
                 </ion-avatar>
                 <h2 class="participant-name">{{ participant?.display_name }}</h2>
                 <div class="remove">

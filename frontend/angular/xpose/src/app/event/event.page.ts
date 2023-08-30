@@ -34,11 +34,12 @@ interface Item {
   styleUrls: ['./event.page.scss'],
 })
 export class EventPage {
+  filterType: string = 'posts'; 
   event: Event;
   participants: any;
   private history: string[] = [];
   cards: any[] = []; // Array to store cards data
-  filterType: string = 'Ongoing';
+  // filterType: string = 'Ongoing';
   loading: boolean = true;
   errorMessage: string | undefined;
   events: any[] = []; // Array to store events data
