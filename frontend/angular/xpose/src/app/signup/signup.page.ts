@@ -45,6 +45,7 @@ export class SignupPage implements OnInit {
 			const password = this.signUpForm.get("password")?.value;
 			const username = this.signUpForm.get("username")?.value;
 			this.authService.signUp(email, password, username);
+			this.router.navigate(["/home"]);
 		}
 
 		// Custom password validator function
