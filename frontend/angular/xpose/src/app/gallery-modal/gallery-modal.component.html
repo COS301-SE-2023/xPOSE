@@ -1,15 +1,15 @@
-<!-- <ion-header>
+<ion-header>
   <ion-toolbar>
-    <ion-title>Image Modal</ion-title>
+    <ion-title>Image</ion-title>
     <ion-buttons slot="end">
       <ion-menu-button autoHide="false" menu="end">
         <ion-button>
           <ion-icon slot="icon-only" name="ellipsis-vertical"></ion-icon>
         </ion-button>
-       
+      
       </ion-menu-button>
       <button (click)="closeModal()">
-        <ion-icon class="icon-close" name="close-circle-outline"></ion-icon>
+        <ion-icon name="close-outline"></ion-icon>
       </button>
     </ion-buttons>
   </ion-toolbar>
@@ -38,24 +38,20 @@
 </ion-menu>
 
 
-<ion-content>
+ <!-- <ion-content>
   <div class="modal-content">
         <div class="modal-image-container">
           <ion-img [src]="galleryData[currentIndex].imageSrc" [alt]="galleryData[currentIndex].imageAlt"></ion-img>
-      < Display additional information or buttons here -->
-    <!-- </div>
-  </div> -->
+
+    </div>
+  </div>
 
 
-<!-- </ion-content> -->
+</ion-content>  -->
+
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true">
-  <button  (click)="closeModal()" data-dismiss="modal" >
-              <ion-icon name="close-outline"></ion-icon>
-     </button>
     <div class="modal-dialog" role="document">
-    <!-- <div class="modal-title"> -->
-              
-      <!--       </div> -->
+
       <div class="modal-content">
         <div class="modal-body">
           <div id="carouselExample" class="carousel slide" data-ride="carousel">
@@ -74,9 +70,15 @@
             <button (click)="next()">
               <ion-icon class="icon-nev" name="chevron-forward-outline"></ion-icon>
             </button>
+ 
           </div>
+          <button (click)="toggleLike()">
+            <ion-icon [name]="isLiked ? 'heart' : 'heart-outline'" class="love"></ion-icon>
+          </button>
+          <span>{{ likeCount }}</span>
+          
            <div class="modal-footer">
-              <ion-icon name="heart-outline"></ion-icon>
+            <!--   <ion-icon name="heart-outline"></ion-icon> -->
               <ion-textarea placeholder="Add a comment"></ion-textarea>
             </div> 
           </div>
