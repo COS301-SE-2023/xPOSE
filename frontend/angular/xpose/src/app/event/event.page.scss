@@ -1,358 +1,358 @@
-.loading-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-}
-
-.loading-text {
-  margin-top: 10px;
-  font-size: 14px;
-  color: #333; /* Adjust the color as per your design */
-}
-
-ion-toolbar.custom-toolbar {
-    --background: #ffffff;
-    color: #000000;
-    font-size: 20px;
-    --min-height: 70px;
-  }
-  .footer-content {
-    background-color: #f2f2f2;
-    padding: 10px;
-    text-align: center;
-    color: #333;
-    font-size: 14px;
-  }
-  
-  ion-content .main-content{
-    --background: #ffffff;
-    background-color: #ffffff;
-  }
-  
-  .custom-background{
-    --background: #ffffff;
-    color: #000000;
-    font-size: 20px;
-    // --min-height: 70px;
-  }
- 
-  .card-image{
-    height: 200px;
-    width: 100%;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    border-radius: 10px;
-    margin-bottom: 10px;
-    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
-    transition: all 0.3s ease-in-out;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    .card-title{
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        padding: 10px;
-        background: rgba(0,0,0,0.5);
-        color: #fff;
-        font-weight: 500;
-        font-size: 1.2rem;
-        text-align: center;
-        transition: all 0.3s ease-in-out;
-    }
-    &:hover{
-        box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.2);
-        .card-title{
-            font-size: 1.5rem;
-        }
-    }
-}
-.tabs{
-    // margin-top: 240px;
-    color: #eb0091;
-    .tabarea{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-bottom: 20px;
-        --background: #ffc5ff;
-    }
-    .tab-button{
-        --background:var(--color);
-        padding: 10px 20px;
-        border-radius: 10px;
-        background: #b1b1b1;
-        --color: #eb0091;
-        font-weight: 500;
-        font-size: 1.2rem;
-        margin-right: 10px;
-        transition: all 0.3s ease-in-out;
-     
-        &:hover{
-            background: #000;
-            color: #fff;
-        }
-    }
-    .tab-button-active{
-        background: #000;
-        color: #fff;
-    }
-}
-
-  ion-list {
-    // padding-bottom: 800px;
-    // display: block;
-    margin-left: 0;
-    margin-right: 0;
-    margin-top: 0;
-    margin-bottom: 0;
-    padding-left: 0;
-    padding-right: 0;
-    padding-top: 0;
-    padding-bottom: 0;
-    display: block;
-    // contain: content;
-    list-style-type: none;
-  
-}
-
-.leave-button{
-  font-size: 40px;
-  color: #555555;
-
-}
-
-/* Styling the ion-menu */
-ion-menu[side="end"] {
-  --background: #ffffff;
-  --width: 304px;
-    --min-width: auto;
-    --max-width: auto;
-    --height: 20%;
-    --min-height: auto;
-    --max-height: auto;
-      border: solid 0.2px #000;
-      // border-radius: 10px;
-//     --background: var(--ion-background-color, #fff);
-//     inset: 0px;
-//     display: none;
-//     position: absolute;
-//     contain: strict;
-}
-
-
-
-// .qrcode-container {
+// .loading-container {
 //   display: flex;
+//   flex-direction: column;
 //   justify-content: center;
 //   align-items: center;
 //   height: 100%;
 // }
 
-.image-container {
-  position: relative; /* Make sure the container is positioned relatively */
-  display: inline-block; /* Or use any other layout property suitable for your case */
-}
+// .loading-text {
+//   margin-top: 10px;
+//   font-size: 14px;
+//   color: #333; /* Adjust the color as per your design */
+// }
 
-.fixed-button {
-  position: absolute;
-  bottom: 20px; /* Adjust this value to set the distance from the bottom */
-  right: 20px; /* Adjust this value to set the distance from the right */
-}
-.icon-button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-left: 45%;
-  border: solid 0.2px #666666;
-  border-radius: 35px;
-  color: #eb0091;
-}
+// ion-toolbar.custom-toolbar {
+//     --background: #ffffff;
+//     color: #000000;
+//     font-size: 20px;
+//     --min-height: 70px;
+//   }
+//   .footer-content {
+//     background-color: #f2f2f2;
+//     padding: 10px;
+//     text-align: center;
+//     color: #333;
+//     font-size: 14px;
+//   }
+  
+//   ion-content .main-content{
+//     --background: #ffffff;
+//     background-color: #ffffff;
+//   }
+  
+//   .custom-background{
+//     --background: #ffffff;
+//     color: #000000;
+//     font-size: 20px;
+//     // --min-height: 70px;
+//   }
+ 
+//   .card-image{
+//     height: 200px;
+//     width: 100%;
+//     background-size: cover;
+//     background-repeat: no-repeat;
+//     background-position: center;
+//     border-radius: 10px;
+//     margin-bottom: 10px;
+//     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+//     transition: all 0.3s ease-in-out;
+//     cursor: pointer;
+//     position: relative;
+//     overflow: hidden;
+//     .card-title{
+//         position: absolute;
+//         bottom: 0;
+//         left: 0;
+//         width: 100%;
+//         padding: 10px;
+//         background: rgba(0,0,0,0.5);
+//         color: #fff;
+//         font-weight: 500;
+//         font-size: 1.2rem;
+//         text-align: center;
+//         transition: all 0.3s ease-in-out;
+//     }
+//     &:hover{
+//         box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.2);
+//         .card-title{
+//             font-size: 1.5rem;
+//         }
+//     }
+// }
+// .tabs{
+//     // margin-top: 240px;
+//     color: #eb0091;
+//     .tabarea{
+//         display: flex;
+//         justify-content: center;
+//         align-items: center;
+//         margin-bottom: 20px;
+//         --background: #ffc5ff;
+//     }
+//     .tab-button{
+//         --background:var(--color);
+//         padding: 10px 20px;
+//         border-radius: 10px;
+//         background: #b1b1b1;
+//         --color: #eb0091;
+//         font-weight: 500;
+//         font-size: 1.2rem;
+//         margin-right: 10px;
+//         transition: all 0.3s ease-in-out;
+     
+//         &:hover{
+//             background: #000;
+//             color: #fff;
+//         }
+//     }
+//     .tab-button-active{
+//         background: #000;
+//         color: #fff;
+//     }
+// }
 
-.cloud {
-  font-size: 50px;
+//   ion-list {
+//     // padding-bottom: 800px;
+//     // display: block;
+//     margin-left: 0;
+//     margin-right: 0;
+//     margin-top: 0;
+//     margin-bottom: 0;
+//     padding-left: 0;
+//     padding-right: 0;
+//     padding-top: 0;
+//     padding-bottom: 0;
+//     display: block;
+//     // contain: content;
+//     list-style-type: none;
+  
+// }
 
-  justify-content: center;
-  align-items: center;
-}
+// .leave-button{
+//   font-size: 40px;
+//   color: #555555;
 
-/* Style for the pop-up container */
-.popup {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 9999;
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
+// }
 
-/* Style for the close button */
-.close-btn {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  width: 30px;
-  height: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: none;
-  background-color: transparent;
-  cursor: pointer;
-  z-index: 999;
-  font-size: 20px;
-  color: #555;
-  border-radius: 50%;
-
-  /* Add a background color when hovering over the close button */
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.1);
-  }
-}
-
-/* Style the content wrapper */
-.content-wrapper {
-  padding: 20px;
-}
-
-/* Style the event card container */
-.event-card-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
-  justify-items: center;
-  margin-bottom: 20px;
-}
-
-/* Style the event cards */
-.event-card {
-  max-width: 300px;
-  width: 100%;
-}
-
-/* Style the QR code container */
-.qrcode-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-/* Style the event link */
-.event-link {
-  text-decoration: underline;
-  cursor: pointer;
-}
-
-
-/* Style the participants container */
-.participants-container {
-  padding: 10px 0;
-}
-
-/* Style the participant list */
-.participant-list {
-  list-style: none;
-  padding: 0;
-}
-
-/* Style the participant list items (li) */
-.participant-card {
-  display: flex;
-  align-items: center;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  padding: 1px;
-  margin-bottom: 1px;
-}
-
-/* Style the participant avatar */
-.participant-avatar {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  overflow: hidden;
-  margin-right: 10px;
-}
-
-/* Style the participant name */
-.participant-name {
-  font-size: 16px;
-  margin: 0;
-}
+// /* Styling the ion-menu */
+// ion-menu[side="end"] {
+//   --background: #ffffff;
+//   --width: 304px;
+//     --min-width: auto;
+//     --max-width: auto;
+//     --height: 20%;
+//     --min-height: auto;
+//     --max-height: auto;
+//       border: solid 0.2px #000;
+//       // border-radius: 10px;
+// //     --background: var(--ion-background-color, #fff);
+// //     inset: 0px;
+// //     display: none;
+// //     position: absolute;
+// //     contain: strict;
+// }
 
 
 
-/* Styling for the comment input section */
-.comment-input {
-  display: flex;
-  align-items: center;
-  padding: 1px;
-  background-color: #f0f0f0;
-  border-radius: 10px;
-  margin: 1px;
-}
+// // .qrcode-container {
+// //   display: flex;
+// //   justify-content: center;
+// //   align-items: center;
+// //   height: 100%;
+// // }
 
-.comment-input ion-input {
-  flex: 1; /* Take available space */
-  margin-right: 10px;
-}
+// .image-container {
+//   position: relative; /* Make sure the container is positioned relatively */
+//   display: inline-block; /* Or use any other layout property suitable for your case */
+// }
 
-.comment-input ion-button {
-  --background: #007bff;
-  color: white;
-  --ion-ripple-color: white;
-}
+// .fixed-button {
+//   position: absolute;
+//   bottom: 20px; /* Adjust this value to set the distance from the bottom */
+//   right: 20px; /* Adjust this value to set the distance from the right */
+// }
+// .icon-button {
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   margin-left: 45%;
+//   border: solid 0.2px #666666;
+//   border-radius: 35px;
+//   color: #eb0091;
+// }
 
-/* Styling for individual comment items */
-.comment-item {
-  background-color: #e9e9e9;
-  border-radius: 10px;
-  margin: 2px 2px;
-  padding: 2px;
-}
+// .cloud {
+//   font-size: 50px;
 
-.comment-item ion-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-}
+//   justify-content: center;
+//   align-items: center;
+// }
 
-.comment-item .text-white {
-  color: #ffffff;
-}
+// /* Style for the pop-up container */
+// .popup {
+//   position: fixed;
+//   top: 50%;
+//   left: 50%;
+//   transform: translate(-50%, -50%);
+//   z-index: 9999;
+//   background-color: #fff;
+//   padding: 20px;
+//   border-radius: 10px;
+//   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+// }
 
-.comment-item h2 {
-  font-size: 16px;
-  margin-bottom: 5px;
-  color: #ff00ff;
-}
+// /* Style for the close button */
+// .close-btn {
+//   position: absolute;
+//   top: 5px;
+//   right: 5px;
+//   width: 30px;
+//   height: 30px;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   border: none;
+//   background-color: transparent;
+//   cursor: pointer;
+//   z-index: 999;
+//   font-size: 20px;
+//   color: #555;
+//   border-radius: 50%;
 
-.comment-item .comment-message {
-  font-size: 14px;
-}
+//   /* Add a background color when hovering over the close button */
+//   &:hover {
+//     background-color: rgba(0, 0, 0, 0.1);
+//   }
+// }
 
-.remove {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  padding-left: 100px;
-  background-color: #ffffff;
-  /* other styles for the button */
-}
+// /* Style the content wrapper */
+// .content-wrapper {
+//   padding: 20px;
+// }
 
-.remove ion-icon {
-  color: #eb0091;
-  font-size: 31px;
-  /* other styles for the icon */
-}
+// /* Style the event card container */
+// .event-card-container {
+//   display: grid;
+//   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+//   gap: 20px;
+//   justify-items: center;
+//   margin-bottom: 20px;
+// }
+
+// /* Style the event cards */
+// .event-card {
+//   max-width: 300px;
+//   width: 100%;
+// }
+
+// /* Style the QR code container */
+// .qrcode-container {
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   margin-bottom: 10px;
+// }
+
+// /* Style the event link */
+// .event-link {
+//   text-decoration: underline;
+//   cursor: pointer;
+// }
+
+
+// /* Style the participants container */
+// .participants-container {
+//   padding: 10px 0;
+// }
+
+// /* Style the participant list */
+// .participant-list {
+//   list-style: none;
+//   padding: 0;
+// }
+
+// /* Style the participant list items (li) */
+// .participant-card {
+//   display: flex;
+//   align-items: center;
+//   border: 1px solid #ccc;
+//   border-radius: 10px;
+//   padding: 1px;
+//   margin-bottom: 1px;
+// }
+
+// /* Style the participant avatar */
+// .participant-avatar {
+//   width: 80px;
+//   height: 80px;
+//   border-radius: 50%;
+//   overflow: hidden;
+//   margin-right: 10px;
+// }
+
+// /* Style the participant name */
+// .participant-name {
+//   font-size: 16px;
+//   margin: 0;
+// }
+
+
+
+// /* Styling for the comment input section */
+// .comment-input {
+//   display: flex;
+//   align-items: center;
+//   padding: 1px;
+//   background-color: #f0f0f0;
+//   border-radius: 10px;
+//   margin: 1px;
+// }
+
+// .comment-input ion-input {
+//   flex: 1; /* Take available space */
+//   margin-right: 10px;
+// }
+
+// .comment-input ion-button {
+//   --background: #007bff;
+//   color: white;
+//   --ion-ripple-color: white;
+// }
+
+// /* Styling for individual comment items */
+// .comment-item {
+//   background-color: #e9e9e9;
+//   border-radius: 10px;
+//   margin: 2px 2px;
+//   padding: 2px;
+// }
+
+// .comment-item ion-avatar {
+//   width: 40px;
+//   height: 40px;
+//   border-radius: 50%;
+// }
+
+// .comment-item .text-white {
+//   color: #ffffff;
+// }
+
+// .comment-item h2 {
+//   font-size: 16px;
+//   margin-bottom: 5px;
+//   color: #ff00ff;
+// }
+
+// .comment-item .comment-message {
+//   font-size: 14px;
+// }
+
+// .remove {
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: flex-end;
+//   padding-left: 100px;
+//   background-color: #ffffff;
+//   /* other styles for the button */
+// }
+
+// .remove ion-icon {
+//   color: #eb0091;
+//   font-size: 31px;
+//   /* other styles for the icon */
+// }
 
 ion-segment-button{
   // --background: #ff00aa;
@@ -367,3 +367,50 @@ ion-segment-button{
   --color-checked: #ff00aa;
 }
 
+/* Add your custom styles here */
+.chat-list {
+  ion-item-divider {
+    --background: transparent;
+    color: var(--ion-color-medium-shade);
+  }
+
+  .chat-item {
+    ion-avatar {
+      width: 40px;
+      height: 40px;
+    }
+  }
+
+  .chat-content {
+    ion-label {
+      display: block;
+      padding-left: 10px;
+
+      .chat-name {
+        font-weight: bold;
+        font-size: 16px;
+      }
+
+      .chat-message {
+        font-size: 14px;
+      }
+
+      .chat-timestamp {
+        font-size: 12px;
+        color: var(--ion-color-medium-shade);
+      }
+    }
+  }
+
+  .comment-input {
+    ion-input {
+      flex-grow: 1;
+    }
+
+    ion-button {
+      ion-icon {
+        --ion-icon-fill-color: var(--ion-color-primary);
+      }
+    }
+  }
+}
