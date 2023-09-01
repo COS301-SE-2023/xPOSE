@@ -17,9 +17,10 @@ export const rejectFriendRequest = async (req, res) => {
               ]
             }
           });
-          
+
+        
             // delete this users notification document
-            if(!notificationUid) {
+            if(notificationUid) {
               const db = admin.firestore();
               const notificationRef = db.collection("Notifications").doc(requestId).collection("MyNotifications").doc(notificationUid);
   

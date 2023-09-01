@@ -26,8 +26,8 @@
                 <h2>{{ message.message }}</h2>
               </ion-label>
               <ion-buttons slot="end">
-                <ion-button fill="clear" (click)="acceptRequest(message)">Accept</ion-button>
-                <ion-button fill="clear" (click)="rejectRequest(message)">Reject</ion-button>
+                <ion-button fill="clear" (click)="request(message, 'accept_friendship')">Accept</ion-button>
+                <ion-button fill="clear" (click)="request(message, 'reject_friendship')">Reject</ion-button>
               </ion-buttons>
             </ion-item>
     
@@ -39,8 +39,8 @@
               <p>{{ message.message }}</p>
             </ion-label>
             <ion-buttons slot="end">
-              <ion-button fill="clear" (click)="acceptInvitation(message)">Accept</ion-button>
-              <ion-button fill="clear" (click)="rejectInvitation(message)">Reject</ion-button>
+              <ion-button fill="clear" (click)="request(message, 'accept_join_event')">Accept</ion-button>
+              <ion-button fill="clear" (click)="request(message, 'reject_join_event')">Reject</ion-button>
             </ion-buttons>
           </ion-item>
     
@@ -56,7 +56,7 @@
                 </p>
             </ion-label>
             <ion-buttons slot="end">
-              <ion-button fill="clear" (click)="removeNotification(message)">clear</ion-button>
+              <ion-button fill="clear" (click)="clearNotification(message)">clear</ion-button>
             </ion-buttons>
           </ion-item>
           </ng-container>
