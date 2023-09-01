@@ -20,10 +20,10 @@
       <ion-grid>
         <ion-row>
           <ion-col size="12" class="button-col">
-            <ion-button expand="full" (click)="uploadImage()">Upload Image</ion-button>
+            <button expand="full" (click)="uploadImage()">Upload Image</button>
           </ion-col>
           <ion-col size="12" class="button-col">
-            <ion-button expand="full" (click)="authorizeImage()">Authorize Images</ion-button>
+            <button expand="full" (click)="authorizeImage()">Authorize Images</button>
           </ion-col>
           <ion-col size="12" class="image-col" *ngIf="selectedImage">
             <img [src]="selectedImage" alt="Selected Headshot" />
@@ -32,7 +32,7 @@
             Image couldn't be found.
           </ion-col>
           <ion-col size="12" class="button-col">
-            <ion-button expand="full" (click)="register()">Register</ion-button>
+            <button expand="full" (click)="register()">Register</button>
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -47,7 +47,7 @@
       <ion-grid>
         <ion-row>
           <ion-col size="12" class="button-col">
-            <ion-button expand="full" (click)="uploadAnotherImage()">Upload Another Image</ion-button>
+            <button expand="full" (click)="uploadAnotherImage()">Upload Another Image</button>
           </ion-col>
         </ion-row>
       </ion-grid>
