@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar class="header">
     <ion-title>Image</ion-title>
     <ion-buttons slot="end">
       <ion-menu-button autoHide="false" menu="end">
@@ -82,10 +82,10 @@
            
             <!-- <ion-col> -->
               <!-- List of Comments -->
-              <ion-list style="margin-top: 10px;">
-                <ion-item *ngFor="let comment of comments" >
+              <ion-list style="margin-top: 10px;" class="header">
+                <ion-item *ngFor="let comment of comments" class="header" >
                   {{ comment }}
-                </ion-item>
+                </ion-item  >
               </ion-list>
               <!-- Comment Input -->
               <ion-textarea
@@ -93,11 +93,6 @@
                 placeholder="Add a comment"
                 (keyup.enter)="addComment()"
               ></ion-textarea>
-            
-              
-            <!-- </ion-col> -->
-            
-
           </div>
           </div>
   

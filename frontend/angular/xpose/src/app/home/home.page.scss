@@ -1,3 +1,10 @@
+.custom-backround{
+  --background: #ffffff;
+  color: #000000;
+  font-size: 20px;
+  // --min-height: 70px;
+}
+
 ion-card {
   background-color: hsl(304, 49%, 82%);
   color: #000000;
@@ -171,16 +178,20 @@ ion-card-content {
 
 .custom-toolbar {
   display: block;
+  background-color: #ffffff;
 }
 
 @media screen and (max-width: 768px) {
   .custom-toolbar ion-title {
     display: none;
-  }
+    background-color: #ffffff;
   
   .custom-toolbar ion-menu-button {
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: #ffffff;
+    color: #000000;
   }
+}
 }
