@@ -10,7 +10,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 50px;
+    margin-top: 20px;
   }
   
   .user_div {
@@ -28,16 +28,11 @@
   }
   
   .username {
-    font-size: 20px;
+    font-size: 15px;
     font-weight: bold;
     color: #333;
   }
-  
-  .edit_div {
-    --background: #ff008c;
-    margin-top: 10px;
-  }
- 
+   
   ion-toolbar.custom-toolbar {
     --background: #ffffff;
     color: #000000;
@@ -147,13 +142,18 @@
   }
 
   .edit_div{
-    background: #ff5fca;
-    margin-top: 10px;
-    font-size: 18px ;
-    border-radius: 10px;
-    border: 8px solid #ff5fca;
+    background: #ff00f0;
+    // margin-top: 5px;
+    font-size: 10px ;
+    border-radius: 5px;
+    border: 2px solid #ff00f0;
+    --background: #ff00f0;
 
   }
+  // .edit_div {
+  //   --background: #ff00f0;
+  //   margin-top: 10px;
+  // }
   ion-segment-button{
     // --background: #ff00aa;
     --color: #000000;

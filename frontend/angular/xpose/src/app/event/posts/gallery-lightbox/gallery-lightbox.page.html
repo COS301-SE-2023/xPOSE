@@ -9,9 +9,9 @@
       <!-- ngFor loop to display images in the gallery -->
       <!-- <ion-card> -->
         <ion-card *ngFor="let item of galleryData; let i=index" (click)="openImageModal(item, i)">
-          <ion-card>
+          <!-- <ion-card> -->
             <ion-img [src]="item.imageSrc" [alt]="item.imageAlt" class="gallery-img"></ion-img>
-          </ion-card>
+          <!-- </ion-card> -->
         </ion-card>
       <!-- </ion-card> -->
     </div>

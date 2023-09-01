@@ -20,13 +20,16 @@ export class GalleryModalComponent  implements OnInit {
   currentIndex: number;
   previewImage = false;
   showMask = false;
+  isLiked: boolean = false;
+  likeCount: number = 0;
   // currentLightboxImage: Item = this.galleryData[0];
 
-  constructor(private modalController: ModalController,
-     private menuController: MenuController,
-     private http: HttpClient,
-     private api: ApiService,
-     ) {
+  constructor(
+    private modalController: ModalController,
+    private menuController: MenuController,
+    private http: HttpClient,
+    private api: ApiService,
+  ) {
     this.currentIndex = this.initialIndex;
   }
 
@@ -41,6 +44,17 @@ export class GalleryModalComponent  implements OnInit {
   next() {
     this.currentIndex = (this.currentIndex + 1) % this.galleryData.length;
   }
+
+  toggleLike() {
+    this.isLiked = !this.isLiked;
+
+    if (this.isLiked) {
+      this.likeCount++;
+    } else {
+      this.likeCount--;
+    }
+  }
+
 
   ngOnInit() {}
  downloadImage() {
