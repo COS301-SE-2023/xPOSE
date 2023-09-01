@@ -21,21 +21,21 @@
       <ion-title>Image Options</ion-title>
     </ion-toolbar>
   </ion-header>
-  <ion-content>
+  <ion-content class="menu-content">
     <ion-list>
-      <ion-item (click)="downloadImage()">
+      <ion-item (click)="downloadImage()" class="menu-item">
         <ion-label>Download</ion-label>
       </ion-item>
-      <ion-item (click)="deleteImage()">
+      <ion-item (click)="deleteImage()" class="menu-item">
         <ion-label>Delete</ion-label>
       </ion-item>
-      <ion-item (click)="shareImage('')">
+      <ion-item (click)="shareImage('')" class="menu-item">
         <ion-label>Share</ion-label>
       </ion-item>
-       
     </ion-list>
   </ion-content>
 </ion-menu>
+
 
 
  <!-- <ion-content>

@@ -92,3 +92,16 @@ button{
   max-height: 100%;
 
 }
+
+.menu-item {
+  padding: 10px; /* Adjust the padding as needed */
+  color: #242424; /* Text color for menu items */
+  font-size: 16px; /* Font size for menu items */
+  text-align: left; /* Text alignment for menu items */
+}
+
+.menu-item:hover {
+  background-color: #ffc8ed; /* Background color on hover */
+  color: #000000; /* Text color on hover */
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+}
