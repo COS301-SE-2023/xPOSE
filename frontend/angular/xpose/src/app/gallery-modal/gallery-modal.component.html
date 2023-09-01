@@ -77,10 +77,28 @@
           </button>
           <span>{{ likeCount }}</span>
           
-           <div class="modal-footer">
-            <!--   <ion-icon name="heart-outline"></ion-icon> -->
-              <ion-textarea placeholder="Add a comment"></ion-textarea>
-            </div> 
+          <div class="modal-footer">
+
+           
+            <!-- <ion-col> -->
+              <!-- List of Comments -->
+              <ion-list style="margin-top: 10px;">
+                <ion-item *ngFor="let comment of comments" >
+                  {{ comment }}
+                </ion-item>
+              </ion-list>
+              <!-- Comment Input -->
+              <ion-textarea
+                [(ngModel)]="newComment"
+                placeholder="Add a comment"
+                (keyup.enter)="addComment()"
+              ></ion-textarea>
+            
+              
+            <!-- </ion-col> -->
+            
+
+          </div>
           </div>
   
         </div>

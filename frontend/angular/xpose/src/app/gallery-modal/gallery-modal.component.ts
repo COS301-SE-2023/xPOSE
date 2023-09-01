@@ -139,4 +139,16 @@ shareImage(imageUrl: string) {
     this.menuController.open('imageMenu');
   }
 
+  comments: string[] = [
+    'Wow, great picture!',
+    'I wish I could take photos like this.',
+  ];
+  newComment: string = '';
+
+  addComment() {
+    if (this.newComment.trim() !== '') {
+      this.comments.push(this.newComment);
+      this.newComment = '';
+    }
+  }
 }
