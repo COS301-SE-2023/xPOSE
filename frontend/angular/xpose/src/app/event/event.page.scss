@@ -31,8 +31,10 @@ ion-segment-button{
 
 /* Add your custom styles here */
 .chat-list {
+  --background: #ffffff;
+  color: #000000;
   ion-item-divider {
-    --background: transparent;
+    background-color: #ffffff;
     color: var(--ion-color-medium-shade);
   }
 
@@ -40,13 +42,24 @@ ion-segment-button{
     ion-avatar {
       width: 40px;
       height: 40px;
+      background-color: #ffffff;
+      color: #000000;
+      --background: #ffffff;
     }
+    --background: #ffffff;
+    color: #000000;
   }
 
   .chat-content {
+    background-color: #ffffff;
+    color: #000000;
+
     ion-label {
       display: block;
       padding-left: 10px;
+      background-color: #ffffff;
+      color: #000000;
+
 
       .chat-name {
         font-weight: bold;
@@ -55,6 +68,7 @@ ion-segment-button{
 
       .chat-message {
         font-size: 14px;
+ 
       }
 
       .chat-timestamp {
@@ -65,11 +79,17 @@ ion-segment-button{
   }
 
   .comment-input {
+    background-color: #ffffff;
+    --background: #ffffff;
     ion-input {
       flex-grow: 1;
+      background-color: #ffffff;
+      color: #000000;
     }
 
     ion-button {
+      background-color: #ffffff;
+      color: #000000;
       ion-icon {
         --ion-icon-fill-color: var(--ion-color-primary);
       }
@@ -83,6 +103,7 @@ ion-segment-button{
   --min-height: 70px;
 }
 .custom-backround{
+  background-color: #eb0091;
   --background: #ffffff;
   color: #000000;
   font-size: 20px;
@@ -90,6 +111,16 @@ ion-segment-button{
 }
 ion-list{
   background-color: #ffffff;
+  color: #000000;
+  font-size: 20px;
+  // --min-height: 70px;
+}
+ion-item{
+  background-color: #ffffff;
+}
+ion-toolbar{
+  background-color: #ffffff;
+  --background: #ff00aa;
   color: #000000;
   font-size: 20px;
   // --min-height: 70px;
