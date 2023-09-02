@@ -1,17 +1,21 @@
+from datetime import timedelta
 from flask import Flask, request, jsonify
 import face_recognition
 import numpy as np
 import firebase_admin
-from firebase_admin import credentials, storage
+from firebase_admin import credentials, storage, firestore
+import os
+import random
+import string
 app = Flask(__name__)
 
 # Store user encodings in a dictionary for now (replace with a database later)
 user_encodings = {}
 
 # Initialize Firebase Admin SDK
-cred = credentials.Certificate('permissions.json')
+cred = credentials.Certificate('./permissions.json')
 firebase_admin.initialize_app(cred, {
-    'storageBucket': 'gs://xpose-4f48c.appspot.com',
+    'storageBucket': 'xpose-4f48c.appspot.com',  # Use only the bucket name here
     'databaseURL': 'https://xpose-4f48c-default-rtdb.firebaseio.com'
 })
 
@@ -30,6 +34,15 @@ def generate_detection_form():
     <form method="post" action="/detect" enctype="multipart/form-data">
         <input type="file" name="image" accept=".jpg, .jpeg, .png" required><br><br>
         <input type="submit" value="Detect Users">
+    </form>
+    '''
+def generate_upload_form():
+    return '''
+    <form method="post" action="/upload" enctype="multipart/form-data">
+        <label for="user_id">User ID:</label><br>
+        <input type="text" id="user_id" name="user_id" required><br><br>
+        <input type="file" name="image" accept=".jpg, .jpeg, .png" required><br><br>
+        <input type="submit" value="Upload Photo">
     </form>
     '''
 
@@ -69,9 +82,15 @@ def detect_users():
         return jsonify({'detected_users': detected_users})
     except Exception as e:
         return jsonify({'error': str(e)}), 400
+    
+def generate_random_filename():
+    letters = string.ascii_letters
+    return ''.join(random.choice(letters) for _ in range(10)) + '.jpg'
 
-@app.route('/upload', methods=['POST'])
+@app.route('/upload', methods=['GET', 'POST'])
 def upload_photo():
+    if request.method == 'GET':
+        return generate_upload_form()
     try:
         if 'image' not in request.files:
             return jsonify({'error': 'No file part'}), 400
@@ -80,16 +99,33 @@ def upload_photo():
         if image.filename == '':
             return jsonify({'error': 'No selected file'}), 400
 
-        # Upload the image to Firebase Storage
+        # Generate a random filename for the image
+        random_filename = generate_random_filename()
+
+        # Upload the image to Firebase Storage with the random filename
         bucket = storage.bucket()
-        blob = bucket.blob(image.filename)
+        blob = bucket.blob(random_filename)
         blob.upload_from_string(image.read())
 
-        return jsonify({'message': 'Photo uploaded successfully'})
+        # Get the public URL of the uploaded file
+        url = blob.generate_signed_url(
+            version='v4',
+            expiration=timedelta(days=1),  # Adjust the expiration as needed
+            method='GET')
+
+        # Save the file record in the Firestore
+        db = firestore.client()  # Initialize Firestore
+        image_ref = db.collection('test').document()
+        image_data = {
+            'fileName': random_filename,
+            'url': url,
+            'createdAt': firestore.SERVER_TIMESTAMP
+        }
+        image_ref.set(image_data)
+
+        return jsonify({'message': 'Photo uploaded successfully', 'image_filename': random_filename})
     except Exception as e:
         return jsonify({'error': str(e)}), 400
-
-
 
 if __name__ == '__main__':
     app.run(debug=True)
