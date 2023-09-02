@@ -1,11 +1,19 @@
 from flask import Flask, request, jsonify
 import face_recognition
 import numpy as np
-
+import firebase_admin
+from firebase_admin import credentials, storage
 app = Flask(__name__)
 
 # Store user encodings in a dictionary for now (replace with a database later)
 user_encodings = {}
+
+# Initialize Firebase Admin SDK
+cred = credentials.Certificate('permissions.json')
+firebase_admin.initialize_app(cred, {
+    'storageBucket': 'gs://xpose-4f48c.appspot.com',
+    'databaseURL': 'https://xpose-4f48c-default-rtdb.firebaseio.com'
+})
 
 def generate_registration_form():
     return '''
@@ -61,6 +69,27 @@ def detect_users():
         return jsonify({'detected_users': detected_users})
     except Exception as e:
         return jsonify({'error': str(e)}), 400
+
+@app.route('/upload', methods=['POST'])
+def upload_photo():
+    try:
+        if 'image' not in request.files:
+            return jsonify({'error': 'No file part'}), 400
+
+        image = request.files['image']
+        if image.filename == '':
+            return jsonify({'error': 'No selected file'}), 400
+
+        # Upload the image to Firebase Storage
+        bucket = storage.bucket()
+        blob = bucket.blob(image.filename)
+        blob.upload_from_string(image.read())
+
+        return jsonify({'message': 'Photo uploaded successfully'})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
