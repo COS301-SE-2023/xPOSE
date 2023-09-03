@@ -7,10 +7,10 @@ from firebase_admin import credentials, storage, firestore
 import os
 import random
 import string
-app = Flask(__name__)
+import json
+from db_connector import db, User  # Import the database models
 
-# Store user encodings in a dictionary for now (replace with a database later)
-user_encodings = {}
+app = Flask(__name__)
 
 # Initialize Firebase Admin SDK
 cred = credentials.Certificate('./permissions.json')
@@ -54,10 +54,13 @@ def register_user():
         image = face_recognition.load_image_file(request.files['image'])
         encoding = face_recognition.face_encodings(image)[0]
         user_id = request.form['user_id']
-        user_encodings[user_id] = encoding.tostring()  # Convert encoding to string for storage
-        print("User ID", user_id, " - Encoding: ", encoding)
-        print("\n")
-        print("Face encodings", user_encodings)
+        
+        # Serialize the encoding array to a JSON string
+        encoding_json = json.dumps(encoding.tolist())
+
+        # Create a new user and save their encoding in the database
+        new_user = User.create(uid=user_id, face_encoding=encoding_json)
+        
         return jsonify({'message': 'User registered successfully'})
     except Exception as e:
         return jsonify({'error': str(e)}), 400
@@ -73,59 +76,18 @@ def detect_users():
 
         detected_users = []
 
+        # Retrieve all users from the database
+        all_users = User.select()
+
         for face_encoding in face_encodings:
-            for user_id, user_encoding in user_encodings.items():
-                user_encoding = np.fromstring(user_encoding, dtype=np.float64)
-                if face_recognition.compare_faces([user_encoding], face_encoding)[0]:
-                    detected_users.append(user_id)
+            for user in all_users:
+                # Parse the stored JSON string back to a numpy array
+                stored_encoding = np.array(json.loads(user.face_encoding))
+                if face_recognition.compare_faces([stored_encoding], face_encoding)[0]:
+                    detected_users.append(user.uid)
 
         return jsonify({'detected_users': detected_users})
     except Exception as e:
         return jsonify({'error': str(e)}), 400
-    
-def generate_random_filename():
-    letters = string.ascii_letters
-    return ''.join(random.choice(letters) for _ in range(10)) + '.jpg'
-
-@app.route('/upload', methods=['GET', 'POST'])
-def upload_photo():
-    if request.method == 'GET':
-        return generate_upload_form()
-    try:
-        if 'image' not in request.files:
-            return jsonify({'error': 'No file part'}), 400
-
-        image = request.files['image']
-        if image.filename == '':
-            return jsonify({'error': 'No selected file'}), 400
-
-        # Generate a random filename for the image
-        random_filename = generate_random_filename()
-
-        # Upload the image to Firebase Storage with the random filename
-        bucket = storage.bucket()
-        blob = bucket.blob(random_filename)
-        blob.upload_from_string(image.read())
-
-        # Get the public URL of the uploaded file
-        url = blob.generate_signed_url(
-            version='v4',
-            expiration=timedelta(days=1),  # Adjust the expiration as needed
-            method='GET')
-
-        # Save the file record in the Firestore
-        db = firestore.client()  # Initialize Firestore
-        image_ref = db.collection('test').document()
-        image_data = {
-            'fileName': random_filename,
-            'url': url,
-            'createdAt': firestore.SERVER_TIMESTAMP
-        }
-        image_ref.set(image_data)
-
-        return jsonify({'message': 'Photo uploaded successfully', 'image_filename': random_filename})
-    except Exception as e:
-        return jsonify({'error': str(e)}), 400
-
 if __name__ == '__main__':
     app.run(debug=True)
