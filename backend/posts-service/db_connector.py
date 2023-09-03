@@ -10,9 +10,6 @@ DB_HOST = config('DB_HOST')
 # Create a MySQL database instance
 db = MySQLDatabase(DB_NAME, user=DB_USER, password=DB_PASSWORD, host=DB_HOST)
 
-# Replace with your MySQL database credentials
-db = MySQLDatabase('xpose-posts-database', user='mkhoza', password='{ZgQ?q3MP1sdyX**', host='34.133.32.236')
-# ZgQ?q3MP1sdyX**@34.133.32.236
 class BaseModel(Model):
     class Meta:
         database = db
