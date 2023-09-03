@@ -2,3 +2,4 @@ permissions.json
 node_modules/
 uploads/
 .env
+/__pycache__/
