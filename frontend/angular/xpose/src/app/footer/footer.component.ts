@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../shared/services/auth.service';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-footer',
@@ -9,9 +10,12 @@ import { AuthService } from '../shared/services/auth.service';
 })
 export class FooterComponent  implements OnInit {
 
-  constructor(private router: Router, public authService: AuthService,) { }
+  constructor(private router: Router, public authService: AuthService, private menu: MenuController) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+	this.menu.enable(true, 'menuId');
+  	this.menu.open('menuId');
+  }
 
   viewEvent() {
 	this.router.navigate(['/event']);
