@@ -12,10 +12,7 @@ export class FooterComponent  implements OnInit {
 
   constructor(private router: Router, public authService: AuthService, private menu: MenuController) { }
 
-  ngOnInit() {
-	this.menu.enable(true, 'menuId');
-  	this.menu.open('menuId');
-  }
+  ngOnInit() {}
 
   viewEvent() {
 	this.router.navigate(['/event']);

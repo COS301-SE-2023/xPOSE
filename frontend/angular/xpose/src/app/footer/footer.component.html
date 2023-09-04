@@ -1,47 +1,40 @@
-<ion-menu side="start" contentId="main-content" menuId="menuId">
-
-  
+<div class="sidebar">
   <ion-header>
-    <ion-toolbar class="custom-toolbar">
-      <ion-buttons slot="start">
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
+    <ion-toolbar>
+      <ion-menu-button autoHide="false" slot="start"></ion-menu-button>
       <ion-title>xPOSE</ion-title>
     </ion-toolbar>
   </ion-header>
- 
-
   <ion-content>
-    <!-- Sidebar menu items go here -->
     <ion-list>
-      <ion-item (click)="onHome()">
+      <ion-item (click)="onHome()" class="sidebar-link">
         <ion-icon name="home-outline" slot="start"></ion-icon>
         Home
       </ion-item>
-      <ion-item (click)="onJoinedEvent()">
+      <ion-item (click)="onJoinedEvent()" class="sidebar-link">
         <ion-icon name="people-outline" slot="start"></ion-icon>
         Joined Events
       </ion-item>
-      <ion-item (click)="onEvent()">
+      <ion-item (click)="onEvent()" class="sidebar-link">
         <ion-icon name="add-outline" slot="start"></ion-icon>
         Create Event
       </ion-item>
-      <ion-item (click)="onNotifications()">
+      <ion-item (click)="onNotifications()" class="sidebar-link">
         <ion-icon name="notifications-outline" slot="start"></ion-icon>
         Notifications
       </ion-item>
-      <ion-item (click)="onProfile()">
+      <ion-item (click)="onProfile()" class="sidebar-link">
         <ion-icon name="person-outline" slot="start"></ion-icon>
         Profile
       </ion-item>
-      <ion-item (click)="onSettings()">
+      <ion-item (click)="onSettings()" class="sidebar-link">
         <ion-icon name="settings-outline" slot="start"></ion-icon>
         Settings
       </ion-item>
-      <ion-item (click)="logout()">
+      <ion-item (click)="logout()" class="sidebar-link">
         <ion-icon name="log-out-outline" slot="start"></ion-icon>
         Logout
       </ion-item>
     </ion-list>
   </ion-content>
-</ion-menu>
+</div>
