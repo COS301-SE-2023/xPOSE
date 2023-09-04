@@ -16,8 +16,15 @@
       <ion-label class="username">Unique Code:{{user.username}}</ion-label><br>
       <br>
     </div>
+    <ion-button class="edit_div" (click)="handleFunction(user)">
+      <ion-icon name="person-add-outline" *ngIf="!isFriend && !requestSent"></ion-icon>
+      <ion-icon name="person-remove-outline" *ngIf="isFriend"></ion-icon>
+      <ion-icon name="checkmark-done-outline" *ngIf="requestSent"></ion-icon>
+      {{ isFriend ? 'Unfriend' : requestSent ? 'Request Sent' : 'Send Request' }}
+    </ion-button>
+    
      <!-- Use a ternary operator to conditionally set the button label -->
-     <ion-button class="edit_div" (click)="handleFunction(user)">{{ isFriend? 'Unfriend': requestSent? 'Request Sent':'Request Friendship' }}</ion-button>
+     <!-- <ion-button class="edit_div" (click)="handleFunction(user)">{{ isFriend? 'Unfriend': requestSent? 'Request Sent':'Request Friendship' }}</ion-button> -->
   </div>
 </div>
 

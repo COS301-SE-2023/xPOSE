@@ -3,6 +3,7 @@ import { Component, OnInit } from "@angular/core";
 import { Camera, CameraResultType, CameraSource } from "@capacitor/camera";
 import { HttpClient } from "@angular/common/http";
 
+
 @Component({
   selector: "app-settings",
   templateUrl: "./settings.page.html",

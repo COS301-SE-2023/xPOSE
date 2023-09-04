@@ -1,112 +1,77 @@
-
 <ion-header [translucent]="true">
   <ion-toolbar class="custom-toolbar">
     <ion-buttons slot="start">
       <app-backbutton></app-backbutton>
-      </ion-buttons>
-    <ion-title >Notifications</ion-title>
+    </ion-buttons>
+    <ion-title>Notifications</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" class="custom-backround">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Notifications</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-
-  <ion-list>
-    <!-- Example notification item -->
-     <!-- <ion-item> -->
-    <ng-container *ngIf="messages.length > 0; else noNotifications">
-      <ng-container *ngFor="let message of messages">
-
-        <!--Friendship notification item -->
-        <ion-item *ngIf="message.type =='friend_request'">
-          <ion-icon name="person-add"></ion-icon>
-          <ion-label>
-            <h2>{{ message.message }}</h2>
-          </ion-label>
-          <ion-buttons slot="end">
-            <ion-button fill="clear" (click)="acceptRequest(message)">Accept</ion-button>
-            <ion-button fill="clear" (click)="rejectRequest(message)">Reject</ion-button>
-          </ion-buttons>
-        </ion-item>
-
-        
-      <!-- Event Invitation notification item --> 
-      <ion-item *ngIf="message.type === 'join_event'">
-        <ion-icon name="calendar"></ion-icon>
-        <ion-label>
-          <h2>Event Invitation</h2>
-          <p>{{ message.message }}</p>
-        </ion-label>
-        <ion-buttons slot="end">
-          <ion-button fill="clear" (click)="acceptInvitation(message)">Accept</ion-button>
-          <ion-button fill="clear" (click)="rejectInvitation(message)">Reject</ion-button>
-        </ion-buttons>
-      </ion-item>
-
-      <!-- Friend request accept -->
-      <ion-item *ngIf="message.type === 'friend_accept'">
-        <!-- <ion-icon name="calendar"></ion-icon> -->
-        <ion-label>
-          <h2>Friend Request accepted</h2>
-          <p>
-            <a [routerLink]="['/user-profile', message.senderId]">
-              {{ message.message }}
-            </a>
-            </p>
-        </ion-label>
-        <ion-buttons slot="end">
-          <ion-button fill="clear" (click)="removeNotification(message)">clear</ion-button>
-        </ion-buttons>
-      </ion-item>
-
-      
-
-      </ng-container>
-    </ng-container>
-
-
-    <!-- Placeholder content when there are no notifications -->
-    <ng-template #noNotifications>
-      <ion-item>
-        <ion-label>
-          <h2>No Notifications</h2>
-          <p>You currently don't have any notifications.</p>
-        </ion-label>
-      </ion-item>
-    </ng-template>
-  </ion-list>
+  <ion-row>
+    <ion-col size="2">
+      <!-- Sidebar content goes here -->
+      <app-footer></app-footer>
+    </ion-col>
+    <ion-col size="10">
+      <ion-list>
+         <!-- <ion-item> -->
+        <ng-container *ngIf="messages.length > 0; else noNotifications">
+          <ng-container *ngFor="let message of messages">
+    
+            <!--Friendship notification item -->
+            <ion-item *ngIf="message.type =='friend_request'">
+              <ion-icon name="person-add"></ion-icon>
+              <ion-label>
+                <h2>{{ message.message }}</h2>
+              </ion-label>
+              <ion-buttons slot="end">
+                <ion-button fill="clear" (click)="request(message, 'accept_friendship')">Accept</ion-button>
+                <ion-button fill="clear" (click)="request(message, 'reject_friendship')">Reject</ion-button>
+              </ion-buttons>
+            </ion-item>
+    
+          <!-- Event Invitation notification item --> 
+          <ion-item *ngIf="message.type === 'join_event'">
+            <ion-icon name="calendar"></ion-icon>
+            <ion-label>
+              <h2>Event Invitation</h2>
+              <p>{{ message.message }}</p>
+            </ion-label>
+            <ion-buttons slot="end">
+              <ion-button fill="clear" (click)="request(message, 'accept_join_event')">Accept</ion-button>
+              <ion-button fill="clear" (click)="request(message, 'reject_join_event')">Reject</ion-button>
+            </ion-buttons>
+          </ion-item>
+    
+          <!-- Friend request accept -->
+          <ion-item *ngIf="message.type === 'friend_accept'">
+            <!-- <ion-icon name="calendar"></ion-icon> -->
+            <ion-label>
+              <h2>Friend Request accepted</h2>
+              <p>
+                <a [routerLink]="['/user-profile', message.senderId, message.receiverId]">
+                  {{ message.message }}
+                </a>
+                </p>
+            </ion-label>
+            <ion-buttons slot="end">
+              <ion-button fill="clear" (click)="clearNotification(message)">clear</ion-button>
+            </ion-buttons>
+          </ion-item>
+          </ng-container>
+        </ng-container>
+    
+        <!-- Placeholder content when there are no notifications -->
+        <ng-template #noNotifications>
+          <ion-item>
+            <ion-label>
+              <h2>No Notifications</h2>
+              <p>You currently don't have any notifications.</p>
+            </ion-label>
+          </ion-item>
+        </ng-template>
+      </ion-list>
+    </ion-col>
+  </ion-row>
 </ion-content> 
-
-<ion-footer>
-  <ion-toolbar position="fixed">
-    <ion-tabs>
-      <ion-tab-bar slot="bottom">
-        <ion-tab-button tab="home" >
-          <ion-icon name="home-outline" (click)="onHome()"></ion-icon>
-          <ion-label>Home</ion-label>
-        </ion-tab-button>
-      <ion-tab-button tab="joined-events" (click)="onJoinedEvent()">
-        <ion-icon name="people-outline"></ion-icon>
-        <ion-label>Joined Events</ion-label>
-      </ion-tab-button>
-        <ion-tab-button tab="create-event" (click)="onEvent()">
-          <ion-icon name="add-circle-outline"></ion-icon>
-          <ion-label>My Event</ion-label>
-        </ion-tab-button>
-        <ion-tab-button tab="notifications" (click)="onNotifications()">
-          <ion-icon name="notifications-outline"></ion-icon>
-          <ion-label>Notifications</ion-label>
-        </ion-tab-button>
-        <ion-tab-button tab="profile" (click)="onProfile()">
-          <ion-icon name="person-outline"></ion-icon>
-          <ion-label>Profile</ion-label>
-        </ion-tab-button>
-      </ion-tab-bar>
-    </ion-tabs>
-  </ion-toolbar>
-</ion-footer> 

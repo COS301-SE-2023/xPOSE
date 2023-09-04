@@ -6,8 +6,6 @@ import 'firebase/compat/storage';
 import { ApiService } from '../service/api.service';
 
 
-// import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer/ngx';
-
 @Component({
   selector: 'app-gallery-modal',
   templateUrl: './gallery-modal.component.html',
@@ -20,13 +18,16 @@ export class GalleryModalComponent  implements OnInit {
   currentIndex: number;
   previewImage = false;
   showMask = false;
+  isLiked: boolean = false;
+  likeCount: number = 0;
   // currentLightboxImage: Item = this.galleryData[0];
 
-  constructor(private modalController: ModalController,
-     private menuController: MenuController,
-     private http: HttpClient,
-     private api: ApiService,
-     ) {
+  constructor(
+    private modalController: ModalController,
+    private menuController: MenuController,
+    private http: HttpClient,
+    private api: ApiService,
+  ) {
     this.currentIndex = this.initialIndex;
   }
 
@@ -42,31 +43,37 @@ export class GalleryModalComponent  implements OnInit {
     this.currentIndex = (this.currentIndex + 1) % this.galleryData.length;
   }
 
+  toggleLike() {
+    this.isLiked = !this.isLiked;
+
+    if (this.isLiked) {
+      this.likeCount++;
+    } else {
+      this.likeCount--;
+    }
+  }
+
+
   ngOnInit() {}
- downloadImage() {
+  downloadImage() {
+    // const imageUrl = 'https://example.com/path-to-your-image.jpg'; // Replace with your image URL
+    // const saveDirectory = this.file.dataDirectory; // Use 'dataDirectory' for the app's data directory
+    // const fileName = 'downloaded_image.jpg'; // Desired file name
   
-  // const fileTransfer: FileTransferObject = this.transfer.create();
+    // const fileTransfer: FileTransferObject = this.fileTransfer.create();
   
-  // // Get the current image URL
-  // const imageUrl = this.galleryData[this.currentIndex].imageSrc;
-
-  // // Generate a unique file name for the downloaded image
-  // const fileName = `image_${Date.now()}.jpg`;
-
-  // // Set the download URL and target path
-  // const downloadUrl = encodeURI(imageUrl);
-  // const targetPath = this.platform.is('ios') ? this.file.documentsDirectory : this.file.externalDataDirectory;
+    // fileTransfer.download(imageUrl, saveDirectory + fileName).then(
+    //   entry => {
+    //     console.log('Image downloaded successfully:', entry.toURL());
+    //     // You can now use 'entry.toURL()' to access the saved image file path
+    //   },
+    //   error => {
+    //     console.error('Error downloading image:', error);
+    //   }
+    // );
+  }
   
-  // // Download the image file
-  // fileTransfer.download(downloadUrl, targetPath + fileName).then(
-  //   entry => {
-  //     console.log('Image downloaded successfully: ' + entry.toURL());
-  //   },
-  //   error => {
-  //     console.error('Error downloading image: ' + error);
-  //   }
-  // );
-}
+  
 
 deleteImage() {
   const item = this.galleryData[this.currentIndex];
@@ -125,4 +132,16 @@ shareImage(imageUrl: string) {
     this.menuController.open('imageMenu');
   }
 
+  comments: string[] = [
+    'Wow, great picture!',
+    'I wish I could take photos like this.',
+  ];
+  newComment: string = '';
+
+  addComment() {
+    if (this.newComment.trim() !== '') {
+      this.comments.push(this.newComment);
+      this.newComment = '';
+    }
+  }
 }

@@ -1,9 +1,9 @@
-.modal-content {
-    position: relative;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-  }
+// .modal-content {
+//     position: relative;
+//     height: 100%;
+//     display: flex;
+//     flex-direction: column;
+//   }
   
   .modal-navigation {
     position: absolute;
@@ -16,6 +16,7 @@
     align-items: center;
     padding: 0 20px;
     z-index: 1;
+    --background-color: #ffffff;
   }
   
   .modal-navigation button {
@@ -24,25 +25,111 @@
     font-size: 24px;
     color: #000;
     cursor: pointer;
+    --background-color: #ffffff;
   }
 
-  .modal-image-container {
-    position: relative; /* Ensure relative positioning for the image */
-    flex-grow: 1; /* Take available space, pushing navigation to the bottom */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden; /* Hide any overflow from large images */
-    max-height: 75vh; /* Take up 75% of the viewport height */
-  }
+//   .modal-image-container {
+//     position: relative; /* Ensure relative positioning for the image */
+//     flex-grow: 1; /* Take available space, pushing navigation to the bottom */
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     overflow: hidden; /* Hide any overflow from large images */
+//     max-height: 75vh; /* Take up 75% of the viewport height */
+//   }
   
-  ion-img {
-    width: auto; /* Allow the image to resize itself */
-    max-height: 100%; /* Auto-resize the image to fit within the container */
-    object-fit: contain; /* Maintain aspect ratio */
-  }
+//   ion-img {
+//     width: auto; /* Allow the image to resize itself */
+//     max-height: 100%; /* Auto-resize the image to fit within the container */
+//     object-fit: contain; /* Maintain aspect ratio */
+//   }
   .icon-close{
-    font-size: 50px;
-    color: #fff;
+    font-size: 10px;
+    color: #ffffff;
     // background-color: #1f1f1f;
+    background-color: #ffffff;
   }
+.carousel-control .glyphicon-chevron-right, .carousel-control .icon-next {
+    margin-right: -382px;
+}
+.carousel-control .glyphicon-chevron-left, .carousel-control .icon-prev {
+    margin-left: -71px;
+}
+.modal-footer { 
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 10px;
+  background-color: aliceblue;
+}
+ion-img {
+  width: 100%;
+  height: 550px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding-top: -10px;
+}
+.close-outline{
+  color: #ff0000;
+  font-size: 30px;
+  background-color: #ff0000;
+  background-color: #ffffff;
+}
+button{
+  background-color: #ffffff;
+  border: none;
+  color: #000000;
+  padding: 0px 0px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 30px;
+  align-items: end;
+  background-color: #ffffff;
+}
+.love{
+  color: #ff0000;
+  font-size: 30px;
+ padding-left: 144px;
+}
+.modal{
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  max-height: 100%;
+  background-color: #ffffff;
+  color: #000000;
+
+}
+
+.menu-item {
+  padding: 10px; /* Adjust the padding as needed */
+  color: #242424; /* Text color for menu items */
+  font-size: 16px; /* Font size for menu items */
+  text-align: left; /* Text alignment for menu items */
+}
+
+.menu-item:hover {
+  background-color: #ffc8ed; /* Background color on hover */
+  color: #000000; /* Text color on hover */
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+}
+.custom-backround{
+  --background: #ffffff;
+  color: #000000;
+  font-size: 20px;
+  // --min-height: 70px;
+}
+
+ion-toolbar{
+  font-size: 20px;
+  font-weight: bold;
+  color: #000000;
+  font-family: 'Pacifico', cursive;
+  background-color: violet;
+}
+.header{
+ 
+  color: #000000;
+  font-family: 'Pacifico', cursive;
+  background-color: rgb(255, 255, 255);
+}

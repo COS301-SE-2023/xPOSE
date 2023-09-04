@@ -1,15 +1,15 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Image Modal</ion-title>
+  <ion-toolbar class="header">
+    <ion-title>Image</ion-title>
     <ion-buttons slot="end">
       <ion-menu-button autoHide="false" menu="end">
         <ion-button>
           <ion-icon slot="icon-only" name="ellipsis-vertical"></ion-icon>
         </ion-button>
-       
+      
       </ion-menu-button>
       <button (click)="closeModal()">
-        <ion-icon class="icon-close" name="close-circle-outline"></ion-icon>
+        <ion-icon name="close-outline"></ion-icon>
       </button>
     </ion-buttons>
   </ion-toolbar>
@@ -21,38 +21,84 @@
       <ion-title>Image Options</ion-title>
     </ion-toolbar>
   </ion-header>
-  <ion-content>
+  <ion-content class="menu-content">
     <ion-list>
-      <ion-item (click)="downloadImage()">
+      <ion-item (click)="downloadImage()" class="menu-item">
         <ion-label>Download</ion-label>
       </ion-item>
-      <ion-item (click)="deleteImage()">
+      <ion-item (click)="deleteImage()" class="menu-item">
         <ion-label>Delete</ion-label>
       </ion-item>
-      <ion-item (click)="shareImage('')">
+      <ion-item (click)="shareImage('')" class="menu-item">
         <ion-label>Share</ion-label>
       </ion-item>
-       
     </ion-list>
   </ion-content>
 </ion-menu>
 
 
-<ion-content>
+
+ <!-- <ion-content>
   <div class="modal-content">
         <div class="modal-image-container">
-      <ion-img [src]="galleryData[currentIndex].imageSrc" [alt]="galleryData[currentIndex].imageAlt"></ion-img>
-      <!-- Display additional information or buttons here -->
+          <ion-img [src]="galleryData[currentIndex].imageSrc" [alt]="galleryData[currentIndex].imageAlt"></ion-img>
+
     </div>
   </div>
-  
-  <div class="modal-navigation">
-    <button (click)="prev()">
-      <ion-icon class="icon-close" name="arrow-back"></ion-icon>
-    </button>
-    <button (click)="next()">
-      <ion-icon class="icon-close" name="arrow-forward"></ion-icon>
-    </button>
-  </div>
 
-</ion-content>
+
+</ion-content>  -->
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+
+      <div class="modal-content">
+        <div class="modal-body">
+          <div id="carouselExample" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                  <div class="modal-image-container">
+                   <ion-img [src]="galleryData[currentIndex].imageSrc" [alt]="galleryData[currentIndex].imageAlt"></ion-img>
+              </div>
+            </div>
+              <!-- Add other carousel items -->
+            </div>
+            <div class="modal-navigation">
+            <button (click)="prev()">
+              <ion-icon class="icon-nev" name="chevron-back-outline"></ion-icon>
+            </button>
+            <button (click)="next()">
+              <ion-icon class="icon-nev" name="chevron-forward-outline"></ion-icon>
+            </button>
+ 
+          </div>
+          <button (click)="toggleLike()">
+            <ion-icon [name]="isLiked ? 'heart' : 'heart-outline'" class="love"></ion-icon>
+          </button>
+          <span>{{ likeCount }}</span>
+          
+          <div class="modal-footer">
+
+           
+            <!-- <ion-col> -->
+              <!-- List of Comments -->
+              <ion-list style="margin-top: 10px;" class="header">
+                <ion-item *ngFor="let comment of comments" class="header" >
+                  {{ comment }}
+                </ion-item  >
+              </ion-list>
+              <!-- Comment Input -->
+              <ion-textarea
+                [(ngModel)]="newComment"
+                placeholder="Add a comment"
+                (keyup.enter)="addComment()"
+              ></ion-textarea>
+          </div>
+          </div>
+  
+        </div>
+         
+      </div>
+    </div>
+  </div>
+  

@@ -10,7 +10,9 @@ import { getUsers,
         removeFriend,
         acceptFriendRequest,
         rejectFriendRequest,
-        searchUser 
+        searchUser,
+        isFriend 
+        
     } from '../controllers/index.js';
 
 const router = express.Router();
@@ -29,6 +31,9 @@ router.get('/:userId/friends', getFriends);
 
 // get specified friend
 router.get('/:userId/friends/:requestId', getFriend);
+
+// getFriendship status
+router.get('/:userId/isFriend/:requestId', isFriend)
 
 // send friend request
 router.post('/:userId/friend-requests/:requestId', sendFriendRequest);

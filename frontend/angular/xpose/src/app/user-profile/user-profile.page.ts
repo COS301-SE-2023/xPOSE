@@ -26,11 +26,13 @@ export class UserProfilePage implements OnInit {
     uid: string;
   };
   
+  uid_viewing_user: string ="";
   isFriend: boolean = false;
   requestSent: boolean = false;
   selectedTab: any;
   tabs: any;
   private history: string[] = [];
+
 
   constructor (
     private router: Router,
@@ -59,7 +61,12 @@ export class UserProfilePage implements OnInit {
     // Split the URL by slashes (/)
     const urlParts = id .split('/');
     // Get the last part of the URL, which should be the uid
-    const uid = urlParts[urlParts.length - 1];
+    const uid = urlParts[urlParts.length - 2];
+
+    // console.log("User being viewd:",uid);
+    this.uid_viewing_user = urlParts[urlParts.length - 1];
+    // console.log("Viewing user",urlParts[urlParts.length - 1]);
+
     this.user.uid = uid;
     this.userService.GetUser(uid).subscribe((userData) => {
       this.user.displayName = userData.displayName;
@@ -67,7 +74,7 @@ export class UserProfilePage implements OnInit {
       this.user.username = userData.uniq_username;
       this.user.photoURL =userData.photoURL;
       
-      // this.updateFriendShipStatus();
+      this.updateFriendShipStatus();
       
     });
 
@@ -77,18 +84,20 @@ export class UserProfilePage implements OnInit {
 
   async updateFriendShipStatus(){
 
-    // try{
-    //   // `${this.api.apiUrl}/u/users/`;
-    //   const response = await this.http.get<{ areFriends: boolean }>(`${this.api.apiUrl}/u/users/${this.user.uid}/${requestId}`).toPromise();
+    try{
+      // `${this.api.apiUrl}/u/users/`;
+      const response = await this.http.get<{ areFriends: boolean }>(`${this.api.apiUrl}/u/users/${this.user.uid}/isFriend/${this.uid_viewing_user}`).toPromise();
       
-    //   if(response?.areFriends){
-    //     this.isFriend = true;
-    //   } else {
-    //     this.isFriend = false;
-    //   }
-    // } catch(error){
-    //   console.error('Error updating friendship status:', error);
-    // }
+      if(response?.areFriends){
+        this.isFriend = true;
+      } else {
+        this.isFriend = false;
+      }
+
+      console.log("Update friend request testing", this.isFriend);
+    } catch(error){
+      console.error('Error updating friendship status:', error);
+    }
   }
 
   handleFunction(user:any){
@@ -96,9 +105,11 @@ export class UserProfilePage implements OnInit {
     if(this.isFriend){
       // unfriend users
       this.removeFriendRequest(user);
+      this.isFriend = false;
     } else {
       // send friend request
       this.sendFriendRequest()
+      this.requestSent = true;
     }
   }
 
@@ -107,7 +118,7 @@ export class UserProfilePage implements OnInit {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
 
     const requestBody = JSON.stringify(user);
-    return this.http.post<any>(`${endpoint}${this.user.uid}/friend-requests/${user.uid}/reject`, requestBody, {headers})
+    return this.http.post<any>(`${endpoint}${this.uid_viewing_user}/friend-requests/${this.user.uid}/reject`, requestBody, {headers})
     .toPromise()
     .then((response) => {
       console.log("Friend request rejected/removed",response);  
@@ -155,7 +166,7 @@ export class UserProfilePage implements OnInit {
                   console.log(response);
                   console.log("Friendship request done successfully!");
 
-                  this.isFriend = true;
+                  // this.isFriend = true;
                   this.requestSent = true;
 
                 },
