@@ -1,0 +1,50 @@
+<ion-header [translucent]="true">
+  <ion-toolbar class="custom-toolbar">
+    <ion-buttons slot="start">
+      <!-- <app-backbutton></app-backbutton> -->
+    </ion-buttons>
+    <ion-title>Edit Event</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div>
+    <form #form="ngForm" (ngSubmit)="CreateEvent(form)">
+      <label class="label" for="image">Change Cover Page Image:</label>
+      <div class="input-container">
+        <input type="file" accept="image/*" name="image" id="image">
+      </div>
+
+      <label class="label" for="image">Event Name:</label>
+      <ion-input class="ther" name="title" [(ngModel)]="createEvent.title" required></ion-input>
+
+      <label class="label" for="image">Description:</label>
+      <ion-textarea class="ther" name="description" [(ngModel)]="createEvent.description"></ion-textarea>
+
+      <label class="label" for="image">Location</label>
+      <div class="input-container" id="location">
+        <ion-input class="ther" name="location" [(ngModel)]="createEvent.location" id="locationInput"></ion-input>
+      </div>
+
+      <ion-row>
+        <ion-col size="6">
+            <p>Start Date</p>
+            <ion-input
+              type="date"
+              [(ngModel)]="createEvent.start_date"
+              name="start_date"
+            ></ion-input>
+        </ion-col>
+      
+        <ion-col size="6">
+            <p>End Date</p>
+            <ion-input
+              type="date"
+              [(ngModel)]="createEvent.end_date"
+              name="end_date"
+            ></ion-input>
+        </ion-col>
+      </ion-row>
+    </form>
+  </div>
+</ion-content>

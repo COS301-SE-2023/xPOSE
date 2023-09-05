@@ -10,6 +10,7 @@ import { sendFriendRequest } from "./sendFriendRequest.js";
 import { removeFriend } from "./removeFriend.js";
 import { updateUser } from "./updateUser.js";
 import { searchUser } from "./searchUser.js";
+import {isFriend} from './isFriend.js'
 
 //Export all
 export {
@@ -24,6 +25,7 @@ export {
     sendFriendRequest,
     removeFriend,
     updateUser,
-    searchUser
+    searchUser,
+    isFriend
   };
   

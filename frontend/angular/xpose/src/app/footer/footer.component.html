@@ -1,29 +1,52 @@
-<ion-content [fullscreen]="true" class="footer-content">
-  <div class="sidebar-container">
-    <div class="sidebar">
-      <ion-button (click)="onHome()">
+<div class="sidebar">
+  <!-- <ion-header>
+    <ion-toolbar>
+      <ion-title>xPOSE</ion-title>
+    </ion-toolbar>
+  </ion-header> -->
+  <ion-content>
+    <!-- Sidebar menu items go here -->
+    <ion-item>
+      <a (click)="onHome()" class="sidebar-link">
         <ion-icon name="home-outline"></ion-icon>
         Home
-      </ion-button>
-      <ion-button (click)="onJoinedEvent()">
+      </a>  
+    </ion-item>
+    <ion-item>
+      <a (click)="onJoinedEvent()" class="sidebar-link">
         <ion-icon name="people-outline"></ion-icon>
         Joined Events
-      </ion-button>
-      <ion-button (click)="onEvent()">
-        <ion-icon name="add-circle" class="big" style="color: rgb(156, 156, 156);"></ion-icon>
+      </a>  
+    </ion-item>
+    <ion-item>
+      <a (click)="onEvent()" class="sidebar-link">
+        <ion-icon name="add-outline"></ion-icon>
         Create Event
-      </ion-button>
-      <ion-button (click)="onNotifications()">
+      </a>  
+    </ion-item>
+    <ion-item>
+      <a (click)="onNotifications()" class="sidebar-link">
         <ion-icon name="notifications-outline"></ion-icon>
         Notifications
-      </ion-button>
-      <ion-button (click)="onProfile()">
+      </a>  
+    </ion-item>
+    <ion-item>
+      <a (click)="onProfile()" class="sidebar-link">
         <ion-icon name="person-outline"></ion-icon>
         Profile
-      </ion-button>
-    </div>
-    <div class="content">
-      <!-- Your main content goes here -->
-    </div>
-  </div>
-</ion-content>
+      </a>  
+    </ion-item>
+    <ion-item>
+      <a (click)="onSettings()" class="sidebar-link">
+        <ion-icon name="settings-outline"></ion-icon>
+        Settings
+      </a>  
+    </ion-item>
+    <ion-item>
+      <a (click)="logout()" class="sidebar-link">
+        <ion-icon name="log-out-outline"></ion-icon>
+        Logout
+      </a>  
+    </ion-item>
+  </ion-content>
+</div>

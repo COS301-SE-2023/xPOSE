@@ -1,7 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import admin from "firebase-admin";
 import User from '../data-access/models/user.table.js';
-import Friend_request from '../data-access/models/friend_request.table.js';
 import Friendship from '../data-access/models/friendship.table.js';
 import { sendMessageToQueue } from '../sender.js';
 import { Op } from 'sequelize';
@@ -9,54 +8,57 @@ import { Op } from 'sequelize';
 let users = [];
 
 export const getFriends = async (req, res) => {
-  // console.log("======== TTTTT1 ");
     try {
-      // console.log("======== TTTTT2 ");
-        const { userId } = req.params;
-        // console.log("======== TTTTT3 ",userId);
-      // check if user existis in the database using Sequelize
-      const user =  await User.findAll({
-        where: {firebase_doc_ref: userId},
-      });
-      // console.log("======== TTTTT4 ");
-      
-      if(!user || user.length === 0) {
+      const { userId } = req.params;
+
+      let friends = [];
+      try {
+         friends = await Friendship.findAll({
+          where: {
+            [Op.or]: [
+              { userID1: userId },
+              { userID2: userId }
+            ],
+            Status: 'accepted' 
+          },
+          include: [
+            { model: User },
+            { model: User }
+          ]
+        });
+    
+        // console.log("::::FRIENDS:::::", friends);
+      } catch (error) {
+        console.error("Error retrieving friends:", error);
+        throw error;
+      }
+
+      // console.log("List of Friends::::", list_friends);
+      // const list_friends = user.Friends;
+
+      if(!friends) {
         return res.status(404).json({message: 'User not found'});
       }
 
-      // fetch friends form teh friendship table using sequelize
-      // console.log("======== TTTTT5 ");
-      const friendIds = await Friendship.findAll({
-        where: {
-          [Op.or]: [
-            {friend_a_id: userId},
-          {friend_b_id: userId} ]
-        },
-        attributes: ['friend_a_id', 'friend_b_id'],
-        raw: true,
-        distinct: true
-      });
-
-      // console.log("======== TTTTT6 ");
-
-    
-
       // declare array to store friend documents
+      const friends_ = [];
 
-      const friends = [];
 
       // get the friend documents from firestore based on ref/id
-      for(const friendId of friendIds) {
-        const friendDoc = await admin.firestore().collection('Users').doc(friendId.friend_a_id).get();
-
+      for(const friendId of friends) {
+        if(friendId.dataValues.userID2 === userId)
+          var friendDoc = await admin.firestore().collection('Users').doc(friendId.dataValues.userID1).get();
+        if(friendId.dataValues.userID1 === userId)
+          var friendDoc = await admin.firestore().collection('Users').doc(friendId.dataValues.userID2).get();
+        
         if(friendDoc.exists){
-          friends.push({
+          friends_.push({
             ... friendDoc.data()
           });
         }
       }
 
-      res.status(200).json(friends);
+      res.status(200).json(friends_);
       } catch (error) {
         console.error('Error getting friends:', error);
         res.status(500).json({ error: 'An error occurred while getting friends' });

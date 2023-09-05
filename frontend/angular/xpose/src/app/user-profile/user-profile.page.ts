@@ -4,7 +4,7 @@ import { AuthService } from '../shared/services/auth.service';
 import { Service } from '../service/service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Observable, map } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AngularFirestore } from "@angular/fire/compat/firestore";
 import { ApiService } from '../service/api.service';
 
@@ -26,10 +26,13 @@ export class UserProfilePage implements OnInit {
     uid: string;
   };
   
+  uid_viewing_user: string ="";
   isFriend: boolean = false;
+  requestSent: boolean = false;
   selectedTab: any;
   tabs: any;
   private history: string[] = [];
+
 
   constructor (
     private router: Router,
@@ -52,12 +55,18 @@ export class UserProfilePage implements OnInit {
   }
 
   ngOnInit() {
-
+    // this.isFriend = true;
+    //  this.requestSent = true;
     let id = window.location.href;
     // Split the URL by slashes (/)
     const urlParts = id .split('/');
     // Get the last part of the URL, which should be the uid
-    const uid = urlParts[urlParts.length - 1];
+    const uid = urlParts[urlParts.length - 2];
+
+    // console.log("User being viewd:",uid);
+    this.uid_viewing_user = urlParts[urlParts.length - 1];
+    // console.log("Viewing user",urlParts[urlParts.length - 1]);
+
     this.user.uid = uid;
     this.userService.GetUser(uid).subscribe((userData) => {
       this.user.displayName = userData.displayName;
@@ -65,14 +74,61 @@ export class UserProfilePage implements OnInit {
       this.user.username = userData.uniq_username;
       this.user.photoURL =userData.photoURL;
       
+      this.updateFriendShipStatus();
+      
     });
 
     this.getEventsFromAPI();
   }
 
 
-  handleFunction(){
-    this.sendFriendRequest()
+  async updateFriendShipStatus(){
+
+    try{
+      // `${this.api.apiUrl}/u/users/`;
+      const response = await this.http.get<{ areFriends: boolean }>(`${this.api.apiUrl}/u/users/${this.user.uid}/isFriend/${this.uid_viewing_user}`).toPromise();
+      
+      if(response?.areFriends){
+        this.isFriend = true;
+      } else {
+        this.isFriend = false;
+      }
+
+      console.log("Update friend request testing", this.isFriend);
+    } catch(error){
+      console.error('Error updating friendship status:', error);
+    }
+  }
+
+  handleFunction(user:any){
+
+    if(this.isFriend){
+      // unfriend users
+      this.removeFriendRequest(user);
+      this.isFriend = false;
+    } else {
+      // send friend request
+      this.sendFriendRequest()
+      this.requestSent = true;
+    }
+  }
+
+  removeFriendRequest(user:any){
+    const endpoint = `${this.api.apiUrl}/u/users/`;
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+    const requestBody = JSON.stringify(user);
+    return this.http.post<any>(`${endpoint}${this.uid_viewing_user}/friend-requests/${this.user.uid}/reject`, requestBody, {headers})
+    .toPromise()
+    .then((response) => {
+      console.log("Friend request rejected/removed",response);  
+    })
+    .catch((error) => {
+      // Handle error response here
+      console.log("Error:", error);
+      // console.log("Response body:", error.error);
+      return Promise.reject(error);
+    });
   }
 
   getEventsFromAPI() {
@@ -108,8 +164,10 @@ export class UserProfilePage implements OnInit {
               this.http.post(endpoint, { username: senderName }).subscribe(
                 (response) => {
                   console.log(response);
-
                   console.log("Friendship request done successfully!");
+
+                  // this.isFriend = true;
+                  this.requestSent = true;
 
                 },
                 (error) => {

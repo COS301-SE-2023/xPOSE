@@ -1,10 +1,10 @@
 import { v4 as uuidv4 } from 'uuid';
 import admin from "firebase-admin";
 import User from '../data-access/models/user.table.js';
-import Friend_request from '../data-access/models/friend_request.table.js';
 import Friendship from '../data-access/models/friendship.table.js';
 import { sendMessageToQueue } from '../sender.js';
 import generateRandomAlphanumeric from './generateRandomAlphanumeric.js';
+import {generateUsername} from 'username-generator';
 
 let users = [];
 export const createUser = async (req, res) => {
@@ -31,14 +31,14 @@ export const createUser = async (req, res) => {
 
         const user = {
             displayName,
-            uniq_username:uniq_username_,
+            uniq_username: generateUsername(),//uniq_username_,
             email,
             emailVerified,
             privacy,
             bio,
             photoURL: `https://firebasestorage.googleapis.com/v0/b/xpose-4f48c.appspot.com/o/profiles%2Falexander-shatov-kmYw-PkX5M4-unsplash.jpg?alt=media&token=a60cc25d-2a94-4b51-8f97-6f67399a7568`,
             uid,
-            visibility
+            visibility:"public"
           };
 
         //Create the user in Firebase Authentication
@@ -55,7 +55,8 @@ export const createUser = async (req, res) => {
         
       // add user reference in the sql database
       await User.create({
-        firebase_doc_ref: uid
+        firebase_doc_ref: uid,
+        userName: displayName
       });
 
       res.send({message: `User with the name ${displayName} added to the DB`});

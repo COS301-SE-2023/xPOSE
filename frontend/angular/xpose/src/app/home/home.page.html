@@ -2,64 +2,22 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap">
 </ion-header>
 
-<ion-content [fullscreen]="true" id="main-content" class="custom-background" class="content">
+<ion-header [translucent]="true">
+  <ion-toolbar class="custom-toolbar">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>xPOSE</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" id="main-content" class="custom-background" >
   <ion-row>
-    <ion-col size="3">
+    <ion-col size="2">
       <!-- Sidebar content goes here -->
-      <div class="sidebar">
-        <ion-header>
-          <ion-toolbar>
-            <ion-title>xPOSE</ion-title>
-          </ion-toolbar>
-        </ion-header>
-        <ion-content>
-          <!-- Sidebar menu items go here -->
-          <ion-item>
-            <a (click)="onHome()" class="sidebar-link">
-              <ion-icon name="home-outline"></ion-icon>
-              Home
-            </a>  
-          </ion-item>
-          <ion-item>
-            <a (click)="onJoinedEvent()" class="sidebar-link">
-              <ion-icon name="people-outline"></ion-icon>
-              Joined Events
-            </a>  
-          </ion-item>
-          <ion-item>
-            <a (click)="onEvent()" class="sidebar-link">
-              <ion-icon name="add-outline"></ion-icon>
-              Create Event
-            </a>  
-          </ion-item>
-          <ion-item>
-            <a (click)="onNotifications()" class="sidebar-link">
-              <ion-icon name="notifications-outline"></ion-icon>
-              Notifications
-            </a>  
-          </ion-item>
-          <ion-item>
-            <a (click)="onProfile()" class="sidebar-link">
-              <ion-icon name="person-outline"></ion-icon>
-              Profile
-            </a>  
-          </ion-item>
-          <ion-item>
-            <a (click)="onSettings()" class="sidebar-link">
-              <ion-icon name="settings-outline"></ion-icon>
-              Setting
-            </a>  
-          </ion-item>
-          <ion-item>
-            <a (click)="logout()" class="sidebar-link">
-              <ion-icon name="log-out-outline"></ion-icon>
-              Logout
-            </a>  
-          </ion-item>
-        </ion-content>
-      </div>
+      <app-footer></app-footer>
     </ion-col>
-    <ion-col size="9">
+    <ion-col size="10">
       <div class="button-container">
         <ion-searchbar class="button-container" placeholder="Search" (click)="search()"></ion-searchbar>
       </div>
@@ -87,18 +45,13 @@
                   <ion-icon name="location"></ion-icon>
                   {{ truncateText(card.location, 4) }}
                 </ion-card-content>
-                <ion-row>
-                  <ion-col center text-center>
+                <!-- <ion-row class="description"> -->
+                  <!-- <ion-col class="description" > -->
                     <ion-card-subtitle>
                       {{ card.description }}
                     </ion-card-subtitle>
-                  </ion-col>
-                  <ion-col class="ion-text-end">
-                    <ion-button fill="clear" class="right-aligned-button">
-                      <!-- <ion-icon class="iconp" name='share'></ion-icon> -->
-                    </ion-button>
-                  </ion-col>
-                </ion-row>
+                  <!-- </ion-col> -->
+                <!-- </ion-row> -->
               </ion-card-header>
             </ion-card>
           </ion-col>
@@ -107,3 +60,4 @@
     </ion-col>
   </ion-row>
 </ion-content>
+

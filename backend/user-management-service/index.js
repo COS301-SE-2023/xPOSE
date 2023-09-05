@@ -1,7 +1,6 @@
 import sequelize from './sqldb.js';
 import User from './data-access/models/user.table.js';
 import Friendship from './data-access/models/friendship.table.js';
-import FriendRequest from './data-access/models/friend_request.table.js';
 
 
 const initializeSQLDB = async () => { 

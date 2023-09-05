@@ -32,9 +32,15 @@ export function handleNotification(message) {
     const db = admin.firestore();
     const notificationRef = db.collection('Notifications').doc(data.receiverId);
     // Store the message in the MyNotifications subcollection
-    notificationRef.collection('MyNotifications').add(data)
-            .then(()=> {
+    notificationRef.collection('MyNotifications').add({
+        ...data, notificationId:''})
+            .then((docRef)=> {
                 console.log("Notification sent successfully!");
+                
+                return docRef.update({
+                    notificationId: docRef.id
+                })
+           
             })
             .catch((error) => {
                 console.error("Error adding document: ", error);
