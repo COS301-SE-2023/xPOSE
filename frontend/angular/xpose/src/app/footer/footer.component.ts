@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../shared/services/auth.service';
-import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-footer',
@@ -10,7 +9,7 @@ import { MenuController } from '@ionic/angular';
 })
 export class FooterComponent  implements OnInit {
 
-  constructor(private router: Router, public authService: AuthService, private menu: MenuController) { }
+  constructor(private router: Router, public authService: AuthService,) { }
 
   ngOnInit() {}
 
@@ -45,5 +44,4 @@ export class FooterComponent  implements OnInit {
    logout() {
     this.authService.signOut();
   }
-
 }

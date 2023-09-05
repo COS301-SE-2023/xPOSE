@@ -7,9 +7,7 @@ import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { Observable, map } from "rxjs";
 import { get } from "http";
 import { ApiService } from "../service/api.service";
-
-
-
+import { MenuController } from '@ionic/angular';
 
 @Component({
 	selector: "app-home",
@@ -19,6 +17,9 @@ import { ApiService } from "../service/api.service";
 
 
 export class HomePage {
+    isMenuOpen = true;
+  	menuClosed = false;
+
 	loading: boolean = true;
 	searchResults: { title: string; description: string; }[] | undefined;
 	constructor(
@@ -27,10 +28,20 @@ export class HomePage {
 		private router: Router,
 		private http: HttpClient,
 		private afAuth: AngularFireAuth,
-		private api: ApiService
+		private api: ApiService,
+		private menuController: MenuController
 		) {
 	
 	   }
+
+	   toggleMenu() {
+		if (this.isMenuOpen) {
+		  this.menuController.close('mainMenu');
+		} else {
+		  this.menuController.open('mainMenu');
+		}
+		this.isMenuOpen = !this.isMenuOpen;
+	  }
 
 	ngOnInit() {
 		this.getEventsFromAPI();
@@ -132,4 +143,36 @@ export class HomePage {
 	eventDetails(event_id: string) {
 		this.router.navigate(['/view-event', event_id]);
 	}
+
+	viewEvent() {
+		this.router.navigate(['/event']);
+		}
+	
+		  onEvent(){
+			this.router.navigate(['/create-event']);
+		}
+	
+		onNotifications(){
+			this.router.navigate(['/notification']);
+		}
+		
+		onProfile(){
+			this.router.navigate(['/profile']);
+		}  
+	
+		onJoinedEvent(){
+			this.router.navigate(['/joined-event']);
+		}
+	
+		onHome(){
+			this.router.navigate(['/home']);
+		}
+	
+		onSettings(){
+			this.router.navigate(['/settings']);
+		}
+		
+	   logout() {
+		this.authService.signOut();
+	  }
 }
