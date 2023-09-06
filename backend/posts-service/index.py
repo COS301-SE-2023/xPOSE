@@ -1,3 +1,4 @@
+from form_generators import generate_registration_form, generate_detection_form, generate_upload_form, generate_event_post_form, generate_image_upload_form
 from datetime import timedelta
 import datetime
 from flask import Flask, request, jsonify
@@ -9,9 +10,8 @@ import os
 import random
 import string
 import json
-from db_connector import db, User, Image  # Import the database models
-from PIL import Image as PILImage, ImageFilter
-import io
+from db_connector import User  # Import the database models
+from PIL import Image as PILImage
 from datetime import datetime, timedelta
 
 
@@ -24,32 +24,7 @@ firebase_admin.initialize_app(cred, {
     'databaseURL': 'https://xpose-4f48c-default-rtdb.firebaseio.com'
 })
 
-def generate_registration_form():
-    return '''
-    <form method="post" action="/register" enctype="multipart/form-data">
-        <label for="user_id">User ID:</label><br>
-        <input type="text" id="user_id" name="user_id" required><br><br>
-        <input type="file" name="image" accept=".jpg, .jpeg, .png" required><br><br>
-        <input type="submit" value="Register User">
-    </form>
-    '''
 
-def generate_detection_form():
-    return '''
-    <form method="post" action="/detect" enctype="multipart/form-data">
-        <input type="file" name="image" accept=".jpg, .jpeg, .png" required><br><br>
-        <input type="submit" value="Detect Users">
-    </form>
-    '''
-def generate_upload_form():
-    return '''
-    <form method="post" action="/upload" enctype="multipart/form-data">
-        <label for="user_id">User ID:</label><br>
-        <input type="text" id="user_id" name="user_id" required><br><br>
-        <input type="file" name="image" accept=".jpg, .jpeg, .png" required><br><br>
-        <input type="submit" value="Upload Photo">
-    </form>
-    '''
 
 @app.route('/register', methods=['GET', 'POST'])
 def register_user():
@@ -151,16 +126,43 @@ def detect_users_in_image(image):
     except Exception as e:
         return str(e)
 
-def generate_event_post_form(event_id):
-    return f'''
-    <form method="post" action="/post/{event_id}" enctype="multipart/form-data">
-        <label for="uid">User ID:</label><br>
-        <input type="text" id="uid" name="uid" required><br><br>
-        <label for="image">Image:</label><br>
-        <input type="file" name="image" accept=".jpg, .jpeg, .png" required><br><br>
-        <input type="submit" value="Create Event Post">
-    </form>
-    '''
+@app.route('/post/<event_id>/<post_id>', methods=['GET', 'DELETE', 'PUT'])
+def delete_event_post(event_id, post_id):
+    try:
+        # Check if the post exists in the Firestore collection 'Event-Posts/event_id/posts'
+        firestore_client = firestore.client()
+        event_post_ref = firestore_client.document(f'Event-Posts/{event_id}')
+        posts_collection = event_post_ref.collection('posts')
+        post_doc = posts_collection.document(post_id)
+        
+        if not post_doc.get().exists:
+            return jsonify({'error': 'Post not found'}), 404
+
+        # Delete the post document
+        post_doc.delete()
+
+        return jsonify({'message': 'Post deleted successfully'}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+def remove_metadata(image):
+    try:
+        # Open the image using Pillow
+        img = PILImage.open(image)
+
+        # Remove EXIF data (metadata) from the image
+        img_without_metadata = PILImage.new(img.mode, img.size)
+        img_without_metadata.putdata(list(img.getdata()))
+
+        # Save the image without metadata
+        # remove the debgging line below
+        # img_without_metadata.save('test.jpg', format='JPEG')
+        img_without_metadata.save(image, format='JPEG')
+
+        return True  # Successfully removed metadata
+    except Exception as e:
+        return str(e)  # Return the error message if there's an issue
+
 
 @app.route('/post/<event_id>', methods=['GET', 'POST'])
 def create_event_post(event_id):
@@ -173,10 +175,11 @@ def create_event_post(event_id):
         # Check if the request has an image file
         if 'image' not in request.files:
             return jsonify({'error': 'No image file provided'}), 400
+        
 
         # Get the image file
         
-        image = request.files['image']
+        image = (request.files['image'])
         image_url = upload_image_to_firebase(image)
         users_in_image = detect_users_in_image(image)
 
@@ -219,15 +222,6 @@ def create_event_post(event_id):
 def secure_filename(filename : str):
     return ''.join(c for c in filename if c.isalnum() or c in ['.', '_'])
 
-def generate_image_upload_form():
-    form = """
-    <form method="POST" action="/upload_image" enctype="multipart/form-data">
-        <input type="file" name="image" accept="image/*" required>
-        <input type="submit" value="Upload Image">
-    </form>
-    """
-    return form
-
 def upload_image_to_firebase(image, filename = None):
     # Generate a random filename if no filename is provided
     if filename is None:
@@ -269,8 +263,6 @@ def upload_image():
             blob = bucket.blob('test/mito.jpg')
             blob.upload_from_file(image)
 
-    
-
             # Generate a download URL for the uploaded image with a 30-year expiration
             expiration_time = datetime.utcnow() + timedelta(days=90)
             expiration_seconds = int(expiration_time.timestamp())
@@ -280,6 +272,31 @@ def upload_image():
     except Exception as e:
         return jsonify({'error': str(e)})
 
+# Add a comment to a post 
+@app.route('/:event_id/:post_id/comment', methods=['POST'])
+def add_comment():
+    """
+    Adding a comment is adding a comment document inside the post document's 'comments' collection.
+    """
+    pass
+
+# Remove a comment from a post
+@app.route('/:event_id/:post_id/comment/:comment_id', methods=['DELETE'])
+def remove_comment():
+    """
+    Removing a comment is deleting a comment document from the post document's 'comments' collection.
+    """
+    pass
+
+# Add a like to a post or remove a like from a post
+@app.route('/:event_id/:post_id/like', methods=['POST', 'DELETE'])
+def like_action():
+    pass
+
+# Delete a post
+@app.route('/:event_id/:post_id', methods=['DELETE'])
+def delete_post():
+    pass
 
 if __name__ == '__main__':
     app.run(debug=True)
