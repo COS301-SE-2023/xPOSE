@@ -39,7 +39,6 @@ export class HomePage {
 	ngOnInit() {
 		this.getEventsFromAPI();
 	}
-	   // get events from firebase and display
 	   
   getEventsFromAPI() {
 
@@ -51,7 +50,6 @@ export class HomePage {
 				  this.events = events;
 				this.populateCards();
 			  });
-			//   this.loading = false;
 		}
 		else {
 			console.log("no user id");
@@ -72,8 +70,6 @@ export class HomePage {
 		if (user) {
 		  return user.uid;
 		} else {
-			// throw error
-			// some extra stuff
 		  console.log('No user is currently logged in.');
 		  return '';
 		}
