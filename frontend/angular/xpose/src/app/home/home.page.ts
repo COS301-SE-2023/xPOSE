@@ -17,9 +17,6 @@ import { MenuController } from '@ionic/angular';
 
 
 export class HomePage {
-    isMenuOpen = true;
-  	menuClosed = false;
-
 	loading: boolean = true;
 	searchResults: { title: string; description: string; }[] | undefined;
 	constructor(
@@ -34,13 +31,9 @@ export class HomePage {
 	
 	   }
 
-	   toggleMenu() {
-		if (this.isMenuOpen) {
-		  this.menuController.close('mainMenu');
-		} else {
-		  this.menuController.open('mainMenu');
-		}
-		this.isMenuOpen = !this.isMenuOpen;
+	   menuItemClicked(item: string) {
+		console.log(`Clicked on ${item}`);
+		this.menuController.close('menu');
 	  }
 
 	ngOnInit() {
