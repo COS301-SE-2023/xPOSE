@@ -202,21 +202,17 @@ ion-card-content {
 }
 }
 ion-toolbar{
-  background-color: #ffffff;
-  --background: #ff00aa;
-  color: #ffffff;
-  font-size: 20px;
-  // --min-height: 70px;
+  background-color: #000000;
+  --background: #ffffff;
+  color: #000000;
+  font-size: 24px;
 }
 ion-col{
   background: #ffffff;
   color: #000000;
 }
-// .descripti{
-//   background: #ffb8f3;
-//   color: #000000;
-// }
-// ion-card-subtitle{
-//   background: #ffb8f3;
-//   color: #000000;
-// }
+
+ion-searchbar{
+  --background: #ffffff;
+  color: #000000;
+}
