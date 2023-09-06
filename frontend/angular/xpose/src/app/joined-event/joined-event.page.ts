@@ -122,33 +122,45 @@ export class JoinedEventPage implements OnInit {
     }
   }
   
-  search() {
+	search() {
 		this.router.navigateByUrl('/search');
 	}
-
-  onEvent() {
-    this.router.navigate(['/create-event']);
-  }
-
-  eventDetails(event_id: string) {
+	
+	eventDetails(event_id: string) {
 		this.router.navigate(['/view-event', event_id]);
 	}
 
-  onNotifications() {
-    this.router.navigate(['/notification']);
-  }
-
-  onProfile() {
-    this.router.navigate(['/profile']);
-  }
-
-  onJoinedEvent() {
-    this.router.navigate(['/joined-event']);
-  }
-
-  onHome() {
-    this.router.navigate(['/home']);
-  }
+	viewEvent() {
+		this.router.navigate(['/event']);
+		}
+	
+		  onEvent(){
+			this.router.navigate(['/create-event']);
+		}
+	
+		onNotifications(){
+			this.router.navigate(['/notification']);
+		}
+		
+		onProfile(){
+			this.router.navigate(['/profile']);
+		}  
+	
+		onJoinedEvent(){
+			this.router.navigate(['/joined-event']);
+		}
+	
+		onHome(){
+			this.router.navigate(['/home']);
+		}
+	
+		onSettings(){
+			this.router.navigate(['/settings']);
+		}
+		
+	   logout() {
+		this.authService.signOut();
+	  }
   
   getStatusColor(status: string) {
     if (status === 'ongoing') {
