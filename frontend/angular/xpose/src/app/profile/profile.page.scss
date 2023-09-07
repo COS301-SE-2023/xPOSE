@@ -1,10 +1,9 @@
-
 .profile-image {
-  width: 100px; /* Set the desired width */
-  height: 100px; /* Set the desired height */
-  border-radius: 50%; /* Create a circular shape */
-  object-fit: cover; /* Ensure the image covers the entire circle */
-  border: 2px solid #ccc; /* Add a border (optional) */
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ccc;
 }
 
 .profile_div {
@@ -30,22 +29,19 @@
 
 .username {
   font-size: 20px;
-  // font-weight: bold;
   color: #333;
 }
 
 .edit_div {
-  background-color: #ff00ff; /* Set the background color for the Edit Profile button */
-  // --color: #fff; /* Set the text color for the Edit Profile button */
-  // margin-top: 20px;
+  background-color: #ff00ff;
   padding: 10px;
   border-radius: 10px;
   color: #ffffff;
 }
 
 .pink-button {
-  --background: #919191; /* Set the background color for the pink button */
-  --color: white; /* Set the text color for the pink button */
+  --background: #919191;
+  --color: white;
   font-size: 19px;
 }
 
@@ -57,17 +53,17 @@ ion-toolbar.custom-toolbar {
   --background: #ffffff;
   color: #000000;
   font-size: 20px;
-  /* Add more custom styles as needed */
   --min-height: 50px;
-  
 }
+
 ion-label{
   --text-align: center;
 }
+
 ion-content#main-content {
   --background: #ffffff;
-
 }
+
 button{
   background-color: #b4b4b4;
   width: 100%;
@@ -75,15 +71,12 @@ button{
   font-size: 15px;
   padding: 10px;
 }
+
 .enu-buttons{
   align-items: center;
   background-color: #919191
   color( red green blue);
 }
-// ion-button{
-//   --background-color: #919191;
-
-// }
 
 .p-s1{
   .p-title{
@@ -93,8 +86,8 @@ button{
   ion-icon{
     font-size: 13rem;
   }
-
 }
+
 ion-header{
   box-shadow: 0px 2px 4px rgba(0,0,0, 0.10);
 }
@@ -102,6 +95,49 @@ ion-header{
 .custom-card{
   box-shadow: 0px 2px 6px rgba(0,0,0, 0.20);
 }
+
 .p-list{
   color:hsl(0, 0%, 29%);
+}
+
+.sidebar {
+  background-color: #f0f0f0;
+  height: 100%;
+  overflow-y: auto;
+  --background: #ffffff;
+}
+
+.sidebar ion-header {
+  background-color: #ffffff;
+  --background: #ffffff;
+  border-bottom: 1px solid #ccc;
+}
+
+.sidebar ion-content {
+  padding: 10px;
+  --background: #ffffff;
+}
+
+.scrollable-content {
+  max-height: 100vh;
+  overflow-y: auto;
+  --background: #ffffff;
+}
+
+.sidebar-link {
+  display: block;
+  text-decoration: none;
+  color: #000;
+  margin-bottom: 10px;
+  cursor: pointer;
+  --background: #ffffff;
+}
+
+.sidebar-link ion-icon {
+  margin-right: 5px;
+  --background: #ffffff;
+}
+
+ion-item{
+  --background: #ffffff;
 }

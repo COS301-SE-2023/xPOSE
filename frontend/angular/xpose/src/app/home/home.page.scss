@@ -1,3 +1,9 @@
+.custom-backround{
+  --background: #ffffff;
+  color: #000000;
+  font-size: 20px;
+}
+
 ion-card {
   background-color: hsl(304, 49%, 82%);
   color: #000000;
@@ -34,6 +40,7 @@ ion-card-content {
   padding: 10px;
   color: #353535;
   font-family: "Merriweather", serif;
+  --background: #ffffff;
 }
 
 .card-subtitle {
@@ -91,6 +98,7 @@ ion-card-content {
   border-radius: 4px;
   font-size: 14px;
   font-weight: bold;
+  --background: #ffffff;
 }
 
 .label-default {
@@ -128,6 +136,7 @@ ion-card-content {
   font-weight: bold;
   display: flex;
   align-items: center;
+  --background: #ffffff;
 }
 
 .iconp{
@@ -142,6 +151,7 @@ ion-card-content {
   font-size: 30px;
   text-shadow: #3d3d3d;
   color: #1d1d1d;
+  --background: #ffffff;
 }
 
 @keyframes spin {
@@ -171,16 +181,74 @@ ion-card-content {
 
 .custom-toolbar {
   display: block;
+  background-color: #ffffff;
 }
 
 @media screen and (max-width: 768px) {
   .custom-toolbar ion-title {
     display: none;
-  }
+    background-color: #ffffff;
+    
   
   .custom-toolbar ion-menu-button {
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: #ffffff;
+    color: #000000;
   }
+}
+}
+ion-toolbar{
+  background-color: #ffffff;
+  --background: #ff00aa;
+  color: #ffffff;
+  font-size: 20px;
+  // --min-height: 70px;
+}
+ion-col{
+  background: #ffffff;
+  color: #000000;
+}
+
+.sidebar {
+  background-color: #f0f0f0;
+  height: 100%;
+  overflow-y: auto;
+  --background: #ffffff;
+}
+
+.sidebar ion-header {
+  background-color: #ffffff;
+  --background: #ffffff;
+  border-bottom: 1px solid #ccc;
+}
+
+.sidebar ion-content {
+  padding: 10px;
+  --background: #ffffff;
+}
+
+.scrollable-content {
+  max-height: 100vh;
+  overflow-y: auto;
+  --background: #ffffff;
+}
+
+.sidebar-link {
+  display: block;
+  text-decoration: none;
+  color: #000;
+  margin-bottom: 10px;
+  cursor: pointer;
+  --background: #ffffff;
+}
+
+.sidebar-link ion-icon {
+  margin-right: 5px;
+  --background: #ffffff;
+}
+
+ion-item{
+  --background: #ffffff;
 }

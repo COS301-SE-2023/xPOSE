@@ -1,3 +1,10 @@
+.custom-background{
+  --background: #ffffff;
+  background-color: #ffffff;
+  color: #000000;
+  font-size: 20px;
+  // --min-height: 70px;
+}
 .button-col,
 .image-col {
   display: flex;
@@ -10,4 +17,82 @@
 .image-col img {
   max-width: 100%;
   height: auto;
+}
+
+button{
+  background-color: #ff00f0;
+  border: none;
+  color: #1d1d1d;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 5px;
+  border: 1px solid #a8009dd3;
+  ::shadow{
+    color: #000000;
+  }
+}
+ion-card{
+  --background: #ffffff;
+  background-color: #ffffff;
+  color: #000000;
+  font-size: 20px;
+  // --min-height: 70px;`
+}
+ion-card-title{
+  font-size: 20px;
+  font-weight: bold;
+  color: #000000;
+}
+ion-toolbar{
+  --background: #ffffff;
+  background-color: #ffffff;
+  color: #000000;
+  font-size: 20px;
+  // --min-height: 70px;
+}
+
+.sidebar {
+  background-color: #f0f0f0;
+  height: 100%;
+  overflow-y: auto;
+  --background: #ffffff;
+}
+
+.sidebar ion-header {
+  background-color: #ffffff;
+  --background: #ffffff;
+  border-bottom: 1px solid #ccc;
+}
+
+.sidebar ion-content {
+  padding: 10px;
+  --background: #ffffff;
+}
+
+.scrollable-content {
+  max-height: 100vh;
+  overflow-y: auto;
+  --background: #ffffff;
+}
+
+.sidebar-link {
+  display: block;
+  text-decoration: none;
+  color: #000;
+  margin-bottom: 10px;
+  cursor: pointer;
+  --background: #ffffff;
+}
+
+.sidebar-link ion-icon {
+  margin-right: 5px;
+  --background: #ffffff;
+}
+
+ion-item{
+  --background: #ffffff;
 }

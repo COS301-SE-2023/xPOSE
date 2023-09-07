@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar class="header">
     <ion-title>Image</ion-title>
     <ion-buttons slot="end">
       <ion-menu-button autoHide="false" menu="end">
@@ -21,21 +21,21 @@
       <ion-title>Image Options</ion-title>
     </ion-toolbar>
   </ion-header>
-  <ion-content>
+  <ion-content class="menu-content">
     <ion-list>
-      <ion-item (click)="downloadImage()">
+      <ion-item (click)="downloadImage()" class="menu-item">
         <ion-label>Download</ion-label>
       </ion-item>
-      <ion-item (click)="deleteImage()">
+      <ion-item (click)="deleteImage()" class="menu-item">
         <ion-label>Delete</ion-label>
       </ion-item>
-      <ion-item (click)="shareImage('')">
+      <ion-item (click)="shareImage('')" class="menu-item">
         <ion-label>Share</ion-label>
       </ion-item>
-       
     </ion-list>
   </ion-content>
 </ion-menu>
+
 
 
  <!-- <ion-content>
@@ -77,10 +77,23 @@
           </button>
           <span>{{ likeCount }}</span>
           
-           <div class="modal-footer">
-            <!--   <ion-icon name="heart-outline"></ion-icon> -->
-              <ion-textarea placeholder="Add a comment"></ion-textarea>
-            </div> 
+          <div class="modal-footer">
+
+           
+            <!-- <ion-col> -->
+              <!-- List of Comments -->
+              <ion-list style="margin-top: 10px;" class="header">
+                <ion-item *ngFor="let comment of comments" class="header" >
+                  {{ comment }}
+                </ion-item  >
+              </ion-list>
+              <!-- Comment Input -->
+              <ion-textarea
+                [(ngModel)]="newComment"
+                placeholder="Add a comment"
+                (keyup.enter)="addComment()"
+              ></ion-textarea>
+          </div>
           </div>
   
         </div>
