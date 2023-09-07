@@ -30,7 +30,6 @@ def delete_like():
 def register_user():
     return jsonify({'Message': 'Registered a user'}, 201)
 
-
 @app.route('/health', methods=['GET'])
 def health_check():
     return jsonify({'Message': 'Posts service is healthy'}, 200)
