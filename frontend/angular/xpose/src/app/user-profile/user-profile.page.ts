@@ -24,11 +24,13 @@ export class UserProfilePage implements OnInit {
     email: string;
     username: string;
     uid: string;
+    visibility: string;
   };
   
   uid_viewing_user: string ="";
   isFriend: boolean = false;
   requestSent: boolean = false;
+  isPublic: boolean = true;
   selectedTab: any;
   tabs: any;
   private history: string[] = [];
@@ -41,7 +43,7 @@ export class UserProfilePage implements OnInit {
     private afAuth: AngularFireAuth,
     private http: HttpClient,
     private firestore: AngularFirestore,
-    private api: ApiService,
+    private api: ApiService
     // private location: Location
   ) {
     this.user = {
@@ -49,14 +51,13 @@ export class UserProfilePage implements OnInit {
       displayName: 'loading...',
       email: 'loading...',
       username:'loading...',
-      uid:""
+      uid:"",
+      visibility:""
     };
     this.user.photoURL = './assets/images/profile picture.jpg'; // Updated profile picture URL
   }
 
   ngOnInit() {
-    // this.isFriend = true;
-    //  this.requestSent = true;
     let id = window.location.href;
     // Split the URL by slashes (/)
     const urlParts = id .split('/');
@@ -72,7 +73,8 @@ export class UserProfilePage implements OnInit {
       this.user.displayName = userData.displayName;
       this.user.email = userData.email;
       this.user.username = userData.uniq_username;
-      this.user.photoURL =userData.photoURL;
+      this.user.photoURL = userData.photoURL;
+      this.user.visibility = userData.visibility; 
       
       this.updateFriendShipStatus();
       
@@ -82,7 +84,7 @@ export class UserProfilePage implements OnInit {
   }
 
 
-  async updateFriendShipStatus(){
+  async updateFriendShipStatus() {
 
     try{
       // `${this.api.apiUrl}/u/users/`;
@@ -95,6 +97,7 @@ export class UserProfilePage implements OnInit {
       }
 
       console.log("Update friend request testing", this.isFriend);
+
     } catch(error){
       console.error('Error updating friendship status:', error);
     }
@@ -132,18 +135,38 @@ export class UserProfilePage implements OnInit {
   }
 
   getEventsFromAPI() {
+
+    if (this.user.visibility == "private" && this.isFriend == false){
+      // cannot show events of private account
+      this.isPublic = false;
+    }
+
+    if (this.user.visibility == "private" && this.isFriend === true){
+      // can see events of private account of  because they are friends
+      this.isPublic = true;
+    }
+
+    if (this.user.visibility == "public"){
+      // can see events of public account
+      this.isPublic = true;
+    }
+
+    console.log("User visibility test 1", this.isPublic);
+    console.log("User visibility test 2", this.user.visibility);
+    
+    
     // this.getCurrentUserId().subscribe((uid) => {
-      let uid = this.user.uid;
-      if (uid) {
-        console.log(`We got that ${uid}`);
-        this.http.get<Event[]>(`${this.api.apiUrl}/e/events?uid=${uid}&filter=participant`).subscribe((events: Event[]) => {
-          console.log(events);
-          this.events = events;
-          this.populateCards();
-        });       
-      } else {
-        console.log("No user id");
-      }
+      // let uid = this.user.uid;
+      // if (uid) {
+      //   console.log(`We got that ${uid}`);
+      //   this.http.get<Event[]>(`${this.api.apiUrl}/e/events?uid=${uid}&filter=participant`).subscribe((events: Event[]) => {
+      //     console.log(events);
+      //     this.events = events;
+      //     this.populateCards();
+      //   });       
+      // } else {
+      //   console.log("No user id");
+      // }
     // });
   }
 
@@ -217,6 +240,25 @@ export class UserProfilePage implements OnInit {
         end_date: event.end_date,
         status: event.status,
       }));
+    }
+  }
+
+
+  getfriends() {
+    
+    if (this.user.visibility == "private" && this.isFriend == false){
+      // cannot show events of private account
+      this.isPublic = false;
+    }
+
+    if (this.user.visibility == "private" && this.isFriend === true){
+      // can see events of private account of  because they are friends
+      this.isPublic = true;
+    }
+
+    if (this.user.visibility == "public"){
+      // can see events of public account
+      this.isPublic = true;
     }
   }
 

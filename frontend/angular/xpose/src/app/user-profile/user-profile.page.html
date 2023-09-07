@@ -39,35 +39,53 @@
   </ion-segment>
 
   <div *ngIf="selectedSegment === 'events'">
-    <ion-list>
-      <ion-card *ngFor="let card of cards">
-        <img [src]="card.image_url">
-        <ion-card-header class="card-title">
-          <ion-card-title class="header">{{ card.name }}</ion-card-title>
-          <ion-card-content>
-            <ion-icon name="location"></ion-icon>
-            {{ card.location }}
-          </ion-card-content>
-          <ion-row>
-            <ion-col center text-center>
-              <ion-card-subtitle>
-                {{ card.description }}
-              </ion-card-subtitle>
-            </ion-col>
-            <ion-col class="ion-text-end">
-              <ion-button fill="clear" class="right-aligned-button">
-                <ion-icon class="iconp" name='share'></ion-icon>
-              </ion-button>
-            </ion-col>
-          </ion-row>
-        </ion-card-header>
-      </ion-card>
-    </ion-list>
+
+        <div *ngIf="isPublic;else content_for_private">
+
+          <ion-list>
+            <ion-card *ngFor="let card of cards">
+              <img [src]="card.image_url">
+              <ion-card-header class="card-title">
+                <ion-card-title class="header">{{ card.name }}</ion-card-title>
+                <ion-card-content>
+                  <ion-icon name="location"></ion-icon>
+                  {{ card.location }}
+                </ion-card-content>
+                <ion-row>
+                  <ion-col center text-center>
+                    <ion-card-subtitle>
+                      {{ card.description }}
+                    </ion-card-subtitle>
+                  </ion-col>
+                  <ion-col class="ion-text-end">
+                    <ion-button fill="clear" class="right-aligned-button">
+                      <ion-icon class="iconp" name='share'></ion-icon>
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-card-header>
+            </ion-card> 
+          </ion-list>
+        </div>
+      
+      <ng-template #content_for_private>
+        <ion-row class="ion-justify-content-center">
+            <p>Cannot show events of private account</p>
+        </ion-row>
+        </ng-template>
   </div>
 
   <div *ngIf="selectedSegment === 'friends'">
-    <ion-content>
-      <!-- Add content for the Friends tab -->
-    </ion-content>
+    <div *ngIf="isPublic;else content_for_private">
+      <ion-content>
+        <ion-card *ngFor="let card of cards">
+        </ion-card>
+      </ion-content>
+    </div>
+    <ng-template #content_for_private>
+      <ion-row class="ion-justify-content-center">
+          <p>Cannot show friends of private account</p>
+      </ion-row>
+      </ng-template>
   </div>
 </ion-content>

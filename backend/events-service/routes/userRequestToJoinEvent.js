@@ -4,6 +4,7 @@ const admin = require('firebase-admin');
 const { sendMessageToQueue } = require('../libs/sender');
 // const MessageBuilder = require('../libs/MessageBuilder');
 
+
 class MessageBuilder {
     constructor() {
       this.message = {
@@ -14,12 +15,18 @@ class MessageBuilder {
           receiverId: "",
           timestamp: Date.now(),
           status: "pending",
+          values: []
         },
       };
     }
   
     setType(type) {
       this.message.data.type = type;
+      return this;
+    }
+    
+    setValue(value){
+      this.message.data.values.push(value);
       return this;
     }
   
@@ -115,9 +122,19 @@ async function userRequestToJoinEvent(req, res) {
           .setMessage(`${event.title} Request to join!`)
           .setSenderId(uid)
           .setReceiverId(eventOwnerUid)
+          .setValue({
+            code: code,
+            inviter_id: uid, // change this to owner id later
+            invitee_id: uid
+          })
           .build();
 
-        sendMessageToQueue(queueName, message);
+          // console.log("BEFORE MESSAGE SENDING::::",message);
+        try{
+          sendMessageToQueue(queueName, message);
+        } catch(error){
+          console.log("Error sending notification", error)
+        }
 
         res.json(joinRequest);
     } catch (error) {
