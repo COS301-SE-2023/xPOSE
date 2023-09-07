@@ -8,7 +8,7 @@ export class PostNotificationStrategy implements NotificationRequestStrategy {
         private http: HttpClient){
 
     }
-
+    
     async execute(user: any): Promise<void> {
         // Code for Notification of posts goes here
     }
