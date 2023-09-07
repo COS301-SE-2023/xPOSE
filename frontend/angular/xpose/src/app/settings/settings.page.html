@@ -86,6 +86,33 @@
 
   <ion-card>
     <ion-card-header>
+      <ion-card-title>Test the photo recognition</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12" class="button-col">
+            <button expand="full" (click)="detectFaces()">Upload Image</button>
+          </ion-col>
+          <!-- <ion-col size="12" class="button-col">
+            <button expand="full" (click)="authorizeImage()">Authorize Images</button>
+          </ion-col> -->
+          <ion-col size="12" class="image-col" *ngIf="selectedImage">
+            <img [src]="selectedImage2" alt="Selected Headshot" />
+          </ion-col>
+          <ion-col size="12" *ngIf="!selectedImage2" class="image-col">
+            Image couldn't be found.
+          </ion-col>
+          <!-- <ion-col size="12" class="button-col">
+            <button expand="full" (click)="register()">Register</button>
+          </ion-col> -->
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
       <ion-card-title>Delete your account</ion-card-title>
     </ion-card-header>
     <ion-card-content>
