@@ -10,6 +10,9 @@ import { ApiService } from '../service/api.service';
 import { NotificationHandler } from './notificationHandler';
 import { AcceptFriendshipStrategy } from './handle-notifications/acceptFriendshipStrategy';
 import { RejectFriendshipStrategy } from './handle-notifications/rejectFriendshipStrategy';
+import { AcceptJoinEventStrategy } from './handle-notifications/AcceptJoinEventStrategy';
+import { RejectJoinEventStrategy } from './handle-notifications/RejectJoinEventStrategy';
+import { PostNotificationStrategy } from './handle-notifications/PostNotificationStrategy';
 
 @Component({
   selector: 'app-notification',
@@ -37,14 +40,19 @@ export class NotificationPage implements OnInit {
     // Notifications strategies
     const accept_friendship_strategy = new AcceptFriendshipStrategy(api, http);
     const reject_friendship_strategy =  new RejectFriendshipStrategy(api, http);
- // const accept_join_event_strategy =  new AcceptJoinEventStrategy(api, http);
- // const reject_join_event_Strategy =  new RejectJoinEventStrategy(api, http);
+    const accept_join_event_strategy =  new AcceptJoinEventStrategy(api, http);
+    const reject_join_event_Strategy =  new RejectJoinEventStrategy(api, http);
+    const post_notification_strategy =  new PostNotificationStrategy(api, http);
+
+
 
     this.strategies = {
       "accept_friendship": accept_friendship_strategy,
       "reject_friendship": reject_friendship_strategy,
-      // "accept_join_event": accept_join_event_strategy,
-      // "reject_join_event": reject_join_event_Strategy
+      "accept_join_event": accept_join_event_strategy,
+      "reject_join_event": reject_join_event_Strategy,
+      "post_notifications": post_notification_strategy
+
     }
     
     this.notificationHandler = new NotificationHandler(firestore, authService, http, api, this.strategies);
@@ -80,7 +88,6 @@ export class NotificationPage implements OnInit {
 
   clearNotification(message: any) {
     this.notificationHandler.removeNotification(message);
-    // this.messages = this.notificationHandler.getMessages();
   }
   
   search() {

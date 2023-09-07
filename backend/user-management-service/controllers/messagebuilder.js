@@ -19,6 +19,7 @@ class MessageBuilder {
     }
     setValue(value){
       this.message.data.values.push(value);
+      return this;
     }
   
     setMessage(message) {

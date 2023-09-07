@@ -71,7 +71,7 @@ removeNotification(message: any) {
     const notificationRef = this.firestore.collection("Notifications").doc(message.receiverId).collection("MyNotifications").doc(message.notificationId);
     // Delete the notification document
     notificationRef.delete().then(() =>{
-        console.log(`Notification document with ID ${message.notificationId} successfully deleted`);
+        // console.log(`Notification document with ID ${message.notificationId} successfully deleted`);
         }).catch(error =>{
             console.error(`Error deleting notification document with ID ${message.notificationId}:`, error);
         });       
