@@ -15,7 +15,7 @@ import { AngularFireAuth } from "@angular/fire/compat/auth";
 })
 export class SettingsPage implements OnInit {
   selectedImage: string | null = null;
-
+	selectedImage2: string | null = null;// this is for the second image
   constructor(private http: HttpClient, 
     public authService: AuthService,
 		private router: Router,
@@ -63,13 +63,47 @@ export class SettingsPage implements OnInit {
 	  } else {
 		console.log("No image data available.");
 	  }
-  
-
-
   }
 
-  authorizeImage() {
-    // Implement logic to authorize images (if needed)
+  async detectFaces() {
+    const image = await Camera.getPhoto({
+		quality: 90,
+		allowEditing: true,
+		resultType: CameraResultType.Uri,
+		source: CameraSource.Prompt,
+	  });
+  
+	  if (image && image.webPath) {
+		  try {
+			  this.selectedImage = image.webPath;
+			// Convert image to Blob
+			const response = await fetch(image.webPath);
+			const blobImage = await response.blob();
+	  
+			// Create FormData and append the image Blob to it
+			const formData = new FormData();
+			formData.append('image', blobImage, 'image.jpg');
+			// Send the FormData to the server
+			this.getCurrentUserId().subscribe((uid) => {
+				// formData.append('user_id', uid);
+			  
+				  if (uid) {
+				  this.http.post(`${this.api.apiUrl}/posts/detect?uid=${uid}`, formData).subscribe(
+					  (res: any) => {
+					  console.log(res);
+					  },
+					  (error: any) => {
+					  console.error(error);
+					  }
+				  );
+				  }
+			});
+		  } catch (error) {
+			console.error('Error while processing image:', error);
+		  }
+		} else {
+		  console.log("No image data available.");
+		}
   }
 
   register() {
