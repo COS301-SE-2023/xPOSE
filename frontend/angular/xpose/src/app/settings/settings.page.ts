@@ -3,6 +3,9 @@ import { Camera, CameraResultType, CameraSource } from "@capacitor/camera";
 import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
 import { AuthService } from "../shared/services/auth.service";
+import { ApiService } from "../service/api.service";
+import { Observable, map } from "rxjs";
+import { AngularFireAuth } from "@angular/fire/compat/auth";
 
 
 @Component({
@@ -15,7 +18,9 @@ export class SettingsPage implements OnInit {
 
   constructor(private http: HttpClient, 
     public authService: AuthService,
-		private router: Router) {}
+		private router: Router,
+		private api: ApiService,
+		private afAuth: AngularFireAuth) {}
 
   ngOnInit() {}
 
@@ -27,18 +32,40 @@ export class SettingsPage implements OnInit {
       source: CameraSource.Prompt,
     });
 
-    if (image && image.webPath) {
-      this.selectedImage = image.webPath;
-	  const imageName = Date.now().toString();
-	  fetch(`https://gfvj9hjfr6.execute-api.us-east-1.amazonaws.com/dev/xpose-posts/${imageName}.jpeg`, {
-		method: 'PUT',
-		headers: {
-		  'Content-Type': 'image/jpeg'
-		},
-		body: image.webPath
-	  })
-	  .then(response => response.json())
-    }
+	if (image && image.webPath) {
+		try {
+			this.selectedImage = image.webPath;
+		  // Convert image to Blob
+		  const response = await fetch(image.webPath);
+		  const blobImage = await response.blob();
+	
+		  // Create FormData and append the image Blob to it
+		  const formData = new FormData();
+		  formData.append('image', blobImage, 'image.jpg');
+		  // Send the FormData to the server
+		  this.getCurrentUserId().subscribe((uid) => {
+			  formData.append('user_id', uid);
+			
+				if (uid) {
+				this.http.post(`${this.api.apiUrl}/posts/register?uid=${uid}`, formData).subscribe(
+					(res: any) => {
+					console.log(res);
+					},
+					(error: any) => {
+					console.error(error);
+					}
+				);
+				}
+		  });
+		} catch (error) {
+		  console.error('Error while processing image:', error);
+		}
+	  } else {
+		console.log("No image data available.");
+	  }
+  
+
+
   }
 
   authorizeImage() {
@@ -48,6 +75,23 @@ export class SettingsPage implements OnInit {
   register() {
     // Implement logic to register the selected image (if needed)
   }
+
+  getCurrentUserId(): Observable<string> {
+    return this.afAuth.authState.pipe(
+      map((user) => {
+      if (user) {
+        return user.uid;
+      } else {
+        // throw error
+        // some extra stuff
+        
+        console.log('No user is currently logged in.');
+        return '';
+      }
+      })
+    );
+    }
+
 
   async uploadAnotherImage() {
     try {

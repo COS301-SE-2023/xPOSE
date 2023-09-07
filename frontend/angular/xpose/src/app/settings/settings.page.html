@@ -67,9 +67,9 @@
           <ion-col size="12" class="button-col">
             <button expand="full" (click)="uploadImage()">Upload Image</button>
           </ion-col>
-          <ion-col size="12" class="button-col">
+          <!-- <ion-col size="12" class="button-col">
             <button expand="full" (click)="authorizeImage()">Authorize Images</button>
-          </ion-col>
+          </ion-col> -->
           <ion-col size="12" class="image-col" *ngIf="selectedImage">
             <img [src]="selectedImage" alt="Selected Headshot" />
           </ion-col>
@@ -86,13 +86,13 @@
 
   <ion-card>
     <ion-card-header>
-      <ion-card-title>Upload Another Image</ion-card-title>
+      <ion-card-title>Delete your account</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <ion-grid>
         <ion-row>
           <ion-col size="12" class="button-col">
-            <button expand="full" (click)="uploadAnotherImage()">Upload Another Image</button>
+            <button expand="full" (click)="uploadAnotherImage()">Delete Account</button>
           </ion-col>
         </ion-row>
       </ion-grid>
