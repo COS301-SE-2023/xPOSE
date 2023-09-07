@@ -164,6 +164,7 @@ def remove_metadata(image):
         return str(e)  # Return the error message if there's an issue
 
 
+
 @app.route('/post/<event_id>', methods=['GET', 'POST'])
 def create_event_post(event_id):
     if request.method == 'GET':
@@ -297,6 +298,11 @@ def like_action():
 @app.route('/:event_id/:post_id', methods=['DELETE'])
 def delete_post():
     pass
+
+# Health check
+@app.route('/', methods=['GET'])
+def health_check():
+    return jsonify({'Message': 'Posts service is healthy'}), 200
 
 if __name__ == '__main__':
     app.run(debug=True)
