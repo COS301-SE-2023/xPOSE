@@ -13,10 +13,7 @@ import { map } from "rxjs/operators";
 import { ViewChild } from "@angular/core";
 import { NgForm } from "@angular/forms";
 import { ApiService } from "../service/api.service";
-
-// import { google } from '@types/googlemaps';
-
-
+import { AuthService } from "../shared/services/auth.service";
 
 @Component({
 	selector: "app-create-event",
@@ -50,6 +47,7 @@ export class CreateEventPage implements OnInit, AfterViewInit {
 		private router: Router,
 		private api: ApiService,
 		private modalController: ModalController,
+		public authService: AuthService,
 		private afAuth: AngularFireAuth) {
 			this.map = null;
 			this.marker = null;
@@ -59,18 +57,7 @@ export class CreateEventPage implements OnInit, AfterViewInit {
 	}
 
 	onPrivacyChange() {
-
-
-
-		// if(this.createEvent.privacy_setting == 'public'){
-		// 	this.createEvent.privacy_setting = 'public';
-		// }else if(this.createEvent.privacy_setting == 'private'){
-		// 	this.createEvent.privacy_setting = 'private';
-		// }
 		console.log('Privacy changed:', this.createEvent.privacy_setting);
-		// You can perform any actions here based on the selected privacy setting.
-
-		
 	  }
 
 	ngOnInit(): void {}
@@ -282,29 +269,45 @@ export class CreateEventPage implements OnInit, AfterViewInit {
 	  }
 	  
 
-	goBack(){
-		this.router.navigate(["/home"]);
+	  search() {
+		this.router.navigateByUrl('/search');
+	}
+	
+	eventDetails(event_id: string) {
+		this.router.navigate(['/view-event', event_id]);
 	}
 
-	onEvent() {
-	this.router.navigate(['/create-event']);
-	}
-
-	onNotifications() {
-	this.router.navigate(['/notification']);
-	}
-
-	onProfile() {
-	this.router.navigate(['/profile']);
-	}
-
-	onJoinedEvent() {
-	this.router.navigate(['/joined-event']);
-	}
-
-	onHome() {
-	this.router.navigate(['/home']);
-	}
+	viewEvent() {
+		this.router.navigate(['/event']);
+		}
+	
+		  onEvent(){
+			this.router.navigate(['/create-event']);
+		}
+	
+		onNotifications(){
+			this.router.navigate(['/notification']);
+		}
+		
+		onProfile(){
+			this.router.navigate(['/profile']);
+		}  
+	
+		onJoinedEvent(){
+			this.router.navigate(['/joined-event']);
+		}
+	
+		onHome(){
+			this.router.navigate(['/home']);
+		}
+	
+		onSettings(){
+			this.router.navigate(['/settings']);
+		}
+		
+	   logout() {
+		this.authService.signOut();
+	  }
 
 	async openEventModal(id:string) {
 		console.log("OUR ID" + id);

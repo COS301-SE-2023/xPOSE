@@ -1,10 +1,58 @@
+<ion-menu contentId="main-content">
+  <ion-content>
+    <ion-list>
+      <ion-item>
+        <a (click)="onHome()" class="sidebar-link">
+          <ion-icon name="home-outline"></ion-icon>
+          Home
+        </a>  
+      </ion-item>
+      <ion-item>
+        <a (click)="onJoinedEvent()" class="sidebar-link">
+          <ion-icon name="people-outline"></ion-icon>
+          Joined Events
+        </a>  
+      </ion-item>
+      <ion-item>
+        <a (click)="onEvent()" class="sidebar-link">
+          <ion-icon name="add-outline"></ion-icon>
+          Create Event
+        </a>  
+      </ion-item>
+      <ion-item>
+        <a (click)="onNotifications()" class="sidebar-link">
+          <ion-icon name="notifications-outline"></ion-icon>
+          Notifications
+        </a>  
+      </ion-item>
+      <ion-item>
+        <a (click)="onProfile()" class="sidebar-link">
+          <ion-icon name="person-outline"></ion-icon>
+          Profile
+        </a>  
+      </ion-item>
+      <ion-item>
+        <a (click)="onSettings()" class="sidebar-link">
+          <ion-icon name="settings-outline"></ion-icon>
+          Settings
+        </a>  
+      </ion-item>
+      <ion-item>
+        <a (click)="logout()" class="sidebar-link">
+          <ion-icon name="log-out-outline"></ion-icon>
+          Logout
+        </a>  
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
 <ion-header [translucent]="true">
   <ion-toolbar class="custom-toolbar">
     <ion-buttons slot="start">
-      <app-backbutton></app-backbutton>
-      </ion-buttons>
-    <!-- <ion-title>Profile</ion-title> -->
-    <ion-menu-button slot="end" class="menu"></ion-menu-button>
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Profile</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -19,14 +67,9 @@
       <button class="button" expand="full">Change Profile</button>
       <button (click)="logout()" expand="full">Logout</button>
       <button expand="full">About Us</button>
-      
     </ion-list>
   </ion-content>
 </ion-menu>
-<!-- <ion-footer>
-  <ion-button (click)="logout()" expand="full" class="pink-button">Logout</ion-button>
-</ion-footer> -->
-
 
 <div class="profile_div" >
   <div class="user_div" *ngIf="user">
@@ -35,8 +78,7 @@
       <ion-label class="username">{{user.displayName}}</ion-label><br>
       <ion-label class="username_1">{{user.email}}</ion-label><br>
       <ion-label class="username_1">{{user.username}}</ion-label><br>
-      <ion-label class="username_1">Account: {{user.visibility}}</ion-label>
-      
+      <ion-label class="username_1">Account: {{user.visibility}}</ion-label> 
       <br> 
     </div>
     <button class="edit_div" (click)="editProfile()">Edit Profile</button> 
@@ -57,5 +99,3 @@
     </ion-tab-bar>
   </ion-tabs>
 </ion-content>
-
-

@@ -1,10 +1,15 @@
-<ion-content [fullscreen]="true">
+<!-- <ion-content [fullscreen]="true"> -->
   <ion-header [translucent]="true">
     <ion-toolbar>
       <ion-buttons slot="start">
         <app-backbutton></app-backbutton>
        </ion-buttons>
-      <ion-title>Search</ion-title>
+       <ion-searchbar
+          #searchBar
+          placeholder="Search"
+          [(ngModel)]="searchQuery"
+          (ionChange)="onSearch()"
+        ></ion-searchbar>
     </ion-toolbar>
   </ion-header>
 
@@ -17,25 +22,25 @@
     </ion-segment-button>
   </ion-segment>
 
-  <ion-searchbar
+  <!-- <ion-searchbar
     #searchBar
     placeholder="Search"
     [(ngModel)]="searchQuery"
     (ionChange)="onSearch()"
-  ></ion-searchbar>
+  ></ion-searchbar> -->
 
-  <ion-content>
+  <ion-content id="main-content" class="custom-background" >
 
-    <div class="ion-text-center" *ngIf="searchClicked && loading">
+    <div class="fontcolor" *ngIf="searchClicked && loading">
       Please wait searching...
     </div>
 
     <ng-container *ngIf="!found">
-      <h2 class="ion-text-center">No matches found.</h2>
+      <h2 class="fontcolor">No matches found.</h2>
     </ng-container>
 
     <!-- Display  array of events information if available -->
-    <h2 class="ion-text-center" *ngIf="search_result" >{{search_result}}</h2>
+    <h2 class="fontcolor" *ngIf="search_result" >{{search_result}}</h2>
     <div *ngIf="this.events">
       <ion-list>
         <ion-item *ngFor="let eventItem of this.events">
@@ -73,4 +78,4 @@
       {{ item.name }}
     </ion-item>
   </ion-list> -->
-</ion-content>
+<!-- </ion-content> -->
