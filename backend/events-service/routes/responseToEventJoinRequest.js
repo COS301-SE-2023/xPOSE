@@ -1,12 +1,17 @@
 const { sequelize, User, Event, EventInvitation, EventParticipant, EventJoinRequest } = require('../data-access/sequelize');
 const uploadImageToFirebase = require('../data-access/firebase.repository');
 const admin = require('firebase-admin');
+const MessageBuilder = require('../libs/MessageBuilder');
+const { sendMessageToQueue } = require('../libs/sender');
 
 async function responseToEventJoinRequest(req, res) {
     try {
         const { uid } = req.query;
         const { response } = req.body; // Remove request_id from req.body
         const { code } = req.params;
+
+        // console.log("Request Body:", req.body);
+        // console.log("Request query", req.query);
 
         // Check if required fields are present in the request body
         if (!uid || !response) {
@@ -74,7 +79,7 @@ async function responseToEventJoinRequest(req, res) {
             return;
         }
 
-        // Update the request with the response
+        // // Update the request with the response
         const joinRequest = await existingRequest.update({
             response: response,
         });
@@ -86,6 +91,23 @@ async function responseToEventJoinRequest(req, res) {
                 event_id_fk: event.id,
                 timestamp: new Date(),
             });
+
+            // send notification to sender
+             // send message to notification queue using rabbitmq
+        const queueName = 'notifications';
+        const message = new MessageBuilder()
+          .setType("accept_join_event")
+          .setMessage(`${event.title} joined!`)
+          .setSenderId(req.body.receiverId)
+          .setReceiverId(req.body.senderId)
+          .build();
+
+        try{
+          sendMessageToQueue(queueName, message);
+        } catch(error){
+          console.log("Error sending notification", error)
+        }
+
         }
 
         res.json(joinRequest);

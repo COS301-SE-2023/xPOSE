@@ -104,6 +104,37 @@
               <ion-button fill="clear" (click)="clearNotification(message)">clear</ion-button>
             </ion-buttons>
           </ion-item>
+
+          <!-- accept_join_event -->
+          <ion-item *ngIf="message.type === 'accept_join_event' ">
+            <ion-label>
+              <h2>Request to join event accepted</h2>
+               <p>
+                <!-- <a [routerLink]="['/user-profile', message.senderId, message.receiverId]"> -->
+                  {{ message.message }}
+                <!-- </a> -->
+               </p>
+            </ion-label>
+            <ion-buttons slot="end">
+              <ion-button fill="clear" (click)="clearNotification(message)">clear</ion-button>
+            </ion-buttons>
+          </ion-item>
+
+          <!-- post_notifications -->
+          <ion-item *ngIf="message.type === 'post_notifications' ">
+              <ion-label>
+                <h2>Posts</h2>
+                  <p>
+                    <!-- <a [routerLink]="['/user-profile', message.senderId, message.receiverId]"> -->
+                    {{ message.message }}
+                    <!-- </a> -->
+                  </p>
+              </ion-label>
+              <ion-buttons slot="end">
+              <ion-button fill="clear" (click)="clearNotification(message)">clear</ion-button>
+              </ion-buttons>
+          </ion-item>
+          
           </ng-container>
         </ng-container>
     

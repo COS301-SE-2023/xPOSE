@@ -19,6 +19,7 @@ class MessageBuilder {
     }
     setValue(value){
       this.message.data.values.push(value);
+      return this;
     }
   
     setMessage(message) {
@@ -46,4 +47,4 @@ class MessageBuilder {
     }
 }
 
-module.export = new MessageBuilder();
+module.exports = MessageBuilder;

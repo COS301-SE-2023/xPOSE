@@ -2,7 +2,7 @@ import admin from "firebase-admin";
 import generateRandomAlphanumeric from './generateRandomAlphanumeric.js';
 
 export const updateUser = async (req, res) => {
-
+    
     try {
         const { userId } = req.params;
         const { displayName, photoURL, visibility } = req.body;
@@ -22,9 +22,9 @@ export const updateUser = async (req, res) => {
         if (photoURL || photoURL !="") updatedFields.photoURL = photoURL;
         if (visibility) updatedFields.visibility = visibility;
 
-        const alph = generateRandomAlphanumeric(6);
+        /*const alph = generateRandomAlphanumeric(6);
         let uniq_username_ = `${displayName}${alph}`;
-        updatedFields.uniq_username = uniq_username_;
+        updatedFields.uniq_username = uniq_username_;*/
         
         // Update the user document with the new values
         await userRef.update(updatedFields);
