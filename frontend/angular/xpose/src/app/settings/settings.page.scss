@@ -105,10 +105,12 @@
 h2 {
   text-align: center;
   margin-bottom: 20px;
+  color: #000;
 }
 
 .form-group {
   margin-bottom: 15px;
+  color: #000;
 }
 
 label {
@@ -125,8 +127,8 @@ input[type="email"] {
 }
 
 button {
-  background-color: #007bff;
-  color: #fff;
+  background-color: #eb0091;
+  color: #000000;
   border: none;
   padding: 10px 20px;
   border-radius: 4px;
@@ -134,7 +136,7 @@ button {
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: #eb0091;
 }
 
 .profile-section,
@@ -148,4 +150,27 @@ button:hover {
 
 .radio-label {
   margin-right: 10px;
+}
+.custom-backround{
+  background-color: #eb0091;
+  --background: #ffffff;
+  color: #000000;
+  font-size: 20px;
+  // --min-height: 70px;
+}
+h3{
+  color: #000;
+}
+ion-label{
+  color: #000 ;
+}
+ion-toolbar{
+  --background: #ffffff;
+  background-color: #ffffff;
+  color: #000000;
+  font-size: 20px;
+  // --min-height: 70px;
+}
+p{
+  color: #000;
 }
