@@ -24,8 +24,6 @@ firebase_admin.initialize_app(cred, {
     'databaseURL': 'https://xpose-4f48c-default-rtdb.firebaseio.com'
 })
 
-
-
 @app.route('/register', methods=['GET', 'POST'])
 def register_user():
     if request.method == 'GET':
