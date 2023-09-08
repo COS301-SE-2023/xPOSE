@@ -26,7 +26,27 @@ export class SettingsPage implements OnInit {
 		private api: ApiService,
 		private afAuth: AngularFireAuth) {}
 
-  ngOnInit() {}
+
+	headshot_image_url: string = '';
+  
+	ngOnInit() {
+		this.getCurrentUserId().subscribe((uid) => {
+			// formData.append('user_id', uid);
+		  
+			  if (uid) {
+			  this.http.get(`${this.api.apiUrl}/posts/user/${uid}`).subscribe(
+				  (res: any) => {
+					this.headshot_image_url = res.image_url;
+				  console.log(res);
+				  },
+				  (error: any) => {
+					console.log('Hello');
+				  console.error(error);
+				  }
+			  );
+			  }
+		});
+  }
 
   async uploadImage() {
     const image = await Camera.getPhoto({
@@ -120,11 +140,40 @@ export class SettingsPage implements OnInit {
   }
    // Method to upload facial recognition data
    uploadFacialData(event: any) {
-    const file = event.target.files[0];
+    this.file = event.target.files[0];
+	this.headshot_image_url = URL.createObjectURL(this.file);
+	// display image
+
     // Implement logic to upload and register facial data on the server
     // You may use Angular's HttpClient for making API requests
-  }
-  registerFacialData() {
+}
+
+file: any | null ;
+
+  // Method to register facial recognition data
+registerFacialData() {
+	// Create FormData and append the image Blob to it
+	if(this.file == null) {
+		console.log("No image data available.");
+		return;
+	}
+	  const formData = new FormData();
+	  formData.append('image', this.file, this.file.name);
+
+	  this.getCurrentUserId().subscribe((uid) => {
+		formData.append('user_id', uid);
+	  
+		  if (uid) {
+		  this.http.post(`${this.api.apiUrl}/posts/register?uid=${uid}`, formData).subscribe(
+			  (res: any) => {
+			  console.log(res);
+			  },
+			  (error: any) => {
+			  console.error(error);
+			  }
+		  );
+		  }
+	});
     // Implement logic to register facial data on the server
     // You may use Angular's HttpClient for making API requests
   }
