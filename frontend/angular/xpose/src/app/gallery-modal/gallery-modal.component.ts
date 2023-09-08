@@ -30,6 +30,14 @@ export class GalleryModalComponent  implements OnInit {
   ) {
     this.currentIndex = this.initialIndex;
   }
+  
+  // when the component loads
+  ionViewDidEnter() {
+    this.currentIndex = this.initialIndex;
+    console.log('Values:');
+    console.log(this.galleryData);
+    console.log(this.initialIndex);
+  }
 
   closeModal() {
     this.modalController.dismiss();
@@ -53,7 +61,10 @@ export class GalleryModalComponent  implements OnInit {
     }
   }
 
-
+  usersInImage() {
+    alert('Users in image: ' + this.galleryData[this.currentIndex].users_in_image);
+  }
+ 
   ngOnInit() {}
   downloadImage() {
     // const imageUrl = 'https://example.com/path-to-your-image.jpg'; // Replace with your image URL
