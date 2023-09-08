@@ -32,26 +32,29 @@
       <ion-item (click)="shareImage('')" class="menu-item">
         <ion-label>Share</ion-label>
       </ion-item>
+      <ion-item (click)="usersInImage()" class="menu-item">
+        <ion-label>Who's in this?</ion-label>
+      </ion-item>
     </ion-list>
   </ion-content>
 </ion-menu>
 
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog" role="document">
 
-      <div class="modal-content">
-        <div class="modal-body">
-          <div id="carouselExample" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner">
-              <div class="carousel-item active">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div id="carouselExample" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
                   <div class="modal-image-container">
-                   <ion-img [src]="galleryData[currentIndex].imageSrc" [alt]="galleryData[currentIndex].imageAlt"></ion-img>
-              </div>
+                   <ion-img [src]="galleryData[currentIndex].imageSrc" [alt]="galleryData[currentIndex].imageAlt"></ion-img>
+              </div>
             </div>
-              <!-- Add other carousel items -->
-            </div>
-            <div class="modal-navigation">
+              <!-- Add other carousel items -->
+            </div>
+            <div class="modal-navigation">
             <button (click)="prev()">
               <ion-icon class="icon-nev" name="chevron-back-outline"></ion-icon>
             </button>
@@ -82,11 +85,11 @@
                 (keyup.enter)="addComment()"
               ></ion-textarea> -->
           <!-- </div> -->
-          </div>
+          </div>
   
-        </div>
-         
-      </div>
-    </div>
+        </div>
+         
+      </div>
+    </div>
   </div>
   
