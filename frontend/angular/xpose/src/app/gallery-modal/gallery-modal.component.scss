@@ -4,7 +4,7 @@
     top: 50%;
     left: 0;
     width: 100%;
-    transform: translateY(-50%);
+    transform: translateY(-100%);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -44,7 +44,7 @@ ion-img {
   height: 550px;
   background-repeat: no-repeat;
   background-size: cover;
-  padding-top: -10px;
+  padding-top: -40px;
 }
 .close-outline{
   color: #ff0000;
@@ -66,7 +66,7 @@ button{
 .love{
   color: #ff0000;
   font-size: 30px;
- padding-left: 144px;
+  padding-left: 144px;
 }
 .modal{
   width: 100%;
@@ -78,18 +78,18 @@ button{
 
 }
 
-.menu-item {
-  padding: 10px; 
-  color: #242424; 
-  font-size: 16px; 
-  text-align: left; 
-}
+// .menu-item {
+//   padding: 10px; 
+//   color: #242424; 
+//   font-size: 16px; 
+//   text-align: left; 
+// }
 
-.menu-item:hover {
-  background-color: #ffc8ed; 
-  color: #000000; 
-  transition: background-color 0.3s ease, color 0.3s ease; 
-}
+// .menu-item:hover {
+//   background-color: #ffc8ed; 
+//   color: #000000; 
+//   transition: background-color 0.3s ease, color 0.3s ease; 
+// }
 .custom-backround{
   --background: #ffffff;
   color: #000000;
@@ -102,6 +102,7 @@ ion-toolbar{
   color: #000000;
   font-family: 'Pacifico', cursive;
   background-color: violet;
+  --background:#ffffff;
 }
 .header{
   color: #000000;
