@@ -15,7 +15,11 @@ import { AngularFireAuth } from "@angular/fire/compat/auth";
 })
 export class SettingsPage implements OnInit {
   selectedImage: string | null = null;
-	selectedImage2: string | null = null;// this is for the second image
+  username: string = 'JohnDoe';
+  fullName: string = 'John Doe';
+  email: string = 'john.doe@example.com';
+  privacy: string = 'public';
+
   constructor(private http: HttpClient, 
     public authService: AuthService,
 		private router: Router,
@@ -109,6 +113,39 @@ export class SettingsPage implements OnInit {
   register() {
     // Implement logic to register the selected image (if needed)
   }
+  // Method to update account privacy setting
+  updatePrivacy() {
+    // Implement logic to send updated privacy setting to the server
+    // You may use Angular's HttpClient for making API requests
+  }
+   // Method to upload facial recognition data
+   uploadFacialData(event: any) {
+    const file = event.target.files[0];
+    // Implement logic to upload and register facial data on the server
+    // You may use Angular's HttpClient for making API requests
+  }
+  registerFacialData() {
+    // Implement logic to register facial data on the server
+    // You may use Angular's HttpClient for making API requests
+  }
+
+  // Method to delete facial recognition data
+  deleteFacialData() {
+    // Implement logic to delete facial data on the server
+    // You may use Angular's HttpClient for making API requests
+  }
+
+	// Method to delete the user's account
+	deleteAccount() {
+		// Implement logic to delete the user's account on the server
+		// You may use Angular's HttpClient for making API requests
+	}
+
+	// Method to update user profile
+	updateProfile() {
+		// Implement logic to send updated profile data to the server
+		// You may use Angular's HttpClient for making API requests
+	  }
 
   getCurrentUserId(): Observable<string> {
     return this.afAuth.authState.pipe(

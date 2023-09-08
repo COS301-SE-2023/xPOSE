@@ -1,128 +1,67 @@
-<ion-menu contentId="main-content">
-  <ion-content>
-    <ion-list>
-      <ion-item>
-        <a (click)="onHome()" class="sidebar-link">
-          <ion-icon name="home-outline"></ion-icon>
-          Home
-        </a>  
-      </ion-item>
-      <ion-item>
-        <a (click)="onJoinedEvent()" class="sidebar-link">
-          <ion-icon name="people-outline"></ion-icon>
-          Joined Events
-        </a>  
-      </ion-item>
-      <ion-item>
-        <a (click)="onEvent()" class="sidebar-link">
-          <ion-icon name="add-outline"></ion-icon>
-          Create Event
-        </a>  
-      </ion-item>
-      <ion-item>
-        <a (click)="onNotifications()" class="sidebar-link">
-          <ion-icon name="notifications-outline"></ion-icon>
-          Notifications
-        </a>  
-      </ion-item>
-      <ion-item>
-        <a (click)="onProfile()" class="sidebar-link">
-          <ion-icon name="person-outline"></ion-icon>
-          Profile
-        </a>  
-      </ion-item>
-      <ion-item>
-        <a (click)="onSettings()" class="sidebar-link">
-          <ion-icon name="settings-outline"></ion-icon>
-          Settings
-        </a>  
-      </ion-item>
-      <ion-item>
-        <a (click)="logout()" class="sidebar-link">
-          <ion-icon name="log-out-outline"></ion-icon>
-          Logout
-        </a>  
-      </ion-item>
-    </ion-list>
-  </ion-content>
-</ion-menu>
-
 <ion-header [translucent]="true">
   <ion-toolbar class="custom-toolbar">
     <ion-buttons slot="start">
+      <app-backbutton></app-backbutton>
+    </ion-buttons>
+    <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Settings</ion-title>
+    <ion-title>Account Settings</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" id="main-content" class="custom-background">
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Upload Headshots</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-grid>
-        <ion-row>
-          <ion-col size="12" class="button-col">
-            <button expand="full" (click)="uploadImage()">Upload Image</button>
-          </ion-col>
-          <!-- <ion-col size="12" class="button-col">
-            <button expand="full" (click)="authorizeImage()">Authorize Images</button>
-          </ion-col> -->
-          <ion-col size="12" class="image-col" *ngIf="selectedImage">
-            <img [src]="selectedImage" alt="Selected Headshot" />
-          </ion-col>
-          <ion-col size="12" *ngIf="!selectedImage" class="image-col">
-            Image couldn't be found.
-          </ion-col>
-          <ion-col size="12" class="button-col">
-            <button expand="full" (click)="register()">Register</button>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-card-content>
-  </ion-card>
+<ion-content [fullscreen]="true" id="main-content" class="custom-backround">
+  <div class="account-settings">
+    <!-- <h2>Account Settings</h2> -->
 
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Test the photo recognition</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-grid>
-        <ion-row>
-          <ion-col size="12" class="button-col">
-            <button expand="full" (click)="detectFaces()">Upload Image</button>
-          </ion-col>
-          <!-- <ion-col size="12" class="button-col">
-            <button expand="full" (click)="authorizeImage()">Authorize Images</button>
-          </ion-col> -->
-          <ion-col size="12" class="image-col" *ngIf="selectedImage">
-            <img [src]="selectedImage2" alt="Selected Headshot" />
-          </ion-col>
-          <ion-col size="12" *ngIf="!selectedImage2" class="image-col">
-            Image couldn't be found.
-          </ion-col>
-          <!-- <ion-col size="12" class="button-col">
-            <button expand="full" (click)="register()">Register</button>
-          </ion-col> -->
-        </ion-row>
-      </ion-grid>
-    </ion-card-content>
-  </ion-card>
+    <!-- Change Profile Section -->
+    <section class="profile-section">
+      <h3>Change Profile</h3>
+      <form (submit)="updateProfile()">
+        <div class="form-group">
+          <label for="username">Username:</label>
+          <input type="text" id="username" [(ngModel)]="username" name="username" required>
+        </div>
+        <div class="form-group">
+          <label for="fullName">Full Name:</label>
+          <input type="text" id="fullName" [(ngModel)]="fullName" name="fullName" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" id="email" [(ngModel)]="email" name="email" required>
+        </div>
+        <button type="submit">Save Changes</button>
+      </form>
+    </section>
 
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Delete your account</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-grid>
-        <ion-row>
-          <ion-col size="12" class="button-col">
-            <button expand="full" (click)="uploadAnotherImage()">Delete Account</button>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-card-content>
-  </ion-card>
+    <!-- Account Privacy Section -->
+    <section class="privacy-section">
+      <h3>Account Privacy</h3>
+      <div class="form-group">
+        <label>Privacy Setting:</label>
+        <label>
+          <input type="radio" [(ngModel)]="privacy" name="privacy" value="public"> Public
+        </label>
+        <label>
+          <input type="radio" [(ngModel)]="privacy" name="privacy" value="private"> Private
+        </label>
+      </div>
+      <button (click)="updatePrivacy()">Save Changes</button>
+    </section>
+
+    <!-- Facial Recognition Section -->
+    <section class="facial-recognition-section">
+      <h3>Facial Recognition</h3>
+      <input type="file" (change)="uploadFacialData($event)">
+      <button (click)="registerFacialData()">Register Facial Data</button>
+      <button (click)="deleteFacialData()">Delete Facial Data</button>
+    </section>
+
+    <!-- Delete Account Section -->
+    <section class="delete-account-section">
+      <h3>Delete Account</h3>
+      <p>Are you sure you want to delete your account?</p>
+      <button (click)="deleteAccount()">Delete Account</button>
+    </section>
+  </div>
 </ion-content>
