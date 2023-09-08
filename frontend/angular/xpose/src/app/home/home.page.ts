@@ -7,9 +7,7 @@ import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { Observable, map } from "rxjs";
 import { get } from "http";
 import { ApiService } from "../service/api.service";
-
-
-
+import { MenuController } from '@ionic/angular';
 
 @Component({
 	selector: "app-home",
@@ -27,15 +25,20 @@ export class HomePage {
 		private router: Router,
 		private http: HttpClient,
 		private afAuth: AngularFireAuth,
-		private api: ApiService
+		private api: ApiService,
+		private menuController: MenuController
 		) {
 	
 	   }
 
+	   menuItemClicked(item: string) {
+		console.log(`Clicked on ${item}`);
+		this.menuController.close('menu');
+	  }
+
 	ngOnInit() {
 		this.getEventsFromAPI();
 	}
-	   // get events from firebase and display
 	   
   getEventsFromAPI() {
 
@@ -47,7 +50,6 @@ export class HomePage {
 				  this.events = events;
 				this.populateCards();
 			  });
-			//   this.loading = false;
 		}
 		else {
 			console.log("no user id");
@@ -68,8 +70,6 @@ export class HomePage {
 		if (user) {
 		  return user.uid;
 		} else {
-			// throw error
-			// some extra stuff
 		  console.log('No user is currently logged in.');
 		  return '';
 		}
@@ -132,4 +132,36 @@ export class HomePage {
 	eventDetails(event_id: string) {
 		this.router.navigate(['/view-event', event_id]);
 	}
+
+	viewEvent() {
+		this.router.navigate(['/event']);
+		}
+	
+		  onEvent(){
+			this.router.navigate(['/create-event']);
+		}
+	
+		onNotifications(){
+			this.router.navigate(['/notification']);
+		}
+		
+		onProfile(){
+			this.router.navigate(['/profile']);
+		}  
+	
+		onJoinedEvent(){
+			this.router.navigate(['/joined-event']);
+		}
+	
+		onHome(){
+			this.router.navigate(['/home']);
+		}
+	
+		onSettings(){
+			this.router.navigate(['/settings']);
+		}
+		
+	   logout() {
+		this.authService.signOut();
+	  }
 }

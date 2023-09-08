@@ -3,3 +3,5 @@ node_modules/
 uploads/
 .env
 /__pycache__/
+/.venv/
+/build/

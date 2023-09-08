@@ -1,3 +1,4 @@
+from form_generators import generate_registration_form, generate_detection_form, generate_upload_form, generate_event_post_form, generate_image_upload_form
 from datetime import timedelta
 import datetime
 from flask import Flask, request, jsonify
@@ -9,9 +10,8 @@ import os
 import random
 import string
 import json
-from db_connector import db, User, Image  # Import the database models
-from PIL import Image as PILImage, ImageFilter
-import io
+from db_connector import User  # Import the database models
+from PIL import Image as PILImage
 from datetime import datetime, timedelta
 
 
@@ -24,71 +24,67 @@ firebase_admin.initialize_app(cred, {
     'databaseURL': 'https://xpose-4f48c-default-rtdb.firebaseio.com'
 })
 
-def generate_registration_form():
-    return '''
-    <form method="post" action="/register" enctype="multipart/form-data">
-        <label for="user_id">User ID:</label><br>
-        <input type="text" id="user_id" name="user_id" required><br><br>
-        <input type="file" name="image" accept=".jpg, .jpeg, .png" required><br><br>
-        <input type="submit" value="Register User">
-    </form>
-    '''
-
-def generate_detection_form():
-    return '''
-    <form method="post" action="/detect" enctype="multipart/form-data">
-        <input type="file" name="image" accept=".jpg, .jpeg, .png" required><br><br>
-        <input type="submit" value="Detect Users">
-    </form>
-    '''
-def generate_upload_form():
-    return '''
-    <form method="post" action="/upload" enctype="multipart/form-data">
-        <label for="user_id">User ID:</label><br>
-        <input type="text" id="user_id" name="user_id" required><br><br>
-        <input type="file" name="image" accept=".jpg, .jpeg, .png" required><br><br>
-        <input type="submit" value="Upload Photo">
-    </form>
-    '''
-
 @app.route('/register', methods=['GET', 'POST'])
 def register_user():
     if request.method == 'GET':
         return generate_registration_form()
     try:
         # Load the image
-        image = PILImage.open(request.files['image'])
-        
+        image_file = request.files['image']
+
+        image = PILImage.open(image_file)
+        print("Image loaded successfully")
+
         # Calculate the new dimensions by increasing both width and height
-        original_width, original_height = image.size
-        new_width = int(original_width / 0.7)
-        new_height = int(original_height / 0.7)
-        
+        # original_width, original_height = image.size
+        # new_width = int(original_width / 0.7)
+        # new_height = int(original_height / 0.7)
+
         # Resize the image to the new dimensions
-        image = image.resize((new_width, new_height), PILImage.ANTIALIAS)
-        
+        # image = image.resize((new_width, new_height), PILImage.ANTIALIAS)
+        # Uncomment the above lines if you need to resize the image.
+
+        print("Image resized successfully")
+
         # Convert the resized image to a numpy array
         image_array = np.array(image)
+        print("Image converted to a numpy array successfully")
 
         # Perform face detection on the resized image
         face_encodings = face_recognition.face_encodings(image_array)
-        
+
         if len(face_encodings) == 0:
             return jsonify({'error': 'No faces were detected in the provided image'}), 400
 
         encoding = face_encodings[0]  # Assuming there's at least one face
+        print("Face detected and encoded successfully")
 
         user_id = request.form['user_id']
-        
+
+        # Upload the image to Firebase Storage and get the URL
+        image_file.seek(0)
+        image_url = upload_image_to_firebase(image_file)
+        print("Image uploaded to Firebase Storage successfully")
+
+        # Update the user's document with the image URL
+        firestore_client = firestore.client()
+        user_ref = firestore_client.collection('Users').document(user_id)
+        user_ref.update({'image_url': image_url})
+        print("Image URL updated in Firestore successfully")
+
         # Serialize the encoding array to a JSON string
         encoding_json = json.dumps(encoding.tolist())
+        print("Encoding converted to JSON successfully")
 
         # Create a new user and save their encoding in the database
         new_user = User.create(uid=user_id, face_encoding=encoding_json)
-        
-        return jsonify({'message': 'User registered successfully'})
+        print("User created and face encoding saved in the database successfully")
+
+        return jsonify({'message': 'User registered successfully', 'image_url': image_url})
     except Exception as e:
+        print("Error:", str(e))
         return jsonify({'error': str(e)}), 400
+
     
 @app.route('/detect', methods=['GET', 'POST'])
 def detect_users():
@@ -151,16 +147,66 @@ def detect_users_in_image(image):
     except Exception as e:
         return str(e)
 
-def generate_event_post_form(event_id):
-    return f'''
-    <form method="post" action="/post/{event_id}" enctype="multipart/form-data">
-        <label for="uid">User ID:</label><br>
-        <input type="text" id="uid" name="uid" required><br><br>
-        <label for="image">Image:</label><br>
-        <input type="file" name="image" accept=".jpg, .jpeg, .png" required><br><br>
-        <input type="submit" value="Create Event Post">
-    </form>
-    '''
+@app.route('/user/<uid>', methods=['GET'])
+def get_user_image(uid):
+    try:
+        # Create a Firestore client
+        firestore_client = firestore.client()
+
+        # Get the user document by UID
+        user_ref = firestore_client.collection('Users').document(uid)
+        user_data = user_ref.get().to_dict()
+
+        if not user_data:
+            return jsonify({'error': 'User not found'}), 404
+
+        # Check if the user document contains an 'image_url' field
+        if 'image_url' in user_data:
+            image_url = user_data['image_url']
+            return jsonify({'image_url': image_url}), 200
+        else:
+            return jsonify({'error': 'User image not found'}), 404
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/post/<event_id>/<post_id>', methods=['GET', 'DELETE', 'PUT'])
+def delete_event_post(event_id, post_id):
+    try:
+        # Check if the post exists in the Firestore collection 'Event-Posts/event_id/posts'
+        firestore_client = firestore.client()
+        event_post_ref = firestore_client.document(f'Event-Posts/{event_id}')
+        posts_collection = event_post_ref.collection('posts')
+        post_doc = posts_collection.document(post_id)
+        
+        if not post_doc.get().exists:
+            return jsonify({'error': 'Post not found'}), 404
+
+        # Delete the post document
+        post_doc.delete()
+
+        return jsonify({'message': 'Post deleted successfully'}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+def remove_metadata(image):
+    try:
+        # Open the image using Pillow
+        img = PILImage.open(image)
+
+        # Remove EXIF data (metadata) from the image
+        img_without_metadata = PILImage.new(img.mode, img.size)
+        img_without_metadata.putdata(list(img.getdata()))
+
+        # Save the image without metadata
+        # remove the debgging line below
+        # img_without_metadata.save('test.jpg', format='JPEG')
+        img_without_metadata.save(image, format='JPEG')
+
+        return True  # Successfully removed metadata
+    except Exception as e:
+        return str(e)  # Return the error message if there's an issue
+
+
 
 @app.route('/post/<event_id>', methods=['GET', 'POST'])
 def create_event_post(event_id):
@@ -173,10 +219,11 @@ def create_event_post(event_id):
         # Check if the request has an image file
         if 'image' not in request.files:
             return jsonify({'error': 'No image file provided'}), 400
+        
 
         # Get the image file
         
-        image = request.files['image']
+        image = (request.files['image'])
         image_url = upload_image_to_firebase(image)
         users_in_image = detect_users_in_image(image)
 
@@ -219,15 +266,6 @@ def create_event_post(event_id):
 def secure_filename(filename : str):
     return ''.join(c for c in filename if c.isalnum() or c in ['.', '_'])
 
-def generate_image_upload_form():
-    form = """
-    <form method="POST" action="/upload_image" enctype="multipart/form-data">
-        <input type="file" name="image" accept="image/*" required>
-        <input type="submit" value="Upload Image">
-    </form>
-    """
-    return form
-
 def upload_image_to_firebase(image, filename = None):
     # Generate a random filename if no filename is provided
     if filename is None:
@@ -269,8 +307,6 @@ def upload_image():
             blob = bucket.blob('test/mito.jpg')
             blob.upload_from_file(image)
 
-    
-
             # Generate a download URL for the uploaded image with a 30-year expiration
             expiration_time = datetime.utcnow() + timedelta(days=90)
             expiration_seconds = int(expiration_time.timestamp())
@@ -280,6 +316,36 @@ def upload_image():
     except Exception as e:
         return jsonify({'error': str(e)})
 
+# Add a comment to a post 
+@app.route('/:event_id/:post_id/comment', methods=['POST'])
+def add_comment():
+    """
+    Adding a comment is adding a comment document inside the post document's 'comments' collection.
+    """
+    pass
+
+# Remove a comment from a post
+@app.route('/:event_id/:post_id/comment/:comment_id', methods=['DELETE'])
+def remove_comment():
+    """
+    Removing a comment is deleting a comment document from the post document's 'comments' collection.
+    """
+    pass
+
+# Add a like to a post or remove a like from a post
+@app.route('/:event_id/:post_id/like', methods=['POST', 'DELETE'])
+def like_action():
+    pass
+
+# Delete a post
+@app.route('/:event_id/:post_id', methods=['DELETE'])
+def delete_post():
+    pass
+
+# Health check
+@app.route('/', methods=['GET'])
+def health_check():
+    return jsonify({'Message': 'Posts service is healthy'}), 200
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
