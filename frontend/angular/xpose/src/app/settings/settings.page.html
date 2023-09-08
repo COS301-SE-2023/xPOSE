@@ -52,6 +52,8 @@
     <!-- Facial Recognition Section -->
     <section class="facial-recognition-section">
       <h3>Facial Recognition</h3>
+      <!-- add image linking to headshot_image_url -->
+      <img [src]="headshot_image_url" alt="No Headshot Image">
       <input type="file" (change)="uploadFacialData($event)">
       <button (click)="registerFacialData()">Register Facial Data</button>
       <button (click)="deleteFacialData()">Delete Facial Data</button>
