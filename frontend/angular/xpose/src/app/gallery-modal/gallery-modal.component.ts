@@ -4,6 +4,8 @@ import { MenuController, ModalController, Platform } from '@ionic/angular';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/storage';
 import { ApiService } from '../service/api.service';
+import { Observable, map } from 'rxjs';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 
 @Component({
@@ -27,6 +29,7 @@ export class GalleryModalComponent  implements OnInit {
     private menuController: MenuController,
     private http: HttpClient,
     private api: ApiService,
+    private afs: AngularFirestore,
   ) {
     this.currentIndex = this.initialIndex;
   }
@@ -61,10 +64,24 @@ export class GalleryModalComponent  implements OnInit {
     }
   }
 
-  usersInImage() {
-    alert('Users in image: ' + this.galleryData[this.currentIndex].users_in_image);
+  async usersInImage() {
+    // iterate through users_in_image array and display each uid using getUserNameFromUid(uid)
+    alert('Users in image:\n' + this.galleryData[this.currentIndex].users_in_image.join('\n'));
+    
   }
- 
+  
+  getUserNameFromUid(uid: string): Observable<string> {
+    return this.afs.collection('Users').doc(uid).valueChanges().pipe(
+      map((user: any) => {
+        if (user && user.displayName) {
+          return user.displayName;
+        } else {
+          return 'Unknown User';
+        }
+      })
+    );
+  }
+    
   ngOnInit() {}
   downloadImage() {
     // const imageUrl = 'https://example.com/path-to-your-image.jpg'; // Replace with your image URL
