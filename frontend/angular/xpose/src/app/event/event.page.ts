@@ -316,7 +316,7 @@ export class EventPage {
         this.getCurrentUserId().subscribe((uid) => {
           formData.append('uid', uid);
           if (uid) {
-            this.http.post(`${this.api.apiUrl}/posts/post/${this.current_event.code}?uid=${uid}`, formData).subscribe(
+            this.http.post(`${this.api.apiUrl}/p/${this.current_event.code}?uid=${uid}`, formData).subscribe(
               (res: any) => {
                 console.log(res);
               },
