@@ -146,6 +146,7 @@ ion-radio-group{
 .item1{
   color: #000000;
   --background: #d3d3d3;
+  border: solid 1px #b1b1b1;
   
   // background-color: #525252;
 }
@@ -159,6 +160,11 @@ ion-col{
 }
 ion-row{
   color: #000000;
+  // --background: #000000;
+}
+.privacy{
+  color: #000000;
+  padding-bottom: 25px;
   // --background: #000000;
 }
 // ion-label{
