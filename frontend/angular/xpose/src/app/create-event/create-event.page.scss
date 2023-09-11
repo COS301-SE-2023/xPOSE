@@ -1,221 +1,166 @@
-// .custom-background{
-//   --background: #ffffff;
-//   background-color: #ffffff;
-//   color: #000000;
-//   font-size: 20px;
-//   // --min-height: 70px;
-// }
-// .button-col,
-// .image-col {
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   margin-top: 10px;
-//   margin-bottom: 10px;
-// }
+/* Global Styles */
 
-// .image-col img {
-//   max-width: 100%;
-//   height: auto;
-// }
+/* Set background color for the entire app */
+ion-content.custom-background {
+  --ion-background-color: #ffffff; /* Replace with your desired background color */
+}
 
-// button{
-//   background-color: #ff00f0;
-//   border: none;
-//   color: #1d1d1d;
-//   padding: 10px 20px;
-//   text-align: center;
-//   text-decoration: none;
-//   display: inline-block;
-//   font-size: 16px;
-//   font-weight: bold;
-//   border-radius: 5px;
-//   border: 1px solid #a8009dd3;
-//   ::shadow{
-//     color: #000000;
-//   }
-// }
-// ion-card{
-//   --background: #ffffff;
-//   background-color: #ffffff;
-//   color: #000000;
-//   font-size: 20px;
-//   // --min-height: 70px;`
-// }
-// ion-card-title{
-//   font-size: 20px;
-//   font-weight: bold;
-//   color: #000000;
-// }
-// ion-toolbar{
-//   --background: #ffffff;
-//   background-color: #ffffff;
-//   color: #000000;
-//   font-size: 20px;
-//   // --min-height: 70px;
-// }
 
-// .sidebar {
-//   background-color: #f0f0f0;
-//   height: 100%;
-//   overflow-y: auto;
-//   --background: #ffffff;
-// }
 
-// .sidebar ion-header {
-//   background-color: #ffffff;
-//   --background: #ffffff;
-//   border-bottom: 1px solid #ccc;
-// }
-
-// .sidebar ion-content {
-//   padding: 10px;
-//   --background: #ffffff;
-// }
-
-// .scrollable-content {
-//   max-height: 100vh;
-//   overflow-y: auto;
-//   --background: #ffffff;
-// }
-
-// .sidebar-link {
-//   display: block;
-//   text-decoration: none;
-//   color: #000;
-//   margin-bottom: 10px;
-//   cursor: pointer;
-//   --background: #ffffff;
-// }
-
-// .sidebar-link ion-icon {
-//   margin-right: 5px;
-//   --background: #ffffff;
-// }
-
-// ion-item{
-//   --background: #ffffff;
-// }
 .account-settings {
   max-width: 600px;
   margin: 0 auto;
   padding: 20px;
-  background-color: #ffffff;
-  color: #000;
 }
 
-h2 {
-  text-align: center;
-  margin: 20px 0; /* Added margin to top and bottom */
-  color: #000;
+/* Center content in the middle of the screen */
+ion-content.fullscreen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  color: #333;
 }
 
-.form-group {
-  margin-bottom: 15px;
-  color: #000;
-  // border: solid 0.5px #eeeeee;
+/* Sidebar Menu Styles */
+
+/* Style sidebar links */
+.sidebar-link {
+  text-decoration: none;
+  color: #333; /* Replace with your desired text color */
+  display: flex;
+  align-items: center;
 }
 
-label {
-  display: block;
-  margin-bottom: 5px;
+/* Add space between icon and text */
+ion-icon {
+  margin-right: 8px;
 }
 
-input[type="text"],
-input[type="email"] {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ff0000;
-  border-radius: 4px;
-  margin-bottom: 20px; /* Added margin to the bottom of inputs */
-  // color: #000;
-}
-
-button {
-  background-color: #eb0091;
-  color: #000000;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 4px;
+/* Add padding and background color on hover */
+ion-item:hover {
+  background-color: #ddd; /* Replace with your desired hover background color */
   cursor: pointer;
-  margin-top: 10px; /* Added margin to the top of the button */
+  color: #333;
 }
 
-button:hover {
-  background-color: #eb0091;
+/* Toolbar Styles */
+
+/* Customize the toolbar appearance */
+.custom-toolbar {
+  --ion-background-color: #eb0091; /* Replace with your desired toolbar background color */
+  --color: #000000; /* Replace with your desired text color */
 }
 
+/* Form Styles */
+
+/* Style labels for form elements */
+label {
+  font-weight: bold;
+  color: #333;
+  border-bottom: #007aff;
+}
+
+/* Style input elements */
+ion-input, ion-textarea {
+  border: 1px solid #ccc; /* Replace with your desired border color */
+  border-radius: 4px;
+  padding: 8px;
+  margin-bottom: 10px;
+  width: 100%;
+  color: #000000;
+}
+
+/* Style radio buttons */
+ion-radio {
+  --color-checked: #ff00ff; /* Replace with your desired checked color */
+}
+
+/* Center the map div */
+#map {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px; /* Adjust the height as needed */
+  border: 1px solid #ccc; /* Replace with your desired border color */
+  margin-top: 10px;
+  color: #333;
+}
+
+/* Button Styles */
+
+/* Customize the button appearance */
+.custom-btn {
+  --background: #eb0091; /* Replace with your desired button background color */
+  --color: #000000; /* Replace with your desired button text color */
+  border-radius: 4px;
+  text-align: center;
+  width: 100%;
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+/* Adjust button spinner size */
+ion-spinner {
+  --spinner-lines: 2;
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+  color: #000000;
+}
+
+/* Adjust button margin */
+span:not(.ng-star-inserted) {
+  margin-left: 8px;
+}
+
+/* Center the button */
+.centrr {
+  display: flex;
+  justify-content: center;
+  color: #000000;
+}
+P{
+  color: #000000;
+}
+.label_upload,
 .profile-section,
 .privacy-section,
 .facial-recognition-section,
 .delete-account-section {
-  border: 1px solid #ccc;
+  border: 1px solid #e0e0e0;
   padding: 15px;
   margin-bottom: 20px;
 }
-
-.radio-label {
-  margin-right: 10px;
-}
-
-.custom-background {
-  background-color: #ffffff;
-  color: #000000;
-  font-size: 20px;
-  /* Remove the following line, or uncomment if needed */
-  /* --min-height: 70px; */
-  padding: 20px; /* Added padding to create space */
-}
-
-h3 {
-  color: #000;
-  margin-top: 20px; /* Added margin to the top of h3 elements */
-}
-
-ion-label {
-  color: #000;
-  // border : 1px solid #000;
-}
-
-ion-toolbar {
-  background-color: #ffffff;
+ion-toolbar{
   --background: #ffffff;
+  background-color: #ffffff;
   color: #000000;
   font-size: 20px;
-  /* --min-height: 70px; */
-  padding: 10px 0; /* Added padding to top and bottom of toolbar */
+  // --min-height: 70px;
 }
-
-p {
-  color: #000;
-  margin-bottom: 15px; /* Added margin to the bottom of paragraphs */
-}
-.ther{
-  border: solid 1px #d4d4d4;
-  color: #000;
-}
-.input-container{
-  border: solid 1px #d4d4d4;
-  color: #000;
-  padding-bottom: 30px;
-}
-.custom-btn{
-  background-color: #eb0091;
+ion-radio-group{
   color: #000000;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-top: 10px; /* Added margin to the top of the button */
-  align-items: center;
+  --background: #ffffff;
 }
 .item1{
-  background-color: #ffffff;
   color: #000000;
-  font-size: 20px;
-  /* --min-height: 70px; */
-  padding: 10px 0; /* Added padding to top and bottom of toolbar */
-  border: solid 1px #d4d4d4;
-  --background: #cccccc;
-  padding-bottom: 5px;
+  --background: #d3d3d3;
+  
+  // background-color: #525252;
 }
+ion-input{
+  color: #000000;
+  // --background: #000000;
+}
+ion-col{
+  color: #000000;
+  // --background: #000000;
+}
+ion-row{
+  color: #000000;
+  // --background: #000000;
+}
+// ion-label{
+//   background-color: #ffffff;
+// }
