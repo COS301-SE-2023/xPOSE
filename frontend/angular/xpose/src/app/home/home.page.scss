@@ -4,6 +4,10 @@
   font-size: 20px;
 }
 
+.custom-toolbar {
+  --background: hsl(304, 49%, 82%);
+}
+
 ion-card {
   background-color: hsl(304, 49%, 82%);
   color: #000000;
@@ -199,13 +203,14 @@ ion-card-content {
   }
 }
 }
+
 ion-toolbar{
   background-color: #ffffff;
   --background: #ffffff;
   color: #000000;
   font-size: 20px;
-  // --min-height: 70px;
 }
+
 ion-col{
   background: #ffffff;
   color: #000000;
