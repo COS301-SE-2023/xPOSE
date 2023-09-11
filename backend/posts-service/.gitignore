@@ -2,6 +2,6 @@ permissions.json
 node_modules/
 uploads/
 .env
-/__pycache__/
+**/__pycache__/
 /.venv/
 /build/
