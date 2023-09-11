@@ -1,4 +1,9 @@
 from flask import Flask, request, jsonify
+import os
+import sys
+# face_recognition_functions.py is in /libs/
+sys.path.append(os.path.join(os.path.dirname(__file__), 'libs'))
+from face_recognition_functions import encode_and_store_face, decode_faces
 
 app = Flask(__name__)
 
@@ -28,11 +33,30 @@ def delete_like():
 
 @app.route('/register', methods=['POST'])
 def register_user():
-    return jsonify({'Message': 'Registered a user'}, 201)
+    if request.method == 'POST':
+        try:
+            user_id = request.form['user_id']
+            image_file = request.files['image']
+            result, status_code = encode_and_store_face(image_file, user_id)
+            return jsonify(result), status_code
+        except Exception as e:
+            return jsonify({'error': str(e)}), 400
+
+@app.route('/detect', methods=['POST'])
+def detect_users():
+    if request.method == 'POST':
+        try:
+            image_file = request.files['image']
+            result, status_code = decode_faces(image_file)
+            return jsonify(result), status_code
+        except Exception as e:
+            return jsonify({'error': str(e)}), 400
+
 
 @app.route('/health', methods=['GET'])
 def health_check():
     return jsonify({'Message': 'Posts service is healthy'}, 200)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # app.run(debug=True)
+    import rabbitmq_functions
