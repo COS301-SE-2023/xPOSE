@@ -16,7 +16,7 @@ class BaseModel(Model):
 
 class User(BaseModel):
     uid = CharField(primary_key=True)
-    face_encoding = TextField()
+    face_encoding = TextField(null=True)
 
 class Event(BaseModel):
     eid = CharField(primary_key=True)
