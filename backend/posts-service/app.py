@@ -128,6 +128,9 @@ def delete_post(event_id, post_id):
         post_ref = firestore_client.collection(f'Event-Posts/{event_id}/posts').document(post_id)
         post_doc = post_ref.get()
 
+        # Delete image from Firebase Storage
+        delete_image_from_firebase(post_doc.to_dict()['image_url'])
+
         if post_doc.exists:
             # Delete the post from the Firestore collection
             post_ref.delete()
