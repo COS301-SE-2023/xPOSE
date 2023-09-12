@@ -1,14 +1,7 @@
-# Include external libraries
-# import os
-# import sys
-# sys.path.append(os.path.join(os.path.dirname(__file__), 'libs'))
-# sys.path.append(os.path.join(os.path.dirname(__file__), 'data-access'))
-
 from flask import Flask, request, jsonify
 from db_connector import *
-from firebase_functions import upload_image_to_firebase
-# face_recognition_functions.py is in /libs/
-from face_recognition_functions import encode_and_store_face, decode_faces
+from firebase_functions import upload_image_to_firebase, delete_image_from_firebase
+from face_recognition_functions import encode_and_store_face, decode_faces, clear_face_encodings
 from google.cloud import firestore
 
 import os
@@ -209,24 +202,162 @@ def get_and_delete_comment(event_id, post_id, comment_id):
     except Exception as e:
         return jsonify({'error': str(e)}), 400
 
-@app.route('/:event_id/:post_id/like', methods=['POST'])
-def create_like():
-    return jsonify({'Message': 'Created a like'}, 201)
 
-@app.route('/:event_id/:post_id/like/:like_id', methods=['DELETE'])
-def delete_like():
-    return jsonify({'Message': 'Deleted a like'}, 200)
+@app.route('/<event_id>/<post_id>/like', methods=['POST'])
+def create_like(event_id, post_id):
+    try:
+        # Get user ID from the request
+        user_id = request.form['user_id']
+
+        # Initialize Firestore client
+        firestore_client = firestore.Client()
+
+        # Check if the post exists in the Firestore collection
+        post_ref = firestore_client.collection(f'Event-Posts/{event_id}/posts').document(post_id)
+        post_doc = post_ref.get()
+
+        if not post_doc.exists:
+            return jsonify({'error': 'Post not found'}), 404
+
+        # Create a new like document inside the post document
+        likes_collection = post_ref.collection('likes')
+        new_like_doc = likes_collection.add({
+            'uid': user_id,
+            'timestamp': firestore.SERVER_TIMESTAMP
+        })
+
+        # Retrieve the generated like ID
+        like_doc_ref, like_doc_id = new_like_doc
+        like_id = like_doc_id.id
+
+        return jsonify({'message': 'Created a like', 'like_id': like_id}), 201
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
+
+@app.route('/<event_id>/<post_id>/like/<like_id>', methods=['DELETE'])
+def delete_like(event_id, post_id, like_id):
+    try:
+        # Initialize Firestore client
+        firestore_client = firestore.Client()
+
+        # Check if the post exists in the Firestore collection
+        post_ref = firestore_client.collection(f'Event-Posts/{event_id}/posts').document(post_id)
+        post_doc = post_ref.get()
+
+        if not post_doc.exists:
+            return jsonify({'error': 'Post not found'}), 404
+
+        # Check if the like exists in the likes collection under the post
+        like_ref = post_ref.collection('likes').document(like_id)
+        like_doc = like_ref.get()
+
+        if not like_doc.exists:
+            return jsonify({'error': 'Like not found'}), 404
+
+        # Delete the like document
+        like_ref.delete()
+
+        return jsonify({'message': 'Deleted a like', 'like_id': like_id}), 200
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
+
+
+@app.route('/user/<uid>', methods=['GET'])
+def get_user_image(uid):
+    try:
+        # Create a Firestore client
+        firestore_client = firestore.Client()
+
+        # Get the user document by UID
+        user_ref = firestore_client.collection('Users').document(uid)
+        user_data = user_ref.get().to_dict()
+
+        if not user_data:
+            return jsonify({'error': 'User not found'}), 404
+
+        # Check if the user document contains an 'image_url' field
+        if 'image_url' in user_data:
+            image_url = user_data['image_url']
+            return jsonify({'image_url': image_url}), 200
+        else:
+            return jsonify({'error': 'User image not found'}), 404
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
 
 @app.route('/register', methods=['POST'])
 def register_user():
     if request.method == 'POST':
         try:
-            user_id = request.form['uid']
+            user_id = request.form['user_id']
             image_file = request.files['image']
+            
+            # Store the user image in Firebase Storage
+            image_url = upload_image_to_firebase(image_file)
+            print('Image URL: ', image_url) 
+
+            image_file.seek(0)
+
+            # Encode and store the user's face data
             result, status_code = encode_and_store_face(image_file, user_id)
+            print('Retrieved result: ', result, ' with status code: ', status_code)
+
+
+            # Save the image URL in Firestore
+            firestore_client = firestore.Client()
+
+            user_ref = firestore_client.collection('Users').document(user_id)
+            user_ref.set({
+                'image_url': image_url
+            })
+            
+            print('User image URL saved in Firestore')
+
             return jsonify(result), status_code
         except Exception as e:
             return jsonify({'error': str(e)}), 400
+
+
+@app.route('/user/<uid>/delete', methods=['DELETE'])
+def delete_user_image(uid):
+    try:
+        # Create a Firestore client
+        firestore_client = firestore.Client()
+
+        # Get the user document by UID
+        user_ref = firestore_client.collection('Users').document(uid)
+        user_data = user_ref.get().to_dict()
+
+        if not user_data:
+            return jsonify({'error': 'User not found'}), 404
+        
+        print('User data: ', user_data  )
+
+        # Check if the user document contains an 'image_url' field
+        if 'image_url' in user_data:
+            image_url = user_data['image_url']
+            
+            # Delete the image from Firebase Storage
+            print('Deleting image from Firebase Storage')
+            delete_image_from_firebase(image_url)
+            print('Image deleted from Firebase Storage')
+
+            # Remove the image URL from Firestore
+            user_ref.update({
+                'image_url': firestore.DELETE_FIELD
+            })
+            
+            # Clear face encodings in the MySQL database (You'll need to implement this)
+            clear_face_encodings(uid)
+            
+            return jsonify({'message': 'Deleted user image'}), 200
+        else:
+            return jsonify({'error': 'User image not found'}), 404
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
 
 @app.route('/detect', methods=['POST'])
 def detect_users():
@@ -237,7 +368,6 @@ def detect_users():
             return jsonify(result), status_code
         except Exception as e:
             return jsonify({'error': str(e)}), 400
-
 
 @app.route('/health', methods=['GET'])
 def health_check():
