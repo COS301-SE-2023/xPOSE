@@ -4,5 +4,5 @@
     "/e": "https://events-service-wcjsbin3oq-uc.a.run.app",
     "/u": "https://user-management-service-dkk7eohcwq-uc.a.run.app",
     "/n": "https://notifications-service-dkk7eohcwq-uc.a.run.app",
-    "/posts": "http://127.0.0.1:5000"
+    "/posts": "https://xpose-posts-service-wcjsbin3oq-uc.a.run.app"
 }

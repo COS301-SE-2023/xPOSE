@@ -153,7 +153,7 @@ file: any | null ;
   // Method to register facial recognition data
 registerFacialData() {
 	// Create FormData and append the image Blob to it
-	const temp = 'http://127.0.0.1:5000';
+	// const temp = 'http://127.0.0.1:5000';
 	if(this.file == null) {
 		console.log("No image data available.");
 		return;
@@ -165,7 +165,7 @@ registerFacialData() {
 		formData.append('user_id', uid);
 	  
 		  if (uid) {
-		  this.http.post(`${temp}/register?uid=${uid}`, formData).subscribe(
+		  this.http.post(`${this.api.apiUrl}/posts/register?uid=${uid}`, formData).subscribe(
 			  (res: any) => {
 			  console.log(res);
 			  },
