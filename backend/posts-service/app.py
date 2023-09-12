@@ -116,9 +116,32 @@ def create_post(event_id):
         except Exception as e:
             return jsonify({'error': str(e)}), 400
         
-@app.route('/:event_id/:post_id', methods=['DELETE'])
-def delete_post():
-    return jsonify({'Message': 'Deleted a post'}, 200)
+@app.route('/<event_id>/<post_id>', methods=['DELETE'])
+def delete_post(event_id, post_id):
+    try:
+        # Check if the post exists in the SQL 'posts' table
+        try:
+            post = Post.get(Post.pid == post_id)
+        except Post.DoesNotExist:
+            return jsonify({'error': 'Post not found'}), 404
+
+        # Delete the post from the SQL 'posts' table
+        post.delete_instance()
+
+        # Initialize Firestore client
+        firestore_client = firestore.Client()
+
+        # Check if the post exists in the Firestore collection
+        post_ref = firestore_client.collection(f'Event-Posts/{event_id}/posts').document(post_id)
+        post_doc = post_ref.get()
+
+        if post_doc.exists:
+            # Delete the post from the Firestore collection
+            post_ref.delete()
+
+        return jsonify({'message': 'Deleted a post', 'post_id': post_id}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
 
 @app.route('/:event_id/:post_id/comment', methods=['POST'])
 def create_comment():
