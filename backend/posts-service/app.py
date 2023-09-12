@@ -81,7 +81,7 @@ def create_post(event_id):
             new_post_doc = posts_ref.add({
                 'image_url': image_url,
                 'uid': user_id,
-                'detected_users': detected_users,
+                'users_in_image': detected_users,
                 'timestamp': firestore.SERVER_TIMESTAMP
             })
 
@@ -143,13 +143,71 @@ def delete_post(event_id, post_id):
     except Exception as e:
         return jsonify({'error': str(e)}), 400
 
-@app.route('/:event_id/:post_id/comment', methods=['POST'])
-def create_comment():
-    return jsonify({'Message': 'Created a comment'}, 201)
+@app.route('/<event_id>/<post_id>/comment', methods=['POST'])
+def create_comment(event_id, post_id):
+    try:
+        # Get user ID and comment message from the request
+        user_id = request.form['user_id']
+        comment_message = request.form['message']
 
-@app.route('/:event_id/:post_id/comment/:comment_id', methods=['DELETE'])
-def delete_comment():
-    return jsonify({'Message': 'Deleted a comment'}, 200)
+        # Initialize Firestore client
+        firestore_client = firestore.Client()
+
+        # Check if the post exists in the Firestore collection
+        post_ref = firestore_client.collection(f'Event-Posts/{event_id}/posts').document(post_id)
+        post_doc = post_ref.get()
+
+        if not post_doc.exists:
+            return jsonify({'error': 'Post not found'}), 404
+
+        # Create a new comment document inside the post document
+        comments_collection = post_ref.collection('comments')
+        new_comment_doc = comments_collection.add({
+            'uid': user_id,
+            'message': comment_message,
+            'timestamp': firestore.SERVER_TIMESTAMP
+        })
+
+        # Retrieve the generated comment ID
+        comment_doc_ref, comment_doc_id = new_comment_doc
+        comment_id = comment_doc_id.id
+
+        return jsonify({'message': 'Created a comment', 'comment_id': comment_id}), 201
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
+
+@app.route('/<event_id>/<post_id>/comment/<comment_id>', methods=['GET', 'DELETE'])
+def get_and_delete_comment(event_id, post_id, comment_id):
+    try:
+        # Initialize Firestore client
+        firestore_client = firestore.Client()
+
+        # Check if the post exists in the Firestore collection
+        post_ref = firestore_client.collection(f'Event-Posts/{event_id}/posts').document(post_id)
+        post_doc = post_ref.get()
+
+        if not post_doc.exists:
+            return jsonify({'error': 'Post not found'}), 404
+
+        # Check if the comment exists in the comments collection under the post
+        comment_ref = post_ref.collection('comments').document(comment_id)
+        comment_doc = comment_ref.get()
+
+        if not comment_doc.exists:
+            return jsonify({'error': 'Comment not found'}), 404
+
+        if request.method == 'GET':
+            # Retrieve the comment details
+            comment_data = comment_doc.to_dict()
+            return jsonify({'message': 'Retrieved comment details', 'comment_data': comment_data}), 200
+        elif request.method == 'DELETE':
+            # Delete the comment document
+            comment_ref.delete()
+            return jsonify({'message': 'Deleted a comment', 'comment_id': comment_id}), 200
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
 
 @app.route('/:event_id/:post_id/like', methods=['POST'])
 def create_like():
