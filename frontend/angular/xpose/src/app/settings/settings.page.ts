@@ -153,7 +153,7 @@ file: any | null ;
   // Method to register facial recognition data
 registerFacialData() {
 	// Create FormData and append the image Blob to it
-	const temp = 'https://xpose-posts-service-wcjsbin3oq-uc.a.run.app';
+	// const temp = 'http://127.0.0.1:5000';
 	if(this.file == null) {
 		console.log("No image data available.");
 		return;
@@ -165,7 +165,7 @@ registerFacialData() {
 		formData.append('user_id', uid);
 	  
 		  if (uid) {
-		  this.http.post(`${temp}/register?uid=${uid}`, formData).subscribe(
+		  this.http.post(`${this.api.apiUrl}/posts/register?uid=${uid}`, formData).subscribe(
 			  (res: any) => {
 			  console.log(res);
 			  },
@@ -183,12 +183,23 @@ registerFacialData() {
   deleteFacialData() {
     // Implement logic to delete facial data on the server
     // You may use Angular's HttpClient for making API requests
+	this.getCurrentUserId().subscribe((uid) => {
+		  if (uid) {
+			console.log(`${this.api.apiUrl}/posts/user/${uid}/delete`);
+		  this.http.delete(`${this.api.apiUrl}/posts/user/${uid}/delete`).subscribe(
+			  (res: any) => {
+			  console.log(res);
+			  },
+			  (error: any) => {
+			  console.error(error);
+			  }
+		  );
+		  }
+	});
   }
 
 	// Method to delete the user's account
 	deleteAccount() {
-		// Implement logic to delete the user's account on the server
-		// You may use Angular's HttpClient for making API requests
 	}
 
 	// Method to update user profile
