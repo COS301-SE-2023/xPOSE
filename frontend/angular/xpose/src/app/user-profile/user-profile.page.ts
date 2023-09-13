@@ -7,6 +7,14 @@ import { Observable, map } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AngularFirestore } from "@angular/fire/compat/firestore";
 import { ApiService } from '../service/api.service';
+import { ChangeDetectorRef } from '@angular/core';
+import { error } from 'console';
+
+
+
+
+
+
 
 @Component({
   selector: 'app-user-profile',
@@ -16,6 +24,8 @@ import { ApiService } from '../service/api.service';
 export class UserProfilePage implements OnInit {
   userEvents: any[] | undefined;
   events: any[] = [];
+  userFriends: any[] = [];
+  loading:boolean = true;
   cards: any[] = [];
   selectedSegment: string = 'events';
   user: {
@@ -34,8 +44,7 @@ export class UserProfilePage implements OnInit {
   selectedTab: any;
   tabs: any;
   private history: string[] = [];
-
-
+  
   constructor (
     private router: Router,
     public authService: AuthService,
@@ -54,35 +63,64 @@ export class UserProfilePage implements OnInit {
       uid:"",
       visibility:""
     };
-    this.user.photoURL = './assets/images/profile picture.jpg'; // Updated profile picture URL
+    this.user.photoURL = ''; 
   }
 
-  ngOnInit() {
-    let id = window.location.href;
-    // Split the URL by slashes (/)
-    const urlParts = id .split('/');
-    // Get the last part of the URL, which should be the uid
-    const uid = urlParts[urlParts.length - 2];
+   async ngOnInit() {
+    try {
+      let id = window.location.href;
+      // Split the URL by slashes (/)
+      const urlParts = id .split('/');
+      // Get the last part of the URL, which should be the uid
+      const uid = urlParts[urlParts.length - 2];
+  
+      // console.log("User being viewd:",uid);
 
-    // console.log("User being viewd:",uid);
-    this.uid_viewing_user = urlParts[urlParts.length - 1];
-    // console.log("Viewing user",urlParts[urlParts.length - 1]);
+      // console.log("UID:", uid); // Add this line for debugging
+      this.uid_viewing_user = urlParts[urlParts.length - 1];
+      // console.log("Viewing user",urlParts[urlParts.length - 1]);
 
-    this.user.uid = uid;
-    this.userService.GetUser(uid).subscribe((userData) => {
-      this.user.displayName = userData.displayName;
-      this.user.email = userData.email;
-      this.user.username = userData.uniq_username;
-      this.user.photoURL = userData.photoURL;
-      this.user.visibility = userData.visibility; 
+      // console.log("UID Viewing User:", this.uid_viewing_user);
+      this.user.uid = uid;
+
+
+      // convert observable into promise
+      const userDatPromise = new Promise<any>((resolve, reject) =>{
+        this.userService.GetUser(uid).subscribe(
+          (userData) => resolve(userData),
+          (error) => reject(error)
+        );
+      });
+  
+  
+      const userData = await userDatPromise;
       
-      this.updateFriendShipStatus();
-      
-    });
+      if(userData) {
+        // console.log("User Data:", userData); // Log the user data for debugging
+        this.user.displayName = userData.displayName;
+        this.user.email = userData.email;
+        this.user.username = userData.uniq_username;
+        this.user.photoURL = userData.photoURL;
+        this.user.visibility = userData.visibility; 
+        // console.log("user testing visibility", this.user.visibility);
 
-    this.getEventsFromAPI();
+        await this.updateFriendShipStatus();  
+        this.getEventsFromAPI();
+        this.getfriends();
+      }else {
+        console.log("User not found");
+      }
+    } catch(error){
+      console.log("Error in ngOnInt:", error)
+    }
+
   }
 
+  forceRedirect(friendUid: string, viewingUid: string) {
+    const userProfileUrl = `/user-profile/${friendUid}/${viewingUid}`;
+      // Update the window location to trigger a full page refresh
+      window.location.href = userProfileUrl;
+  }
 
   async updateFriendShipStatus() {
 
@@ -134,8 +172,8 @@ export class UserProfilePage implements OnInit {
     });
   }
 
-  getEventsFromAPI() {
 
+  private checkVisibility(){
     if (this.user.visibility == "private" && this.isFriend == false){
       // cannot show events of private account
       this.isPublic = false;
@@ -151,23 +189,28 @@ export class UserProfilePage implements OnInit {
       this.isPublic = true;
     }
 
-    console.log("User visibility test 1", this.isPublic);
-    console.log("User visibility test 2", this.user.visibility);
-    
-    
-    // this.getCurrentUserId().subscribe((uid) => {
-      // let uid = this.user.uid;
-      // if (uid) {
-      //   console.log(`We got that ${uid}`);
-      //   this.http.get<Event[]>(`${this.api.apiUrl}/e/events?uid=${uid}&filter=participant`).subscribe((events: Event[]) => {
-      //     console.log(events);
-      //     this.events = events;
-      //     this.populateCards();
-      //   });       
-      // } else {
-      //   console.log("No user id");
-      // }
-    // });
+  }
+  async getEventsFromAPI() {
+
+    this.checkVisibility();
+    // console.log("User visibility in events test 1:::", this.isPublic);
+    // console.log("User visibility in events test 2:::", this.user.visibility);
+
+    if(this.isPublic || this.isFriend){
+      // this.getCurrentUserId().subscribe((uid) => {
+        let uid = this.user.uid;
+        if (uid) {
+          // console.log(`We got that ${uid}`);
+          this.http.get<Event[]>(`${this.api.apiUrl}/e/events?uid=${uid}&filter=participant`).subscribe((events: Event[]) => {
+            // console.log(events);
+            this.events = events;
+            this.populateCards();
+          });       
+        } else {
+          console.log("No user id");
+        }
+      // });
+    }
   }
 
   sendFriendRequest() {
@@ -244,22 +287,27 @@ export class UserProfilePage implements OnInit {
   }
 
 
-  getfriends() {
+  async getfriends() {
+    this.checkVisibility();
+    if(this.isPublic || this.isFriend) {
+      const endpoint = `${this.api.apiUrl}/u/users/`;
+      this.loading = true;
+      this.http.get<any[]>(`${endpoint}${this.user.uid}/friends`).subscribe(
+      (response) => {
+        this.userFriends = response;
+        this.loading = false;
+        console.log("Friends",this.userFriends);
+        console.log("userfirends lenght test::::::", this.userFriends.length);
+        if (this.userFriends.length === undefined){
+          this.userFriends = [];
+        }
+      },
+        (error) => {
+          console.error(error.error.message);
+        }
+      );
+    }
     
-    if (this.user.visibility == "private" && this.isFriend == false){
-      // cannot show events of private account
-      this.isPublic = false;
-    }
-
-    if (this.user.visibility == "private" && this.isFriend === true){
-      // can see events of private account of  because they are friends
-      this.isPublic = true;
-    }
-
-    if (this.user.visibility == "public"){
-      // can see events of public account
-      this.isPublic = true;
-    }
   }
 
   // back(): void {
