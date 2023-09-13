@@ -216,49 +216,6 @@ ion-col{
   color: #000000;
 }
 
-// .sidebar {
-//   background-color: #f0f0f0;
-//   height: 100%;
-//   overflow-y: auto;
-//   --background: #ffffff;
-// }
-
-// .sidebar ion-header {
-//   background-color: #ffffff;
-//   --background: #ffffff;
-//   border-bottom: 1px solid #ccc;
-// }
-
-// .sidebar ion-content {
-//   padding: 10px;
-//   --background: #ffffff;
-// }
-
-// .scrollable-content {
-//   max-height: 100vh;
-//   overflow-y: auto;
-//   --background: #ffffff;
-// }
-
-// .sidebar-link {
-//   display: block;
-//   text-decoration: none;
-//   color: #000;
-//   margin-bottom: 10px;
-//   cursor: pointer;
-//   --background: #ffffff;
-// }
-
-// .sidebar-link ion-icon {
-//   margin-right: 5px;
-//   --background: #ffffff;
-// }
-
-// ion-item{
-//   --background: #ffffff;
-// }
-
-//menu styling 
 
 /* styles.css or your custom CSS file */
 
@@ -287,3 +244,11 @@ ion-icon {
 }
 
 
+//search style
+ion-searchbar {
+  --background: #f4f4f4; /* Set the background color of the search bar */
+  --color: #333; /* Set the text color */
+  --placeholder-color: #999; /* Set the color of the placeholder text */
+  --border-color: #ddd; /* Set the border color */
+  --border-radius: 10px; /* Set the border radius */
+}

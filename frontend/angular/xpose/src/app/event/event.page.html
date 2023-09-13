@@ -12,20 +12,30 @@
 
     
     
-<ion-menu side="end" content-id="main-content">
-  <ion-header>
-    <ion-toolbar>
-      <ion-title>Menu</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <ion-content>
-    <ion-list>
-      <ion-item (click) = "editEvent()">Edit event</ion-item>
-      <ion-item (click) = "leaveEvent()">Leave event</ion-item>
-      <ion-item (click) = "deleteEvent()">Delete event</ion-item>
-    </ion-list>
-  </ion-content>
-</ion-menu>  
+  <ion-menu side="end" content-id="main-content">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Menu</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list>
+        <ion-item (click)="editEvent()">
+          <ion-icon name="create-outline" slot="start"></ion-icon>
+          Edit event
+        </ion-item>
+        <ion-item (click)="leaveEvent()">
+          <ion-icon name="exit-outline" slot="start"></ion-icon>
+          Leave event
+        </ion-item>
+        <ion-item (click)="deleteEvent()">
+          <ion-icon name="trash-outline" slot="start"></ion-icon>
+          Delete event
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+  
 
       <ion-content [fullscreen]="true" id="main-content" class="custom-backround">
       <app-loading-icon *ngIf="loading"></app-loading-icon>
