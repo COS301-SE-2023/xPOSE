@@ -73,12 +73,13 @@ export class GalleryLightboxPage implements OnInit {
   
 
   async openImageModal(item: any, index: number) {
+    console.log('clicked', index)
     this.currentItem = item;
     const modal = await this.modalController.create({
       component: GalleryModalComponent,
       componentProps: {
         galleryData: this.galleryData,
-      initialIndex: index
+        initialIndex: index
       }
     });
 

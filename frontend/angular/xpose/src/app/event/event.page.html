@@ -1,28 +1,14 @@
-<ion-header [translucent]="true">
-  <ion-toolbar class="custom-toolbar" style="display: flex; justify-content: center;">
-    <ion-buttons slot="end">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-buttons slot="start">
-      <app-backbutton></app-backbutton>
-    </ion-buttons>
-    <ion-title class="event-title">Event</ion-title>
-
-    <!-- <ion-buttons slot="end"> -->
-      <!-- <ion-button (click)="onLogoutClick()">
-        <ion-icon name="log-out-outline"></ion-icon>
-      </ion-button> -->
-    <!-- </ion-buttons> -->
-
-    <!-- Search button -->
-    <ion-buttons slot="end">
-      <ion-button (click)="onSearchClick()">
-        <ion-icon name="search-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-
-  </ion-toolbar>
-</ion-header>
+  <ion-header [translucent]="true">
+    <ion-toolbar class="custom-toolbar" >
+      <ion-buttons slot="end">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-buttons slot="start">
+        <app-backbutton></app-backbutton>
+      </ion-buttons>
+      <ion-title class="event-title">Event</ion-title>
+    </ion-toolbar>
+  </ion-header>
 
     
     
@@ -159,12 +145,12 @@
     </ion-content>
  
     <ion-footer *ngIf="filterType === 'posts'">
-      <ion-toolbar>
+      <!-- <ion-toolbar> -->
         <button (click)="openImageGallery()" class="icon-button">
           <div>
             <ion-icon class="cloud" name="cloud-upload">upload</ion-icon>
           </div>
         </button>
-      </ion-toolbar>
+      <!-- </ion-toolbar> -->
     </ion-footer>
     

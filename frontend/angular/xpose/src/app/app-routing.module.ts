@@ -37,10 +37,6 @@ const routes: Routes = [
     loadChildren: () => import("./settings/settings.module").then(m => m.SettingsPageModule)
   },
   {
-    path: "header",
-    loadChildren: () => import("./header/header.module").then(m => m.HeaderPageModule)
-  },
-  {
     path: "event/:id",
     loadChildren: () => import("./event/event.module").then(m => m.EventPageModule)
   },

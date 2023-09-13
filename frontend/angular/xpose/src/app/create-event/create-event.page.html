@@ -1,4 +1,4 @@
-<ion-menu contentId="main-content">
+<ion-menu menuId="main-menu" contentId="main-content">
   <ion-content>
     <ion-list>
       <ion-item>
@@ -52,40 +52,45 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Create Event</ion-title>
+    <ion-title>Create event</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" id="main-content" class="custom-background">
+  <div class="account-settings">
+    
   <ion-row>
     <ion-col>
       <div>
         <form #form="ngForm" (ngSubmit)="CreateEvent(form)">
-          <ion-grid>
-            <ion-row>
-              <ion-col size="6">
+          <!-- <ion-grid> -->
+            <!-- <ion-row> -->
+              <!-- <ion-col size="6"> -->
+                <section class="privacy">
                 <ion-radio-group value="privacy" name="privacy_setting" [(ngModel)]="createEvent.privacy_setting">
-                  <ion-item class="item1" class="custom-ion-item">
+                  <ion-item class="item1" >
                     <ion-label>Public</ion-label>
                     <ion-radio value="public"></ion-radio>
                   </ion-item>
                 </ion-radio-group>
-              </ion-col>
-              <ion-col size="6">
+              <!-- </ion-col> -->
+              <!-- <ion-col size="6"> -->
                 <ion-radio-group value="privacy" name="privacy_setting" [(ngModel)]="createEvent.privacy_setting">
-                  <ion-item class="item1" class="custom-ion-item">
+                  <ion-item class="item1" >
                     <ion-label>Private</ion-label>
                     <ion-radio value="private"></ion-radio>
                   </ion-item>
                 </ion-radio-group>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-
-          <label class="label" for="image">Upload Cover Page Image:</label>
-          <div class="input-container">
-            <input type="file" accept="image/*" (change)="onFileSelected($event)" name="image" id="image">
-          </div>
+                </section>
+              <!-- </ion-col> -->
+            <!-- </ion-row> -->
+          <!-- </ion-grid> -->
+          <section class="profile-section">
+            <label class="label" for="image">Upload Cover Page Image:</label>
+            <div class="input-container">
+              <input type="file" accept="image/*" (change)="onFileSelected($event)" name="image" id="image">
+            </div>
+        </section>
 
           <label class="label" for="image">Event Name:</label>
           <ion-input class="ther" name="title" [(ngModel)]="createEvent.title"></ion-input>
@@ -93,7 +98,7 @@
           <label class="label" for="image">Description:</label>
           <ion-textarea class="ther" name="description" [(ngModel)]="createEvent.description"></ion-textarea>
 
-          <label class="label" for="image">Location</label>
+          <!-- <label class="label" for="image">Location</label>
           <div class="input-container" id="location">
             <ion-input class="ther" name="location" [(ngModel)]="createEvent.location" id="locationInput"></ion-input>
           </div>
@@ -101,7 +106,7 @@
 
           <div class="input-container1">
             <div id="map"></div>
-          </div>
+          </div> -->
 
           <ion-row>
             <!-- Start date -->
@@ -134,4 +139,5 @@
       </div>
     </ion-col>
   </ion-row>
+  </div>
 </ion-content>

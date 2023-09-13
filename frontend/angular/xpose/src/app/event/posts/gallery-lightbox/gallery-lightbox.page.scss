@@ -83,7 +83,7 @@
             }
             .lightbox-img {
                 width: 100%;
-                height: 100%;
+                // height: 100%;
                 position: absolute; /* Change from 'absolute' to 'fixed' */
                 top: 0; /* Position the image at the top of the viewport */
                 left: 0; /* Position the image at the left of the viewport */
@@ -95,7 +95,7 @@
             
               .lightbox-img img {
                 max-width: 100%; /* Ensure the image doesn't exceed the lightbox width */
-                max-height: 100%px; /* Ensure the image doesn't exceed the lightbox height */
+                max-height: 100%; /* Ensure the image doesn't exceed the lightbox height */
                 // object-fit: contain; /* Fit the image within the container, preserving its aspect ratio */
                 border-radius: .35rem;
               }

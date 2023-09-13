@@ -1,7 +1,8 @@
 {
     "/c": "https://event-chats-service-dkk7eohcwq-uc.a.run.app",
-    "/p": "https://event-posts-service-dkk7eohcwq-uc.a.run.app",
-    "/e": "http://localhost:8004",
-    "/u": " http://localhost:8002",
-    "/n": "http://localhost:8006"
+    "/p": "https://event-posts-service-old-wcjsbin3oq-uc.a.run.app",
+    "/e": "https://events-service-wcjsbin3oq-uc.a.run.app",
+    "/u": "https://user-management-service-dkk7eohcwq-uc.a.run.app",
+    "/n": "https://notifications-service-dkk7eohcwq-uc.a.run.app",
+    "/posts": "https://xpose-posts-service-wcjsbin3oq-uc.a.run.app"
 }

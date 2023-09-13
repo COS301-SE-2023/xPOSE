@@ -6,14 +6,12 @@ import face_recognition
 import numpy as np
 import firebase_admin
 from firebase_admin import credentials, storage, firestore
-import os
 import random
 import string
 import json
 from db_connector import User  # Import the database models
 from PIL import Image as PILImage
 from datetime import datetime, timedelta
-
 
 app = Flask(__name__)
 
@@ -24,46 +22,67 @@ firebase_admin.initialize_app(cred, {
     'databaseURL': 'https://xpose-4f48c-default-rtdb.firebaseio.com'
 })
 
-
-
 @app.route('/register', methods=['GET', 'POST'])
 def register_user():
     if request.method == 'GET':
         return generate_registration_form()
     try:
         # Load the image
-        image = PILImage.open(request.files['image'])
-        
+        image_file = request.files['image']
+
+        image = PILImage.open(image_file)
+        print("Image loaded successfully")
+
         # Calculate the new dimensions by increasing both width and height
-        original_width, original_height = image.size
-        new_width = int(original_width / 0.7)
-        new_height = int(original_height / 0.7)
-        
+        # original_width, original_height = image.size
+        # new_width = int(original_width / 0.7)
+        # new_height = int(original_height / 0.7)
+
         # Resize the image to the new dimensions
-        image = image.resize((new_width, new_height), PILImage.ANTIALIAS)
-        
+        # image = image.resize((new_width, new_height), PILImage.ANTIALIAS)
+        # Uncomment the above lines if you need to resize the image.
+
+        print("Image resized successfully")
+
         # Convert the resized image to a numpy array
         image_array = np.array(image)
+        print("Image converted to a numpy array successfully")
 
         # Perform face detection on the resized image
         face_encodings = face_recognition.face_encodings(image_array)
-        
+
         if len(face_encodings) == 0:
             return jsonify({'error': 'No faces were detected in the provided image'}), 400
 
         encoding = face_encodings[0]  # Assuming there's at least one face
+        print("Face detected and encoded successfully")
 
         user_id = request.form['user_id']
-        
+
+        # Upload the image to Firebase Storage and get the URL
+        image_file.seek(0)
+        image_url = upload_image_to_firebase(image_file)
+        print("Image uploaded to Firebase Storage successfully")
+
+        # Update the user's document with the image URL
+        firestore_client = firestore.client()
+        user_ref = firestore_client.collection('Users').document(user_id)
+        user_ref.update({'image_url': image_url})
+        print("Image URL updated in Firestore successfully")
+
         # Serialize the encoding array to a JSON string
         encoding_json = json.dumps(encoding.tolist())
+        print("Encoding converted to JSON successfully")
 
         # Create a new user and save their encoding in the database
         new_user = User.create(uid=user_id, face_encoding=encoding_json)
-        
-        return jsonify({'message': 'User registered successfully'})
+        print("User created and face encoding saved in the database successfully")
+
+        return jsonify({'message': 'User registered successfully', 'image_url': image_url})
     except Exception as e:
+        print("Error:", str(e))
         return jsonify({'error': str(e)}), 400
+
     
 @app.route('/detect', methods=['GET', 'POST'])
 def detect_users():
@@ -126,6 +145,28 @@ def detect_users_in_image(image):
     except Exception as e:
         return str(e)
 
+@app.route('/user/<uid>', methods=['GET'])
+def get_user_image(uid):
+    try:
+        # Create a Firestore client
+        firestore_client = firestore.client()
+
+        # Get the user document by UID
+        user_ref = firestore_client.collection('Users').document(uid)
+        user_data = user_ref.get().to_dict()
+
+        if not user_data:
+            return jsonify({'error': 'User not found'}), 404
+
+        # Check if the user document contains an 'image_url' field
+        if 'image_url' in user_data:
+            image_url = user_data['image_url']
+            return jsonify({'image_url': image_url}), 200
+        else:
+            return jsonify({'error': 'User image not found'}), 404
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
 @app.route('/post/<event_id>/<post_id>', methods=['GET', 'DELETE', 'PUT'])
 def delete_event_post(event_id, post_id):
     try:
@@ -162,6 +203,7 @@ def remove_metadata(image):
         return True  # Successfully removed metadata
     except Exception as e:
         return str(e)  # Return the error message if there's an issue
+
 
 
 @app.route('/post/<event_id>', methods=['GET', 'POST'])
@@ -298,5 +340,10 @@ def like_action():
 def delete_post():
     pass
 
+# Health check
+@app.route('/', methods=['GET'])
+def health_check():
+    return jsonify({'Message': 'Posts service is healthy'}), 200
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)

@@ -8,11 +8,19 @@ ion-card {
   border-radius: 5px;
   overflow: hidden;
 }
+ion-toolbar{
+  background-color: #ffffff;
+  --background: #ffffff;
+  color: #000000;
+  font-size: 20px;
+}
 
 .card-image {
   width: 100%;
   height: 200px;
   object-fit: cover;
+  --background: #ffffff;
+  background-color: #f0f0f0;
 }
 
 .card-title {
@@ -26,15 +34,28 @@ ion-card-content {
   display: inline;
   padding-left: 10px;
   color: #353535;
+  // --background: #ffffff;
+  // background-color: #f0f0f0;
+}
+ion-content{
+  --background: #ffffff;
+  background-color: #ffffff;
+  color: #000000;
+}
+ion-list{
+  --background: #ffffff;
+  background-color: #ffffff;
+  color: #000000;
 }
 
 .card-content {
   padding: 10px;
-  color: #353535;
+  color: #000000;
+  --background: #ffffff;
 }
 
 .card-subtitle {
-  color: #3d3d3d;
+  color: #292929;
 }
 
 .card-description {
@@ -49,7 +70,7 @@ ion-card-content {
 }
 
 .card-button {
-  --color: #ffffff;
+  --color: #000000;
   --background: linear-gradient(135deg, #ff0066, #ea00ff);
   --box-shadow: none;
   border: none;
@@ -82,7 +103,7 @@ ion-card-content {
   bottom: 10px;
   right: 10px;
   background-color: #f00;
-  color: #fff;
+  color: #000000;
   padding: 6px 10px;
   border-radius: 4px;
   font-size: 14px;
@@ -117,7 +138,7 @@ ion-card-content {
   position: absolute;
   top: 0;
   right: 0;
-  color: #fff;
+  color: #000000;
   padding: 6px 10px;
   border-radius: 4px;
   font-size: 14px;
@@ -133,44 +154,80 @@ ion-card-content {
   text-shadow: #f00;
 }
 
-.sidebar {
-  background-color: #f0f0f0;
-  height: 100%;
-  overflow-y: auto;
+// .sidebar {
+//   background-color: #f0f0f0;
+//   height: 100%;
+//   overflow-y: auto;
+//   --background: #ffffff;
+// }
+
+// .sidebar ion-header {
+//   background-color: #ffffff;
+//   --background: #ffffff;
+//   border-bottom: 1px solid #ccc;
+// }
+
+// .sidebar ion-content {
+//   padding: 10px;
+//   --background: #ffffff;
+// }
+
+// .scrollable-content {
+//   max-height: 100vh;
+//   overflow-y: auto;
+//   --background: #ffffff;
+// }
+
+// .sidebar-link {
+//   display: block;
+//   text-decoration: none;
+//   color: #000;
+//   margin-bottom: 10px;
+//   cursor: pointer;
+//   --background: #ffffff;
+// }
+
+// .sidebar-link ion-icon {
+//   margin-right: 5px;
+//   --background: #ffffff;
+// }
+
+// ion-item{
+//   --background: #ffffff;
+// }
+ion-segment{
   --background: #ffffff;
+  color: #000000;
+}
+ion-segment-button{
+  --background: #ffffff;
+  color: #000000;
 }
 
-.sidebar ion-header {
-  background-color: #ffffff;
-  --background: #ffffff;
-  border-bottom: 1px solid #ccc;
+//menu styling 
+
+/* styles.css or your custom CSS file */
+
+/* Style the entire menu */
+ion-menu {
+  --width: 200px; /* Set the width of the sidebar menu */
+  --background: #f4f4f4; /* Set the background color of the sidebar menu */
 }
 
-.sidebar ion-content {
-  padding: 10px;
-  --background: #ffffff;
+ion-item {
+  --padding-start: 20px; /* Set the padding from the start of the item */
+  --padding-end: 20px; /* Set the padding from the end of the item */
 }
 
-.scrollable-content {
-  max-height: 100vh;
-  overflow-y: auto;
-  --background: #ffffff;
+ion-item:hover {
+  background-color: #e0e0e0; /* Set the background color when hovered */
 }
 
-.sidebar-link {
-  display: block;
-  text-decoration: none;
-  color: #000;
-  margin-bottom: 10px;
-  cursor: pointer;
-  --background: #ffffff;
+a.sidebar-link {
+  color: #000; /* Set the color of the link */
+  text-decoration: none; /* Remove the underline from the link */
 }
-
-.sidebar-link ion-icon {
-  margin-right: 5px;
-  --background: #ffffff;
-}
-
-ion-item{
-  --background: #ffffff;
+ion-icon {
+  --color: #333; /* Color of the icon */
+  --ionicon-stroke-width: 32px; /* Size of the icon */
 }

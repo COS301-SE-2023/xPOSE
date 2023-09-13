@@ -14,9 +14,9 @@ ion-list {
   background-color: #ffffff;
 }
 
-ion-icon {
-  color: black;
-}
+// ion-icon {
+//   color: black;
+// }
 
 h2 {
   font-size: 15px;
@@ -89,51 +89,79 @@ ion-buttons{
   color: #000000;
 }
 
-ion-toolbar.custom-toolbar {
-  --background: #ffffff;
-  color: #000000;
-  font-size: 20px;
-  --min-height: 70px;
+// ion-toolbar.custom-toolbar {
+//   --background: #ffffff;
+//   color: #000000;
+//   font-size: 20px;
+//   --min-height: 70px;
+// }
+
+// .sidebar {
+//   background-color: #f0f0f0;
+//   height: 100%;
+//   overflow-y: auto;
+//   --background: #ffffff;
+// }
+
+// .sidebar ion-header {
+//   background-color: #ffffff;
+//   --background: #ffffff;
+//   border-bottom: 1px solid #ccc;
+// }
+
+// .sidebar ion-content {
+//   padding: 10px;
+//   --background: #ffffff;
+// }
+
+// .scrollable-content {
+//   max-height: 100vh;
+//   overflow-y: auto;
+//   --background: #ffffff;
+// }
+
+// .sidebar-link {
+//   display: block;
+//   text-decoration: none;
+//   color: #000;
+//   margin-bottom: 10px;
+//   cursor: pointer;
+//   --background: #ffffff;
+// }
+
+// .sidebar-link ion-icon {
+//   margin-right: 5px;
+//   --background: #ffffff;
+// }
+
+// ion-item{
+//   --background: #ffffff;
+// }
+
+//menu styling 
+
+/* styles.css or your custom CSS file */
+
+/* Style the entire menu */
+ion-menu {
+  --width: 200px; /* Set the width of the sidebar menu */
+  --background: #f4f4f4; /* Set the background color of the sidebar menu */
 }
 
-.sidebar {
-  background-color: #f0f0f0;
-  height: 100%;
-  overflow-y: auto;
-  --background: #ffffff;
+ion-item {
+  --padding-start: 20px; /* Set the padding from the start of the item */
+  --padding-end: 20px; /* Set the padding from the end of the item */
 }
 
-.sidebar ion-header {
-  background-color: #ffffff;
-  --background: #ffffff;
-  border-bottom: 1px solid #ccc;
+ion-item:hover {
+  background-color: #e0e0e0; /* Set the background color when hovered */
 }
 
-.sidebar ion-content {
-  padding: 10px;
-  --background: #ffffff;
+a.sidebar-link {
+  color: #000; /* Set the color of the link */
+  text-decoration: none; /* Remove the underline from the link */
 }
-
-.scrollable-content {
-  max-height: 100vh;
-  overflow-y: auto;
-  --background: #ffffff;
-}
-
-.sidebar-link {
-  display: block;
-  text-decoration: none;
-  color: #000;
-  margin-bottom: 10px;
-  cursor: pointer;
-  --background: #ffffff;
-}
-
-.sidebar-link ion-icon {
-  margin-right: 5px;
-  --background: #ffffff;
-}
-
-ion-item{
-  --background: #ffffff;
+ion-icon {
+  --color: #333; /* Color of the icon */
+  --ionicon-stroke-width: 32px; /* Size of the icon */
 }

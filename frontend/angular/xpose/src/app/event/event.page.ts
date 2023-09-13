@@ -25,6 +25,7 @@ interface Item {
   uid: string;
   id: string;
   event_id: string;
+  users_in_image: string[];
   // timestamp: Date;
 }
 
@@ -284,6 +285,7 @@ export class EventPage {
             // doc_id: ,
             id: doc.payload.doc.id,
             event_id: this.current_event.code,
+            users_in_image: post.users_in_image,
             // timestamp: post.timestamp
           });
         });
@@ -312,8 +314,9 @@ export class EventPage {
   
         // Send the FormData to the server
         this.getCurrentUserId().subscribe((uid) => {
+          formData.append('user_id', uid);
           if (uid) {
-            this.http.post(`${this.api.apiUrl}/p/${this.current_event.code}?uid=${uid}`, formData).subscribe(
+            this.http.post(`${this.api.apiUrl}/posts/${this.current_event.code}?uid=${uid}`, formData).subscribe(
               (res: any) => {
                 console.log(res);
               },
