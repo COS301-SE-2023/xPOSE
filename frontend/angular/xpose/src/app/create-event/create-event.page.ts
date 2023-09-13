@@ -269,9 +269,7 @@ export class CreateEventPage implements OnInit, AfterViewInit {
 	  }
 	  
 
-	  search() {
-		this.router.navigateByUrl('/search');
-	}
+
 	
 	eventDetails(event_id: string) {
 		this.router.navigate(['/view-event', event_id]);
