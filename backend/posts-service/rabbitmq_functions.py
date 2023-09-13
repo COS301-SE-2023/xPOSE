@@ -5,6 +5,7 @@ import os
 import sys
 # face_recognition_functions.py is in ../data-access/
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'data-access'))
+import db_connector
 from decouple import config
 
 # Load environment variables using decouple

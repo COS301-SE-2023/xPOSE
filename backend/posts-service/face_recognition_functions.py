@@ -4,8 +4,7 @@ import PIL.Image as PILImage
 import face_recognition
 import os
 import sys
-sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'data-access'))
-from db_connector import User  # Import the database models
+from db_connector import User
 
 def encode_and_store_face(image_file, user_id):
     try:
@@ -30,15 +29,27 @@ def encode_and_store_face(image_file, user_id):
         encoding_json = json.dumps(encoding.tolist())
         print("Encoding converted to JSON successfully")
 
-        # Create a new user and save their encoding in the database
-        new_user = User.create(uid=user_id, face_encoding=encoding_json)
-        print("User created and face encoding saved in the database successfully")
+        # Check if the user already exists in the database
+        existing_user = User.get_or_none(User.uid == user_id)
 
-        return {'message': 'User registered successfully'}, 200
+        if existing_user:
+            # Update the face encoding for the existing user
+            existing_user.face_encoding = encoding_json
+            existing_user.save()
+            print("Face encoding updated for the existing user")
+        else:
+            # Create a new user and save their encoding in the database
+            new_user = User.create(uid=user_id, face_encoding=encoding_json)
+            print("User created and face encoding saved in the database successfully")
+
+        # Reset the file pointer to the beginning of the file
+        image.seek(0)
+
+        return {'message': 'User face encoding saved successfully'}, 200
     except Exception as e:
         print("Error:", str(e))
         return {'error': str(e)}, 400
-
+    
 def decode_faces(image):
     try:
         image = face_recognition.load_image_file(image)
@@ -48,7 +59,7 @@ def decode_faces(image):
         detected_users = []
 
         # Retrieve all users from the database
-        all_users = User.select()
+        all_users = User.select().where(User.face_encoding.is_null(False))
 
         # Set the tolerance level (this needs some adjusting)
         tolerance = 0.5
@@ -65,5 +76,20 @@ def decode_faces(image):
                     detected_users.append(user.uid)
 
         return {'detected_users': detected_users}, 200
+    except Exception as e:
+        return {'error': str(e)}, 400
+
+def clear_face_encodings(user_id):
+    try:
+        # Check if the user exists in the database
+        user = User.get_or_none(User.uid == user_id)
+
+        if user:
+            # Clear the face encoding for the user
+            user.face_encoding = None
+            user.save()
+            return {'message': 'Face encodings cleared successfully'}, 200
+        else:
+            return {'error': 'User not found'}, 404
     except Exception as e:
         return {'error': str(e)}, 400
