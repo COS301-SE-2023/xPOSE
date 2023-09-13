@@ -21,15 +21,6 @@
           <app-loading-icon *ngIf="loading"></app-loading-icon>
           <ion-button expand="block" class="join-button" (click)="handleButtonClick()">{{ getButtonLabel() }}</ion-button>
 
-          <!-- <h1 class="h1">Event details</h1> -->
-          
-          <!-- <h1 class="h1">Owner</h1>
-          <p>{{ event?.owner_display_name }}</p>
-          <h1 class="h1">Location</h1>
-          <p>{{ event?.location }}</p>
-          <div id="map" class="map"></div>
-          <h1 class="h1">Description</h1>
-          <p>{{ event?.description }}</p> -->
           <h1 class="h1">Owner</h1>
           <p>{{ event?.owner_display_name }}</p>
 
@@ -46,5 +37,3 @@
     </ion-row>
   </ion-grid>
 </ion-content>
-
-<!-- <app-footer></app-footer> -->

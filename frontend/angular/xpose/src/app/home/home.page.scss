@@ -14,16 +14,19 @@ ion-card {
   margin-bottom: 20px;
   height: auto;
   border: solid 0.1px #adadad;
-  box-shadow: 0 4px 8px rgba(255, 160, 215, 0.1);
-  border-radius: 5px;
+  border-radius: 7px;
   overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15); /* Add a shadow */
 }
 
 .card-image {
   width: 100%;
-  height: 280px;
+  height: 210px;
   object-fit: cover;
-}
+  border-top-left-radius: 10px; /* Set the top left border radius */
+  border-top-right-radius: 10px; /* Set the top right border radius */
+ }
+  
 
 .card-title {
   font-size: 24px;
@@ -62,34 +65,6 @@ ion-card-content {
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-}
-
-.card-button {
-  --color: #ffffff;
-  --background: linear-gradient(135deg, #ff0066, #ea00ff);
-  --box-shadow: none;
-  border: none;
-  --border-radius: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 18px;
-  --padding-start: 20px;
-  --padding-end: 20px;
-  --margin: 5px;
-  transition: background-color 0.3s ease-in-out;
-}
-
-.card-button:hover {
-  --background: linear-gradient(135deg, #ea00ff, #ff0066);
-}
-
-.card-button-share {
-  color: #ff0066;
-}
-
-.card-button-view {
-  color: #ea00ff;
 }
 
 .card-label {
