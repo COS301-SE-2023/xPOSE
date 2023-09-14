@@ -2,6 +2,7 @@ import { Component, OnInit,NgZone } from "@angular/core";
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from "@angular/forms";
 import { Router } from '@angular/router';
 import { AuthService } from "../shared/services/auth.service";
+import { LoadingController } from "@ionic/angular";
 
 @Component({
 	selector: "app-signup",
@@ -10,11 +11,13 @@ import { AuthService } from "../shared/services/auth.service";
 	})
 	
 export class SignupPage implements OnInit {
+	loading!: HTMLIonLoadingElement;
 	signUpForm: FormGroup;
 	constructor(
 		public authService: AuthService,
 		private formBuilder: FormBuilder,
-		private router: Router
+		private router: Router,
+		private loadingController: LoadingController
 		) {
 			this.signUpForm = this.formBuilder.group({
 				email: ["", [Validators.required, Validators.email, this.customEmailValidator()]],
@@ -40,14 +43,31 @@ export class SignupPage implements OnInit {
 			};
 		  }
 
-		signUp() {
-			const email = this.signUpForm.get("email")?.value;
-			const password = this.signUpForm.get("password")?.value;
-			const username = this.signUpForm.get("username")?.value;
-			this.authService.signUp(email, password, username);
-			this.router.navigate(["/home"]);
+		async signUp() {
+
+			try {
+				this.loading = await this.loadingController.create({
+				  message: " signing up user...",
+				});
+				await this.loading.present();
+
+				const email = this.signUpForm.get("email")?.value;
+				const password = this.signUpForm.get("password")?.value;
+				const username = this.signUpForm.get("username")?.value;
+				await this.authService.signUp(email, password, username);
+				await this.loading.dismiss()
+				this.forceRedirect();
+			}catch(error){
+				console.log("Error loging user");
+			}
 		}
 
+
+		forceRedirect() {
+			const login = `/login`;
+			  // Update the window location to trigger a full page refresh
+			  window.location.href = login;
+		  }
 		// Custom password validator function
 		customPasswordValidator(): ValidatorFn {
 			return (control: AbstractControl): { [key: string]: any } | null => {

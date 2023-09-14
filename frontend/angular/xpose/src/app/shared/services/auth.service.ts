@@ -53,7 +53,7 @@ export class AuthService {
       });
   }
   // Sign up with email/password
-  signUp(email: string, password: string, username: string): Promise<any> {
+  async signUp(email: string, password: string, username: string): Promise<any> {
     const signUpData = {
       displayName: username,
       uniq_username:"",
@@ -73,11 +73,6 @@ export class AuthService {
     .toPromise()
     .then((response) => {
       console.log("signed up successfully",response);
-      // this.router.navigate(['/login']);
-      // this.router.navigate(['/login'], { replaceUrl: true });
-      window.alert("signed up successfully");
-      this.location.back();
-   
     })
     .catch((error) => {
       // Handle error response here

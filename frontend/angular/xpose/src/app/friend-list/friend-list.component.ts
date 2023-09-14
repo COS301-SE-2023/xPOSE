@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { ApiService } from 'src/app/service/api.service';
+import { Location } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-friend-list',
@@ -11,6 +13,7 @@ import { ApiService } from 'src/app/service/api.service';
 export class FriendListComponent  implements OnInit {
   loading:boolean = true; // initial loading state
   currentUserId: string = "";
+  private history: string[] = [];
   friends = [
     {
       uid: "",
@@ -22,9 +25,11 @@ export class FriendListComponent  implements OnInit {
   ];
 
   constructor( 
+    private router: Router,
     private http: HttpClient,
     private authService: AuthService,
-    private api: ApiService) { }
+    private api: ApiService,
+    private location: Location) { }
 
   ngOnInit() {
     this.authService.getCurrentUserId().subscribe((uid) => {
@@ -88,5 +93,14 @@ export class FriendListComponent  implements OnInit {
       return Promise.reject(error);
     });
 
+  }
+
+  back(): void {
+    this.history.pop();
+    if (this.history.length >= 0) {
+      this.location.back();
+    } else {
+      this.router.navigate(['/home']);
+    }
   }
 }
