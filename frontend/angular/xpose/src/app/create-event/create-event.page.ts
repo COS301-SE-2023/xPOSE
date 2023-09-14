@@ -242,35 +242,35 @@ onLocationSelect(prediction: any) {
 
 	viewEvent() {
 		this.router.navigate(['/event']);
-		}
+	}
 	
-		  onEvent(){
-			this.router.navigate(['/create-event']);
-		}
+	onEvent(){
+		this.router.navigate(['/create-event']);
+	}
 	
-		onNotifications(){
-			this.router.navigate(['/notification']);
-		}
+	onNotifications(){
+		this.router.navigate(['/notification']);
+	}
 		
-		onProfile(){
-			this.router.navigate(['/profile']);
-		}  
+	onProfile(){
+		this.router.navigate(['/profile']);
+	}  
 	
-		onJoinedEvent(){
-			this.router.navigate(['/joined-event']);
-		}
+	onJoinedEvent(){
+		this.router.navigate(['/joined-event']);
+	}
 	
-		onHome(){
-			this.router.navigate(['/home']);
-		}
+	onHome(){
+		this.router.navigate(['/home']);
+	}
 	
-		onSettings(){
-			this.router.navigate(['/settings']);
-		}
+	onSettings(){
+		this.router.navigate(['/settings']);
+	}
 		
-	   logout() {
+	logout() {
 		this.authService.signOut();
-	  }
+	}
 
 	async openEventModal(id:string) {
 		console.log("OUR ID" + id);

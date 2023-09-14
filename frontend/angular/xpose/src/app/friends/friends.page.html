@@ -1,22 +1,24 @@
-<!-- friends.page.html -->
+<app-footer></app-footer>
 
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>Friends</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content class="ion-padding">
-  <!-- Display a list of friends -->
-  <ion-list>
-    <ion-item *ngFor="let friend of friends">
-      <ion-avatar slot="start">
-        <img [src]="friend.avatar">
-      </ion-avatar>
-      <ion-label>
-        <h2>{{ friend.name }}</h2>
-        <p>{{ friend.status }}</p>
-      </ion-label>
-    </ion-item>
-  </ion-list>
+<ion-content [fullscreen]="true" id="main-content" class="custom-background">
+  <div class="friends-container">
+    <ion-list class="friends-list">
+      <ion-item *ngFor="let friend of friends">
+        <p (click)="forceRedirect(friend.uid)">
+          <ion-avatar slot="start">
+            <img [src]="friend.photoURL">
+          </ion-avatar>
+          <ion-label>
+            <h2>{{ friend.displayName }}</h2>
+            <!-- <p>{{ friend.uniq_username }}</p>
+            <p>{{ friend.email }}</p> -->
+          </ion-label>
+        </p>
+        <ion-button slot="end" (click)="unfriend(friend)">Unfriend</ion-button>
+      </ion-item>
+    </ion-list>
+    <div *ngIf="!friends || friends.length === 0"> <!-- Add another ngIf for no friends -->
+      <p  class="ion-text-center">No friends to display.</p>
+    </div>
+  </div>
 </ion-content>
