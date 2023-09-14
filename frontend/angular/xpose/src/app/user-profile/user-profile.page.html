@@ -14,6 +14,7 @@
       <ion-label class="username">Name: {{user.displayName}}</ion-label><br>
       <ion-label class="username">Email: {{user.email}}</ion-label><br>
       <ion-label class="username">Unique Code:{{user.username}}</ion-label><br>
+      <ion-label class="username">Account:{{user.visibility}}</ion-label><br>
       <br>
     </div>
     <ion-button class="edit_div" (click)="handleFunction(user)">
@@ -39,33 +40,42 @@
   </ion-segment>
 
   <div *ngIf="selectedSegment === 'events'">
+        <div *ngIf="isPublic || isFriend;else content_for_private">
+            <div *ngIf="cards && cards.length > 0 ">
+              <ion-list>
+                <ion-card *ngFor="let card of cards">
+                  <div (click)="eventDetails(card.id)">
+                    <img [src]="card.image_url">
+                    <ion-card-header class="card-title">
+                      <ion-card-title class="header">{{ card.title }}</ion-card-title>
+                      <ion-card-content>
+                        <ion-icon name="location"></ion-icon>
+                        {{ card.location }}
+                      </ion-card-content>
+                      <ion-row>
+                        <ion-col center text-center>
+                          <ion-card-subtitle>
+                            {{ card.description }}
+                          </ion-card-subtitle>
+                        </ion-col>
+                        <!-- <ion-col class="ion-text-end">
+                          <ion-button fill="clear" class="right-aligned-button">
+                            <ion-icon class="iconp" name='share'></ion-icon>
+                          </ion-button>
+                        </ion-col> -->
+                      </ion-row>
+                    </ion-card-header>
+                  </div>
+                </ion-card> 
+              </ion-list>
+            </div>
 
-        <div *ngIf="isPublic;else content_for_private">
-
-          <ion-list>
-            <ion-card *ngFor="let card of cards">
-              <img [src]="card.image_url">
-              <ion-card-header class="card-title">
-                <ion-card-title class="header">{{ card.name }}</ion-card-title>
-                <ion-card-content>
-                  <ion-icon name="location"></ion-icon>
-                  {{ card.location }}
-                </ion-card-content>
-                <ion-row>
-                  <ion-col center text-center>
-                    <ion-card-subtitle>
-                      {{ card.description }}
-                    </ion-card-subtitle>
-                  </ion-col>
-                  <ion-col class="ion-text-end">
-                    <ion-button fill="clear" class="right-aligned-button">
-                      <ion-icon class="iconp" name='share'></ion-icon>
-                    </ion-button>
-                  </ion-col>
-                </ion-row>
-              </ion-card-header>
-            </ion-card> 
-          </ion-list>
+            <div *ngIf="!cards || cards.length === 0">
+              <ion-row class="ion-justify-content-center">
+                <p>No Events to display.</p>
+              </ion-row>
+            </div>
+    
         </div>
       
       <ng-template #content_for_private>
@@ -76,11 +86,25 @@
   </div>
 
   <div *ngIf="selectedSegment === 'friends'">
-    <div *ngIf="isPublic;else content_for_private">
-      <ion-content>
-        <ion-card *ngFor="let card of cards">
-        </ion-card>
-      </ion-content>
+    <div *ngIf="(isPublic || isFriend);else content_for_private">
+          <ion-list *ngIf="userFriends && userFriends.length > 0">
+            <ion-item *ngFor="let friend of userFriends">
+              <div (click)="forceRedirect(friend.uid, uid_viewing_user)">
+                <ion-thumbnail slot="start">
+                  <img [src]="friend.photoURL">
+                </ion-thumbnail>
+                <ion-label>
+                  <h2>{{ friend.displayName }}</h2>
+                    <p>{{ friend.uniq_username }}</p>
+                </ion-label>
+              </div>       
+            </ion-item>
+          </ion-list>
+          <div *ngIf="!userFriends || userFriends.length === 0">
+            <ion-row class="ion-justify-content-center">
+              <p>No friends to display.</p>
+            </ion-row>
+          </div>
     </div>
     <ng-template #content_for_private>
       <ion-row class="ion-justify-content-center">

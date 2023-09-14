@@ -1,53 +1,48 @@
+<!-- nav-bar.component.html -->
+
+<!-- Sidebar menu content -->
 <ion-menu contentId="main-content">
   <ion-content>
     <ion-list>
-      <ion-item>
-        <a (click)="onHome()" class="sidebar-link">
-          <ion-icon name="home-outline"></ion-icon>
-          Home
-        </a>  
+      <ion-item (click)="onHome()" class="sidebar-link">
+        <ion-icon name="home-outline"></ion-icon>
+        Home
       </ion-item>
-      <ion-item>
-        <a (click)="onJoinedEvent()" class="sidebar-link">
-          <ion-icon name="people-outline"></ion-icon>
-          Joined Events
-        </a>  
+      <ion-item (click)="onJoinedEvent()" class="sidebar-link">
+        <ion-icon name="people-outline"></ion-icon>
+        Joined Events
       </ion-item>
-      <ion-item>
-        <a (click)="onEvent()" class="sidebar-link">
-          <ion-icon name="add-outline"></ion-icon>
-          Create Event
-        </a>  
+      <ion-item (click)="onEvent()" class="sidebar-link">
+        <ion-icon name="add-outline"></ion-icon>
+        Create Event
       </ion-item>
-      <ion-item>
-        <a (click)="onNotifications()" class="sidebar-link">
-          <ion-icon name="notifications-outline"></ion-icon>
-          Notifications
-        </a>  
+      <ion-item (click)="onNotifications()" class="sidebar-link">
+        <ion-icon name="notifications-outline"></ion-icon>
+        Notifications
       </ion-item>
-      <ion-item>
-        <a (click)="onProfile()" class="sidebar-link">
-          <ion-icon name="person-outline"></ion-icon>
-          Profile
-        </a>  
+      <ion-item (click)="onProfile()" class="sidebar-link">
+        <ion-icon name="person-outline"></ion-icon>
+        Profile
       </ion-item>
-      <ion-item>
-        <a (click)="onSettings()" class="sidebar-link">
-          <ion-icon name="settings-outline"></ion-icon>
-          Settings
-        </a>  
+      <ion-item (click)="onSettings()" class="sidebar-link">
+        <ion-icon name="settings-outline"></ion-icon>
+        Settings
       </ion-item>
-      <ion-item>
-        <a (click)="logout()" class="sidebar-link">
-          <ion-icon name="log-out-outline"></ion-icon>
-          Logout
-        </a>  
+      <ion-item (click)="logout()" class="sidebar-link">
+        <ion-icon name="log-out-outline"></ion-icon>
+        Logout
       </ion-item>
     </ion-list>
   </ion-content>
 </ion-menu>
 
-<!-- <ion-buttons> -->
-  <ion-menu-button></ion-menu-button>
-<!-- </ion-buttons> -->
-  
+<!-- Navigation bar -->
+<nav class="navbar">
+  <div class="navbar-logo">
+    <ion-title>xPOSE</ion-title>
+  </div>
+  <ion-buttons slot="start">
+    <!-- Toggle button to open the sidebar menu -->
+    <ion-menu-button autoHide="false"></ion-menu-button>
+  </ion-buttons>
+</nav>

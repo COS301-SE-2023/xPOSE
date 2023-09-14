@@ -6,6 +6,9 @@ import { AuthService } from "../shared/services/auth.service";
 import { ApiService } from "../service/api.service";
 import { Observable, map } from "rxjs";
 import { AngularFireAuth } from "@angular/fire/compat/auth";
+import { AngularFirestore } from "@angular/fire/compat/firestore";
+import { LoadingController } from "@ionic/angular";
+import { Service } from '../service/service';
 
 
 @Component({
@@ -15,18 +18,54 @@ import { AngularFireAuth } from "@angular/fire/compat/auth";
 })
 export class SettingsPage implements OnInit {
   selectedImage: string | null = null;
-  username: string = 'JohnDoe';
-  fullName: string = 'John Doe';
-  email: string = 'john.doe@example.com';
+  username: string = '...';
+  fullName: string = '...';
+  email: string = '...';
   privacy: string = 'public';
-
+  uid: string = "";
+  loading!: HTMLIonLoadingElement;
   constructor(private http: HttpClient, 
     public authService: AuthService,
 		private router: Router,
 		private api: ApiService,
-		private afAuth: AngularFireAuth) {}
+		private afAuth: AngularFireAuth,
+		private afs: AngularFirestore,
+		private loadingController: LoadingController,
+		private service: Service) {}
 
-  ngOnInit() {}
+
+	headshot_image_url: string = '';
+  
+	ngOnInit() {
+		this.getCurrentUserId().subscribe((uid) => {
+			// formData.append('user_id', uid);
+		  
+			  if (uid) {
+				this.uid = uid;
+			  this.http.get(`${this.api.apiUrl}/posts/user/${uid}`).subscribe(
+				  (res: any) => {
+					this.headshot_image_url = res.image_url;
+				  console.log(res);
+				  },
+				  (error: any) => {
+					console.log('Hello');
+				  console.error(error);
+				  }
+			  );
+
+			  // current user data
+			  this.service.GetUser(uid).subscribe((userData) => {
+				this.username = userData.displayName; 
+				this.email = userData.email;
+				this.privacy = userData.visibility;
+				// this.isPublic =userData.visibility;       
+			  });
+
+
+
+			  }
+		});
+  }
 
   async uploadImage() {
     const image = await Camera.getPhoto({
@@ -114,17 +153,67 @@ export class SettingsPage implements OnInit {
     // Implement logic to register the selected image (if needed)
   }
   // Method to update account privacy setting
-  updatePrivacy() {
-    // Implement logic to send updated privacy setting to the server
-    // You may use Angular's HttpClient for making API requests
+  async updatePrivacy() {
+	try {
+		this.loading = await this.loadingController.create({
+		  message: "Updating privacy...",
+		});
+		await this.loading.present();
+
+		// Update profile endpoint will go here
+		const data = {
+			displayName: "",
+			photoURL:"",
+			visibility: this.privacy
+		  };
+		const requestBody = JSON.stringify(data);
+		const response = await this.service.UpdateUserDetails(requestBody, this.uid);
+
+		await this.loading.dismiss();
+	
+		// this.router.navigate(["/home"]);
+		} catch (error) {
+			await this.loading.dismiss();
+			console.error("Error updating profile", error);
+		}
   }
    // Method to upload facial recognition data
    uploadFacialData(event: any) {
-    const file = event.target.files[0];
+    this.file = event.target.files[0];
+	this.headshot_image_url = URL.createObjectURL(this.file);
+	// display image
+
     // Implement logic to upload and register facial data on the server
     // You may use Angular's HttpClient for making API requests
-  }
-  registerFacialData() {
+}
+
+file: any | null ;
+
+  // Method to register facial recognition data
+registerFacialData() {
+	// Create FormData and append the image Blob to it
+	// const temp = 'http://127.0.0.1:5000';
+	if(this.file == null) {
+		console.log("No image data available.");
+		return;
+	}
+	  const formData = new FormData();
+	  formData.append('image', this.file, this.file.name);
+
+	  this.getCurrentUserId().subscribe((uid) => {
+		formData.append('user_id', uid);
+	  
+		  if (uid) {
+		  this.http.post(`${this.api.apiUrl}/posts/register?uid=${uid}`, formData).subscribe(
+			  (res: any) => {
+			  console.log(res);
+			  },
+			  (error: any) => {
+			  console.error(error);
+			  }
+		  );
+		  }
+	});
     // Implement logic to register facial data on the server
     // You may use Angular's HttpClient for making API requests
   }
@@ -133,18 +222,73 @@ export class SettingsPage implements OnInit {
   deleteFacialData() {
     // Implement logic to delete facial data on the server
     // You may use Angular's HttpClient for making API requests
+	this.getCurrentUserId().subscribe((uid) => {
+		  if (uid) {
+			console.log(`${this.api.apiUrl}/posts/user/${uid}/delete`);
+		  this.http.delete(`${this.api.apiUrl}/posts/user/${uid}/delete`).subscribe(
+			  (res: any) => {
+			  console.log(res);
+			  },
+			  (error: any) => {
+			  console.error(error);
+			  }
+		  );
+		  }
+	});
   }
 
 	// Method to delete the user's account
-	deleteAccount() {
-		// Implement logic to delete the user's account on the server
-		// You may use Angular's HttpClient for making API requests
+	async deleteAccount() {
+		try {
+			this.loading = await this.loadingController.create({
+			  message: "deleting profile...",
+			});
+			await this.loading.present();
+
+			// Delete user profile endpoint will go here
+			const response = await this.service.deleteUser(this.uid);
+	
+			await this.loading.dismiss();
+			localStorage.removeItem('user');
+			// force redirect to login page
+			this.forceRedirect();
+			} catch (error) {
+				await this.loading.dismiss();
+				console.error("Error deleting profile", error);
+			}
 	}
 
+	forceRedirect() {
+		const login = `/login`;
+		  // Update the window location to trigger a full page refresh
+		  window.location.href = login;
+	  }
+
 	// Method to update user profile
-	updateProfile() {
-		// Implement logic to send updated profile data to the server
-		// You may use Angular's HttpClient for making API requests
+	async updateProfile() {
+		try {
+			this.loading = await this.loadingController.create({
+			  message: "Updating profile...",
+			});
+			await this.loading.present();
+
+			// Update profile endpoint will go here
+			const data = {
+				displayName: this.username,
+				photoURL:"",
+				visibility: ""
+			  };
+			const requestBody = JSON.stringify(data);
+			const response = await this.service.UpdateUserDetails(requestBody, this.uid);
+	
+			await this.loading.dismiss();
+			// console.log("DisplayName update successfully")
+		
+			// this.router.navigate(["/home"]);
+			} catch (error) {
+				await this.loading.dismiss();
+				console.error("Error updating profile", error);
+			}
 	  }
 
   getCurrentUserId(): Observable<string> {

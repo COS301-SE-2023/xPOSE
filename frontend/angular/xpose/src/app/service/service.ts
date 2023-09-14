@@ -44,32 +44,29 @@ export class Service {
     try {
         const headers = new HttpHeaders().set('Content-Type', 'application/json');
       const response = await this.httpClient.patch(`${this.apiUrl}/u/users/${uid}`, requestBody, { headers }).toPromise();
-      console.log("Response from server:", response);
+      // console.log("Response from server:", response);
       console.log("User profile updated successfully");
       return response;
     } catch (error) {
-      console.log("Error in calling function");
+      // console.log("Error in calling function");
       console.log("Error:", error);
       // console.log("Response body:", error.error);
       return Promise.reject(error);
     }
+  }
 
 
-
-
-
-    // const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    // return this.httpClient.patch(`${this.apiUrl}/u/users/${uid}`, requestBody, {headers})
-    // .toPromise()
-    // .then((Response) => {
-    //   console.log("User profile updated successfully")
-    //   window.alert("User profile updated successfully");
-    // })
-    // .catch((error) => {
-    //   console.log("Error in calling function");
-    //   console.log("Error:", error);
-    //   // console.log("Response body:", error.error);
-    //   return Promise.reject(error);
-    // })
+  async deleteUser(uid:string){
+    try {
+      const response = await this.httpClient.delete(`${this.apiUrl}/u/users/${uid}`).toPromise();
+      console.log("User deleted successfully")
+      return response;
+    } catch(error){
+      console.log("Error deleting user", error);
+      return Promise.reject(error);
+    }
   }
 }
+
+
+

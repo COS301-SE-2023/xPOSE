@@ -21,7 +21,7 @@
   </ion-list> -->
 
   <ion-list *ngFor="let card of cards">
-    <ion-card>
+    <ion-card (click)="eventDetails(card.id)">
       <img [src]="card.image_url" alt="Card Image" class="card-image">
       <ion-card-header class="card-title">
         <ion-card-title class="header">

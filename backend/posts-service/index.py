@@ -6,14 +6,12 @@ import face_recognition
 import numpy as np
 import firebase_admin
 from firebase_admin import credentials, storage, firestore
-import os
 import random
 import string
 import json
 from db_connector import User  # Import the database models
 from PIL import Image as PILImage
 from datetime import datetime, timedelta
-
 
 app = Flask(__name__)
 

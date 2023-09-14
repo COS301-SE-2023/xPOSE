@@ -115,9 +115,7 @@ ion-list{
   font-size: 20px;
   // --min-height: 70px;
 }
-ion-item{
-  background-color: #ffffff;
-}
+
 ion-toolbar{
   background-color: #ffffff;
   --background: #ffffff;
@@ -135,12 +133,12 @@ ion-toolbar{
 
 }
 
-ion-item{
-  background-color: #ffffff;
-  color: #000000;
-  font-size: 20px;
-  --background: #ffffff;
-}
+// ion-item{
+//   background-color: #ffffff;
+//   color: #000000;
+//   font-size: 20px;
+//   --background: #ffffff;
+// }
 ion-card-header{
   color: #000000;
   font-size: 20px;
@@ -155,4 +153,19 @@ ion-card-subtitle{
   color: #000000;
   font-size: 20px;
   // background-color: #ffffff;
+}
+
+//menu style
+ion-menu {
+  --width: 300px; /* Set the width of the side menu */
+  --background: #f4f4f4; /* Set the background color of the side menu */
+}
+
+ion-item {
+  --padding-start: 20px; /* Set the padding from the start of the item */
+  --padding-end: 20px; /* Set the padding from the end of the item */
+}
+
+ion-item:hover {
+  background-color: #e0e0e0; /* Set the background color when hovered */
 }

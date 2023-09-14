@@ -9,16 +9,20 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { Observable } from "rxjs";
+import '@angular/compiler';
+
 import { map } from "rxjs/operators";
 import { ViewChild } from "@angular/core";
 import { NgForm } from "@angular/forms";
 import { ApiService } from "../service/api.service";
 import { AuthService } from "../shared/services/auth.service";
+// import { PlaceAutocompleteComponent } from "../shared/maps/place-autocomplete/place-autocomplete.component";
 
 @Component({
 	selector: "app-create-event",
 	templateUrl: "./create-event.page.html",
 	styleUrls: ["./create-event.page.scss"],
+	// imports: [PlaceAutocompleteComponent]
 	})
 export class CreateEventPage implements OnInit, AfterViewInit {
 
@@ -269,9 +273,7 @@ export class CreateEventPage implements OnInit, AfterViewInit {
 	  }
 	  
 
-	  search() {
-		this.router.navigateByUrl('/search');
-	}
+
 	
 	eventDetails(event_id: string) {
 		this.router.navigate(['/view-event', event_id]);

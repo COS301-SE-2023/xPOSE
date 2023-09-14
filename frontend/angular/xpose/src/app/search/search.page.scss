@@ -5,15 +5,21 @@
     font-size: 20px;
   
   }
-  ion-searchbar{
-    --background: #ffffff;
-    color: #000000;
+  ion-searchbar {
+    --background: #f4f4f4; /* Set the background color of the search bar */
+    --color: #333; /* Set the text color */
+    --placeholder-color: #999; /* Set the color of the placeholder text */
+    --border-color: #ddd; /* Set the border color */
+    --border-radius: 10px; /* Set the border radius */
   }
-  ion-segment{
-    --background: #ffffff;
-    color: #000000;
-
+  
+  ion-segment {
+    --color: #b53fab; /* Set the color of the segment */
+    --color-checked: #fff; /* Set the color when checked */
+    --background: #f4f4f4; /* Set the background color */
+    --background-checked: #b53fab; /* Set the background color when checked */
   }
+  
   ion-segment-button{
     --background: #ffffff;
     color: #000000;
@@ -23,11 +29,17 @@
     background-color: #ffffff;
     color: #000000;
   }
-  ion-list{
-    --background: #ffffff;
-    background-color: #ffffff;
-    color: #000000;
+  ion-list {
+    --padding-start: 0; /* Remove the padding from the start of the list */
+    --padding-end: 0; /* Remove the padding from the end of the list */
   }
+  
+  ion-item {
+    --padding-start: 20px; /* Set the padding from the start of the item */
+    --padding-end: 20px; /* Set the padding from the end of the item */
+    --min-height: 50px; /* Set the minimum height of the item */
+  }
+  
   ion-toolbar{
     --background: #ffffff;
     background-color: #ffffff;

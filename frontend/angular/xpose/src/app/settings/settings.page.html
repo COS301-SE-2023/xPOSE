@@ -1,12 +1,58 @@
+<ion-menu menuId="main-menu" contentId="main-content">
+  <ion-content>
+    <ion-list>
+      <ion-item>
+        <a (click)="onHome()" class="sidebar-link">
+          <ion-icon name="home-outline"></ion-icon>
+          Home
+        </a>  
+      </ion-item>
+      <ion-item>
+        <a (click)="onJoinedEvent()" class="sidebar-link">
+          <ion-icon name="people-outline"></ion-icon>
+          Joined Events
+        </a>  
+      </ion-item>
+      <ion-item>
+        <a (click)="onEvent()" class="sidebar-link">
+          <ion-icon name="add-outline"></ion-icon>
+          Create Event
+        </a>  
+      </ion-item>
+      <ion-item>
+        <a (click)="onNotifications()" class="sidebar-link">
+          <ion-icon name="notifications-outline"></ion-icon>
+          Notifications
+        </a>  
+      </ion-item>
+      <ion-item>
+        <a (click)="onProfile()" class="sidebar-link">
+          <ion-icon name="person-outline"></ion-icon>
+          Profile
+        </a>  
+      </ion-item>
+      <ion-item>
+        <a (click)="onSettings()" class="sidebar-link">
+          <ion-icon name="settings-outline"></ion-icon>
+          Settings
+        </a>  
+      </ion-item>
+      <ion-item>
+        <a (click)="logout()" class="sidebar-link">
+          <ion-icon name="log-out-outline"></ion-icon>
+          Logout
+        </a>  
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
 <ion-header [translucent]="true">
   <ion-toolbar class="custom-toolbar">
     <ion-buttons slot="start">
-      <app-backbutton></app-backbutton>
-    </ion-buttons>
-    <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Account Settings</ion-title>
+    <ion-title>Account settings</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -24,11 +70,11 @@
         </div>
         <div class="form-group">
           <label for="fullName">Full Name:</label>
-          <input type="text" id="fullName" [(ngModel)]="fullName" name="fullName" required>
+          <input type="text" id="fullName" [(ngModel)]="fullName" name="fullName" disabled>
         </div>
         <div class="form-group">
           <label for="email">Email:</label>
-          <input type="email" id="email" [(ngModel)]="email" name="email" required>
+          <input type="email" id="email" [(ngModel)]="email" name="email" disabled>
         </div>
         <button type="submit">Save Changes</button>
       </form>
@@ -40,7 +86,7 @@
       <div class="form-group">
         <label>Privacy Setting:</label>
         <label>
-          <input type="radio" [(ngModel)]="privacy" name="privacy" value="public"> Public
+          <input type="radio" [(ngModel)]="privacy" name="privacy" value="public" > Public
         </label>
         <label>
           <input type="radio" [(ngModel)]="privacy" name="privacy" value="private"> Private
@@ -52,6 +98,8 @@
     <!-- Facial Recognition Section -->
     <section class="facial-recognition-section">
       <h3>Facial Recognition</h3>
+      <!-- add image linking to headshot_image_url -->
+      <img [src]="headshot_image_url" alt="No Headshot Image">
       <input type="file" (change)="uploadFacialData($event)">
       <button (click)="registerFacialData()">Register Facial Data</button>
       <button (click)="deleteFacialData()">Delete Facial Data</button>

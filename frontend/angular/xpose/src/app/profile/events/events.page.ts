@@ -51,6 +51,10 @@ export class EventsPage implements OnInit {
       }
     });
   }
+
+  eventDetails(event_id: string) {
+		this.router.navigate(['/view-event', event_id]);
+	}
   
   getCurrentUserId(): Observable<string> {
     return this.afAuth.authState.pipe(
@@ -77,7 +81,7 @@ export class EventsPage implements OnInit {
         image_url: event.image_url,
         longitude: event.longitude,
         latitude: event.latitude,
-        id: event.id,
+        id: event.code,
         created_at: event.createdAt,
         start_date: event.start_date,
         end_date: event.end_date,

@@ -1,4 +1,4 @@
-<ion-menu contentId="main-content">
+<ion-menu menuId="main-menu" contentId="main-content">
   <ion-content>
     <ion-list>
       <ion-item>
@@ -32,6 +32,12 @@
         </a>  
       </ion-item>
       <ion-item>
+        <a (click)="onFriends()" class="sidebar-link">
+          <ion-icon name="person-outline"></ion-icon>
+          Friends
+        </a>  
+      </ion-item>
+      <ion-item>
         <a (click)="onSettings()" class="sidebar-link">
           <ion-icon name="settings-outline"></ion-icon>
           Settings
@@ -48,7 +54,7 @@
 </ion-menu>
 
 <ion-header [translucent]="true">
-  <ion-toolbar class="custom-toolbar">
+  <ion-toolbar >
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>

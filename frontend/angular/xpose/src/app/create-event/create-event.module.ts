@@ -17,7 +17,8 @@ import { SharedModule } from "../shared/shared.module";
         FormsModule,
         IonicModule,
         CreateEventPageRoutingModule,
-        SharedModule
+        SharedModule,
+        
     ]
 })
 export class CreateEventPageModule {}
