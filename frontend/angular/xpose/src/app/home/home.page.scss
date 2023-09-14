@@ -158,11 +158,6 @@ ion-card-content {
   overflow-y: auto;
 }
 
-.custom-toolbar {
-  display: block;
-  background-color: #ffffff;
-}
-
 @media screen and (max-width: 768px) {
   .custom-toolbar ion-title {
     display: none;
