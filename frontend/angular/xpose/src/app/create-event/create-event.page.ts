@@ -14,6 +14,7 @@ import { ViewChild } from "@angular/core";
 import { NgForm } from "@angular/forms";
 import { ApiService } from "../service/api.service";
 import { AuthService } from "../shared/services/auth.service";
+import { LocationAutocompleteService } from "../service/location-autocomplete.service";
 
 @Component({
 	selector: "app-create-event",
@@ -48,13 +49,15 @@ export class CreateEventPage implements OnInit, AfterViewInit {
 		private api: ApiService,
 		private modalController: ModalController,
 		public authService: AuthService,
-		private afAuth: AngularFireAuth) {
+		private afAuth: AngularFireAuth,
+		private locationAutocompleteService: LocationAutocompleteService) {
 			this.map = null;
 			this.marker = null;
 		}
 	ngAfterViewInit(): void {
-		this.initMap();
 	}
+
+	locationPredictions: any[] = [];
 
 	onPrivacyChange() {
 		console.log('Privacy changed:', this.createEvent.privacy_setting);
@@ -80,197 +83,156 @@ export class CreateEventPage implements OnInit, AfterViewInit {
 		);
 	  }
 
-	  initMap(): void {
-		this.map = new google.maps.Map(document.getElementById('map') as HTMLElement, {
-			center: { lat: 1.3521, lng: 103.8198 },
-			zoom: 15,
-		});
-
-		this.map.addListener('click', (e:google.maps.MouseEvent) => {
-			this.placeMarker(e.latLng);
-		});
-
-		// Add autocomplete to search bar
-		const input = document.getElementById('locationInput') as HTMLInputElement;
-		const searchBox = new google.maps.places.SearchBox(input);
-		this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-
-		// Bias the SearchBox results towards current map's viewport.
-		this.map.addListener('bounds_changed', () => {
-			searchBox.setBounds(this.map!.getBounds() as google.maps.LatLngBounds);
-		});
-
-		// Update map and marker when a place is selected from the search bar
-		searchBox.addListener('places_changed', () => {
-			const places = searchBox.getPlaces();
-
-			if (places.length == 0) {
-				return;
-			}
-
-			// Clear out the old markers.
-			this.marker?.setMap(null);
-
-			// Set map center and marker position to the selected place.
-			if(places[0].geometry?.viewport)
-			
-			this.map?.setCenter(places[0].geometry.location);
-			this.placeMarker(places[0].geometry?.location);
-		});
+	  locationFilter: string = ''; // Added location filter variable
+	  filteredLocations: string[] = []; // Array to hold filtered locations
+	
+	  // Existing constructor and methods
+	
+	  // Add this method to filter locations based on user input
+	  filterLocations() {
+		console.log('Filtering locations...');
+		this.onLocationInput(this.locationFilter).then((some) => {
+			console.log(some);
+		}); // Call the location input handler
+		// Replace this mock data with your actual list of locations
+		// const locations = [
+		//   "Location1",
+		//   "Location2",
+		//   "Location3",
+		//   // Add more locations as needed
+		// ];
+	  
+		// // Filter locations based on user input
+		// this.filteredLocations = locations.filter((location) =>
+		//   location.toLowerCase().includes(this.locationFilter.toLowerCase())
+		// );
+	  
+		this.updateListHeight(); // Update the list height after filtering
 	  }
+	  selectedLocation: string | null = null; // Variable to store the selected location
 
-	  placeMarker(location: any) {
-		if (this.marker) {
-		  this.marker.setMap(null);
+	  // ...
+	  
+	  listHeight: number = 0; // Variable to store the dynamic height of the ion-list
+
+	  // ...
+	  
+	  // Method to update the height of the ion-list based on filtered locations
+	  updateListHeight() {
+		// Calculate the height based on the number of filtered locations
+		const itemHeight = 48; // Adjust this value based on your item height
+		this.listHeight = this.filteredLocations.length * itemHeight;
+	  }
+	  
+	  // Method to select a location from the dropdown list
+	  selectLocation(location: string) {
+		this.selectedLocation = location;
+		this.createEvent.location = location; // Set the selected location in your form data
+		this.filteredLocations = []; // Clear the dropdown list
+		this.updateListHeight(); // Update the list height after selection
+	  }
+	// Function to fetch location predictions
+	async onLocationInput(event: any) {
+		console.log('Fetching location predictions...');
+		try {
+		this.locationPredictions = await this.locationAutocompleteService.getPlacePredictions(event.target.value);
+		console.log(this.locationPredictions);
+		} catch (error) {
+		console.error('Error fetching location predictions:', error);
 		}
+	}
 
-		this.marker = new google.maps.Marker({
-		  position: location,
-		  map: this.map || new google.maps.Map(document.getElementById('map') as HTMLElement, {}),
-		});
-		
+// Function to handle location selection
+onLocationSelect(prediction: any) {
+	console.log('Selected location:', prediction.description);
+	
+	const geocoder = new google.maps.Geocoder();
+	geocoder.geocode({ address: prediction.description }, (results, status) => {
+	  if (status === 'OK' && results && results[0]) {
+		const location = results[0].geometry.location;
+		this.createEvent.location = prediction.description;
 		this.createEvent.latitude = location.lat();
 		this.createEvent.longitude = location.lng();
+		
+		console.log('Location selected:', this.createEvent.location);
+		console.log('Latitude:', this.createEvent.latitude);
+		console.log('Longitude:', this.createEvent.longitude);
+	  } else {
+		console.log('Geocoding failed due to: ' + status);
 	  }
+	});
+  
+	this.locationPredictions = []; // Clear the predictions
+  }
+  
 
-	  initAutocomplete() {
-		const input = document.getElementById('locationInput') as HTMLInputElement;
-		const autocomplete = new google.maps.places.Autocomplete(input);
-		// Add listener to the input element
-		autocomplete.addListener('place_changed', () => {
-			const place = autocomplete.getPlace();
-			if (!place.geometry) {
-				// User entered the name of a Place that was not suggested and
-				// pressed the Enter key, or the Place Details request failed.
-				console.error('No details available for input: ' + place.name);
-				return;
-			}
-			// For each place, get the icon, name and location.
-			const bounds = new google.maps.LatLngBounds();
-			if (place.geometry.viewport) {
-				// Only geocodes have viewport.
-				bounds.union(place.geometry.viewport);
+	  
+
+	CreateEvent(form: NgForm) {
+	const formData: FormData = new FormData();
+	formData.append('title', this.createEvent.title);
+	formData.append('start_date', this.createEvent.start_date);
+	formData.append('end_date', this.createEvent.end_date);
+	formData.append('location', this.createEvent.location);
+	formData.append('description', this.createEvent.description);
+	formData.append('privacy_setting', this.createEvent.privacy_setting);
+	formData.append('latitude', this.createEvent.latitude.toString());
+	formData.append('longitude', this.createEvent.longitude.toString());
+	if(this.createEvent.title != " " || this.createEvent.start_date != " " || this.createEvent.end_date != " " || this.createEvent.location != " " || this.createEvent.description != " " || this.createEvent.longitude != 0 || this.createEvent.latitude != 0){
+		this.getCurrentUserId().subscribe((uid) => {
+			if(uid){
+				this.buttonClicked = true;
+				this.loading = true;
+				
+
+				
+
+					// this.createEvent.userId = parseInt(userId);
+					const formData: FormData = new FormData();
+					formData.append('uid', uid);
+					formData.append('title', this.createEvent.title);
+					if (this.createEvent.image) {
+					formData.append('image', this.createEvent.image, this.createEvent.image.name);
+					}
+					formData.append('start_date', this.createEvent.start_date);
+					formData.append('end_date', this.createEvent.end_date);
+					formData.append('location', this.createEvent.location);
+					formData.append('description', this.createEvent.description);
+					formData.append('privacy_setting', this.createEvent.privacy_setting);
+					formData.append('latitude', this.createEvent.latitude.toString());
+					formData.append('longitude', this.createEvent.longitude.toString());
+				//   console.log(formData);
+					console.log(this.createEvent);
+					// REfactor this to be done in the service class for better decoupling
+					const url = `${this.api.apiUrl}/e/events?uid=${uid}`;
+					
+					this.http.post(url, formData)
+					.subscribe({
+						next: (response:any) => {
+						console.log(response);
+						this.openEventModal(response.code);
+						// Handle the response from the server
+						this.router.navigate(['/home']);
+						},
+						error: (error) => {
+						// Handle any errors that occurred during the request
+						console.error(error);
+						this.loading = false;
+						// Display an error message to the user or perform any necessary error handling
+						}
+					});
 			}
 			else {
-				bounds.extend(place.geometry.location);
+				console.log("No user is currently logged in.");
+				// ! throw error
 			}
-			this.createEvent.latitude = place.geometry.location.lat();
-			this.createEvent.longitude = place.geometry.location.lng();
-			this.displayMap();
 		});
-	  }
+	}
+	else{
+		console.log("Please fill in all the fields.");
+	}
+	}
 	  
-	  displayMap() {
-		// code to display map
-		// console.log('Loading map');
-		const mapContainer = document.getElementById('map');
-		console.log(`map container ${mapContainer}`);
-		
-		if (mapContainer instanceof HTMLElement) {
-		  console.log(`Loading map`);
-		  const mapOptions: google.maps.MapOptions = {
-			center: { lat: parseFloat(this.createEvent.latitude.toString()), lng: parseFloat(this.createEvent.longitude.toString()) },
-			zoom: 14,
-		  };
-		  
-		  console.log(`Attributes showing ${this.createEvent.latitude} ${this.createEvent.longitude}`);
-		  this.map = new google.maps.Map(mapContainer, mapOptions);
-		  
-		  console.log(`Map loaded`);
-		  this.marker = new google.maps.Marker({
-			position: { lat: parseFloat(this.createEvent.latitude.toString()), lng: parseFloat(this.createEvent.longitude.toString()) },
-			map: this.map,
-			title: 'Event Location',
-		  });
-		  console.log(`Marker loaded`);
-		} else {
-		  console.error('Map container element not found');
-		}
-	  }
-
-	  CreateEvent(form: NgForm) {
-		const formData: FormData = new FormData();
-		formData.append('title', this.createEvent.title);
-		formData.append('start_date', this.createEvent.start_date);
-		formData.append('end_date', this.createEvent.end_date);
-		formData.append('location', this.createEvent.location);
-		formData.append('description', this.createEvent.description);
-		formData.append('privacy_setting', this.createEvent.privacy_setting);
-		formData.append('latitude', this.createEvent.latitude.toString());
-		formData.append('longitude', this.createEvent.longitude.toString());
-		if(this.createEvent.title != " " || this.createEvent.start_date != " " || this.createEvent.end_date != " " || this.createEvent.location != " " || this.createEvent.description != " " || this.createEvent.longitude != 0 || this.createEvent.latitude != 0){
-			this.getCurrentUserId().subscribe((uid) => {
-				if(uid){
-					this.buttonClicked = true;
-					this.loading = true;
-					const geocoder = new google.maps.Geocoder();
-					const location = new google.maps.LatLng(
-					  this.createEvent.latitude,
-					  this.createEvent.longitude
-					);
-	
-					geocoder.geocode({ location }, (results, status) => {
-					  if (status === 'OK') {
-						if (results[0]) {
-						  this.createEvent.location = results[0].formatted_address;
-						  console.log(results[0].formatted_address);
-						} else {
-						  console.log('No results found');
-						}
-					  } else {
-						console.log('Geocoder failed due to: ' + status);
-					  }
-	
-					  // this.createEvent.userId = parseInt(userId);
-					  const formData: FormData = new FormData();
-					  formData.append('uid', uid);
-					  formData.append('title', this.createEvent.title);
-					  if (this.createEvent.image) {
-						formData.append('image', this.createEvent.image, this.createEvent.image.name);
-					  }
-					  formData.append('start_date', this.createEvent.start_date);
-					  formData.append('end_date', this.createEvent.end_date);
-					  formData.append('location', this.createEvent.location);
-					  formData.append('description', this.createEvent.description);
-					  formData.append('privacy_setting', this.createEvent.privacy_setting);
-					  formData.append('latitude', this.createEvent.latitude.toString());
-					  formData.append('longitude', this.createEvent.longitude.toString());
-					//   console.log(formData);
-					  console.log(this.createEvent);
-					  // REfactor this to be done in the service class for better decoupling
-					  const url = `${this.api.apiUrl}/e/events?uid=${uid}`;
-					  
-					  this.http.post(url, formData)
-						.subscribe({
-						  next: (response:any) => {
-							console.log(response);
-							this.openEventModal(response.code);
-							// Handle the response from the server
-							this.router.navigate(['/home']);
-						  },
-						  error: (error) => {
-							// Handle any errors that occurred during the request
-							console.error(error);
-							this.loading = false;
-							// Display an error message to the user or perform any necessary error handling
-						  }
-						});
-					});
-				}
-				else {
-					console.log("No user is currently logged in.");
-					// ! throw error
-				}
-			});
-		}
-		else{
-			console.log("Please fill in all the fields.");
-		}
-	  }
-	  
-
-
-	
 	eventDetails(event_id: string) {
 		this.router.navigate(['/view-event', event_id]);
 	}
