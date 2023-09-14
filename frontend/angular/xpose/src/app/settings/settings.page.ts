@@ -249,13 +249,20 @@ registerFacialData() {
 			const response = await this.service.deleteUser(this.uid);
 	
 			await this.loading.dismiss();
-		
-			this.router.navigate(["/login"]);
+			localStorage.removeItem('user');
+			// force redirect to login page
+			this.forceRedirect();
 			} catch (error) {
 				await this.loading.dismiss();
 				console.error("Error deleting profile", error);
 			}
 	}
+
+	forceRedirect() {
+		const login = `/login`;
+		  // Update the window location to trigger a full page refresh
+		  window.location.href = login;
+	  }
 
 	// Method to update user profile
 	async updateProfile() {
