@@ -108,12 +108,30 @@
             <div id="map"></div>
           </div> -->
 
+          <ion-searchbar
+            class="ther"
+            name="location"
+            [(ngModel)]="createEvent.location"
+            (ionInput)="onLocationInput($event)"
+            autocomplete="off"
+          ></ion-searchbar>
+  
+          
+          <!-- Dropdown-like list of filtered locations -->
+          <ion-list>
+            <ion-item *ngFor="let prediction of locationPredictions" (click)="onLocationSelect(prediction)">
+              <ion-icon name="location"></ion-icon> {{ prediction.description }}
+            </ion-item>
+          </ion-list>
+          
+          <br />
+
           <ion-row>
             <!-- Start date -->
             <ion-col size="6">
               <p>Start Date</p>
               <ion-input
-                type="date"
+                type="datetime"
                 [(ngModel)]="createEvent.start_date"
                 name="start_date"
               ></ion-input>
@@ -123,7 +141,7 @@
             <ion-col size="6">
               <p>End Date</p>
               <ion-input
-                type="date"
+                type="datetime"
                 [(ngModel)]="createEvent.end_date"
                 name="end_date"
               ></ion-input>
