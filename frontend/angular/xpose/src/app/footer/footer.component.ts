@@ -67,4 +67,7 @@ export class FooterComponent  implements OnInit {
    logout() {
     this.authService.signOut();
   }
+  onFriends() {
+    this.router.navigate(['/friends']);
+  }
 }
