@@ -13,14 +13,12 @@ import { error } from 'console';
 
 
 
-
-
-
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.page.html',
   styleUrls: ['./user-profile.page.scss'],
 })
+
 export class UserProfilePage implements OnInit {
   userEvents: any[] | undefined;
   events: any[] = [];
@@ -277,7 +275,7 @@ export class UserProfilePage implements OnInit {
         image_url: event.image_url,
         longitude: event.longitude,
         latitude: event.latitude,
-        id: event.id,
+        id: event.code,
         created_at: event.createdAt,
         start_date: event.start_date,
         end_date: event.end_date,
@@ -285,6 +283,10 @@ export class UserProfilePage implements OnInit {
       }));
     }
   }
+
+  eventDetails(event_id: string) {
+		this.router.navigate(['/view-event', event_id]);
+	}
 
 
   async getfriends() {

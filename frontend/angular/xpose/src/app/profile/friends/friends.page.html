@@ -7,13 +7,15 @@
 <ion-content>
   <ion-list *ngIf="userFriends && userFriends.length > 0"> <!-- Add ngIf here -->
     <ion-item *ngFor="let friend of userFriends">
-      <ion-thumbnail slot="start">
-        <img [src]="friend.photoURL">
-      </ion-thumbnail>
-      <ion-label>
-        <h2>{{ friend.displayName }}</h2>
-        <p>{{ friend.uniq_username }}</p>
-      </ion-label>
+      <div (click)="forceRedirect(friend.uid)">
+        <ion-thumbnail slot="start">
+          <img [src]="friend.photoURL">
+        </ion-thumbnail>
+        <ion-label>
+          <h2>{{ friend.displayName }}</h2>
+            <p>{{ friend.uniq_username }}</p>
+        </ion-label>
+      </div>
       <ion-button slot="end" (click)="unfriend(friend)">
         Unfriend
       </ion-button>

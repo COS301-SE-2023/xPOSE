@@ -2,20 +2,34 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { ApiService } from 'src/app/service/api.service';
+import { Location } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-friends',
-  templateUrl: './friends.page.html',
-  styleUrls: ['./friends.page.scss'],
+  selector: 'app-friend-list',
+  templateUrl: './friend-list.component.html',
+  styleUrls: ['./friend-list.component.scss'],
 })
-export class FriendsPage implements OnInit {
-  userFriends: any[] = [];
+export class FriendListComponent  implements OnInit {
   loading:boolean = true; // initial loading state
   currentUserId: string = "";
+  private history: string[] = [];
+  friends = [
+    {
+      uid: "",
+      displayName: '...',
+      email: '...',
+      uniq_username :"...",
+      photoURL: 'https://via.placeholder.com/150',
+    }
+  ];
+
   constructor( 
+    private router: Router,
     private http: HttpClient,
     private authService: AuthService,
-    private api: ApiService) { }
+    private api: ApiService,
+    private location: Location) { }
 
   ngOnInit() {
     this.authService.getCurrentUserId().subscribe((uid) => {
@@ -27,8 +41,6 @@ export class FriendsPage implements OnInit {
         console.log("profile page no user id");
       }
     });
-
-
   }
 
   getFriends(uid:string){
@@ -37,12 +49,12 @@ export class FriendsPage implements OnInit {
 
     this.http.get<any[]>(`${endpoint}${uid}/friends`).subscribe(
       (response) => {
-        this.userFriends = response;
+        this.friends = response;
         this.loading = false;
 
-        console.log("Friends",this.userFriends);
-        if (this.userFriends.length === undefined){
-          this.userFriends = [];
+        console.log("Friends",this.friends);
+        if (this.friends.length === undefined){
+          this.friends = [];
         }
       },
       (error) => {
@@ -50,16 +62,14 @@ export class FriendsPage implements OnInit {
       }
     );
   }
-  
+
   forceRedirect(friendUid: string) {
     const userProfileUrl = `/user-profile/${friendUid}/${this.currentUserId}`;
       // Update the window location to trigger a full page refresh
       window.location.href = userProfileUrl;
   }
 
-  unfriend(user: any) {
-    // Here you can implement the logic to remove the friend from your list
-    // For demonstration purposes, I'll just remove the friend from the userFriends array directly
+  unfriend(user:any){
     const endpoint = `${this.api.apiUrl}/u/users/`;
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
 
@@ -71,9 +81,9 @@ export class FriendsPage implements OnInit {
     .toPromise()
     .then((response) => {
       console.log("Friend removed",response);
-      const index = this.userFriends.indexOf(user);
+      const index = this.friends.indexOf(user);
       if (index !== -1) {
-        this.userFriends.splice(index, 1);
+        this.friends.splice(index, 1);
       }  
     })
     .catch((error) => {
@@ -83,5 +93,14 @@ export class FriendsPage implements OnInit {
       return Promise.reject(error);
     });
 
+  }
+
+  back(): void {
+    this.history.pop();
+    if (this.history.length >= 0) {
+      this.location.back();
+    } else {
+      this.router.navigate(['/home']);
+    }
   }
 }

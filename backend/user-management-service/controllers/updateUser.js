@@ -1,4 +1,5 @@
 import admin from "firebase-admin";
+import User from '../data-access/models/user.table.js';
 import generateRandomAlphanumeric from './generateRandomAlphanumeric.js';
 
 export const updateUser = async (req, res) => {
@@ -18,16 +19,33 @@ export const updateUser = async (req, res) => {
 
          // Update the user document fields based on the provided values
         const updatedFields = {};
-        if (displayName || displayName != "") updatedFields.displayName = displayName;
-        if (photoURL || photoURL !="") updatedFields.photoURL = photoURL;
-        if (visibility) updatedFields.visibility = visibility;
+        if (displayName || displayName != "") { 
+            updatedFields.displayName = displayName;
 
-        /*const alph = generateRandomAlphanumeric(6);
-        let uniq_username_ = `${displayName}${alph}`;
-        updatedFields.uniq_username = uniq_username_;*/
-        
+            const user = await User.findOne({
+                where: { firebase_doc_ref: userId },
+              });
+
+              if (user.userName !== displayName) {
+                // update sql
+                await User.update(
+                    { userName:  displayName },
+                    { where: { firebase_doc_ref: userId } }
+                );
+              }
+        }
+
+        if (photoURL || photoURL !="") { 
+            updatedFields.photoURL = photoURL;
+        }
+
+        if (visibility) {
+            updatedFields.visibility = visibility;
+        }
+
         // Update the user document with the new values
         await userRef.update(updatedFields);
+
 
         res.status(200).json({message:`User with the id ${userId} has been updated`});
 

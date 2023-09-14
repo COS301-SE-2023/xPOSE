@@ -15,11 +15,20 @@ export const getFriends = async (req, res) => {
       try {
          friends = await Friendship.findAll({
           where: {
-            [Op.or]: [
-              { userID1: userId },
-              { userID2: userId }
-            ],
-            Status: 'accepted' 
+            [Op.and]: [
+              { [Op.not]: [{ userID1: null }] }, // Exclude rows where userID1 is null
+              { [Op.not]: [{ userID2: null }] }, // Exclude rows where userID2 is null
+              {
+                [Op.or]: [
+                  {userID1:userId},
+                  {userID2: userId}
+                ]
+              },             
+              //   { userID1: userId },
+              //   { userID2: userId }
+              // ],
+            { Status: 'accepted'}
+          ] 
           },
           include: [
             { model: User },
