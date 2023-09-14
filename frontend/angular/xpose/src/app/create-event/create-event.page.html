@@ -1,60 +1,4 @@
-<ion-menu menuId="main-menu" contentId="main-content">
-  <ion-content>
-    <ion-list>
-      <ion-item>
-        <a (click)="onHome()" class="sidebar-link">
-          <ion-icon name="home-outline"></ion-icon>
-          Home
-        </a>  
-      </ion-item>
-      <ion-item>
-        <a (click)="onJoinedEvent()" class="sidebar-link">
-          <ion-icon name="people-outline"></ion-icon>
-          Joined Events
-        </a>  
-      </ion-item>
-      <ion-item>
-        <a (click)="onEvent()" class="sidebar-link">
-          <ion-icon name="add-outline"></ion-icon>
-          Create Event
-        </a>  
-      </ion-item>
-      <ion-item>
-        <a (click)="onNotifications()" class="sidebar-link">
-          <ion-icon name="notifications-outline"></ion-icon>
-          Notifications
-        </a>  
-      </ion-item>
-      <ion-item>
-        <a (click)="onProfile()" class="sidebar-link">
-          <ion-icon name="person-outline"></ion-icon>
-          Profile
-        </a>  
-      </ion-item>
-      <ion-item>
-        <a (click)="onSettings()" class="sidebar-link">
-          <ion-icon name="settings-outline"></ion-icon>
-          Settings
-        </a>  
-      </ion-item>
-      <ion-item>
-        <a (click)="logout()" class="sidebar-link">
-          <ion-icon name="log-out-outline"></ion-icon>
-          Logout
-        </a>  
-      </ion-item>
-    </ion-list>
-  </ion-content>
-</ion-menu>
-
-<ion-header [translucent]="true">
-  <ion-toolbar class="custom-toolbar">
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title>Create event</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-footer></app-footer>
 
 <ion-content [fullscreen]="true" id="main-content" class="custom-background">
   <div class="account-settings">
@@ -107,6 +51,24 @@
           <div class="input-container1">
             <div id="map"></div>
           </div> -->
+
+          <ion-searchbar
+            class="ther"
+            name="location"
+            [(ngModel)]="createEvent.location"
+            (ionInput)="onLocationInput($event)"
+            autocomplete="off"
+          ></ion-searchbar>
+  
+          
+          <!-- Dropdown-like list of filtered locations -->
+          <ion-list>
+            <ion-item *ngFor="let prediction of locationPredictions" (click)="onLocationSelect(prediction)">
+              <ion-icon name="location"></ion-icon> {{ prediction.description }}
+            </ion-item>
+          </ion-list>
+          
+          <br />
 
           <ion-row>
             <!-- Start date -->

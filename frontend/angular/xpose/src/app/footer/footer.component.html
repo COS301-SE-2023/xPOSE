@@ -1,6 +1,3 @@
-<!-- nav-bar.component.html -->
-
-<!-- Sidebar menu content -->
 <ion-menu contentId="main-content">
   <ion-content>
     <ion-list>
@@ -36,13 +33,20 @@
   </ion-content>
 </ion-menu>
 
-<!-- Navigation bar -->
-<nav class="navbar">
+<!-- <nav class="navbar">
   <div class="navbar-logo">
-    <ion-title>xPOSE</ion-title>
+    <ion-title>{{ currentPageName }}</ion-title>
   </div>
   <ion-buttons slot="start">
-    <!-- Toggle button to open the sidebar menu -->
     <ion-menu-button autoHide="false"></ion-menu-button>
   </ion-buttons>
-</nav>
+</nav> -->
+
+<ion-header [translucent]="true">
+  <ion-toolbar class="custom-toolbar">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{ currentPageName }}</ion-title>
+  </ion-toolbar>
+</ion-header>
