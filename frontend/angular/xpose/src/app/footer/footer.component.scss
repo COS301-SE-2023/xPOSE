@@ -1,30 +1,10 @@
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #333;
-  padding: 10px 20px;
+.sidebar-link:hover {
+  cursor: pointer;
+  color: #ff00bfa8;
 }
 
-.navbar-logo img {
-  height: 40px;
-}
-
-.navbar-links {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-}
-
-.navbar-links li {
-  margin: 0 10px;
-}
-
-.navbar-links a {
-  text-decoration: none;
-  color: black;
-  font-weight: bold;
+.sidebar-link .menu-icon {
+  margin-right: 10px;
 }
 
 ion-menu {
@@ -44,13 +24,4 @@ ion-item:hover {
 ion-icon {
   --color: #333;
   --ionicon-stroke-width: 32px;
-}
-
-nav.navbar {
-  background-color: #3f51b5;
-}
-
-ion-title {
-  font-size: 20px;
-  color: black;
 }
