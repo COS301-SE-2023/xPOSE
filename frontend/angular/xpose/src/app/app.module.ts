@@ -17,6 +17,7 @@ import { AngularFireDatabaseModule } from "@angular/fire/compat/database";
 import { environment } from "../environments/environment";
 import { AppComponent } from "./app.component";
 import { AppRoutingModule } from "./app-routing.module";
+import { FriendListComponent } from "./friend-list/friend-list.component";
 
 import { CreateEventPage } from "./create-event/create-event.page";
 
@@ -28,7 +29,8 @@ import { GalleryModalComponent } from "./gallery-modal/gallery-modal.component";
   declarations: [
     AppComponent, 
     SidebarComponent,
-    GalleryModalComponent] ,
+    GalleryModalComponent,
+    FriendListComponent] ,
   imports: [
     FormsModule,
     BrowserModule,

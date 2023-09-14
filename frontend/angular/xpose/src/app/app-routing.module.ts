@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
 import { AuthGuard } from "./shared/guard/auth.guard";
-import { SendFriendRequestsComponent } from "./send-friend-requests/send-friend-requests.component";
+import { FriendListComponent } from "./friend-list/friend-list.component";
 
 const routes: Routes = [
   {
@@ -54,7 +54,7 @@ const routes: Routes = [
     loadChildren: () => import("./post-details/post-details.module").then(m => m.PostDetailsPageModule)
   },
   { 
-    path: 'send-friend-requests', component: SendFriendRequestsComponent 
+    path: 'friends/:id', component: FriendListComponent 
   },
   {
     path: 'view-event/:id',
