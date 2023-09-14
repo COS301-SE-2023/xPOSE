@@ -84,7 +84,11 @@ const routes: Routes = [
   {
     path: 'events-settings',
     loadChildren: () => import('./events-settings/events-settings.module').then( m => m.EventsSettingsPageModule)
+  },  {
+    path: 'friends',
+    loadChildren: () => import('./friends/friends.module').then( m => m.FriendsPageModule)
   },
+
 
 ];
 
