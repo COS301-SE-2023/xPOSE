@@ -177,13 +177,27 @@
   margin: 5px;
 }
 
-.btn-lightbox-control.btn-download {
-  font-size: 20px;
-}
-
 .btn-lightbox-control.btn-download:hover {
   background-color: #555;
 }
 
-/* You can add other styles as needed for the download button */
+//input styling
+input[type="text"] {
+  width: 100%; /* Full width */
+  max-width: 400px;
+  padding: 12px; /* Padding */
+  border: 1px solid #ccc; /* Gray border */
+  border-radius: 4px; /* Rounded borders */
+  box-sizing: border-box; /* Make sure that padding and width stays in place */
+  margin-top: 6px; /* Add a top margin */
+  margin-bottom: 16px; /* Bottom margin */
+  resize: vertical; /* Allow the user to vertically resize the textarea (not horizontally) */
+  font-size: 16px; /* Increase font size */
+  background-color: #ececec /* Set a background color */;
+}
+
+input[type="text"]:focus {
+  border-color: #b837ad; /* Set the border color when in focus */
+  outline: none; /* Remove the default outline */
+}
 
