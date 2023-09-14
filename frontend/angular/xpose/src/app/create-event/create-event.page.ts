@@ -10,15 +10,12 @@ import { CommonModule } from '@angular/common';
 import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { Observable } from "rxjs";
 import '@angular/compiler';
-
 import { map } from "rxjs/operators";
 import { ViewChild } from "@angular/core";
 import { NgForm } from "@angular/forms";
 import { ApiService } from "../service/api.service";
 import { AuthService } from "../shared/services/auth.service";
 import { LocationAutocompleteService } from "../service/location-autocomplete.service";
-// import { PlaceAutocompleteComponent } from "../shared/maps/place-autocomplete/place-autocomplete.component";
-
 
 @Component({
 	selector: "app-create-event",
@@ -26,6 +23,7 @@ import { LocationAutocompleteService } from "../service/location-autocomplete.se
 	styleUrls: ["./create-event.page.scss"],
 	// imports: [PlaceAutocompleteComponent]
 	})
+
 export class CreateEventPage implements OnInit, AfterViewInit {
 
 	createEvent: Event = {
