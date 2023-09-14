@@ -50,6 +50,11 @@ export class FriendsPage implements OnInit {
       }
     );
   }
+  forceRedirect(friendUid: string) {
+    const userProfileUrl = `/user-profile/${friendUid}/${this.currentUserId}`;
+      // Update the window location to trigger a full page refresh
+      window.location.href = userProfileUrl;
+  }
 
   unfriend(user: any) {
     // Here you can implement the logic to remove the friend from your list
