@@ -97,7 +97,8 @@ const routes: Routes = [
   },
   {
     path: 'friends',
-    loadChildren: () => import('./friends/friends.module').then( m => m.FriendsPageModule)
+    loadChildren: () => import('./friends/friends.module').then( m => m.FriendsPageModule),
+    data: {title: 'Friends' }
   },
 
 
