@@ -186,10 +186,6 @@ onLocationSelect(prediction: any) {
 			if(uid){
 				this.buttonClicked = true;
 				this.loading = true;
-				
-
-				
-
 					// this.createEvent.userId = parseInt(userId);
 					const formData: FormData = new FormData();
 					formData.append('uid', uid);
