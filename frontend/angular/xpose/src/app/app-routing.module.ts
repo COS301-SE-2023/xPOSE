@@ -91,7 +91,7 @@ const routes: Routes = [
     loadChildren: () => import('./search-image/search-image.module').then( m => m.SearchImagePageModule)
   },
   {
-    path: 'events-settings',
+    path: 'event/:id/settings',
     loadChildren: () => import('./events-settings/events-settings.module').then( m => m.EventsSettingsPageModule),
     data: {title: 'Settings' }
   },
