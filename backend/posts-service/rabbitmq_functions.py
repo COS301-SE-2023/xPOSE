@@ -80,15 +80,15 @@ def send_message_to_queue(queue_name, message):
 
 if __name__ == "__main__":
     # Example usage:
-    # queue_name = 'notifications'
-    # message = MessageBuilder().set_type("join_event").set_message("Event Request to join!").set_sender_id(uid).set_receiver_id(event_owner_uid).set_value({
-    #     "code": code,
-    #     "inviter_id": uid,
-    #     "invitee_id": uid
-    # }).build()
+    queue_name = 'notifications'
+    message = MessageBuilder().set_type("join_event").set_message("more dirt ").set_sender_id('5797bde7-dbad-4e2c-a881-140c77d717ac').set_receiver_id('5797bde7-dbad-4e2c-a881-140c77d717ac').set_value({
+        "code": '1code2',
+        "inviter_id": '5797bde7-dbad-4e2c-a881-140c77d717ac',
+        "invitee_id": '5797bde7-dbad-4e2c-a881-140c77d717ac'
+    }).build()
 
-    # try:
-    #     send_message_to_queue(queue_name, message)
-    # except Exception as e:
-    #     print(f"Error sending notification: {str(e)}")
+    try:
+        send_message_to_queue(queue_name, message)
+    except Exception as e:
+        print(f"Error sending notification: {str(e)}")
     pass
