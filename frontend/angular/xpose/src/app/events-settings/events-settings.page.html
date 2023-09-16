@@ -12,15 +12,9 @@
 
 <ion-content [scrollY]="true" [fullscreen]="true" class="custom-background">
   <div class="event-settings">
-    <section class="section">
-
-      <!-- Change Cover Image -->
-      <div class="form-group">
-        <label for="coverImage">Change Cover Image:</label>
-        <img [src]="createEvent.image_url" alt="Current Cover Image" *ngIf="createEvent.image_url">
-        <input type="file" id="coverImage" (change)="onFileSelected($event)">
-      </div>      
-
+    <section class="form-section">
+      <h3>Event Details</h3>
+      <form #form="ngForm" (ngSubmit)="updateEvent()">      
       <!-- Change Title -->
       <div class="form-group">
         <label for="eventTitle">Change Title:</label>
@@ -33,24 +27,34 @@
         <textarea id="eventDescription" [value]="createEvent.description"></textarea>
       </div>
 
-      <!-- Change Location -->
-      <ion-searchbar class="ther" name="location" [(ngModel)]="createEvent.location" (ionInput)="onLocationInput($event)" autocomplete="off"></ion-searchbar>
+      <!-- Change Cover Image -->
+      <div class="form-group">
+        <label for="coverImage">Change Cover Image:</label>
+        <img [src]="createEvent.image_url" alt="Current Cover Image" *ngIf="createEvent.image_url">
+        <input type="file" id="coverImage" (change)="onFileSelected($event)">
+      </div>      
 
-      <ion-list>
-        <ion-item *ngFor="let prediction of locationPredictions" (click)="onLocationSelect(prediction)">
-          <ion-icon name="location"></ion-icon> {{ prediction.description }}
-        </ion-item>
+      <div class="form-group">
+        <!-- Change Location -->
+        <label for="location">Location:</label>
+        <ion-searchbar class="ther" name="location" [(ngModel)]="createEvent.location" (ionInput)="onLocationInput($event)" autocomplete="off"></ion-searchbar>
+
+        <ion-list>
+          <ion-item *ngFor="let prediction of locationPredictions" (click)="onLocationSelect(prediction)">
+            <ion-icon name="location"></ion-icon> {{ prediction.description }}
+          </ion-item>
       </ion-list>
+      </div>
 
     <!-- Change Dates from Calendar -->
     <div class="form-group">
       <label for="startDate">Start Date:</label>
-      <ion-input [value]="createEvent.start_date" [(ngModel)]="createEvent.start_date" type="date" id="startDate"></ion-input>
+      <ion-input [value]="createEvent.start_date" [(ngModel)]="createEvent.start_date" type="datetime-local" id="startDate"></ion-input>
     </div>
 
     <div class="form-group">
       <label for="endDate">End Date:</label>
-      <ion-input [value]="createEvent.start_date" [(ngModel)]="createEvent.end_date" type="date" id="endDate"></ion-input>
+      <ion-input [value]="createEvent.start_date" [(ngModel)]="createEvent.end_date" type="datetime-local" id="endDate"></ion-input>
     </div>
 
       <!-- Access Privacy (Public/Private) -->
@@ -68,40 +72,61 @@
         </ion-radio-group>
       </div>
 
-      <!-- Posts Settings -->
-      <div class="form-group">
-        <h4>Posts Settings</h4>
-        <ion-checkbox id="facialRecognition">Facial Recognition</ion-checkbox>
-        <ion-checkbox id="deepFaceProtection">Deep Face Protection</ion-checkbox>
-        <ion-checkbox id="encryption">Encryption</ion-checkbox>
-      </div>
-
-      <!-- Chats Settings -->
-      <div class="form-group">
-        <h4>Chats Settings</h4>
-        <ion-radio-group id="chatSettings">
-          <ion-item>
-            <ion-label>Only Admin</ion-label>
-            <ion-radio value="admin"></ion-radio>
-          </ion-item>
-          <ion-item>
-            <ion-label>Everyone</ion-label>
-            <ion-radio value="everyone"></ion-radio>
-          </ion-item>
-        </ion-radio-group>
-      </div>
-
-      <!-- Image Processes -->
-      <div class="form-group">
-        <h4>Image Processes</h4>
-        <ion-checkbox id="profanity">Allow Profanity</ion-checkbox>
-        <ion-checkbox id="negativeMessages">Allow Negative Messages</ion-checkbox>
-      </div>
-
       <!-- Save Changes Button -->
       <div class="form-group">
-        <button id="saveChangesButton">Save Changes</button>
+        <button type="submit">Save Changes</button>
       </div>
+      </form>
     </section>
+
+    <section class="form-section">
+      <h3>Posts Settings</h3>
+      <!-- Posts Settings -->
+      <form (ngSubmit)="onSubmit()" #form="ngForm">
+        <div class="form-group">
+          <h4>Image processing</h4>
+          <ion-checkbox id="facialRecognition">Facial Recognition</ion-checkbox>
+          <ion-checkbox id="deepFaceProtection">Deep Face Protection</ion-checkbox>
+          <ion-checkbox id="encryption">Encryption</ion-checkbox>
+        </div>
+        <!-- Save Changes Button -->
+        <div class="form-group">
+          <button>Save Changes</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="form-section">
+      <!-- Chats Settings -->
+      <h3>Chats Settings</h3>
+      
+      <form (ngSubmit)="onSubmit()" #form="ngForm">
+        <div class="form-group">
+          <h4>Who can send messages?</h4>
+          <ion-radio-group id="chatSettings">
+            <ion-item>
+              <ion-label>Only Admin</ion-label>
+              <ion-radio value="admin"></ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-label>Everyone</ion-label>
+              <ion-radio value="everyone"></ion-radio>
+            </ion-item>
+          </ion-radio-group>
+        </div>
+        <!-- Chat Restrictions -->
+        <div class="form-group">
+          <h4>Chat Restrictions</h4>
+          <ion-checkbox id="profanity">Allow Profanity</ion-checkbox>
+          <ion-checkbox id="negativeMessages">Allow Negative Messages</ion-checkbox>
+        </div>
+    
+        <!-- Save Changes Button -->
+        <div class="form-group">
+          <button id="saveChangesButton">Save Changes</button>
+        </div>
+      </form>
+    </section>
+
   </div>
 </ion-content>
