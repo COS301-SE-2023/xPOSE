@@ -10,6 +10,8 @@ import { map } from "rxjs";
 import { Observable } from "rxjs";
 import { Location } from "@angular/common";
 import { environment } from "src/environments/environment";
+
+
 // import User from '../data-access/models/user.table.js';
 
 @Injectable({
@@ -105,63 +107,81 @@ export class AuthService {
   }
 
   // Sign in with Google
-  signInWithGoogle(): Promise<void> {
-    return this.authLogin(new GoogleAuthProvider()).then((res: any) => {
-      this.isLoggedIn = true;
+  async signInWithGoogle(): Promise<void> {
+
+    try{
+      const res =  await this.authLogin(new GoogleAuthProvider());
+      if(typeof res === 'undefined' || !res){
+        throw new Error("Authentication result is undefined");
+      }
+      console.log("Redirect to home!!!");
       this.router.navigate(['/home']);
-    });
+
+    } catch(error){
+      console.log("error in sign in with provider", error);
+    }
+
   }
 
   // Sign in with Facebook
-  signInWithFacebook(): Promise<void> {
-    return this.authLogin(new FacebookAuthProvider()).then((res: any) => {
+  async signInWithFacebook(): Promise<void> {
+    try{
+      const res =  await this.authLogin(new FacebookAuthProvider());
+      if(typeof res === 'undefined' || !res){
+        throw new Error("Authentication result is undefined");
+      }
+      console.log("Redirect to home!!!");
       this.router.navigate(['/home']);
-    });
+
+    } catch(error){
+      console.log("error in sign in with provider", error);
+    }
   }
 
   // Authentication login to run auth providers
-  authLogin(provider: any): Promise<void> {
-    return this.afAuth
-        .signInWithPopup(provider)
-        .then((result) => {
-          this.setUserData(result.user);
+ async authLogin(provider: any): Promise<void> {
+  try {
+    const result = await this.afAuth.signInWithPopup(provider)
+    this.isLoggedIn = true;
+    localStorage.setItem('user', 'true');
 
-          this.isLoggedIn = true;
-          localStorage.setItem('user', 'true');
-
-        })
-        .catch((error) => {
-          window.alert(error);
-        });
+    // Authentication is usccessful send data to server
+    const response = await this.sendUserDataToServer(result.user);
+    return response;
+  } catch(error){
+    window.alert("Error signing up with provider");
+    console.log(error);
   }
+}
 
-  setUserData(user: any): Promise<void> {
-        // generate unique username
-      const alph = this.generateRandomAlphanumeric(6);  
-      const userRef: AngularFirestoreDocument<any> = this.afs.doc(`Users/${user.uid}`);
-      const userData: User = {
+
+  async sendUserDataToServer(user:any) {
+    const userData: User = {
       uid: user.uid,
       email: user.email,
       displayName: user.displayName,
       photoURL: user.photoURL,
       emailVerified: user.emailVerified,
-      uniq_username: `${user.displayName}${alph}`,
-      visibility: true
-    };
-    // add userId to sql table
-    
-    return userRef.set(userData, { merge: true });
+      visibility: "public"
+    }
+    const response = await this.executeQuery(userData);
+    return response;
   }
 
-   generateRandomAlphanumeric(length: number) {
-    const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let result = '';
-    for (let i = 0; i < length; i++) {
-      const randomIndex = Math.floor(Math.random() * charset.length);
-      result += charset[randomIndex];
+  
+  async executeQuery(userData: any){
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    const requestBody = JSON.stringify(userData);
+    // console.log("Request body in execute",userData );
+    try{
+      const response =  await this.http.patch<any>(`${this.apiUrl}/u/users/${userData.uid}/signInWithProvider`, requestBody, {headers}).toPromise();
+      console.log("Response", response);
+      return response;
+    } catch(error){
+      console.log("provider error", error);
     }
-    return result;
-  };
+   
+}
 
   getCurrentUserId(): Observable<string> {
 		return this.afAuth.authState.pipe(

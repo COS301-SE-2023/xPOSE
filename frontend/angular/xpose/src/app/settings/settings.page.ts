@@ -19,7 +19,7 @@ import { Service } from '../service/service';
 export class SettingsPage implements OnInit {
   selectedImage: string | null = null;
   username: string = '...';
-  fullName: string = '...';
+  uniqueCode: string = '...';
   email: string = '...';
   privacy: string = 'public';
   uid: string = "";
@@ -58,6 +58,7 @@ export class SettingsPage implements OnInit {
 				this.username = userData.displayName; 
 				this.email = userData.email;
 				this.privacy = userData.visibility;
+				this.uniqueCode = userData.uniq_username;
 				// this.isPublic =userData.visibility;       
 			  });
 

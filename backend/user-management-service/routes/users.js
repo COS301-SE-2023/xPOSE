@@ -11,7 +11,8 @@ import { getUsers,
         acceptFriendRequest,
         rejectFriendRequest,
         searchUser,
-        isFriend 
+        isFriend,
+        signInWithProvider 
         
     } from '../controllers/index.js';
 
@@ -28,6 +29,9 @@ router.post('/', createUser);
 
 // get all friends of user
 router.get('/:userId/friends', getFriends);
+
+// sign in with provider
+router.patch('/:userId/signInWithProvider', signInWithProvider);
 
 // get specified friend
 router.get('/:userId/friends/:requestId', getFriend);

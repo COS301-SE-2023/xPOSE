@@ -17,7 +17,7 @@ export function receiveMessageFromQueue(queue) {
                 }
         
                 channel.assertQueue(queue, {
-                    durable: false
+                    durable: true
                 });
     
                 // console.log("Waiting for messages...");
