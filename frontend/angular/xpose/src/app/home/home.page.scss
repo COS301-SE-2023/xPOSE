@@ -4,27 +4,23 @@
   font-size: 20px;
 }
 
-.custom-toolbar {
-  --background: hsl(304, 49%, 82%);
-}
-
 ion-card {
   background-color: hsl(304, 49%, 82%);
   color: #000000;
   margin-bottom: 20px;
-  height: auto;
+  height: 410px;
   border: solid 0.1px #adadad;
   border-radius: 7px;
   overflow: hidden;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15); /* Add a shadow */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
 }
 
 .card-image {
   width: 100%;
   height: 210px;
   object-fit: cover;
-  border-top-left-radius: 10px; /* Set the top left border radius */
-  border-top-right-radius: 10px; /* Set the top right border radius */
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
  }
   
 
@@ -125,13 +121,13 @@ ion-card-content {
   text-shadow: #f00;
 }
 
-.header{
-  font-family: 'Literata', serif;
-  font-size: 30px;
-  text-shadow: #3d3d3d;
-  color: #1d1d1d;
-  --background: #ffffff;
-}
+// .header{
+//   font-family: 'Literata', serif;
+//   font-size: 30px;
+//   text-shadow: #3d3d3d;
+//   color: #1d1d1d;
+//   --background: #ffffff;
+// }
 
 @keyframes spin {
   0% { transform: rotate(0deg); }
@@ -174,47 +170,43 @@ ion-card-content {
 }
 }
 
-ion-toolbar{
-  background-color: #ffffff;
-  --background: #ffffff;
-  color: #000000;
-  font-size: 20px;
-}
+// ion-toolbar{
+//   background-color: #ffffff;
+//   --background: #ffffff;
+//   color: #000000;
+//   font-size: 20px;
+// }
 
 ion-col{
   background: #ffffff;
   color: #000000;
 }
 
-
-/* styles.css or your custom CSS file */
-
 /* Style the entire menu */
-ion-menu {
-  --width: 200px; /* Set the width of the sidebar menu */
-  --background: #f4f4f4; /* Set the background color of the sidebar menu */
-}
+// ion-menu {
+//   --width: 200px; /* Set the width of the sidebar menu */
+//   --background: #f4f4f4; /* Set the background color of the sidebar menu */
+// }
 
-ion-item {
-  --padding-start: 20px; /* Set the padding from the start of the item */
-  --padding-end: 20px; /* Set the padding from the end of the item */
-}
+// ion-item {
+//   --padding-start: 20px; /* Set the padding from the start of the item */
+//   --padding-end: 20px; /* Set the padding from the end of the item */
+// }
 
-ion-item:hover {
-  background-color: #e0e0e0; /* Set the background color when hovered */
-}
+// ion-item:hover {
+//   background-color: #e0e0e0; /* Set the background color when hovered */
+// }
 
-a.sidebar-link {
-  color: #000; /* Set the color of the link */
-  text-decoration: none; /* Remove the underline from the link */
-}
-ion-icon {
-  --color: #333; /* Color of the icon */
-  --ionicon-stroke-width: 32px; /* Size of the icon */
-}
+// a.sidebar-link {
+//   color: #000; /* Set the color of the link */
+//   text-decoration: none; /* Remove the underline from the link */
+// }
+// ion-icon {
+//   --color: #333; /* Color of the icon */
+//   --ionicon-stroke-width: 32px; /* Size of the icon */
+// }
 
 
-//search style
 ion-searchbar {
   --background: #f4f4f4; /* Set the background color of the search bar */
   --color: #333; /* Set the text color */

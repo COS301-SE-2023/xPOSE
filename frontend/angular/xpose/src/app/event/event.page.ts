@@ -264,7 +264,9 @@ export class EventPage {
   }
 
   editEvent() {
-    this.router.navigateByUrl('/events-settings');
+    console.log('Edit event');
+    console.log(this.current_event.code);
+    this.router.navigate([`/event/${this.current_event.code}/settings`]);
   }
   
   retrievePosts() {

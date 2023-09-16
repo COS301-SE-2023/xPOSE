@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { AuthService } from '../shared/services/auth.service';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-footer',
@@ -8,10 +9,32 @@ import { AuthService } from '../shared/services/auth.service';
   styleUrls: ['./footer.component.scss'],
 })
 export class FooterComponent  implements OnInit {
+  currentPageName = '';
+ 	
+  constructor(private router: Router, public authService: AuthService, private activatedRoute: ActivatedRoute) { }
 
-  constructor(private router: Router, public authService: AuthService,) { }
+  ngOnInit() {
+	this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        let route = this.activatedRoute;
+        while (route.firstChild) {
+          route = route.firstChild;
+        }
 
-  ngOnInit() {}
+        this.currentPageName = this.getPageTitle(route);
+      });
+  }
+
+  private getPageTitle(route: ActivatedRoute): string {
+    if (route.snapshot.data['title']) {
+      return route.snapshot.data['title'];
+    } else if (route.firstChild) {
+      return this.getPageTitle(route.firstChild);
+    } else {
+      return '';
+    }
+  }
 
   viewEvent() {
 	this.router.navigate(['/event']);
@@ -43,5 +66,8 @@ export class FooterComponent  implements OnInit {
 	
    logout() {
     this.authService.signOut();
+  }
+  onFriends() {
+    this.router.navigate(['/friends']);
   }
 }

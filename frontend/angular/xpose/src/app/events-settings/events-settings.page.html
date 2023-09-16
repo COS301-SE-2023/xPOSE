@@ -14,48 +14,49 @@
   <div class="event-settings">
     <section class="section">
 
-
       <!-- Change Cover Image -->
       <div class="form-group">
         <label for="coverImage">Change Cover Image:</label>
-        <input type="file" id="coverImage">
-      </div>
+        <img [src]="createEvent.image_url" alt="Current Cover Image" *ngIf="createEvent.image_url">
+        <input type="file" id="coverImage" (change)="onFileSelected($event)">
+      </div>      
 
       <!-- Change Title -->
       <div class="form-group">
         <label for="eventTitle">Change Title:</label>
-        <input type="text" id="eventTitle">
+        <input [value]="createEvent.title" type="text" id="eventTitle">
       </div>
 
       <!-- Change Description -->
       <div class="form-group">
         <label for="eventDescription">Change Description:</label>
-        <textarea id="eventDescription"></textarea>
+        <textarea id="eventDescription" [value]="createEvent.description"></textarea>
       </div>
 
       <!-- Change Location -->
-      <div class="form-group">
-        <label for="eventLocation">Change Location:</label>
-        <input type="text" id="eventLocation">
-      </div>
+      <ion-searchbar class="ther" name="location" [(ngModel)]="createEvent.location" (ionInput)="onLocationInput($event)" autocomplete="off"></ion-searchbar>
 
-      <!-- Change Dates from Calendar -->
-     <!-- Change Dates from Calendar -->
-      <div class="form-group">
-        <label for="startDate">Start Date:</label>
-        <ion-input type="date" id="startDate"></ion-input>
-      </div>
+      <ion-list>
+        <ion-item *ngFor="let prediction of locationPredictions" (click)="onLocationSelect(prediction)">
+          <ion-icon name="location"></ion-icon> {{ prediction.description }}
+        </ion-item>
+      </ion-list>
 
-      <div class="form-group">
-        <label for="endDate">End Date:</label>
-        <ion-input type="date" id="endDate"></ion-input>
-      </div>
+    <!-- Change Dates from Calendar -->
+    <div class="form-group">
+      <label for="startDate">Start Date:</label>
+      <ion-input [value]="createEvent.start_date" [(ngModel)]="createEvent.start_date" type="date" id="startDate"></ion-input>
+    </div>
 
+    <div class="form-group">
+      <label for="endDate">End Date:</label>
+      <ion-input [value]="createEvent.start_date" [(ngModel)]="createEvent.end_date" type="date" id="endDate"></ion-input>
+    </div>
 
       <!-- Access Privacy (Public/Private) -->
       <div class="form-group">
         <label>Access Privacy:</label>
-        <ion-radio-group id="accessPrivacy">
+        <ion-radio-group id="accessPrivacy" [value]="createEvent.privacy_setting">
           <ion-item>
             <ion-label>Public</ion-label>
             <ion-radio value="public"></ion-radio>
