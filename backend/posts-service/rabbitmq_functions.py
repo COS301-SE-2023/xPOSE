@@ -64,11 +64,11 @@ def send_message_to_queue(queue_name, message):
         message_str = json.dumps(message)
         # Set delivery_mode to 2 to make the message persistent
         channel.basic_publish(exchange='',
-                              routing_key=queue_name,
-                              body=message_str,
-                              properties=pika.BasicProperties(
-                                  delivery_mode=2,  # Make the message persistent
-                              ))
+            routing_key=queue_name,
+            body=message_str,
+            properties=pika.BasicProperties(
+                delivery_mode=2,  # Make the message persistent
+        ))
 
         print(f"[x] Sent {message_str} to the {queue_name} queue")
 
