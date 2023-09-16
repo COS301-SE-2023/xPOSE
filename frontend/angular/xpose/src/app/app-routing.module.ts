@@ -7,7 +7,8 @@ const routes: Routes = [
   {
     path: "home",
     loadChildren: () => import("./home/home.module").then(m => m.HomePageModule)
-    ,canActivate:[AuthGuard]
+    ,canActivate:[AuthGuard],
+    data: {title: 'xPOSE' }
   },
   {
     path: "",
@@ -25,29 +26,35 @@ const routes: Routes = [
   {
     path: "create-event",
     loadChildren: () => import("./create-event/create-event.module").then(m => m.CreateEventPageModule)
-    ,canActivate:[AuthGuard]
+    ,canActivate:[AuthGuard],
+    data: {title: 'Create Event' }
   },
   {
     path: "profile",
     loadChildren: () => import("./profile/profile.module").then(m => m.ProfilePageModule)
-    ,canActivate:[AuthGuard]
+    ,canActivate:[AuthGuard],
+    data: {title: 'Profile' }
   },
   {
     path: "settings",
-    loadChildren: () => import("./settings/settings.module").then(m => m.SettingsPageModule)
+    loadChildren: () => import("./settings/settings.module").then(m => m.SettingsPageModule),
+    data: {title: 'Settings' }
   },
   {
     path: "event/:id",
-    loadChildren: () => import("./event/event.module").then(m => m.EventPageModule)
+    loadChildren: () => import("./event/event.module").then(m => m.EventPageModule),
+    data: {title: 'Event' }
   },
   {
     path: "notification",
     loadChildren: () => import("./notification/notification.module").then(m => m.NotificationPageModule)
-    ,canActivate:[AuthGuard]
+    ,canActivate:[AuthGuard],
+    data: {title: 'Notifications' }
   },
   {
     path: "joined-event",
-    loadChildren: () => import("./joined-event/joined-event.module").then(m => m.JoinedEventPageModule)
+    loadChildren: () => import("./joined-event/joined-event.module").then(m => m.JoinedEventPageModule),
+    data: {title: 'Joined Events' }
   },
   {
     path: "post-details",
@@ -59,11 +66,13 @@ const routes: Routes = [
   {
     path: 'view-event/:id',
     loadChildren: () => import('./view-event/view-event.module').then( m => m.ViewEventPageModule)
-    ,canActivate:[AuthGuard]
+    ,canActivate:[AuthGuard],
+    data: {title: 'View Event' }
   },
   {
     path: 'edit',
-    loadChildren: () => import('./edit/edit.module').then( m => m.EditPageModule)
+    loadChildren: () => import('./edit/edit.module').then( m => m.EditPageModule),
+    data: {title: 'Edit Profile' }
   },
   {
     path: 'search',
@@ -82,12 +91,14 @@ const routes: Routes = [
     loadChildren: () => import('./search-image/search-image.module').then( m => m.SearchImagePageModule)
   },
   {
-    path: 'events-settings',
-    loadChildren: () => import('./events-settings/events-settings.module').then( m => m.EventsSettingsPageModule)
+    path: 'event/:id/settings',
+    loadChildren: () => import('./events-settings/events-settings.module').then( m => m.EventsSettingsPageModule),
+    data: {title: 'Settings' }
   },
   {
     path: 'friends',
-    loadChildren: () => import('./friends/friends.module').then( m => m.FriendsPageModule)
+    loadChildren: () => import('./friends/friends.module').then( m => m.FriendsPageModule),
+    data: {title: 'Friends' }
   },
 
 

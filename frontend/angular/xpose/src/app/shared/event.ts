@@ -9,5 +9,6 @@ export interface Event {
     privacy_setting: string;
     latitude: number;
     longitude: number;
+    image_url?: string;
   }
   

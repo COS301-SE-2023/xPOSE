@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../service/api.service';
-import { ModalController } from '@ionic/angular';
+import { ModalController, NavController } from '@ionic/angular';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Observable, map } from 'rxjs';
 import { NgForm } from '@angular/forms';
 import { Event } from '../shared/event';
+import { LocationAutocompleteService } from '../service/location-autocomplete.service';
 
 @Component({
   selector: 'app-events-settings',
@@ -25,20 +26,91 @@ export class EventsSettingsPage implements OnInit {
 		privacy_setting: 'public',
 		latitude: 0,
 		longitude: 0,
-		
+		image_url: ' ',
 	  };
 	  route: any;
 	  buttonClicked = false;
 	  loading = false;
+	locationPredictions: any[] = [];
+
 
   constructor(private http: HttpClient,
 		private router: Router,
 		private api: ApiService,
 		private modalController: ModalController,
-		private afAuth: AngularFireAuth) { }
+		private afAuth: AngularFireAuth,
+    private locationAutocompleteService: LocationAutocompleteService,
+    private activatedRoute: ActivatedRoute,
+    private navCtrl: NavController) { }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+      // click the element with id of posts_tab
+      document.getElementById("posts_tab")?.click();
+
+      // give messageCollection stub value
+      // this.messagesCollection = this.afs.collection<Message>(`Event-Chats/0/chats`);
+      this.activatedRoute.paramMap.subscribe((paramMap: any) => {
+        if (!paramMap.has('id')) {
+          // Redirect to home page if no event id is available
+          this.navCtrl.navigateBack('/home');
+          return;
+        }
+  
+        // participants: Participants[] = [
+        //   { name: 'John' },
+        //   { name: 'Thabo' },
+        //   { name: 'Naria' },
+          // Add more participant objects as needed
+        // ];
+       
+  
+        const event_id = paramMap.get('id');
+  
+        console.log(`The event id = ${event_id}`);
+      
+        this.getCurrentUserId().subscribe((uid) => {
+          if (uid) {
+            this.http.get(`${this.api.apiUrl}/e/events/${event_id}?uid=${uid}`).subscribe((data: any) => {
+              console.log(data);
+              this.createEvent = {
+                uid: data.id, // Assuming id maps to uid
+                title: data.title,
+                image: data.image_url, // You may need to adjust this depending on your data structure
+                start_date: data.start_date,
+                end_date: data.end_date,
+                location: data.location,
+                description: data.description,
+                privacy_setting: data.privacy_setting,
+                latitude: data.latitude,
+                longitude: data.longitude,
+                image_url: data.image_url,
+              };
+            },
+            (error) => {
+                this.loading = false; 
+                console.error(error);
+            });
+          }
+          else {
+            this.loading = false; // Request completed with an error
+            console.log("no user id");
+          }
+        });
+  
+        // Fetch event data based on the route parameter
+        // Call API or perform necessary logic to fetch event details
+        // Assign the fetched data to this.event
+        // console.log(event_id);
+  
+        console.log('Hello from event page');
+        // // make api call to ${this.api.apiUrl}/e/events/{event_id}
+        // this.http.get('${this.api.apiUrl}/e/events/' + event_id).subscribe((res : any) => {
+        //   console.log(res);
+        //   this.event = res;
+        //   // this.currentEventDataService.event_id = res._id;
+        // });
+      });
+    }
 
   onFileSelected(event: any) {
 		const file: File = event.target.files[0];
@@ -58,69 +130,100 @@ export class EventsSettingsPage implements OnInit {
       );
       }
 
-      CreateEvent(form: NgForm) {
-        const formData: FormData = new FormData();
-        formData.append('title', this.createEvent.title);
-        formData.append('start_date', this.createEvent.start_date);
-        formData.append('end_date', this.createEvent.end_date);
-        formData.append('location', this.createEvent.location);
-        formData.append('description', this.createEvent.description);
-        formData.append('privacy_setting', this.createEvent.privacy_setting);
-        formData.append('latitude', this.createEvent.latitude.toString());
-        formData.append('longitude', this.createEvent.longitude.toString());
-        if(this.createEvent.title != " " || this.createEvent.start_date != " " || this.createEvent.end_date != " " || this.createEvent.location != " " || this.createEvent.description != " " || this.createEvent.longitude != 0 || this.createEvent.latitude != 0){
-          this.getCurrentUserId().subscribe((uid) => {
-            if(uid){
+      	// Function to fetch location predictions
+	async onLocationInput(event: any) {
+		console.log('Fetching location predictions...');
+		try {
+		this.locationPredictions = await this.locationAutocompleteService.getPlacePredictions(event.target.value);
+		console.log(this.locationPredictions);
+		} catch (error) {
+		console.error('Error fetching location predictions:', error);
+		}
+	}
+
+    // Function to handle location selection
+    onLocationSelect(prediction: any) {
+      console.log('Selected location:', prediction.description);
+      
+      const geocoder = new google.maps.Geocoder();
+      geocoder.geocode({ address: prediction.description }, (results, status) => {
+        if (status === 'OK' && results && results[0]) {
+        const location = results[0].geometry.location;
+        this.createEvent.location = prediction.description;
+        this.createEvent.latitude = location.lat();
+        this.createEvent.longitude = location.lng();
+        
+        console.log('Location selected:', this.createEvent.location);
+        console.log('Latitude:', this.createEvent.latitude);
+        console.log('Longitude:', this.createEvent.longitude);
+        } else {
+        console.log('Geocoding failed due to: ' + status);
+        }
+      });
+  
+    this.locationPredictions = []; // Clear the predictions
+    }
+
+    updateEvent(form: NgForm) {
+      const formData: FormData = new FormData();
+      formData.append('title', this.createEvent.title);
+      formData.append('start_date', this.createEvent.start_date);
+      formData.append('end_date', this.createEvent.end_date);
+      formData.append('location', this.createEvent.location);
+      formData.append('description', this.createEvent.description);
+      formData.append('privacy_setting', this.createEvent.privacy_setting);
+      formData.append('latitude', this.createEvent.latitude.toString());
+      formData.append('longitude', this.createEvent.longitude.toString());
+      // if(this.createEvent.title != " " || this.createEvent.start_date != " " || this.createEvent.end_date != " " || this.createEvent.location != " " || this.createEvent.description != " " || this.createEvent.longitude != 0 || this.createEvent.latitude != 0){
+        this.getCurrentUserId().subscribe((uid) => {
+          if(uid){
               this.buttonClicked = true;
               this.loading = true;
-              const geocoder = new google.maps.Geocoder();
-              const location = new google.maps.LatLng(
-                this.createEvent.latitude,
-                this.createEvent.longitude
-              );
-      
-              geocoder.geocode({ location }, (results, status) => {
-                if (status === 'OK') {
-                if (results[0]) {
-                  this.createEvent.location = results[0].formatted_address;
-                  console.log(results[0].formatted_address);
-                } else {
-                  console.log('No results found');
+    
+              // this.createEvent.userId = parseInt(userId);
+              const formData: FormData = new FormData();
+              formData.append('uid', uid);
+              formData.append('title', this.createEvent.title);
+              if (this.createEvent.image) {
+              formData.append('image', this.createEvent.image, this.createEvent.image.name);
+              }
+              formData.append('start_date', this.createEvent.start_date);
+              formData.append('end_date', this.createEvent.end_date);
+              formData.append('location', this.createEvent.location);
+              formData.append('description', this.createEvent.description);
+              formData.append('privacy_setting', this.createEvent.privacy_setting);
+              formData.append('latitude', this.createEvent.latitude.toString());
+              formData.append('longitude', this.createEvent.longitude.toString());
+            //   console.log(formData);
+              console.log(this.createEvent);
+              // REfactor this to be done in the service class for better decoupling
+              const url = `${this.api.apiUrl}/e/events?uid=${uid}`;
+              
+              this.http.post(url, formData)
+              .subscribe({
+                next: (response:any) => {
+                console.log(response);
+                // Handle the response from the server
+                this.router.navigate(['/home']);
+                },
+                error: (error) => {
+                // Handle any errors that occurred during the request
+                console.error(error);
+                this.loading = false;
+                // Display an error message to the user or perform any necessary error handling
                 }
-                } else {
-                console.log('Geocoder failed due to: ' + status);
-                }
-      
-                // this.createEvent.userId = parseInt(userId);
-                const formData: FormData = new FormData();
-                formData.append('uid', uid);
-                formData.append('title', this.createEvent.title);
-                if (this.createEvent.image) {
-                formData.append('image', this.createEvent.image, this.createEvent.image.name);
-                }
-                formData.append('start_date', this.createEvent.start_date);
-                formData.append('end_date', this.createEvent.end_date);
-                formData.append('location', this.createEvent.location);
-                formData.append('description', this.createEvent.description);
-                formData.append('privacy_setting', this.createEvent.privacy_setting);
-                formData.append('latitude', this.createEvent.latitude.toString());
-                formData.append('longitude', this.createEvent.longitude.toString());
-              //   console.log(formData);
-                console.log(this.createEvent);
-                // REfactor this to be done in the service class for better decoupling
-                const url = `${this.api.apiUrl}/e/events?uid=${uid}`;
               });
-            }
-            else {
-              console.log("No user is currently logged in.");
-              // ! throw error
-            }
-          });
-        }
-        else{
-          console.log("Please fill in all the fields.");
-        }
-        }
+          }
+          else {
+            console.log("No user is currently logged in.");
+            // ! throw error
+          }
+        });
+      // }
+      // else{
+      //   console.log("Please fill in all the fields.");
+      // }
+      }
         
     
       goBack(){
