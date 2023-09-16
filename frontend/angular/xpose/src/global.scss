@@ -30,3 +30,13 @@
   padding: 15px;
   margin-bottom: 20px;
 }
+
+/* Style input elements */
+ion-input, ion-textarea {
+    border: 1px solid #ccc; /* Replace with your desired border color */
+    border-radius: 4px;
+    padding: 8px;
+    margin-bottom: 10px;
+    width: 100%;
+    color: #000000;
+}

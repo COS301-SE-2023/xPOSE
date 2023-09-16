@@ -165,9 +165,7 @@ export class EventsSettingsPage implements OnInit {
     this.locationPredictions = []; // Clear the predictions
     }
 
-    updateEvent(form: NgForm) {
-      console.log('hit');
-      return;
+    updateEvent() {
       const formData: FormData = new FormData();
       formData.append('title', this.createEvent.title);
       formData.append('start_date', this.createEvent.start_date);
