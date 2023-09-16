@@ -126,7 +126,7 @@ export class AuthService {
   // Sign in with Facebook
   async signInWithFacebook(): Promise<void> {
     try{
-      const res =  await this.authLogin(new GoogleAuthProvider());
+      const res =  await this.authLogin(new FacebookAuthProvider());
       if(typeof res === 'undefined' || !res){
         throw new Error("Authentication result is undefined");
       }
