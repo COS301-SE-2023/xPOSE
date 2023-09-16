@@ -319,6 +319,18 @@ registerFacialData() {
     }
   }
 
+  onImageSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      // Read the selected image file and update the preview
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.selectedImage = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
   search() {
 		this.router.navigateByUrl('/search');
 	}

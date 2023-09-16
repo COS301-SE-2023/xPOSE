@@ -9,6 +9,11 @@
       <h3>Change Profile</h3>
       <form (submit)="updateProfile()">
         <div class="form-group">
+          <label for="profileImage">Profile Image:</label>
+          <input type="file" id="profileImage" (change)="onImageSelected($event)" accept="image/*">
+          <img [src]="selectedImage" *ngIf="selectedImage" class="profile-preview" alt="Selected Image">
+        </div>
+        <div class="form-group">
           <label for="username">Username:</label>
           <input type="text" id="username" [(ngModel)]="username" name="username" required>
         </div>
