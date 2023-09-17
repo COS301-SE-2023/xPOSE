@@ -288,7 +288,6 @@ def get_user_image(uid):
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-
 @app.route('/register', methods=['POST'])
 def register_user():
     if request.method == 'POST':
@@ -306,20 +305,26 @@ def register_user():
             result, status_code = encode_and_store_face(image_file, user_id)
             print('Retrieved result: ', result, ' with status code: ', status_code)
 
-
-            # Save the image URL in Firestore
+            # Save or update the image URL in Firestore
             firestore_client = firestore.Client()
-
             user_ref = firestore_client.collection('Users').document(user_id)
-            user_ref.set({
-                'image_url': image_url
-            })
+
+            # Check if the document exists in Firestore
+            user_data = user_ref.get()
+            if user_data.exists:
+                # Update the existing document
+                user_ref.update({
+                    'image_url': image_url
+                })
+            else:
+                return jsonify({'error': 'User does not exist'}), 404
             
-            print('User image URL saved in Firestore')
+            print('User image URL updated in Firestore')
 
             return jsonify(result), status_code
         except Exception as e:
             return jsonify({'error': str(e)}), 400
+
 
 
 @app.route('/user/<uid>/delete', methods=['DELETE'])
@@ -371,7 +376,7 @@ def detect_users():
         except Exception as e:
             return jsonify({'error': str(e)}), 400
 
-@app.route('/health', methods=['GET'])
+@app.route('/', methods=['GET'])
 def health_check():
     return jsonify({'Message': 'Posts service is healthy'}, 200)
 
