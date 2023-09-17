@@ -1,3 +1,5 @@
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
 <app-footer></app-footer>
 
 <ion-content [fullscreen]="true" id="main-content" class="custom-background">
@@ -19,7 +21,7 @@
               <span class="label-{{ getStatusColor(card?.status) }} label">{{ card?.status }}</span>
               <img [src]="card.image_url" alt="Card Image" class="card-image">
               <ion-card-header class="">
-                <ion-card-title class="header">
+                <ion-card-title>
                   {{ card?.title }}
                 </ion-card-title>
                 <ion-card-content>
