@@ -25,7 +25,9 @@
             <ion-icon name="calendar"></ion-icon>
             <ion-label>
               <h2>Event Invitation</h2>
+              <!-- <a [routerLink]="['/user-profile', message.senderId, message.receiverId]"> -->
               <p>{{ message.message }}</p>
+              <!-- </a> -->
             </ion-label>
             <ion-buttons slot="end">
               <ion-button fill="clear" (click)="request(message, 'accept_join_event')">Accept</ion-button>
