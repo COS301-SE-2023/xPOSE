@@ -19,7 +19,7 @@
       <ion-col size="12">
         <div class="content-container">
           <app-loading-icon *ngIf="loading"></app-loading-icon>
-          <ion-button expand="block" class="join-button" (click)="handleButtonClick()">{{ getButtonLabel() }}</ion-button>
+          <ion-button expand="block"  (click)="handleButtonClick()">{{ getButtonLabel() }}</ion-button>
 
           <h1 class="h1">Owner</h1>
           <p>{{ event?.owner_display_name }}</p>

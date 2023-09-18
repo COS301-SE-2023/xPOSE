@@ -53,7 +53,7 @@ ion-card-title {
   font-weight: 500;
   line-height: 1.2;
   margin: 0 0 11px;
-  color: #1b1b1b;
+  color: #494949;
   text-transform: capitalize; 
 }
 
@@ -70,3 +70,24 @@ ion-card-subtitle {
   color: #666; /* Choose a color that complements the main content */
   margin-top: 8px; /* Adjust margin for spacing from the title */
 }
+
+ion-button{
+  margin-top: 20px;
+  --background: #ff00f0;
+  --color: #000000;
+}
+
+/* Apply font styles to headings and labels */
+h2, h3, label {
+  font-family: 'Roboto', sans-serif; /* Use an appropriate font family */
+  font-weight: 500; /* Adjust font weight as needed */
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* Apply font styles to input fields */
+input {
+  font-family: 'Roboto', sans-serif; /* Use the same font as headings and labels */
+  font-size: 1rem; /* Adjust font size as needed */
+}
+

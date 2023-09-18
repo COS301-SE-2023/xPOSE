@@ -12,8 +12,10 @@ ion-card {
   border: solid 0.1px #adadad;
   border-radius: 7px;
   overflow: hidden;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15), 0 -2px 5px rgba(0, 0, 0, 0.15);
 }
+
+
 
 .card-image {
   width: 100%;
@@ -182,30 +184,17 @@ ion-col{
   color: #000000;
 }
 
-/* Style the entire menu */
-// ion-menu {
-//   --width: 200px; /* Set the width of the sidebar menu */
-//   --background: #f4f4f4; /* Set the background color of the sidebar menu */
-// }
+/* Add a box-shadow to the selected card */
+.card-selected {
+  transform: scale(1.05); /* Scale the card slightly when selected (optional) */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add a smooth transition effect */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Customize shadow values as needed */
+}
 
-// ion-item {
-//   --padding-start: 20px; /* Set the padding from the start of the item */
-//   --padding-end: 20px; /* Set the padding from the end of the item */
-// }
+/* Add this class to the selected card using ngClass when it's clicked */
 
-// ion-item:hover {
-//   background-color: #e0e0e0; /* Set the background color when hovered */
-// }
 
-// a.sidebar-link {
-//   color: #000; /* Set the color of the link */
-//   text-decoration: none; /* Remove the underline from the link */
-// }
-// ion-icon {
-//   --color: #333; /* Color of the icon */
-//   --ionicon-stroke-width: 32px; /* Size of the icon */
-// }
-
+/* Add this class to the selected card using ngClass when it's clicked */
 
 ion-searchbar {
   --background: #f4f4f4; /* Set the background color of the search bar */

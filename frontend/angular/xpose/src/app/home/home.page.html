@@ -17,7 +17,7 @@
       <div class="scrollable-content">
         <ion-row>
           <ion-col size="12" size-sm="6" size-md="4" size-lg="3" *ngFor="let card of cards">
-            <ion-card (click)="eventDetails(card.id)">
+            <ion-card class="card-selected" (click)="eventDetails(card.id)">
               <span class="label-{{ getStatusColor(card?.status) }} label">{{ card?.status }}</span>
               <img [src]="card.image_url" alt="Card Image" class="card-image">
               <ion-card-header class="">
