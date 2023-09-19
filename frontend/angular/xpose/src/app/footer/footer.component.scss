@@ -25,9 +25,8 @@ ion-icon {
   --color: #333;
   --ionicon-stroke-width: 32px;
 }
-ion-toolbar{
-  --background: #e0e0e0;
-  --color: #111111;
+ion-header {
+  padding-top: 50px;
 }
 
 /* Apply styles to the ion-title with the class "app-heading" */

@@ -91,13 +91,12 @@ ion-radio {
 
 /* Customize the button appearance */
 .custom-btn {
-  --background: #eb0091; /* Replace with your desired button background color */
   --color: #000000; /* Replace with your desired button text color */
   border-radius: 4px;
   text-align: center;
   width: 100%;
   margin-top: 20px;
-  font-weight: bold;
+  // font-weight: bold;
 }
 
 /* Adjust button spinner size */
@@ -167,6 +166,13 @@ ion-row{
   padding-bottom: 25px;
   // --background: #000000;
 }
-// ion-label{
-//   background-color: #ffffff;
-// }
+ion-header{
+  --background: #ffffff;
+  color: #000000;
+  padding-top: 50px;
+}
+ion-title{
+  align-items: center;
+  font-size: 18px;
+  color: #6b6b6bd8;
+}

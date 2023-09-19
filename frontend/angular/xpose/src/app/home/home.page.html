@@ -1,13 +1,21 @@
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-
-<app-footer></app-footer>
+<link href="https://cdn.jsdelivr.net/npm/ionicons@5.0.1/dist/css/ionicons.min.css" rel="stylesheet">
 
 <ion-content [fullscreen]="true" id="main-content" class="custom-background">
+
   <ion-row>
     <ion-col>
-      <div class="button-container">
-        <ion-searchbar class="button-container" placeholder="Search" (click)="search()"></ion-searchbar>
-      </div>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title size="large">Home</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="search()">
+              <ion-icon slot="start" name="search"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <!-- <app-footer></app-footer> -->
+     
       <div class="no-cards" *ngIf="cards.length === 0">
         <ion-text>
           <h1>No Events could be loaded...</h1>

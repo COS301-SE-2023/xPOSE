@@ -143,3 +143,13 @@ p {
   color: #333; /* Set the color */
   line-height: 1.6; /* Set the line height */
 }
+ion-header{
+  --background: #ffffff;
+  color: #000000;
+  padding-top: 50px;
+}
+ion-title{
+  align-items: center;
+  font-size: 18px;
+  color: #3f3f3fe8;
+}

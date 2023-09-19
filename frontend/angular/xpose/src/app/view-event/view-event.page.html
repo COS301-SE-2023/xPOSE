@@ -1,15 +1,15 @@
+<ion-content [fullscreen]="true"  class="custom-backround">
 <ion-header [translucent]="true">
   <ion-toolbar class="custom-toolbar">
     <ion-buttons slot="start">
       <app-backbutton></app-backbutton>
     </ion-buttons>
-    <ion-title class="event-title">{{ event?.title }}</ion-title>
+    <ion-title class="event-title">View event</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true"  class="custom-backround">
   <ion-grid>
-    <ion-row>
+    <ion-row> 
       <ion-col size="12">
         <ion-img [src]="event?.image_url"></ion-img>
       </ion-col>
