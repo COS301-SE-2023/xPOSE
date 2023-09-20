@@ -115,3 +115,15 @@ ion-title{
   font-size: 18px;
   color: #6b6b6bd8;
 }
+/* CSS */
+.user_div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-image {
+  width: 100px; /* Adjust the width and height as needed */
+  height: 100px;
+  border-radius: 50%; /* Makes the image circular */
+}

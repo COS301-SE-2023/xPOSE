@@ -395,7 +395,13 @@ async registerFacialData() {
       reader.readAsDataURL(file);
     }
   }
-
+   // Method to trigger the file input
+   selectProfileImage() {
+    const fileInput = document.getElementById('profileImage');
+    if (fileInput) {
+      fileInput.click(); // Simulate a click on the file input
+    }
+  }
   search() {
 		this.router.navigateByUrl('/search');
 	}
