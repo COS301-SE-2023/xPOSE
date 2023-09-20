@@ -15,7 +15,7 @@ export function sendMessageToQueue(queue, msg) {
             }
 
             channel.assertQueue(queue, {
-                durable: false
+                durable: true
             });
     
             channel.sendToQueue(queue, Buffer.from(jsonString));

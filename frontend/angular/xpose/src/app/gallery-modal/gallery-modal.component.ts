@@ -8,6 +8,8 @@ import { Observable, map } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 
+
+
 @Component({
   selector: 'app-gallery-modal',
   templateUrl: './gallery-modal.component.html',

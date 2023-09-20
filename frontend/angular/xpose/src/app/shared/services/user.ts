@@ -4,6 +4,6 @@ export interface User {
   displayName: string;
   photoURL: string;
   emailVerified: boolean;
-  uniq_username: string;
-  visibility: boolean;
+  uniq_username?: string;
+  visibility: string;
 }

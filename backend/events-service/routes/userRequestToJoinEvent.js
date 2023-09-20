@@ -119,7 +119,7 @@ async function userRequestToJoinEvent(req, res) {
         const queueName = 'notifications';
         const message = new MessageBuilder()
           .setType("join_event")
-          .setMessage(`${event.title} Request to join!`)
+          .setMessage(`New user Request to join ${event.title} `)
           .setSenderId(uid)
           .setReceiverId(eventOwnerUid)
           .setValue({

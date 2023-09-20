@@ -1,11 +1,14 @@
-<app-footer></app-footer>
+
+
 
 <ion-content [fullscreen]="true" id="main-content" class="custom-background">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title size="large">Joined Events</ion-title>
+    </ion-toolbar>
+  </ion-header>
   <ion-row>
     <ion-col>
-      <div class="button-container">
-        <ion-searchbar placeholder="Search" (click)="search()"></ion-searchbar>
-      </div>
       <ion-segment [(ngModel)]="filterType" (ionChange)="applyFilter()">
         <ion-segment-button value="Ongoing">
           Ongoing

@@ -18,9 +18,76 @@
 @import "@ionic/angular/css/typography.css";
 @import '@ionic/angular/css/display.css';
 
-/* Optional CSS utils that can be commented out */
+/* Optional CSS utils that can be commented out *//* Optional CSS utils that can be commented out */
 @import "@ionic/angular/css/padding.css";
 @import "@ionic/angular/css/float-elements.css";
 @import "@ionic/angular/css/text-alignment.css";
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
+
+/* font for css */
+
+
+
+.form-section {
+  border: 1px solid #ccc;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+/* Style input elements */
+ion-input, ion-textarea {
+    border: 1px solid #ccc; /* Replace with your desired border color */
+    border-radius: 4px;
+    padding: 8px;
+    margin-bottom: 10px;
+    width: 100%;
+    color: #000000;
+}
+
+
+//font for css
+ion-card-title {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.2;
+  margin: 0 0 11px;
+  color: #494949;
+  text-transform: capitalize; 
+}
+
+ion-card-content {
+  font-size: 2rem; /* Choose an appropriate font size */
+  line-height: 1.4; /* Maintain a comfortable line height for readability */
+  color: #333; /* Choose a suitable text color */
+  padding: 16px; /* Adjust padding for spacing */
+}
+
+ion-card-subtitle {
+  font-size: 0.9rem; /* Choose a slightly smaller font size for subtitles */
+  font-weight: 400; /* Adjust font weight as needed */
+  color: #666; /* Choose a color that complements the main content */
+  margin-top: 8px; /* Adjust margin for spacing from the title */
+}
+
+ion-button{
+  margin-top: 20px;
+  --background: #ff00f0;
+  --color: #000000;
+}
+
+/* Apply font styles to headings and labels */
+h2, h3, label {
+  font-family: 'Roboto', sans-serif; /* Use an appropriate font family */
+  font-weight: 500; /* Adjust font weight as needed */
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* Apply font styles to input fields */
+input {
+  font-family: 'Roboto', sans-serif; /* Use the same font as headings and labels */
+  font-size: 1rem; /* Adjust font size as needed */
+}
+

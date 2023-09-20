@@ -57,16 +57,16 @@ button:hover {
 .custom-backround{
   background-color: #eb0091;
   --background: #ffffff;
-  color: #000000;
+  color: #a06363;
   font-size: 20px;
   // --min-height: 70px;
 }
 h3{
   color: #000;
 }
-ion-label{
-  color: #000 ;
-}
+// ion-label{
+//   color: #000 ;
+// }
 ion-toolbar{
   --background: #ffffff;
   background-color: #ffffff;
@@ -104,4 +104,14 @@ a.sidebar-link {
 ion-icon {
   --color: #333; /* Color of the icon */
   --ionicon-stroke-width: 32px; /* Size of the icon */
+}
+ion-header{
+  --background: #ffffff;
+  color: #000000;
+  padding-top: 50px;
+}
+ion-title{
+  align-items: center;
+  font-size: 18px;
+  color: #6b6b6bd8;
 }

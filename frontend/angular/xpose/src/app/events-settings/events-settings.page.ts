@@ -141,6 +141,7 @@ export class EventsSettingsPage implements OnInit {
 		}
 	}
 
+
     // Function to handle location selection
     onLocationSelect(prediction: any) {
       console.log('Selected location:', prediction.description);
@@ -164,7 +165,7 @@ export class EventsSettingsPage implements OnInit {
     this.locationPredictions = []; // Clear the predictions
     }
 
-    updateEvent(form: NgForm) {
+    updateEvent() {
       const formData: FormData = new FormData();
       formData.append('title', this.createEvent.title);
       formData.append('start_date', this.createEvent.start_date);
@@ -225,6 +226,9 @@ export class EventsSettingsPage implements OnInit {
       // }
       }
         
+      onSubmit() {
+        console.log('hit');
+      }
     
       goBack(){
         this.router.navigate(["/home"]);

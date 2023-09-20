@@ -9,6 +9,7 @@ import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { AngularFirestore } from "@angular/fire/compat/firestore";
 import { LoadingController } from "@ionic/angular";
 import { Service } from '../service/service';
+import { first } from "rxjs";
 
 
 @Component({
@@ -19,7 +20,7 @@ import { Service } from '../service/service';
 export class SettingsPage implements OnInit {
   selectedImage: string | null = null;
   username: string = '...';
-  fullName: string = '...';
+  uniqueCode: string = '...';
   email: string = '...';
   privacy: string = 'public';
   uid: string = "";
@@ -58,6 +59,7 @@ export class SettingsPage implements OnInit {
 				this.username = userData.displayName; 
 				this.email = userData.email;
 				this.privacy = userData.visibility;
+				this.uniqueCode = userData.uniq_username;
 				// this.isPublic =userData.visibility;       
 			  });
 
@@ -190,10 +192,42 @@ export class SettingsPage implements OnInit {
 file: any | null ;
 
   // Method to register facial recognition data
-registerFacialData() {
+async registerFacialData() {
 	// Create FormData and append the image Blob to it
 	// const temp = 'http://127.0.0.1:5000';
+
 	if(this.file == null) {
+		console.log("No image data available.");
+		return;
+	}
+
+	try {
+		this.loading = await this.loadingController.create({
+		  message: "registering facial data...",
+		});
+		
+		
+		const formData = new FormData();
+		formData.append('image', this.file, this.file.name);
+		
+		await this.loading.present();
+		
+		const uid = await this.getCurrentUserId().pipe(first()).toPromise();
+		if(uid) {
+			formData.append('user_id', uid);
+			const response = await this.http.post(`${this.api.apiUrl}/posts/register?uid=${uid}`, formData).toPromise();
+			await this.loading.dismiss();
+			this.self_forceRedirect(); // this can be commented out
+		}
+
+	} catch(error) {
+		console.error("Error registering facial data", error);
+	}
+
+	/*======== What is was before ========*/
+
+	/* 
+		if(this.file == null) {
 		console.log("No image data available.");
 		return;
 	}
@@ -214,14 +248,37 @@ registerFacialData() {
 		  );
 		  }
 	});
-    // Implement logic to register facial data on the server
-    // You may use Angular's HttpClient for making API requests
+	*/
+
   }
 
   // Method to delete facial recognition data
-  deleteFacialData() {
+  async deleteFacialData() {
     // Implement logic to delete facial data on the server
     // You may use Angular's HttpClient for making API requests
+	try {
+
+		this.loading = await this.loadingController.create({
+		  message: "deleting facial data...",
+		});
+
+		await this.loading.present();
+		const uid = await this.getCurrentUserId().pipe(first()).toPromise();
+
+		if (uid) {
+			const response = await this.http.delete(`${this.api.apiUrl}/posts/user/${uid}/delete`).toPromise();
+			await this.loading.dismiss();
+			this.self_forceRedirect(); // this can be commented out
+		}
+		
+	}
+	catch(error){
+		console.error("Error deleting facial data", error);
+	}
+
+	/*======= What it was ======== */
+
+	/*
 	this.getCurrentUserId().subscribe((uid) => {
 		  if (uid) {
 			console.log(`${this.api.apiUrl}/posts/user/${uid}/delete`);
@@ -235,6 +292,8 @@ registerFacialData() {
 		  );
 		  }
 	});
+	 */
+
   }
 
 	// Method to delete the user's account
@@ -253,13 +312,19 @@ registerFacialData() {
 			// force redirect to login page
 			this.forceRedirect();
 			} catch (error) {
-				await this.loading.dismiss();
+				// await this.loading.dismiss();
 				console.error("Error deleting profile", error);
 			}
 	}
 
 	forceRedirect() {
 		const login = `/login`;
+		  // Update the window location to trigger a full page refresh
+		  window.location.href = login;
+	  }
+
+	  self_forceRedirect() {
+		const login = `/settings`;
 		  // Update the window location to trigger a full page refresh
 		  window.location.href = login;
 	  }
@@ -316,6 +381,18 @@ registerFacialData() {
       // Process the response as needed
     } catch (error) {
       console.error("Error uploading image:", error);
+    }
+  }
+
+  onImageSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      // Read the selected image file and update the preview
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.selectedImage = e.target.result;
+      };
+      reader.readAsDataURL(file);
     }
   }
 

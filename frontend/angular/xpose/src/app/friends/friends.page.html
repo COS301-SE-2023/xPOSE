@@ -1,6 +1,12 @@
-<app-footer></app-footer>
+
+  
 
 <ion-content [fullscreen]="true" id="main-content" class="custom-background">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title size="large">Friends</ion-title>
+    </ion-toolbar>
+  </ion-header>
   <div class="friends-container">
     <ion-list class="friends-list">
       <ion-item *ngFor="let friend of friends">

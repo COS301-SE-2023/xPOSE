@@ -22,13 +22,11 @@ import { FriendListComponent } from "./friend-list/friend-list.component";
 import { CreateEventPage } from "./create-event/create-event.page";
 
 import { NgxMasonryModule } from 'ngx-masonry';
-import { SidebarComponent } from './sidebar/sidebar.component';
 import { GalleryModalComponent } from "./gallery-modal/gallery-modal.component";
 
 @NgModule({
   declarations: [
     AppComponent, 
-    SidebarComponent,
     GalleryModalComponent,
     FriendListComponent] ,
   imports: [

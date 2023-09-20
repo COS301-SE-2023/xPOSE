@@ -1,5 +1,11 @@
-<app-footer></app-footer>
-
+<!-- <app-footer></app-footer> -->
+<ion-content [fullscreen]="true">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title size="large">Create event</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
 <ion-content [fullscreen]="true" id="main-content" class="custom-background">
   <div class="account-settings">
   <ion-row>
@@ -48,7 +54,7 @@
             <ion-col size="6">
               <p>Start Date</p>
               <ion-input
-                type="date"
+                type="datetime-local"
                 [(ngModel)]="createEvent.start_date"
                 name="start_date"
               ></ion-input>
@@ -58,7 +64,7 @@
             <ion-col size="6">
               <p>End Date</p>
               <ion-input
-                type="date"
+                type="datetime-local"
                 [(ngModel)]="createEvent.end_date"
                 name="end_date"
               ></ion-input>

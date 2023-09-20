@@ -25,3 +25,20 @@ ion-icon {
   --color: #333;
   --ionicon-stroke-width: 32px;
 }
+ion-header {
+  padding-top: 50px;
+}
+
+/* Apply styles to the ion-title with the class "app-heading" */
+ion-title.app-heading {
+  font-family: 'Your Logo Font', sans-serif; /* Use a custom font for your logo if available */
+  font-size: 1.15rem; /* Adjust font size as needed */
+  font-weight: bold; /* Adjust font weight as needed */
+  color: #333; /* Choose a suitable text color */
+  text-transform: uppercase; /* Convert text to uppercase for a logo-like effect */
+  letter-spacing: 2px; /* Add letter spacing for better visual separation */
+  // text-align: center; /* Center-align the title */
+  margin: 0; /* Remove any default margin */
+  padding: 0; /* Remove any default padding */
+  
+}

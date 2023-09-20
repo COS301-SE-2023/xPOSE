@@ -1,15 +1,15 @@
+<ion-content [fullscreen]="true"  class="custom-backround">
 <ion-header [translucent]="true">
   <ion-toolbar class="custom-toolbar">
     <ion-buttons slot="start">
       <app-backbutton></app-backbutton>
     </ion-buttons>
-    <ion-title class="event-title">{{ event?.title }}</ion-title>
+    <ion-title class="event-title">View event</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true"  class="custom-backround">
   <ion-grid>
-    <ion-row>
+    <ion-row> 
       <ion-col size="12">
         <ion-img [src]="event?.image_url"></ion-img>
       </ion-col>
@@ -19,7 +19,7 @@
       <ion-col size="12">
         <div class="content-container">
           <app-loading-icon *ngIf="loading"></app-loading-icon>
-          <ion-button expand="block" class="join-button" (click)="handleButtonClick()">{{ getButtonLabel() }}</ion-button>
+          <ion-button expand="block"  (click)="handleButtonClick()">{{ getButtonLabel() }}</ion-button>
 
           <h1 class="h1">Owner</h1>
           <p>{{ event?.owner_display_name }}</p>
