@@ -122,7 +122,7 @@ export class EventsSettingsPage implements OnInit {
 		this.eventObject.image = file;
     // this.eventObject.image_url = file.
     this.current_image_url = URL.createObjectURL(file);
-    
+
 	  }
 
     getCurrentUserId(): Observable<string> {
@@ -149,7 +149,33 @@ export class EventsSettingsPage implements OnInit {
 		}
 	}
 
-
+  deleteEvent() {
+    this.getCurrentUserId().subscribe((uid) => {
+      if(uid){
+          const url = `${this.api.apiUrl}/e/events/${this.data.code}?uid=${uid}`;
+          console.log(url);
+          console.log('Deleting event...');
+          this.http.delete(url)
+          .subscribe({
+            next: (response:any) => {
+            console.log(response);
+            // Handle the response from the server
+            // this.router.navigate(['/home']);
+            },
+            error: (error) => {
+            // Handle any errors that occurred during the request
+            console.error(error);
+            this.loading = false;
+            // Display an error message to the user or perform any necessary error handling
+            }
+          });
+      }
+      else {
+        console.log("No user is currently logged in.");
+        // ! throw error
+      }
+    });
+  }
     // Function to handle location selection
     onLocationSelect(prediction: any) {
       console.log('Selected location:', prediction.description);
