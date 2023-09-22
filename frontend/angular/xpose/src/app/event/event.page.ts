@@ -67,6 +67,10 @@ export class EventPage {
   isGalleryOpen: boolean = false;
   // http: any;
 
+  isMenuOpen = false; // Initialize menu as closed
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen; // Toggle the menu state
+  }
   
 
   constructor(private http: HttpClient,
@@ -268,7 +272,7 @@ export class EventPage {
   editEvent() {
     console.log('Edit event');
     console.log(this.current_event.code);
-    this.router.navigate([`/event/${this.current_event.code}/settings`]);
+    this.router.navigate(['event', this.current_event.code, 'settings']);
   }
   
   retrievePosts() {
