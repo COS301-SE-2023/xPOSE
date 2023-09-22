@@ -13,8 +13,17 @@ ion-card {
   border-radius: 7px;
   overflow: hidden;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15), 0 -2px 5px rgba(0, 0, 0, 0.15);
+  transition: transform 0.7s; /* Smooth hover transition */
 }
 
+.card-transition {
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Define the properties to transition and their duration */
+}
+
+.card-transition:hover {
+  transform: scale(1.05); /* Scale up the card on hover */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Apply a box shadow on hover */
+}
 
 
 .card-image {
@@ -180,8 +189,9 @@ ion-col{
 /* Add a box-shadow to the selected card */
 .card-selected {
   transform: scale(1.05); /* Scale the card slightly when selected (optional) */
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add a smooth transition effect */
+  // transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add a smooth transition effect */
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Customize shadow values as needed */
+  transition: transform 0.2s; /* Smooth hover transition */
 }
 
 /* Add this class to the selected card using ngClass when it's clicked */
