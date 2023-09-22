@@ -88,7 +88,8 @@ export class EventPage {
     private api: ApiService,
     private modalController: ModalController,
     private sanitizer: DomSanitizer,
-    public authService: AuthService
+    public authService: AuthService,
+    private userService: Service
     ) {
       // click the 
       this.url = "sdafsda";
