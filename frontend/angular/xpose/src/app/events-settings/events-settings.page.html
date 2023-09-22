@@ -12,19 +12,19 @@
       <!-- Change Title -->
       <div class="form-group">
         <label for="eventTitle">Change Title:</label>
-        <input [value]="eventObject.title" type="text" id="eventTitle">
+        <input [(ngModel)]="eventObject.title" type="text" id="eventTitle">
       </div>
 
       <!-- Change Description -->
       <div class="form-group">
         <label for="eventDescription">Change Description:</label>
-        <textarea id="eventDescription" [value]="eventObject.description"></textarea>
+        <textarea id="eventDescription" [(ngModel)]="eventObject.description"></textarea>
       </div>
 
       <!-- Change Cover Image -->
       <div class="form-group">
         <label for="coverImage">Change Cover Image:</label>
-        <img [src]="eventObject.image_url" alt="Current Cover Image" *ngIf="eventObject.image_url">
+        <img [src]="current_image_url" alt="Current Cover Image" *ngIf="current_image_url">
         <input type="file" id="coverImage" (change)="onFileSelected($event)">
       </div>      
 
@@ -43,18 +43,18 @@
     <!-- Change Dates from Calendar -->
     <div class="form-group">
       <label for="startDate">Start Date:</label>
-      <ion-input [value]="eventObject.start_date" [(ngModel)]="eventObject.start_date" type="datetime-local" id="startDate"></ion-input>
+      <ion-input [(ngModel)]="eventObject.start_date" type="datetime-local" id="startDate"></ion-input>
     </div>
 
     <div class="form-group">
       <label for="endDate">End Date:</label>
-      <ion-input [value]="eventObject.start_date" [(ngModel)]="eventObject.end_date" type="datetime-local" id="endDate"></ion-input>
+      <ion-input [(ngModel)]="eventObject.end_date" type="datetime-local" id="endDate"></ion-input>
     </div>
 
       <!-- Access Privacy (Public/Private) -->
       <div class="form-group">
         <label>Access Privacy:</label>
-        <ion-radio-group id="accessPrivacy" [value]="eventObject.privacy_setting">
+        <ion-radio-group id="accessPrivacy" [(ngModel)]="eventObject.privacy_setting">
           <ion-item>
             <ion-label>Public</ion-label>
             <ion-radio value="public"></ion-radio>
@@ -68,7 +68,7 @@
 
       <!-- Save Changes Button -->
       <div class="form-group">
-        <button type="submit">Save Changes</button>
+        <button type="submit" (click)="updateEvent()">Save Changes</button>
       </div>
       <!-- </form> -->
     </section>

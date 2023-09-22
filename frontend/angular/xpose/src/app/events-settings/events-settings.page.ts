@@ -33,6 +33,7 @@ export class EventsSettingsPage implements OnInit {
 	  loading = false;
 	locationPredictions: any[] = [];
 
+  data: any;
 
   constructor(private http: HttpClient,
 		private router: Router,
@@ -71,11 +72,12 @@ export class EventsSettingsPage implements OnInit {
         this.getCurrentUserId().subscribe((uid : any) => {
           if (uid) {
             this.http.get(`${this.api.apiUrl}/e/events/${event_id}?uid=${uid}`).subscribe((data: any) => {
+              this.data = data;
               console.log(data);
               this.eventObject = {
-                uid: data.id, // Assuming id maps to uid
+                uid: data.owner_id, // Assuming id maps to uid
                 title: data.title,
-                image: data.image_url, // You may need to adjust this depending on your data structure
+                image: null, // You may need to adjust this depending on your data structure
                 start_date: data.start_date,
                 end_date: data.end_date,
                 location: data.location,
@@ -85,8 +87,8 @@ export class EventsSettingsPage implements OnInit {
                 longitude: data.longitude,
                 image_url: data.image_url,
               };
-
-              if(this.eventObject.uid !== uid) {
+              this.current_image_url = data.image_url;
+              if(this.data.user_event_position !== "owner") {
                 console.log("You are not the owner of this event");
                 this.router.navigate(['/home']);
               }
@@ -114,9 +116,13 @@ export class EventsSettingsPage implements OnInit {
       });
     }
 
+    current_image_url: string = '';
   onFileSelected(event: any) {
 		const file: File = event.target.files[0];
 		this.eventObject.image = file;
+    // this.eventObject.image_url = file.
+    this.current_image_url = URL.createObjectURL(file);
+    
 	  }
 
     getCurrentUserId(): Observable<string> {
@@ -187,9 +193,11 @@ export class EventsSettingsPage implements OnInit {
               const formData: FormData = new FormData();
               formData.append('uid', uid);
               formData.append('title', this.eventObject.title);
+              
               if (this.eventObject.image) {
-              formData.append('image', this.eventObject.image, this.eventObject.image.name);
+                formData.append('image', this.eventObject.image, this.eventObject.image.name);
               }
+              
               formData.append('start_date', this.eventObject.start_date);
               formData.append('end_date', this.eventObject.end_date);
               formData.append('location', this.eventObject.location);
@@ -197,17 +205,18 @@ export class EventsSettingsPage implements OnInit {
               formData.append('privacy_setting', this.eventObject.privacy_setting);
               formData.append('latitude', this.eventObject.latitude.toString());
               formData.append('longitude', this.eventObject.longitude.toString());
-            //   console.log(formData);
+              console.log(formData);
               console.log(this.eventObject);
               // REfactor this to be done in the service class for better decoupling
-              const url = `${this.api.apiUrl}/e/events?uid=${uid}`;
-              
-              this.http.post(url, formData)
+              const url = `${this.api.apiUrl}/e/events/${this.data.code}?uid=${uid}`;
+              console.log(url);
+              console.log('Updating event...');
+              this.http.put(url, formData)
               .subscribe({
                 next: (response:any) => {
                 console.log(response);
                 // Handle the response from the server
-                this.router.navigate(['/home']);
+                // this.router.navigate(['/home']);
                 },
                 error: (error) => {
                 // Handle any errors that occurred during the request
