@@ -44,6 +44,10 @@ export class FriendsPage implements OnInit {
       });
     }
   
+    logout() {
+      this.authService.signOut();
+    }
+
     getFriends(uid:string){
       const endpoint = `${this.api.apiUrl}/u/users/`;
       this.loading = true;
