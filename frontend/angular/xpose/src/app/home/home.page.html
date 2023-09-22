@@ -9,7 +9,6 @@
         <ion-button routerLink="/create-event" routerLinkActive="active">Create Event</ion-button>
         <ion-button routerLink="/notification" routerLinkActive="active">Notifications</ion-button>
         <ion-button routerLink="/friends" routerLinkActive="active">Friends</ion-button>
-        <!-- <ion-button routerLink="/profile" routerLinkActive="active"> Profile</ion-button> -->
         <ion-button routerLink="/settings" routerLinkActive="active"> Settings</ion-button>
       </ion-buttons>
       <ion-buttons slot="end">
@@ -33,6 +32,43 @@
 
 
 <ion-content [fullscreen]="true" id="main-content" class="custom-background">
+  <!-- <ion-toolbar class="ion-hide-lg-down"> -->
+    <!-- <ion-searchbar animated placeholder="Search for events" (ionChange)="search($event)"></ion-searchbar> -->
+  <div class="swiper-container" id="tags-swiper">
+    <div class="swiper-wrapper">
+      <!-- All tags on the same row -->
+      <div class="swiper-slide">
+        <ion-row>
+          <ion-col size="3">
+            <div class="swiper-tag recent-events">
+              Recent Events
+            </div>
+          </ion-col>
+          <ion-col size="3">
+            <div class="swiper-tag new-events">
+              New Events
+            </div>
+          </ion-col>
+          <ion-col size="3">
+            <div class="swiper-tag close-events">
+              Close Events
+            </div>
+          </ion-col>
+          <ion-col size="3">
+            <div class="swiper-tag trending-events">
+              Trending Events
+            </div>
+          </ion-col>
+        </ion-row>
+      </div>
+    </div>
+  
+    <!-- Pagination (optional) -->
+    <div class="swiper-pagination"></div>
+  </div>
+  
+  <!-- </ion-toolbar> -->
+<!-- <search-bar></search-bar> -->
   <ion-row>
     <ion-col>
         

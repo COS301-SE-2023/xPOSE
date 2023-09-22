@@ -206,3 +206,66 @@ ion-searchbar {
 //   font-size: 18px;
 //   color: #3f3f3fe8;
 // }
+/* Styles for the Swiper container */
+/* Styles for the Swiper container */
+/* Styles for the Swiper container */
+#tags-swiper {
+  width: 100%;
+  height: auto; /* Adjust the height as needed */
+  margin-top: 10px;
+}
+
+/* Styles for the Swiper slide */
+.swiper-slide {
+  padding: 10px;
+  text-align: center;
+}
+
+/* Customize the styles for each tag */
+.swiper-tag {
+  display: inline-block;
+  padding: 10px 20px;
+  margin: 5px;
+  border-radius: 20px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Recent Events tag */
+.recent-events {
+  background-color: #3498db; /* Blue background for "Recent Events" */
+  color: #fff; /* White text color */
+}
+
+/* New Events tag */
+.new-events {
+  background-color: #e74c3c; /* Red background for "New Events" */
+  color: #fff; /* White text color */
+}
+
+/* Close Events tag */
+.close-events {
+  background-color: #2ecc71; /* Green background for "Close Events" */
+  color: #fff; /* White text color */
+}
+
+/* Trending Events tag */
+.trending-events {
+  background-color: #f39c12; /* Orange background for "Trending Events" */
+  color: #fff; /* White text color */
+}
+
+/* Pagination styles (optional) */
+.swiper-pagination {
+  bottom: 10px;
+}
+
+/* Responsive styles for smaller screens */
+@media screen and (max-width: 768px) {
+  .swiper-tag {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+}

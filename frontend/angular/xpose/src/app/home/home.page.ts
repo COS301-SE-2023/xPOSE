@@ -40,7 +40,11 @@ export class HomePage {
 
 	ngOnInit() {
 		this.getEventsFromAPI();
+
+		
 	}
+
+
 	   
   getEventsFromAPI() {
 
@@ -168,4 +172,17 @@ export class HomePage {
 	onFriends(){
 		this.router.navigate(['/friends']);
 	}
+
+
+
+	// // Initialize Swiper
+	// var tagsSwiper = new Swiper('#tags-swiper', {
+	// 	slidesPerView: 1, // Number of slides per view
+	// 	spaceBetween: 10, // Space between slides
+	// 	pagination: {
+	// 	el: '.swiper-pagination', // Pagination element
+	// 	clickable: true, // Enable pagination clickable
+	// 	},
+	// });
+
 }
