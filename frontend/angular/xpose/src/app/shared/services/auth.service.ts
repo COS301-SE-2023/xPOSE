@@ -2,14 +2,15 @@ import { Injectable, NgZone } from "@angular/core";
 import { Router } from "@angular/router";
 import { User } from "../services/user";
 import { AngularFireAuth } from "@angular/fire/compat/auth";
-import { AngularFirestore, AngularFirestoreDocument } from "@angular/fire/compat/firestore";
-import { GoogleAuthProvider, FacebookAuthProvider } from "firebase/auth";
+import { AngularFirestore, AngularFirestoreDocument, } from "@angular/fire/compat/firestore";
+import { GoogleAuthProvider, FacebookAuthProvider, signInWithPopup, getAuth } from "firebase/auth";
 import { HttpClient } from "@angular/common/http";
 import { HttpHeaders } from '@angular/common/http';
 import { map } from "rxjs";
 import { Observable } from "rxjs";
 import { Location } from "@angular/common";
 import { environment } from "src/environments/environment";
+import { LoadingController } from "@ionic/angular";
 
 
 // import User from '../data-access/models/user.table.js';
@@ -21,6 +22,7 @@ export class AuthService {
   userData: any;
   isLoggedIn: boolean = false;
   apiUrl: string;
+  loading!: HTMLIonLoadingElement;
 
   constructor(
       public afs: AngularFirestore,  // inject firestore
@@ -28,7 +30,8 @@ export class AuthService {
       public router: Router,
       public ngZone: NgZone, // remove outside scope warning
       private http: HttpClient, // inject HttpClient for making HTTP requests
-      private location: Location
+      private location: Location,
+      private loadingController: LoadingController
   ) {
 
     this.isLoggedIn = localStorage.getItem('user') === 'true';
@@ -108,13 +111,14 @@ export class AuthService {
 
   // Sign in with Google
   async signInWithGoogle(): Promise<void> {
-
     try{
+      
       const res =  await this.authLogin(new GoogleAuthProvider());
       if(typeof res === 'undefined' || !res){
         throw new Error("Authentication result is undefined");
       }
       console.log("Redirect to home!!!");
+      await this.loading.dismiss();
       this.router.navigate(['/home']);
 
     } catch(error){
@@ -138,16 +142,77 @@ export class AuthService {
     }
   }
 
+
+ /*async facebooktAuthLogin(provider: any) {
+
+  try{
+    const auth = getAuth();
+    console.log("Check auth",auth);
+    const res =  await   signInWithPopup(auth, provider);
+    this.isLoggedIn = true;
+    localStorage.setItem('user', 'true');
+    const credential = FacebookAuthProvider.credentialFromResult(res);
+    const accessTOken = credential?.accessToken;
+    const response = await this.sendUserDataToServer(res.user);
+    return response;
+  } catch(error){
+
+    console.log("Error in facebook login", error);
+    // const errorCode = error.code;
+    // const errorMessage = error.message;
+    // // The email of the user's account used.
+    // const email = error.customData.email;
+    // // The AuthCredential type that was used.
+    // const credential = FacebookAuthProvider.credentialFromError(error);
+  }
+
+  /*const auth = getAuth();
+  signInWithPopup(auth, provider)
+  .then((result) => {
+    // The signed -in user info.
+    const user = result.user;
+
+    const credential = FacebookAuthProvider.credentialFromResult(result);
+    const accessTOken = credential?.accessToken;
+  })
+  .catch((error) => {
+     // Handle Errors here.
+     const errorCode = error.code;
+     const errorMessage = error.message;
+     // The email of the user's account used.
+     const email = error.customData.email;
+     // The AuthCredential type that was used.
+     const credential = FacebookAuthProvider.credentialFromError(error);
+  })
+ }*/
+
   // Authentication login to run auth providers
  async authLogin(provider: any): Promise<void> {
+
+  /*try {
+    this.loading = await this.loadingController.create({
+      message: "Please wait...",
+    });
+
+    await this.loading.present();
+    await this.authService.signInWithGoogle();
+    await this.loading.dismiss();
+  } catch(error){
+    console.log("Something went wrong");
+  }*/
   try {
     const result = await this.afAuth.signInWithPopup(provider)
     this.isLoggedIn = true;
     localStorage.setItem('user', 'true');
 
+    this.loading = await this.loadingController.create({
+      message: "Please wait...",
+    });
+    await this.loading.present();
     // Authentication is usccessful send data to server
     const response = await this.sendUserDataToServer(result.user);
     return response;
+    
   } catch(error){
     window.alert("Error signing up with provider");
     console.log(error);

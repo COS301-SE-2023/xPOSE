@@ -65,7 +65,7 @@
         <!-- Chat messages -->
         <ion-item class="chat-item" *ngFor="let message of messages">
           <ion-avatar slot="start">
-            <ion-img [src]="generateAvatar(message.displayName)" loading="lazy"></ion-img>
+            <ion-img [src]="generateAvatar(message.photoURL)" loading="lazy"></ion-img>
           </ion-avatar>
           <ion-label class="chat-content">
             <h2 class="chat-name">{{ message.displayName }}</h2>
@@ -133,7 +133,7 @@
         
           <ion-item *ngFor="let participant of participants; let i = index" >
             <ion-avatar slot="start">
-              <ion-img [src]="participant.avatar" loading="lazy" (click)="onCardClick(participant)"></ion-img>
+              <ion-img [src]="participant.photoURL"  loading="lazy" (click)="onCardClick(participant)"></ion-img>
             </ion-avatar>
             <ion-label>
               <h2 class="participant-name" (click)="onCardClick(participant)">{{ participant.display_name }}</h2>
