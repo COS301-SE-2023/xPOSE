@@ -26,6 +26,8 @@
     <ion-buttons slot="end">
       <ion-button (click)="logout()" routerLinkActive="active"> <ion-icon name="log-out-outline"></ion-icon></ion-button>
     </ion-buttons>
+
+    
   </ion-toolbar>
 </ion-header>
 
@@ -41,11 +43,11 @@
             <ion-title class="event-title">Event</ion-title>
           </ion-toolbar>
         </ion-header> -->
-      <app-loading-icon *ngIf="loading"></app-loading-icon>
+      <!-- <app-loading-icon *ngIf="loading"></app-loading-icon> -->
 
     
       <ion-segment [(ngModel)]="filterType"  (ionChange)="applyFilter()">
-        <ion-segment-button v5alue="posts" id="posts_tab">
+        <ion-segment-button value="posts" id="posts_tab">
           Posts
         </ion-segment-button>
         <ion-segment-button value="message-board">
@@ -95,8 +97,13 @@
         <ion-header [translucent]="true">
           <ion-toolbar>
             <ion-title>{{ current_event?.title }}</ion-title>
-          </ion-toolbar>
-        </ion-header>
+            <ion-buttons slot="end">
+              <ion-button (click)="editEvent()" class="edutton">
+                <ion-icon slot="start" name="create-outline"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+             </ion-toolbar>
+           </ion-header>
         
         <!-- <ion-content [fullscreen]="true"> -->
           <div>
