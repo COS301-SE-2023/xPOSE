@@ -1,20 +1,14 @@
-<!-- event-settings.component.html -->
-
-<ion-header [translucent]="true">
-  <ion-toolbar class="custom-toolbar">
-    <ion-buttons slot="start">
-      <app-backbutton></app-backbutton>
-    </ion-buttons>
-    <!-- Header content goes here -->
-    <h3>Event Settings</h3>
-  </ion-toolbar>
-</ion-header>
+<div>
+  hello, <br>
+  world! <br>
+  i'm alive!
+</div>
 
 <ion-content [scrollY]="true" [fullscreen]="true" class="custom-background">
   <div class="event-settings">
     <section class="form-section">
       <h3>Event Details</h3>
-      <form #form="ngForm" (ngSubmit)="updateEvent()">      
+      <!-- <form #form="ngForm" (ngSubmit)="updateEvent()">       -->
       <!-- Change Title -->
       <div class="form-group">
         <label for="eventTitle">Change Title:</label>
@@ -76,13 +70,13 @@
       <div class="form-group">
         <button type="submit">Save Changes</button>
       </div>
-      </form>
+      <!-- </form> -->
     </section>
 
     <section class="form-section">
       <h3>Posts Settings</h3>
       <!-- Posts Settings -->
-      <form (ngSubmit)="onSubmit()" #form="ngForm">
+      <!-- <form (ngSubmit)="onSubmit()" #form="ngForm"> -->
         <div class="form-group">
           <h4>Image processing</h4>
           <ion-checkbox id="facialRecognition">Facial Recognition</ion-checkbox>
@@ -93,14 +87,14 @@
         <div class="form-group">
           <button>Save Changes</button>
         </div>
-      </form>
+      <!-- </form> -->
     </section>
 
     <section class="form-section">
       <!-- Chats Settings -->
       <h3>Chats Settings</h3>
       
-      <form (ngSubmit)="onSubmit()" #form="ngForm">
+      <!-- <form (ngSubmit)="onSubmit()" #form="ngForm"> -->
         <div class="form-group">
           <h4>Who can send messages?</h4>
           <ion-radio-group id="chatSettings">
@@ -125,7 +119,7 @@
         <div class="form-group">
           <button id="saveChangesButton">Save Changes</button>
         </div>
-      </form>
+      <!-- </form> -->
     </section>
 
   </div>

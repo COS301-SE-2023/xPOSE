@@ -270,7 +270,7 @@ export class EventPage {
   editEvent() {
     console.log('Edit event');
     console.log(this.current_event.code);
-    this.router.navigate([`/event/${this.current_event.code}/settings`]);
+    this.router.navigate(['event', this.current_event.code, 'settings']);
   }
   
   retrievePosts() {
