@@ -142,50 +142,6 @@ export class AuthService {
     }
   }
 
-
- /*async facebooktAuthLogin(provider: any) {
-
-  try{
-    const auth = getAuth();
-    console.log("Check auth",auth);
-    const res =  await   signInWithPopup(auth, provider);
-    this.isLoggedIn = true;
-    localStorage.setItem('user', 'true');
-    const credential = FacebookAuthProvider.credentialFromResult(res);
-    const accessTOken = credential?.accessToken;
-    const response = await this.sendUserDataToServer(res.user);
-    return response;
-  } catch(error){
-
-    console.log("Error in facebook login", error);
-    // const errorCode = error.code;
-    // const errorMessage = error.message;
-    // // The email of the user's account used.
-    // const email = error.customData.email;
-    // // The AuthCredential type that was used.
-    // const credential = FacebookAuthProvider.credentialFromError(error);
-  }
-
-  /*const auth = getAuth();
-  signInWithPopup(auth, provider)
-  .then((result) => {
-    // The signed -in user info.
-    const user = result.user;
-
-    const credential = FacebookAuthProvider.credentialFromResult(result);
-    const accessTOken = credential?.accessToken;
-  })
-  .catch((error) => {
-     // Handle Errors here.
-     const errorCode = error.code;
-     const errorMessage = error.message;
-     // The email of the user's account used.
-     const email = error.customData.email;
-     // The AuthCredential type that was used.
-     const credential = FacebookAuthProvider.credentialFromError(error);
-  })
- }*/
-
   // Authentication login to run auth providers
  async authLogin(provider: any): Promise<void> {
 
