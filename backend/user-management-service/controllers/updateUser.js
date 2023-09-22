@@ -37,6 +37,8 @@ export const updateUser = async (req, res) => {
 
         if (photoURL || photoURL !="") { 
             updatedFields.photoURL = photoURL;
+
+            // console.log("phot url is  not empty", photoURL);
         }
 
         if (visibility) {

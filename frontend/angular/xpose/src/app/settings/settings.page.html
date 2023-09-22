@@ -38,15 +38,21 @@
    
     <!-- Change Profile Section -->
     <section class="profile-section">
-      <h3>Change Profile</h3>
+      <!-- <h3>Change Profile</h3> -->
       <form (submit)="updateProfile()">
         <div class="form-group">
           <!-- <ion-label for="profileImage">Profile Image:</ion-label> -->
           <div class="user_div" >
-            <img class="profile-image" src="/assets/images/image2.jpg">
+            <img class="profile-image" [src]="photoURL" alt="Selected Image">
           </div>
-          <input type="file" id="profileImage" (change)="onImageSelected($event)" accept="image/*">
-          <ion-img [src]="selectedImage" *ngIf="selectedImage" class="profile-preview" alt="Selected Image"></ion-img>
+          <label class="file-label">
+            Change profile picture
+            <input class="file-input" type="file" accept="image/*"
+            (change)="onProfilePictureChange($event)" />
+          </label>
+          
+          <!-- <input type="file" id="profileImage" (change)="onProfilePictureChange($event)" accept="image/*"> -->
+          <!-- <ion-img [src]="selectedImage" *ngIf="selectedImage" class="profile-preview" alt="Selected Image"></ion-img> -->
         </div>
         <div class="form-group">
           <label for="username">Username:</label>
