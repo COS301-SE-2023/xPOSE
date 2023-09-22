@@ -27,8 +27,8 @@
       <ion-content [fullscreen]="true" id="main-content" class="custom-backround">
         <ion-header [translucent]="true">
           <ion-toolbar class="custom-toolbar" >
-            <ion-buttons slot="end">
-              <!-- <ion-menu-button></ion-menu-button> -->
+            <ion-buttons slot="end" (click)="editEvent()">
+             edit
             </ion-buttons>
             <ion-buttons slot="start">
               <app-backbutton></app-backbutton>
@@ -40,7 +40,7 @@
 
     
       <ion-segment [(ngModel)]="filterType"  (ionChange)="applyFilter()">
-        <ion-segment-button value="posts" id="posts_tab">
+        <ion-segment-button v5alue="posts" id="posts_tab">
           Posts
         </ion-segment-button>
         <ion-segment-button value="message-board">

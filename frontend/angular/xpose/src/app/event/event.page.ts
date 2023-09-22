@@ -66,6 +66,10 @@ export class EventPage {
   isGalleryOpen: boolean = false;
   // http: any;
 
+  isMenuOpen = false; // Initialize menu as closed
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen; // Toggle the menu state
+  }
   
 
   constructor(private http: HttpClient,

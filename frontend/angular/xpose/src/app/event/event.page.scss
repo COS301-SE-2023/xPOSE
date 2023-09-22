@@ -179,3 +179,39 @@ ion-title{
   font-size: 18px;
   color: #6b6b6bd8;
 }
+
+
+/* Updated CSS for Menu Container */
+.menu-container {
+  position: absolute;
+  top: 0; /* Adjust this value to position the menu above the header */
+  right: 0;
+}
+
+/* Toggler Button */
+.toggler {
+  cursor: pointer;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  text-align: center;
+}
+
+/* Menu */
+.menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index:999; /* Increase z-index value to place the menu above everything */
+}
+
+/* Apply styles when the menu is open */
+.menu-open {
+  display: block;
+}
