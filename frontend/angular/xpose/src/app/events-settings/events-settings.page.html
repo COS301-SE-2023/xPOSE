@@ -12,26 +12,26 @@
       <!-- Change Title -->
       <div class="form-group">
         <label for="eventTitle">Change Title:</label>
-        <input [value]="createEvent.title" type="text" id="eventTitle">
+        <input [value]="eventObject.title" type="text" id="eventTitle">
       </div>
 
       <!-- Change Description -->
       <div class="form-group">
         <label for="eventDescription">Change Description:</label>
-        <textarea id="eventDescription" [value]="createEvent.description"></textarea>
+        <textarea id="eventDescription" [value]="eventObject.description"></textarea>
       </div>
 
       <!-- Change Cover Image -->
       <div class="form-group">
         <label for="coverImage">Change Cover Image:</label>
-        <img [src]="createEvent.image_url" alt="Current Cover Image" *ngIf="createEvent.image_url">
+        <img [src]="eventObject.image_url" alt="Current Cover Image" *ngIf="eventObject.image_url">
         <input type="file" id="coverImage" (change)="onFileSelected($event)">
       </div>      
 
       <div class="form-group">
         <!-- Change Location -->
         <label for="location">Location:</label>
-        <ion-searchbar class="ther" name="location" [(ngModel)]="createEvent.location" (ionInput)="onLocationInput($event)" autocomplete="off"></ion-searchbar>
+        <ion-searchbar class="ther" name="location" [(ngModel)]="eventObject.location" (ionInput)="onLocationInput($event)" autocomplete="off"></ion-searchbar>
 
         <ion-list>
           <ion-item *ngFor="let prediction of locationPredictions" (click)="onLocationSelect(prediction)">
@@ -43,18 +43,18 @@
     <!-- Change Dates from Calendar -->
     <div class="form-group">
       <label for="startDate">Start Date:</label>
-      <ion-input [value]="createEvent.start_date" [(ngModel)]="createEvent.start_date" type="datetime-local" id="startDate"></ion-input>
+      <ion-input [value]="eventObject.start_date" [(ngModel)]="eventObject.start_date" type="datetime-local" id="startDate"></ion-input>
     </div>
 
     <div class="form-group">
       <label for="endDate">End Date:</label>
-      <ion-input [value]="createEvent.start_date" [(ngModel)]="createEvent.end_date" type="datetime-local" id="endDate"></ion-input>
+      <ion-input [value]="eventObject.start_date" [(ngModel)]="eventObject.end_date" type="datetime-local" id="endDate"></ion-input>
     </div>
 
       <!-- Access Privacy (Public/Private) -->
       <div class="form-group">
         <label>Access Privacy:</label>
-        <ion-radio-group id="accessPrivacy" [value]="createEvent.privacy_setting">
+        <ion-radio-group id="accessPrivacy" [value]="eventObject.privacy_setting">
           <ion-item>
             <ion-label>Public</ion-label>
             <ion-radio value="public"></ion-radio>
@@ -122,5 +122,21 @@
       <!-- </form> -->
     </section>
 
+    <section class="form-section">
+      <h3>Delete event</h3>
+      <!-- Posts Settings -->
+      <!-- <form (ngSubmit)="onSubmit()" #form="ngForm"> -->
+        <div class="form-group">
+          <h4>This will delete the event and all of its posts and chats</h4>
+          <!-- <ion-checkbox id="facialRecognition">Facial Recognition</ion-checkbox>
+          <ion-checkbox id="deepFaceProtection">Deep Face Protection</ion-checkbox>
+          <ion-checkbox id="encryption">Encryption</ion-checkbox> -->
+        </div>
+        <!-- Save Changes Button -->
+        <div class="form-group">
+          <button>Delete event</button>
+        </div>
+      <!-- </form> -->
+    </section>
   </div>
 </ion-content>

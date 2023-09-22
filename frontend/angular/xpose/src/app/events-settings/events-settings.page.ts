@@ -15,7 +15,7 @@ import { LocationAutocompleteService } from '../service/location-autocomplete.se
   styleUrls: ['./events-settings.page.scss'],
 })
 export class EventsSettingsPage implements OnInit {
-  createEvent: Event = {
+  eventObject: Event = {
 		uid: 0,
 		title: ' ',
 		image: null,
@@ -68,11 +68,11 @@ export class EventsSettingsPage implements OnInit {
   
         console.log(`The event id = ${event_id}`);
       
-        this.getCurrentUserId().subscribe((uid) => {
+        this.getCurrentUserId().subscribe((uid : any) => {
           if (uid) {
             this.http.get(`${this.api.apiUrl}/e/events/${event_id}?uid=${uid}`).subscribe((data: any) => {
               console.log(data);
-              this.createEvent = {
+              this.eventObject = {
                 uid: data.id, // Assuming id maps to uid
                 title: data.title,
                 image: data.image_url, // You may need to adjust this depending on your data structure
@@ -85,6 +85,11 @@ export class EventsSettingsPage implements OnInit {
                 longitude: data.longitude,
                 image_url: data.image_url,
               };
+
+              if(this.eventObject.uid !== uid) {
+                console.log("You are not the owner of this event");
+                this.router.navigate(['/home']);
+              }
             },
             (error) => {
                 this.loading = false; 
@@ -97,10 +102,7 @@ export class EventsSettingsPage implements OnInit {
           }
         });
   
-        // Fetch event data based on the route parameter
-        // Call API or perform necessary logic to fetch event details
-        // Assign the fetched data to this.event
-        // console.log(event_id);
+        
   
         console.log('Hello from event page');
         // // make api call to ${this.api.apiUrl}/e/events/{event_id}
@@ -114,7 +116,7 @@ export class EventsSettingsPage implements OnInit {
 
   onFileSelected(event: any) {
 		const file: File = event.target.files[0];
-		this.createEvent.image = file;
+		this.eventObject.image = file;
 	  }
 
     getCurrentUserId(): Observable<string> {
@@ -150,13 +152,13 @@ export class EventsSettingsPage implements OnInit {
       geocoder.geocode({ address: prediction.description }, (results, status) => {
         if (status === 'OK' && results && results[0]) {
         const location = results[0].geometry.location;
-        this.createEvent.location = prediction.description;
-        this.createEvent.latitude = location.lat();
-        this.createEvent.longitude = location.lng();
+        this.eventObject.location = prediction.description;
+        this.eventObject.latitude = location.lat();
+        this.eventObject.longitude = location.lng();
         
-        console.log('Location selected:', this.createEvent.location);
-        console.log('Latitude:', this.createEvent.latitude);
-        console.log('Longitude:', this.createEvent.longitude);
+        console.log('Location selected:', this.eventObject.location);
+        console.log('Latitude:', this.eventObject.latitude);
+        console.log('Longitude:', this.eventObject.longitude);
         } else {
         console.log('Geocoding failed due to: ' + status);
         }
@@ -167,14 +169,14 @@ export class EventsSettingsPage implements OnInit {
 
     updateEvent() {
       const formData: FormData = new FormData();
-      formData.append('title', this.createEvent.title);
-      formData.append('start_date', this.createEvent.start_date);
-      formData.append('end_date', this.createEvent.end_date);
-      formData.append('location', this.createEvent.location);
-      formData.append('description', this.createEvent.description);
-      formData.append('privacy_setting', this.createEvent.privacy_setting);
-      formData.append('latitude', this.createEvent.latitude.toString());
-      formData.append('longitude', this.createEvent.longitude.toString());
+      formData.append('title', this.eventObject.title);
+      formData.append('start_date', this.eventObject.start_date);
+      formData.append('end_date', this.eventObject.end_date);
+      formData.append('location', this.eventObject.location);
+      formData.append('description', this.eventObject.description);
+      formData.append('privacy_setting', this.eventObject.privacy_setting);
+      formData.append('latitude', this.eventObject.latitude.toString());
+      formData.append('longitude', this.eventObject.longitude.toString());
       // if(this.createEvent.title != " " || this.createEvent.start_date != " " || this.createEvent.end_date != " " || this.createEvent.location != " " || this.createEvent.description != " " || this.createEvent.longitude != 0 || this.createEvent.latitude != 0){
         this.getCurrentUserId().subscribe((uid) => {
           if(uid){
@@ -184,19 +186,19 @@ export class EventsSettingsPage implements OnInit {
               // this.createEvent.userId = parseInt(userId);
               const formData: FormData = new FormData();
               formData.append('uid', uid);
-              formData.append('title', this.createEvent.title);
-              if (this.createEvent.image) {
-              formData.append('image', this.createEvent.image, this.createEvent.image.name);
+              formData.append('title', this.eventObject.title);
+              if (this.eventObject.image) {
+              formData.append('image', this.eventObject.image, this.eventObject.image.name);
               }
-              formData.append('start_date', this.createEvent.start_date);
-              formData.append('end_date', this.createEvent.end_date);
-              formData.append('location', this.createEvent.location);
-              formData.append('description', this.createEvent.description);
-              formData.append('privacy_setting', this.createEvent.privacy_setting);
-              formData.append('latitude', this.createEvent.latitude.toString());
-              formData.append('longitude', this.createEvent.longitude.toString());
+              formData.append('start_date', this.eventObject.start_date);
+              formData.append('end_date', this.eventObject.end_date);
+              formData.append('location', this.eventObject.location);
+              formData.append('description', this.eventObject.description);
+              formData.append('privacy_setting', this.eventObject.privacy_setting);
+              formData.append('latitude', this.eventObject.latitude.toString());
+              formData.append('longitude', this.eventObject.longitude.toString());
             //   console.log(formData);
-              console.log(this.createEvent);
+              console.log(this.eventObject);
               // REfactor this to be done in the service class for better decoupling
               const url = `${this.api.apiUrl}/e/events?uid=${uid}`;
               
