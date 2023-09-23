@@ -147,6 +147,9 @@ EventInvitation.belongsTo(User, { foreignKey: 'user_id_fk', as: 'user' });
 EventInvitation.belongsTo(Event, { foreignKey: 'event_id_fk', as: 'event' });
 EventJoinRequest.belongsTo(User, { foreignKey: 'user_id_fk', as: 'user' });
 EventJoinRequest.belongsTo(Event, { foreignKey: 'event_id_fk', as: 'event' });
+EventTag.belongsTo(Event, { foreignKey: 'event_id_fk', as: 'event' });
+EventTag.belongsTo(Tag, { foreignKey: 'tag_id_fk', as: 'tag' });
+
 
 User.belongsToMany(Event, {
   through: EventParticipant,
