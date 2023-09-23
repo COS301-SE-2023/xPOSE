@@ -35,16 +35,13 @@
     <!-- <ion-searchbar animated placeholder="Search for events" (ionChange)="search($event)"></ion-searchbar> -->
   <div class="swiper-container" id="tags-swiper">
     <div class="scrolling-wrapper">
-        <div class="swiper-slide">
-          <ion-chip class="swiper-tag" (click)="getEventsFromAPI()">
-            <ion-label>all</ion-label>
-          </ion-chip>
+        <!-- <div class="swiper-slide"> -->
         <div class="swiper-slide" *ngFor="let tag of tags">
           <ion-chip class="swiper-tag" (click)="refreshFeed(tag)">
             <ion-label>{{ tag }}</ion-label>
           </ion-chip>
         </div>
-      </div>
+      <!-- </div> -->
     </div>
   
     <!-- Pagination (optional) -->
@@ -64,7 +61,7 @@
       </div>
       <div class="scrollable-content">
         <ion-row>
-          <ion-col size="12" size-sm="6" size-md="4" size-lg="3" *ngFor="let card of cards">
+          <ion-col size="12" size-sm="6" size-md="4" size-lg="3" *ngFor="let card of filteredCards">
             <ion-card class="card-transition" (click)="eventDetails(card.id)">
               <span class="label-{{ getStatusColor(card?.status) }} label">{{ card?.status }}</span>
               <img [src]="card.image_url" alt="Card Image" class="card-image">

@@ -5,6 +5,7 @@ import { Observable, map } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { HttpClient } from '@angular/common/http';
 import { ApiService } from '../service/api.service';
+import { get } from 'cypress/types/lodash';
 
 @Component({
   selector: 'app-joined-event',
@@ -41,18 +42,20 @@ export class JoinedEventPage implements OnInit {
   getEventsFromAPI() {
     this.getCurrentUserId().subscribe((uid) => {
       if(uid){
-        this.http.get(`${this.api.apiUrl}/e/tags?n=${10}}`)
-        .subscribe((data: any) => {
-          console.log(data);
-          this.tags = data;
-        });
+        // this.http.get(`${this.api.apiUrl}/e/tags?n=${10}}`)
+        // .subscribe((data: any) => {
+        //   console.log(data);
+        //   this.tags = data;
+        // });
   
+        this.tags = ['all', 'ongoing', 'upcoming', 'ended', 'my events'];
+
         // console.log(`We got that ${uid}`);
         this.http.get<Event[]>(`${this.api.apiUrl}/e/feed?uid=${uid}`).subscribe((events: Event[]) => {
-          console.log(events);
-            this.events = events;
+          // console.log(events);
+          this.events = events;
           this.populateCards();
-          });
+        });
       }
       else {
         console.log("no user id");
@@ -62,20 +65,26 @@ export class JoinedEventPage implements OnInit {
     }
 
   refreshFeed(query: string) {
-		this.getCurrentUserId().subscribe((uid) => {
-			if(uid){
-				console.log(`We got that ${uid}`);
-				this.http.get<Event[]>(`${this.api.apiUrl}/e/feed?uid=${uid}&tags=${query}`).subscribe((events: Event[]) => {
-					console.log(events);
-					  this.events = events;
-					this.populateCards();
-				  });
-			}
-			else {
-				console.log("no user id");
-				
-			}
-		});
+		// filter based on query
+    this.getCurrentUserId().subscribe((uid) => {
+      switch(query) {
+        case 'ongoing':
+          this.filteredCards = this.cards.filter(card => card.status.toLowerCase() === 'ongoing');
+          break;
+        case 'upcoming':
+          this.filteredCards = this.cards.filter(card => card.status.toLowerCase() === 'upcoming');
+          break;
+        case 'ended':
+          this.filteredCards = this.cards.filter(card => card.status.toLowerCase() === 'ended');
+          break;
+        case 'my events':
+          this.filteredCards = this.cards.filter(card => card.owner === uid);
+          break;
+        default:
+          this.filteredCards = this.cards;
+          break;
+      }
+    });
 	}
   
   getCurrentUserId(): Observable<string> {
@@ -101,6 +110,7 @@ export class JoinedEventPage implements OnInit {
         title: event.title,
         location: event.location,
         description: '' + event.description,
+        owner: event.owner,
         button: "Join event",
         image_url: event.image_url,
         longitude: event.longitude,
@@ -120,6 +130,7 @@ export class JoinedEventPage implements OnInit {
         // window.location.href = "/view-event/" + event.id;
         }
       }));
+      this.filteredCards = this.cards;
       }
     }
   
