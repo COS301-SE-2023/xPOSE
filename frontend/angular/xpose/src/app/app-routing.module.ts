@@ -111,6 +111,14 @@ const routes: Routes = [
     path: 'help',
     loadChildren: () => import('./help/help.module').then( m => m.HelpPageModule)
   },
+  {
+    path: 'landing-page',
+    loadChildren: () => import('./landing-page/landing-page.module').then( m => m.LandingPagePageModule)
+  },
+  {
+    path: 'my-pictures',
+    loadChildren: () => import('./my-pictures/my-pictures.module').then( m => m.MyPicturesPageModule)
+  },
 
 ];
 
