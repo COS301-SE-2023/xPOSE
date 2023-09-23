@@ -62,12 +62,20 @@
       <ion-list *ngIf="filterType === 'posts'" >
         <!-- Display the gallery images -->
         <app-gallery-lightbox [galleryData]="data"></app-gallery-lightbox>
-        
+  
       </ion-list>
       
     
       <ion-list *ngIf="filterType === 'message-board'" class="chat-list">
+           <!-- Message input -->
+           <ion-item class="comment-input">
+            <ion-input [(ngModel)]="newMessage" placeholder="Type your message"></ion-input>
+            <ion-button (click)="createMessage()" expand="block" fill="clear">
+              <ion-icon name="send" class="colorr"></ion-icon>
+            </ion-button>
+          </ion-item>
         <ion-item-divider class="divider"></ion-item-divider>
+        
         
         <!-- Chat messages -->
         <ion-item class="chat-item" *ngFor="let message of messages">
@@ -77,19 +85,13 @@
           <ion-label class="chat-content">
             <h2 class="chat-name">{{ message.displayName }}</h2>
             <p class="chat-message">{{ message.message }}</p>
-            <span class="chat-timestamp">{{ message.timestamp | date:'shortTime' }}</span>
+            <!-- <span class="chat-timestamp">{{ message.timestamp | date:'shortTime' }}</span> -->
           </ion-label>
         </ion-item>
       
         <ion-item-divider class="divider"></ion-item-divider>
         
-        <!-- Message input -->
-        <ion-item class="comment-input">
-          <ion-input [(ngModel)]="newMessage" placeholder="Type your message"></ion-input>
-          <ion-button (click)="createMessage()" expand="block" fill="clear">
-            <ion-icon name="send" class="colorr"></ion-icon>
-          </ion-button>
-        </ion-item>
+     
       </ion-list>
       
     
