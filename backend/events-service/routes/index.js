@@ -11,6 +11,8 @@ const userRequestToJoinEvent = require('./userRequestToJoinEvent');
 const joinEvent = require('./joinEvent');
 const getEventParticipants = require('./getEventParticipants');
 const searchEvents = require('./searchEvents');
+const getTags = require('./getTags');
+const getEventsFeed = require('./getEventsFeed');
 
 // export all 
 module.exports = {
@@ -26,5 +28,7 @@ module.exports = {
     userRequestToJoinEvent,
     joinEvent,
     getEventParticipants,
-    searchEvents
+    searchEvents,
+    getTags,
+    getEventsFeed
 };

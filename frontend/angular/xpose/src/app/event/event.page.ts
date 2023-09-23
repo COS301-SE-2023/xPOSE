@@ -17,6 +17,9 @@ import { ApiService } from '../service/api.service';
 import { ModalController } from '@ionic/angular';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { GalleryModalComponent } from '../gallery-modal/gallery-modal.component';
+import { Service } from '../service/service';
+
+import { AuthService } from '../shared/services/auth.service';
 
 
 interface Item {
@@ -66,6 +69,10 @@ export class EventPage {
   isGalleryOpen: boolean = false;
   // http: any;
 
+  isMenuOpen = false; // Initialize menu as closed
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen; // Toggle the menu state
+  }
   
 
   constructor(private http: HttpClient,
@@ -80,7 +87,9 @@ export class EventPage {
     // private camera: Camera,
     private api: ApiService,
     private modalController: ModalController,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    public authService: AuthService,
+    private userService: Service
     ) {
       // click the 
       this.url = "sdafsda";
@@ -216,6 +225,9 @@ export class EventPage {
     });
   }
 
+  logout() {
+		this.authService.signOut();
+	}
   deleteEvent() {
     // Implement the API call to delete the event here
     // Make a request to delete the event using this.current_event.code as the event ID
@@ -266,7 +278,7 @@ export class EventPage {
   editEvent() {
     console.log('Edit event');
     console.log(this.current_event.code);
-    this.router.navigate([`/event/${this.current_event.code}/settings`]);
+    this.router.navigate(['event', this.current_event.code, 'settings']);
   }
   
   retrievePosts() {
@@ -367,8 +379,17 @@ export class EventPage {
             // this.event.participants.forEach((participant: any) => {
             //   participant.since_joining = this.formatDateSinceJoining(participant.join_date);
             // });
+            this.participants.forEach((participant:any) =>{
+              this.userService.GetUser(participant.uid).subscribe(
+                (user) => {
+                  if(user) {
+                    participant.photoURL = user.photoURL;
+                  }
+                }
+              )
+            })
 
-            console.log(data);
+            console.log("Participants data:",data);
           });
       }
     });
@@ -490,7 +511,7 @@ export class EventPage {
   messagesCollection: AngularFirestoreCollection<Message> | undefined;
   messages: Message[] = [];
 
-  retrieveMessages() {
+  async retrieveMessages() {
     if(this.messagesCollection) {
       this.messagesCollection.valueChanges().subscribe((messages: Message[]) => {
         this.messages = messages;
@@ -499,6 +520,14 @@ export class EventPage {
         this.messages.forEach((message: Message) => {
           this.getUserNameFromUid(message.uid).subscribe((displayName: string) => {
             message.displayName = displayName;
+            // get the profile photo user who's messaged
+            this.userService.GetUser(message.uid).subscribe(
+              (user) => {
+                if(user) {
+                  message.photoURL = user.photoURL;
+                }
+              }
+            )
           });
         });
         // console.log('Retrieving messages from Firestore...');
@@ -508,6 +537,7 @@ export class EventPage {
     else {
       console.log("messagesCollection is undefined");
     }
+
   }
   
   getUserNameFromUid(uid: string): Observable<string> {
@@ -521,6 +551,8 @@ export class EventPage {
       })
     );
   }
+
+  // getUser with specified ID
 
   // Code to handle participants
 
@@ -545,7 +577,7 @@ export class EventPage {
   }
 //  ramdom
     // Function to generate the random avatar based on initials
-    generateAvatar(displayName: string | undefined): string {
+    generateAvatar(photoURL: string | undefined): string {
       // const initials = this.getInitials(name);
       // const color = this.getRandomColor();
   
@@ -556,8 +588,9 @@ export class EventPage {
     // }
   
     // Function to get the initials from a name
+    // console.log("Testing displayname", displayName);
     const defaultAvatarUrl = 'path/to/default/avatar.jpg';
-    return displayName ? `path/to/avatar/${displayName}.jpg` : defaultAvatarUrl;
+    return photoURL ? photoURL : defaultAvatarUrl;
     }
 
     getInitials(name: string): string {
@@ -599,6 +632,7 @@ interface Message {
   message: string;
   id?: string;
   timestamp?: Date;
+  photoURL?:string;
 }
 
 interface Post {

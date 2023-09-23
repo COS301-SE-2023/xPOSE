@@ -13,8 +13,17 @@ ion-card {
   border-radius: 7px;
   overflow: hidden;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15), 0 -2px 5px rgba(0, 0, 0, 0.15);
+  transition: transform 0.7s; /* Smooth hover transition */
 }
 
+.card-transition {
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Define the properties to transition and their duration */
+}
+
+.card-transition:hover {
+  transform: scale(1.05); /* Scale up the card on hover */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Apply a box shadow on hover */
+}
 
 
 .card-image {
@@ -180,8 +189,9 @@ ion-col{
 /* Add a box-shadow to the selected card */
 .card-selected {
   transform: scale(1.05); /* Scale the card slightly when selected (optional) */
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add a smooth transition effect */
+  // transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add a smooth transition effect */
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Customize shadow values as needed */
+  transition: transform 0.2s; /* Smooth hover transition */
 }
 
 /* Add this class to the selected card using ngClass when it's clicked */
@@ -196,13 +206,87 @@ ion-searchbar {
   --border-color: #ddd; /* Set the border color */
   --border-radius: 10px; /* Set the border radius */
 }
-ion-header{
-  --background: #ffffff;
-  color: #000000;
-  padding-top: 50px;
+// ion-header{
+//   --background: #ffffff;
+//   color: #000000;
+//   padding-top: 50px;
+// }
+// ion-title{
+//   align-items: center;
+//   font-size: 18px;
+//   color: #3f3f3fe8;
+// }
+/* Styles for the Swiper container */
+/* Styles for the Swiper container */
+/* Styles for the Swiper container */
+/* Styles for the Swiper container */
+#tags-swiper {
+  width: 100%;
+  overflow-x: auto; /* Enable horizontal scrolling for tags */
+  white-space: nowrap; /* Prevent tags from wrapping to the next line */
+  padding: 10px 0; /* Add some padding to the top and bottom for spacing */
 }
-ion-title{
-  align-items: center;
-  font-size: 18px;
-  color: #3f3f3fe8;
+
+/* Styles for the Swiper slide (if needed) */
+.swiper-slide {
+  display: inline-block; /* Display tags in a row */
+  margin-right: 10px; /* Add spacing between tags */
+}
+
+/* Customize the styles for each tag */
+.swiper-tag {
+  display: inline-block;
+  padding: 10px 16px; /* Adjust padding for each tag */
+  border-radius: 20px; /* Increase border-radius for pill-like design */
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Recent Events tag */
+.recent-events {
+  background-color: #3498db; /* Blue background for "Recent Events" */
+  color: #fff; /* White text color */
+}
+
+/* New Events tag */
+.new-events {
+  background-color: #e74c3c; /* Red background for "New Events" */
+  color: #fff; /* White text color */
+}
+
+/* Close Events tag */
+.close-events {
+  background-color: #2ecc71; /* Green background for "Close Events" */
+  color: #fff; /* White text color */
+}
+
+/* Trending Events tag */
+.trending-events {
+  background-color: #f39c12; /* Orange background for "Trending Events" */
+  color: #fff; /* White text color */
+}
+
+/* Pagination styles (optional) */
+.swiper-pagination {
+  bottom: 10px;
+}
+
+.scrolling-wrapper {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+
+  .tag {
+    display: inline-block;
+  }
+}
+
+/* Responsive styles for smaller screens */
+@media screen and (max-width: 768px) {
+  .swiper-tag {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
 }

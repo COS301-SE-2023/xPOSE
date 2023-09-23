@@ -1,3 +1,33 @@
+/* Profile picture */
+.profile-picture {
+  display: block;
+  position: relative;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  display: block;
+  margin: 0 auto 16px;
+}
+
+
+.file-input{
+  display: none;
+}
+
+.file-label {
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin-top: 5px;
+  padding: 8px;
+  background-color: #ccc;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
 .account-settings {
   max-width: 600px;
   margin: 0 auto;
@@ -67,13 +97,13 @@ h3{
 // ion-label{
 //   color: #000 ;
 // }
-ion-toolbar{
-  --background: #ffffff;
-  background-color: #ffffff;
-  color: #000000;
-  font-size: 20px;
-  // --min-height: 70px;
-}
+// ion-toolbar{
+//   --background: #ffffff;
+//   background-color: #ffffff;
+//   color: #000000;
+//   font-size: 20px;
+//   // --min-height: 70px;
+// }
 p{
   color: #000;
 }
@@ -105,13 +135,19 @@ ion-icon {
   --color: #333; /* Color of the icon */
   --ionicon-stroke-width: 32px; /* Size of the icon */
 }
-ion-header{
-  --background: #ffffff;
-  color: #000000;
-  padding-top: 50px;
-}
-ion-title{
+
+/* CSS */
+.user_div {
+  display: flex;
+  justify-content: center;
   align-items: center;
-  font-size: 18px;
-  color: #6b6b6bd8;
+}
+
+
+
+
+.profile-image {
+  width: 100px; /* Adjust the width and height as needed */
+  height: 100px;
+  border-radius: 50%; /* Makes the image circular */
 }

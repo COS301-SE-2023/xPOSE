@@ -10,6 +10,7 @@ import { AngularFirestore } from "@angular/fire/compat/firestore";
 import { LoadingController } from "@ionic/angular";
 import { Service } from '../service/service';
 import { first } from "rxjs";
+import { AngularFireStorage } from "@angular/fire/compat/storage";
 
 
 @Component({
@@ -19,12 +20,16 @@ import { first } from "rxjs";
 })
 export class SettingsPage implements OnInit {
   selectedImage: string | null = null;
+  pictureChanged: boolean = false;
+  photoURL: string = "";
   username: string = '...';
   uniqueCode: string = '...';
   email: string = '...';
   privacy: string = 'public';
   uid: string = "";
   loading!: HTMLIonLoadingElement;
+
+
   constructor(private http: HttpClient, 
     public authService: AuthService,
 		private router: Router,
@@ -32,7 +37,9 @@ export class SettingsPage implements OnInit {
 		private afAuth: AngularFireAuth,
 		private afs: AngularFirestore,
 		private loadingController: LoadingController,
-		private service: Service) {}
+		private service: Service,
+		private storage: AngularFireStorage,) {
+		}
 
 
 	headshot_image_url: string = '';
@@ -60,6 +67,7 @@ export class SettingsPage implements OnInit {
 				this.email = userData.email;
 				this.privacy = userData.visibility;
 				this.uniqueCode = userData.uniq_username;
+				this.photoURL =  userData.photoURL;
 				// this.isPublic =userData.visibility;       
 			  });
 
@@ -331,16 +339,41 @@ async registerFacialData() {
 
 	// Method to update user profile
 	async updateProfile() {
+
+		// upload picture only if link has changed
+		const uploadPicture = this.pictureChanged && !!this.selectedImage;
+		if(this.username ==="") {
+			console.log("Cannot make update if nothing has changed or name is empty");			
+			return;
+		}
+
+	
 		try {
 			this.loading = await this.loadingController.create({
 			  message: "Updating profile...",
 			});
 			await this.loading.present();
 
+				// if picture has changed upload it
+				var photoURL_ ="";
+				try{
+					if (uploadPicture) {
+						const filePath =  `profile_pictures/${this.uid}_${new Date().getTime()}`;
+						console.log("file path", filePath);
+						const task = this.storage.upload(filePath, this.selectedImage);
+						const snapshot = await task.snapshotChanges().toPromise();
+						if (snapshot?.state === 'success') {
+							photoURL_ = await snapshot.ref.getDownloadURL();
+						}
+					}
+				} catch(error){
+					console.log("Error uploading picture", error);
+				}
+
 			// Update profile endpoint will go here
 			const data = {
 				displayName: this.username,
-				photoURL:"",
+				photoURL: photoURL_,
 				visibility: ""
 			  };
 			const requestBody = JSON.stringify(data);
@@ -370,8 +403,7 @@ async registerFacialData() {
       }
       })
     );
-    }
-
+}
 
   async uploadAnotherImage() {
     try {
@@ -384,18 +416,28 @@ async registerFacialData() {
     }
   }
 
-  onImageSelected(event: any) {
+  onProfilePictureChange(event: any) {
     const file = event.target.files[0];
     if (file) {
       // Read the selected image file and update the preview
+	//   console.log("Picture onProfilePictureChange", file);
+	  this.selectedImage = file;
+	  this.pictureChanged = true;
       const reader = new FileReader();
       reader.onload = (e: any) => {
-        this.selectedImage = e.target.result;
+        this.photoURL = e.target.result;
       };
       reader.readAsDataURL(file);
     }
-  }
 
+  }
+   // Method to trigger the file input
+   selectProfileImage() {
+    const fileInput = document.getElementById('profileImage');
+    if (fileInput) {
+      fileInput.click(); // Simulate a click on the file input
+    }
+  }
   search() {
 		this.router.navigateByUrl('/search');
 	}

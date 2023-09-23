@@ -6,6 +6,8 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Location } from '@angular/common';
 import { ApiService } from '../service/api.service';
 
+import { AuthService } from "../shared/services/auth.service";
+
 @Component({
   selector: 'app-view-event',
   templateUrl: './view-event.page.html',
@@ -24,7 +26,9 @@ export class ViewEventPage implements OnInit, AfterViewInit {
     private http: HttpClient,
     private afAuth: AngularFireAuth,
     private location: Location,
-    private api: ApiService
+    private api: ApiService,
+    public authService: AuthService
+
   ) {
     this.map = null;
     this.marker = null;
@@ -84,6 +88,10 @@ export class ViewEventPage implements OnInit, AfterViewInit {
     });
   }
 
+  logout() {
+		this.authService.signOut();
+	}
+  
   getEventDataFromAPI() {
     this.getCurrentUserId().subscribe((uid) => {
       if (uid) {
@@ -217,6 +225,7 @@ export class ViewEventPage implements OnInit, AfterViewInit {
           return '';
       }
     }
+    
   
     // Function to accept the invite (Replace this with your actual API call)
     acceptInvite() {
