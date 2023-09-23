@@ -18,6 +18,7 @@ import { MenuController } from '@ionic/angular';
 
 export class HomePage {
 	currentPageName = 'xPose';
+	tags: string[] = ['Angular', 'Ionic', 'JavaScript', 'TypeScript', 'HTML', 'CSS'];
 
 	loading: boolean = true;
 	searchResults: { title: string; description: string; }[] | undefined;
