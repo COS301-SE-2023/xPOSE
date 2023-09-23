@@ -150,7 +150,6 @@ EventJoinRequest.belongsTo(Event, { foreignKey: 'event_id_fk', as: 'event' });
 EventTag.belongsTo(Event, { foreignKey: 'event_id_fk', as: 'event' });
 EventTag.belongsTo(Tag, { foreignKey: 'tag_id_fk', as: 'tag' });
 
-
 User.belongsToMany(Event, {
   through: EventParticipant,
   foreignKey: 'user_id_fk',
@@ -204,6 +203,23 @@ Tag.belongsToMany(Event, {
   through: EventTag,
   foreignKey: 'tag_id_fk',
   otherKey: 'event_id_fk',
+  onDelete: 'CASCADE',
+});
+
+// Define the association between Event and EventParticipant
+Event.belongsToMany(User, {
+  through: EventParticipant,
+  foreignKey: 'event_id_fk',
+  otherKey: 'user_id_fk',
+  as: 'participants', // Add an alias for the association
+  onDelete: 'CASCADE',
+});
+
+User.belongsToMany(Event, {
+  through: EventParticipant,
+  foreignKey: 'user_id_fk',
+  otherKey: 'event_id_fk',
+  as: 'participatingEvents', // Add an alias for the association
   onDelete: 'CASCADE',
 });
 
