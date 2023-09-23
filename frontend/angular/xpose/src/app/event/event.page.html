@@ -83,7 +83,7 @@
             <ion-img [src]="generateAvatar(message.photoURL)" loading="lazy"></ion-img>
           </ion-avatar>
           <ion-label class="chat-content">
-            <h2 class="chat-name">{{ message.displayName }}</h2>
+            <h2 class="chat-name">{{ message.displayName }} <b>{{ toDate(message.timestamp) }}</b></h2>
             <p class="chat-message">{{ message.message }}</p>
             <!-- <span class="chat-timestamp">{{ message.timestamp | date:'shortTime' }}</span> -->
           </ion-label>
