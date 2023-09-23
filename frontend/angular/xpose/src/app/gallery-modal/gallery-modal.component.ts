@@ -6,6 +6,7 @@ import 'firebase/compat/storage';
 import { ApiService } from '../service/api.service';
 import { Observable, map } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Router } from '@angular/router';
 
 
 
@@ -24,6 +25,8 @@ export class GalleryModalComponent  implements OnInit {
   showMask = false;
   isLiked: boolean = false;
   likeCount: number = 0;
+  showCommentBox: boolean = false;
+  showComments: boolean = false
   // currentLightboxImage: Item = this.galleryData[0];
 
   constructor(
@@ -32,8 +35,17 @@ export class GalleryModalComponent  implements OnInit {
     private http: HttpClient,
     private api: ApiService,
     private afs: AngularFirestore,
+    private router: Router
   ) {
     this.currentIndex = this.initialIndex;
+  }
+
+  toggleComment() {
+    this.showCommentBox = !this.showCommentBox;
+  }
+
+  viewComments() {
+    this.showComments = !this.showComments;
   }
   
   // when the component loads
@@ -102,9 +114,12 @@ export class GalleryModalComponent  implements OnInit {
     //   }
     // );
   }
-  
-  
 
+  viewFullImage() {
+    this.router.navigate(['view-image']);
+    this.modalController.dismiss();
+  }
+  
 deleteImage() {
   const item = this.galleryData[this.currentIndex];
 

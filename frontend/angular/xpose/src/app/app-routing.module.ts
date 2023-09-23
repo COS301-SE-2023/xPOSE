@@ -100,8 +100,6 @@ const routes: Routes = [
     loadChildren: () => import('./friends/friends.module').then( m => m.FriendsPageModule),
     data: {title: 'Friends' }
   },
-
-
 ];
 
 @NgModule({

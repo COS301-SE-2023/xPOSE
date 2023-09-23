@@ -1,25 +1,31 @@
   
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  
   .modal-navigation {
     position: absolute;
     top: 50%;
     left: 0;
     width: 100%;
-    transform: translateY(-100%);
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0 20px;
     z-index: 1;
-    --background-color: #ffffff;
   }
   
   .modal-navigation button {
-    background: none;
-    border: none;
     font-size: 24px;
     color: #000;
-    cursor: pointer;
-    --background-color: #ffffff;
   }
 
   .icon-close{
@@ -27,31 +33,35 @@
     color: #ffffff;
     background-color: #ffffff;
   }
+
 .carousel-control .glyphicon-chevron-right, .carousel-control .icon-next {
     margin-right: -382px;
 }
+
 .carousel-control .glyphicon-chevron-left, .carousel-control .icon-prev {
     margin-left: -71px;
 }
+
 .modal-footer { 
   display: flex;
   justify-content: space-between;
   padding-bottom: 10px;
   background-color: aliceblue;
 }
+
 ion-img {
   width: 100%;
   height: 550px;
-  background-repeat: no-repeat;
-  background-size: cover;
-  padding-top: -40px;
+  object-fit: cover;
 }
+
 .close-outline{
   color: #ff0000;
   font-size: 30px;
   background-color: #ff0000;
   background-color: #ffffff;
 }
+
 button{
   background-color: #ffffff;
   border: none;
@@ -63,11 +73,13 @@ button{
   font-size: 30px;
   align-items: end;
 }
+
 .love{
   color: #ff0000;
   font-size: 30px;
   padding-left: 144px;
 }
+
 .modal{
   width: 100%;
   max-width: 100%;
@@ -75,21 +87,12 @@ button{
   max-height: 100%;
   background-color: #ffffff;
   color: #000000;
-
 }
 
-// .menu-item {
-//   padding: 10px; 
-//   color: #242424; 
-//   font-size: 16px; 
-//   text-align: left; 
-// }
+.menu-item {
+  cursor: pointer;
+}
 
-// .menu-item:hover {
-//   background-color: #ffc8ed; 
-//   color: #000000; 
-//   transition: background-color 0.3s ease, color 0.3s ease; 
-// }
 .custom-backround{
   --background: #ffffff;
   color: #000000;
@@ -104,6 +107,7 @@ ion-toolbar{
   background-color: violet;
   --background:#ffffff;
 }
+
 .header{
   color: #000000;
   font-family: 'Pacifico', cursive;
