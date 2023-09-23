@@ -6,7 +6,7 @@ async function getTags(req, res) {
         // let { n } = req.query;
 
         if (!q) {
-            q = '';
+            return res.json([]);
         }
 
         let limit = parseInt(n);
