@@ -139,7 +139,7 @@ export class EventsSettingsPage implements OnInit {
         }
         })
       );
-      }
+    }
 
       	// Function to fetch location predictions
 	async onLocationInput(event: any) {
@@ -203,15 +203,6 @@ export class EventsSettingsPage implements OnInit {
     }
 
     updateEvent() {
-      const formData: FormData = new FormData();
-      formData.append('title', this.eventObject.title);
-      formData.append('start_date', this.eventObject.start_date);
-      formData.append('end_date', this.eventObject.end_date);
-      formData.append('location', this.eventObject.location);
-      formData.append('description', this.eventObject.description);
-      formData.append('privacy_setting', this.eventObject.privacy_setting);
-      formData.append('latitude', this.eventObject.latitude.toString());
-      formData.append('longitude', this.eventObject.longitude.toString());
       // if(this.createEvent.title != " " || this.createEvent.start_date != " " || this.createEvent.end_date != " " || this.createEvent.location != " " || this.createEvent.description != " " || this.createEvent.longitude != 0 || this.createEvent.latitude != 0){
         this.getCurrentUserId().subscribe((uid) => {
           if(uid){
@@ -222,6 +213,10 @@ export class EventsSettingsPage implements OnInit {
               const formData: FormData = new FormData();
               formData.append('uid', uid);
               formData.append('title', this.eventObject.title);
+              for(let index = 0; index < this.selected_tags.length; index++) {
+                console.log(`Adding tag ${this.selected_tags[index]} to form data`);
+                formData.append('tags[]', this.selected_tags[index]);
+              }
               
               if (this.eventObject.image) {
                 formData.append('image', this.eventObject.image, this.eventObject.image.name);
