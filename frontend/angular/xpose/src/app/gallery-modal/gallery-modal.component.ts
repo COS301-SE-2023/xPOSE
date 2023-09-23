@@ -90,7 +90,7 @@ export class GalleryModalComponent  implements OnInit {
       this.getUserNameFromUid(uid).subscribe(
         (userName: string) => {
           completedRequests++;
-          nameOfUserInImage += userName + '\n'; // Concatenate the usernames in image
+          nameOfUserInImage += userName + `\n`; // Concatenate the usernames in image
   
           if (completedRequests === usersInImageArray.length) {
             // All requests have completed, open the modal with the concatenated usernames
