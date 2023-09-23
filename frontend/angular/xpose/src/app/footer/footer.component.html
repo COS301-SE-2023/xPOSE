@@ -1,48 +1,31 @@
-<ion-menu contentId="main-content">
-  <ion-content>
-    <ion-list>
-      <ion-item (click)="onHome()" class="sidebar-link">
-        <ion-icon name="home-outline" class="menu-icon"></ion-icon>
-        Home
-      </ion-item>
-      <ion-item (click)="onJoinedEvent()" class="sidebar-link">
-        <ion-icon name="people-outline" class="menu-icon"></ion-icon>
-        Joined Events
-      </ion-item>
-      <ion-item (click)="onEvent()" class="sidebar-link">
-        <ion-icon name="add-outline" class="menu-icon"></ion-icon>
-        Create Event
-      </ion-item>
-      <ion-item (click)="onNotifications()" class="sidebar-link">
-        <ion-icon name="notifications-outline" class="menu-icon"></ion-icon>
-        Notifications
-      </ion-item>
-      <ion-item (click)="onFriends()" class="sidebar-link">
-        <ion-icon name="people-outline" class="menu-icon"></ion-icon>
-        Friends
-      </ion-item>
-      <ion-item (click)="onProfile()" class="sidebar-link">
-        <ion-icon name="person-outline" class="menu-icon"></ion-icon>
-        Profile
-      </ion-item>
-      <ion-item (click)="onSettings()" class="sidebar-link">
-        <ion-icon name="settings-outline" class="menu-icon"></ion-icon>
-        Settings
-      </ion-item>
-      <ion-item (click)="logout()" class="sidebar-link">
-        <ion-icon name="log-out-outline" class="menu-icon"></ion-icon>
-        Logout
-      </ion-item>
-    </ion-list>
-  </ion-content>
-</ion-menu>
+<link href="https://cdn.jsdelivr.net/npm/ionicons@5.0.1/dist/css/ionicons.min.css" rel="stylesheet">
+  <!-- Large screen view -->
+  <ion-header class="ion-hide-lg-down">
+    <ion-toolbar>
+      <ion-title slot="start">{{ currentPageName }}</ion-title>
+      <ion-buttons slot="start" class="center-items">
+        <ion-button routerLink="/home" routerLinkActive="active">Home</ion-button>
+        <ion-button routerLink="/joined-event" routerLinkActive="active">Joined Events</ion-button>
+        <ion-button routerLink="/create-event" routerLinkActive="active">Create Event</ion-button>
+        <ion-button routerLink="/notification" routerLinkActive="active">Notifications</ion-button>
+        <ion-button routerLink="/friends" routerLinkActive="active">Friends</ion-button>
+        <ion-button routerLink="/settings" routerLinkActive="active"> Settings</ion-button>
+      </ion-buttons>
+      <ion-buttons slot="end">
+        <ion-button (click)="logout()" routerLinkActive="active"> <ion-icon name="log-out-outline"></ion-icon></ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
 
-
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <!-- <ion-menu-button></ion-menu-button> -->
-    </ion-buttons>
-    <ion-title class="app-heading">{{ currentPageName }}</ion-title>
-  </ion-toolbar>
-</ion-header>
+  <!-- Small screen view -->
+  <ion-header class="ion-hide-lg-up">
+    <ion-toolbar>
+      <ion-title class="ion-text-center">{{ currentPageName }}</ion-title>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-buttons slot="end">
+        <ion-button (click)="logout()" routerLinkActive="active"> <ion-icon name="log-out-outline"></ion-icon></ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>

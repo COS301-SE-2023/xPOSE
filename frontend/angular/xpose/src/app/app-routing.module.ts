@@ -99,7 +99,11 @@ const routes: Routes = [
     path: 'friends',
     loadChildren: () => import('./friends/friends.module').then( m => m.FriendsPageModule),
     data: {title: 'Friends' }
+  },  {
+    path: 'help',
+    loadChildren: () => import('./help/help.module').then( m => m.HelpPageModule)
   },
+
 ];
 
 @NgModule({
