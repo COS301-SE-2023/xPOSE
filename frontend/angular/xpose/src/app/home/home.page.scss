@@ -8,12 +8,13 @@ ion-card {
   background-color: hsl(304, 49%, 82%);
   color: #000000;
   margin-bottom: 20px;
-  height: 400px;
+  height: 430px;
   border: solid 0.1px #adadad;
   border-radius: 7px;
   overflow: hidden;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15), 0 -2px 5px rgba(0, 0, 0, 0.15);
   transition: transform 0.7s; /* Smooth hover transition */
+  padding-bottom: 5px;
 }
 
 .card-transition {
@@ -280,6 +281,7 @@ ion-searchbar {
 
   .tag {
     display: inline-block;
+    margin-top: 10px;
   }
 }
 

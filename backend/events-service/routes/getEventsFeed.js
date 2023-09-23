@@ -15,7 +15,7 @@ const {
 async function getEventsFeed(req, res) {
     try {
         console.log('queries: ', req.query);
-        const { uid, tags, dates, title, description, status, code, n } = req.query;
+        const { uid, tags, dates, title, description, status, code, n, owner, participant } = req.query;
 
         if (!uid) {
             return res.status(400).json({ error: 'Missing required fields' });
@@ -100,6 +100,44 @@ async function getEventsFeed(req, res) {
         filter.where.status = status;
         }
 
+        // Filter by owner
+        if (owner) {
+            // Find the user with the provided uid
+            const ownerUserObject = await User.findOne({
+                where: {
+                    uid: owner,
+                },
+            });
+
+            if(ownerUserObject) {
+                filter.where.owner_id_fk = ownerUserObject.id;
+            }
+            else {
+                return res.status(400).json({ error: 'Invalid owner' });
+            }
+        }
+
+        // Filter by participant
+        if (participant) {
+            const participantUserObject = await User.findOne({
+                where: {
+                    uid: participant,
+                }
+            });
+        
+            if (participantUserObject) {
+                filter.include.push({
+                    model: User,
+                    as: 'participants', // Use the association alias here
+                    where: {
+                        id: participantUserObject.id, // Use the foreign key of User
+                    },
+                });
+            } else {
+                return res.status(400).json({ error: 'Invalid participant' });
+            }
+        }
+        
         // Find events based on the filter
         const events = await Event.findAll(filter);
 

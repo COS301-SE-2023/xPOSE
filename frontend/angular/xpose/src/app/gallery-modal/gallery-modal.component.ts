@@ -6,6 +6,7 @@ import 'firebase/compat/storage';
 import { ApiService } from '../service/api.service';
 import { Observable, map } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Router } from '@angular/router';
 
 
 
@@ -24,6 +25,8 @@ export class GalleryModalComponent  implements OnInit {
   showMask = false;
   isLiked: boolean = false;
   likeCount: number = 0;
+  showCommentBox: boolean = false;
+  showComments: boolean = false
   // currentLightboxImage: Item = this.galleryData[0];
 
   constructor(
@@ -32,8 +35,17 @@ export class GalleryModalComponent  implements OnInit {
     private http: HttpClient,
     private api: ApiService,
     private afs: AngularFirestore,
+    private router: Router
   ) {
     this.currentIndex = this.initialIndex;
+  }
+
+  toggleComment() {
+    this.showCommentBox = !this.showCommentBox;
+  }
+
+  viewComments() {
+    this.showComments = !this.showComments;
   }
   
   // when the component loads
@@ -67,9 +79,76 @@ export class GalleryModalComponent  implements OnInit {
   }
 
   async usersInImage() {
+    await this.menuController.close('end');
+
+    const usersInImageArray = this.galleryData[this.currentIndex].users_in_image;
+  
+    let nameOfUserInImage: string = ''; // Initialize an empty string for concatenation
+    let completedRequests = 0; // Counter for completed requests
+    let flag = false;
+    for (const uid of usersInImageArray) {
+      flag = true;
+      this.getUserNameFromUid(uid).subscribe(
+        (userName: string) => {
+          completedRequests++;
+          nameOfUserInImage += userName + `\n`; // Concatenate the usernames in image
+  
+          if (completedRequests === usersInImageArray.length) {
+            // All requests have completed, open the modal with the concatenated usernames
+            this.openModalUser("Users in image:\n" + (nameOfUserInImage || 'Unknown User'));
+          }
+        },
+        (error: any) => {
+          completedRequests++;
+          console.error('Error fetching user name:', error);
+  
+          if (completedRequests === usersInImageArray.length) {
+            // All requests have completed, open the modal with the concatenated usernames
+            this.openModalUser("Users in image:\n" + 'Unknown User');
+          }
+        }
+      );
+    }
+
+
+    if(!flag){
+      this.openModalUser("Users in image:\n" +  ('Unknown User'));
+    }
+
     // iterate through users_in_image array and display each uid using getUserNameFromUid(uid)
-    alert('Users in image:\n' + this.galleryData[this.currentIndex].users_in_image.join('\n'));
-    
+
+    /*let nameOfUserInImage: string | null = null;
+    this.getUserNameFromUid(this.galleryData[this.currentIndex].users_in_image[0]).subscribe(
+      (userName: string) => {
+        nameOfUserInImage = userName; // Set the value when it's available
+        console.log("Users in image", nameOfUserInImage);
+        // alert('Users in image:\n' + nameOfUserInImage);
+        this.openModalUser("Users in image:\n"+ (nameOfUserInImage));
+      },
+      (error: any) => {
+        console.error('Error fetching user name:', error);
+        nameOfUserInImage = 'Unknown User'; // Handle the error case
+      }
+    );*/
+  }
+
+  openModalUser(content: any) {
+    let modal = document.getElementById("myModal");
+    let closeImageOverlay = document.getElementById("end");
+    let modalContent = document.getElementById("modalContent");
+    if(modal) { 
+      modal.style.display = "block";
+    }
+    if(modalContent) {
+      modalContent.textContent = content;
+    }
+
+  }
+
+  closeModalUser() {
+    var modal = document.getElementById("myModal");
+    let closeImageOverlay = document.getElementById("end");
+    if(modal) modal.style.display = "none";
   }
   
   getUserNameFromUid(uid: string): Observable<string> {
@@ -102,9 +181,12 @@ export class GalleryModalComponent  implements OnInit {
     //   }
     // );
   }
-  
-  
 
+  viewFullImage() {
+    this.router.navigate(['view-image']);
+    this.modalController.dismiss();
+  }
+  
 deleteImage() {
   const item = this.galleryData[this.currentIndex];
 

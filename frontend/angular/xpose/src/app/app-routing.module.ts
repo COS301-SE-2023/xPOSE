@@ -38,11 +38,13 @@ const routes: Routes = [
   {
     path: "settings",
     loadChildren: () => import("./settings/settings.module").then(m => m.SettingsPageModule),
+    canActivate:[AuthGuard],
     data: {title: 'Settings' }
   },
   {
     path: "event/:id",
     loadChildren: () => import("./event/event.module").then(m => m.EventPageModule),
+    canActivate:[AuthGuard],
     data: {title: 'Event' }
   },
   {
@@ -54,14 +56,17 @@ const routes: Routes = [
   {
     path: "joined-event",
     loadChildren: () => import("./joined-event/joined-event.module").then(m => m.JoinedEventPageModule),
+    canActivate:[AuthGuard],
     data: {title: 'Joined Events' }
   },
   {
     path: "post-details",
-    loadChildren: () => import("./post-details/post-details.module").then(m => m.PostDetailsPageModule)
+    loadChildren: () => import("./post-details/post-details.module").then(m => m.PostDetailsPageModule),
+    canActivate:[AuthGuard]
   },
   { 
-    path: 'friends/:id', component: FriendListComponent 
+    path: 'friends/:id', component: FriendListComponent,
+    canActivate:[AuthGuard] 
   },
   {
     path: 'view-event/:id',
@@ -72,6 +77,7 @@ const routes: Routes = [
   {
     path: 'edit',
     loadChildren: () => import('./edit/edit.module').then( m => m.EditPageModule),
+    canActivate:[AuthGuard],
     data: {title: 'Edit Profile' }
   },
   {
@@ -98,10 +104,9 @@ const routes: Routes = [
   {
     path: 'friends',
     loadChildren: () => import('./friends/friends.module').then( m => m.FriendsPageModule),
+    canActivate:[AuthGuard],
     data: {title: 'Friends' }
   },
-
-
 ];
 
 @NgModule({
