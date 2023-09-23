@@ -4,9 +4,11 @@ async function getTags(req, res) {
     try {
         const { q, n } = req.query;
         // let { n } = req.query;
+        let query = q;
 
         if (!q) {
-            return res.json([]);
+            // return res.json([]);
+            query = '';
         }
 
         let limit = parseInt(n);
@@ -25,7 +27,7 @@ async function getTags(req, res) {
         const tags = await Tag.findAll({
             where: {
                 tag_name: {
-                    [Sequelize.Op.like]: `%${q}%`, // Use Op.iLike for case-insensitive search
+                    [Sequelize.Op.like]: `%${query}%`, // Use Op.iLike for case-insensitive search
                 },
             },
             limit: limit,
