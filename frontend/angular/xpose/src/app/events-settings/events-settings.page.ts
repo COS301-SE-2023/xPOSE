@@ -71,23 +71,26 @@ export class EventsSettingsPage implements OnInit {
       
         this.getCurrentUserId().subscribe((uid : any) => {
           if (uid) {
-            this.http.get(`${this.api.apiUrl}/e/events/${event_id}?uid=${uid}`).subscribe((data: any) => {
-              this.data = data;
+            console.log(`${this.api.apiUrl}/e/events/${event_id}?uid=${uid}`);
+            console.log(`${this.api.apiUrl}/e/feed?uid=${uid}&code=${event_id}`);
+            this.http.get(`${this.api.apiUrl}/e/feed?uid=${uid}&code=${event_id}`).subscribe((data: any) => {
+              this.data = data[0];
               console.log(data);
               this.eventObject = {
-                uid: data.owner_id, // Assuming id maps to uid
-                title: data.title,
+                uid: this.data.owner_id, // Assuming id maps to uid
+                title: this.data.title,
                 image: null, // You may need to adjust this depending on your data structure
-                start_date: data.start_date,
-                end_date: data.end_date,
-                location: data.location,
-                description: data.description,
-                privacy_setting: data.privacy_setting,
-                latitude: data.latitude,
-                longitude: data.longitude,
-                image_url: data.image_url,
+                start_date: this.data.start_date,
+                end_date: this.data.end_date,
+                location: this.data.location,
+                description: this.data.description,
+                privacy_setting: this.data.privacy_setting,
+                latitude: this.data.latitude,
+                longitude: this.data.longitude,
+                image_url: this.data.image_url,
               };
-              this.current_image_url = data.image_url;
+              this.selected_tags = this.data.tags;
+              this.current_image_url = this.data.image_url;
               if(this.data.user_event_position !== "owner") {
                 console.log("You are not the owner of this event");
                 this.router.navigate(['/home']);
@@ -262,6 +265,37 @@ export class EventsSettingsPage implements OnInit {
       //   console.log("Please fill in all the fields.");
       // }
       }
+
+      tag_input: string = '';
+	  tags_list: string[] = [];
+	  selected_tags: string[] = [];
+	  
+	  onTagInput(event: any) {
+		this.tag_input = event.target.value;
+		this.http.get(`${this.api.apiUrl}/e/tags?q=${this.tag_input}`)
+		.subscribe({
+		  next: (response: any) => {
+			this.tags_list = response;
+		  },
+		  error: (error) => {}
+		});
+	  }
+
+	  onTagRemove(tag: string) {
+		this.selected_tags = this.selected_tags.filter(t => t !== tag);
+	  }
+
+	  onTagSelect(tag: any) {
+		console.log(`Selected tags before: ${this.selected_tags}`);
+		if (!this.selected_tags.includes(tag) && tag !== '') {
+			this.selected_tags.push(tag);
+		}
+		console.log(`Selected tags after: ${this.selected_tags}`);
+		this.tags_list = [];
+		this.tag_input = '';
+	  }
+	  
+	  
         
       onSubmit() {
         console.log('hit');
