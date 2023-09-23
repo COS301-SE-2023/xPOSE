@@ -1,4 +1,4 @@
-const { sequelize, User, Event, EventInvitation, EventParticipant, EventJoinRequest } = require('../data-access/sequelize');
+const { sequelize, User, Event, EventInvitation, EventParticipant, EventJoinRequest, EventTag, Tag } = require('../data-access/sequelize');
 const uploadImageToFirebase = require('../data-access/firebase.repository');
 const admin = require('firebase-admin');
 
@@ -9,6 +9,8 @@ async function updateEvent(req, res) {
             res.status(400).json({ error: 'No uid provided' });
             return;
         }
+
+        console.log('req.body: ', req.body );
 
         const user = await User.findOne({
             where: {
@@ -50,6 +52,38 @@ async function updateEvent(req, res) {
             eventData.image_url = image_url;
         }
 
+        // Update tags if they are provided
+        if (eventData.tags && eventData.tags.length > 0) {
+            // Remove existing tags associated with the event
+            await EventTag.destroy({
+                where: {
+                    event_id_fk: event.id,
+                },
+            });
+
+            // Create new associations with the provided tags
+            for (const tagName of eventData.tags) {
+                let tag = await Tag.findOne({
+                    where: {
+                        tag_name: tagName.toLowerCase(),
+                    },
+                });
+
+                // Create a new tag if it doesn't exist
+                if (!tag) {
+                    tag = await Tag.create({
+                        tag_name: tagName.toLowerCase(),
+                    });
+                }
+
+                await EventTag.create({
+                    event_id_fk: event.id,
+                    tag_id_fk: tag.id,
+                });   
+            }
+        }
+
+        // Update the event data
         await event.update(eventData);
         res.json(event);
     } catch (error) {

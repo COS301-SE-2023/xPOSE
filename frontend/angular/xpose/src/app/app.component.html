@@ -1,8 +1,7 @@
 <link href="https://cdn.jsdelivr.net/npm/ionicons@5.0.1/dist/css/ionicons.min.css" rel="stylesheet">
-<ion-app>
+<!-- <ion-app> -->
     <!-- Large screen view -->
-    
-    <ion-header class="ion-hide-lg-down">
+    <!-- <ion-header class="ion-hide-lg-down">
       <ion-toolbar>
         <ion-title slot="start">{{ currentPageName }} Xpose</ion-title>
         <ion-buttons slot="start" class="center-items">
@@ -18,10 +17,10 @@
           <ion-button (click)="logout()" routerLinkActive="active"> <ion-icon name="log-out-outline"></ion-icon></ion-button>
         </ion-buttons>
       </ion-toolbar>
-    </ion-header>
+    </ion-header> -->
   
     <!-- Small screen view -->
-    <ion-header class="ion-hide-lg-up">
+    <!-- <ion-header class="ion-hide-lg-up">
       <ion-toolbar>
         <ion-title class="ion-text-center">{{ currentPageName }} Xpose</ion-title>
         <ion-buttons slot="start">
@@ -31,7 +30,7 @@
           <ion-button (click)="logout()" routerLinkActive="active"> <ion-icon name="log-out-outline"></ion-icon></ion-button>
         </ion-buttons>
       </ion-toolbar>
-    </ion-header>
+    </ion-header> -->
   
     <ion-menu contentId="main-content" [swipeGesture]="true" class="ion-hide-lg-up" #menu (click)="onMenuItemClick()">
       <ion-header>
@@ -61,10 +60,10 @@
             <ion-icon name="people-outline" class="menu-icon"></ion-icon>
             Friends
           </ion-item>
-          <ion-item (click)="onProfile()" class="sidebar-link">
+          <!-- <ion-item (click)="onProfile()" class="sidebar-link">
             <ion-icon name="person-outline" class="menu-icon"></ion-icon>
             Profile
-          </ion-item>
+          </ion-item> -->
           <ion-item (click)="onSettings()" class="sidebar-link">
             <ion-icon name="settings-outline" class="menu-icon"></ion-icon>
             Settings
@@ -77,11 +76,11 @@
       </ion-content>
     </ion-menu>
   
-    <ion-content [fullscreen]="true" id="main-content">
+    <!-- <ion-content [fullscreen]="true" id="main-content">
       
-    </ion-content>
+    </ion-content> -->
     
     <ion-router-outlet id="main-content"></ion-router-outlet>
   
-  </ion-app>
+  <!-- </ion-app> -->
   

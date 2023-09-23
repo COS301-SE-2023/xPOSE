@@ -1,12 +1,37 @@
 
   
+<ion-header class="ion-hide-lg-down">
+  <ion-toolbar>
+    <ion-title slot="start"> View event</ion-title>
+    <ion-buttons slot="start" class="center-items">
+      <ion-button routerLink="/home" routerLinkActive="active">Home</ion-button>
+      <ion-button routerLink="/joined-event" routerLinkActive="active">Joined Events</ion-button>
+      <ion-button routerLink="/create-event" routerLinkActive="active">Create Event</ion-button>
+      <ion-button routerLink="/notification" routerLinkActive="active">Notifications</ion-button>
+      <ion-button routerLink="/friends" routerLinkActive="active">Friends</ion-button>
+      <!-- <ion-button routerLink="/profile" routerLinkActive="active"> Profile</ion-button> -->
+      <ion-button routerLink="/settings" routerLinkActive="active"> Settings</ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()" routerLinkActive="active"> <ion-icon name="log-out-outline"></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<!-- Small screen view -->
+<ion-header class="ion-hide-lg-up">
+  <ion-toolbar>
+    <ion-title class="ion-text-center"> View event </ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()" routerLinkActive="active"> <ion-icon name="log-out-outline"></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content [fullscreen]="true" id="main-content" class="custom-background">
-  <ion-header>
-    <ion-toolbar>
-      <ion-title size="large">Friends</ion-title>
-    </ion-toolbar>
-  </ion-header>
   <div class="friends-container">
     <ion-list class="friends-list">
       <ion-item *ngFor="let friend of friends">

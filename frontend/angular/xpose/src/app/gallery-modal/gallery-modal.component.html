@@ -35,10 +35,37 @@
       <ion-item (click)="usersInImage()" class="menu-item">
         <ion-label>Who's in this?</ion-label>
       </ion-item>
+      <ion-item (click)="toggleLike()" class="menu-item">
+        <ion-label>Like</ion-label>
+        <ion-icon slot="end" [name]="isLiked ? 'heart' : 'heart-outline'"></ion-icon>
+        <span>{{ likeCount }}</span>
+      </ion-item>
+      <ion-item (click)="toggleComment()" class="menu-item">
+        <ion-label>Comment</ion-label>
+        <ion-icon slot="end" name="chatbubble-ellipses-outline"></ion-icon>
+      </ion-item>
+      <ion-item *ngIf="showCommentBox" class="menu-item">
+        <ion-textarea
+          [(ngModel)]="newComment"
+          placeholder="Add a comment"
+          (keyup.enter)="addComment()"
+        ></ion-textarea>
+        <ion-button (click)="addComment()">Submit</ion-button>
+      </ion-item>
+      <ion-item (click)="viewComments()" class="menu-item">
+        <ion-label>View Comments</ion-label>
+        <ion-icon slot="end" [name]="showComments ? 'chevron-up-outline' : 'chevron-down-outline'"></ion-icon>
+      </ion-item>
+      <div class="comments-section" *ngIf="showComments">
+        <ion-list>
+          <ion-item *ngFor="let comment of comments" class="menu-item">
+            <ion-label>{{ comment }}</ion-label>
+          </ion-item>
+        </ion-list>
+      </div>
     </ion-list>
   </ion-content>
 </ion-menu>
-
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -63,10 +90,10 @@
             </button>
  
           </div>
-          <button (click)="toggleLike()">
+          <!-- <button (click)="toggleLike()">
             <ion-icon [name]="isLiked ? 'heart' : 'heart-outline'" class="love"></ion-icon>
           </button>
-          <span>{{ likeCount }}</span>
+          <span>{{ likeCount }}</span> -->
           
           <!-- <div class="modal-footer"> -->
 

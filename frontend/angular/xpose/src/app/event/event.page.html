@@ -1,46 +1,53 @@
+<ion-header class="ion-hide-lg-down">
+  <ion-toolbar>
+    <ion-title slot="start"> Event</ion-title>
+    <ion-buttons slot="start" class="center-items">
+      <ion-button routerLink="/home" routerLinkActive="active">Home</ion-button>
+      <ion-button routerLink="/joined-event" routerLinkActive="active">Joined Events</ion-button>
+      <ion-button routerLink="/create-event" routerLinkActive="active">Create Event</ion-button>
+      <ion-button routerLink="/notification" routerLinkActive="active">Notifications</ion-button>
+      <ion-button routerLink="/friends" routerLinkActive="active">Friends</ion-button>
+      <!-- <ion-button routerLink="/profile" routerLinkActive="active"> Profile</ion-button> -->
+      <ion-button routerLink="/settings" routerLinkActive="active"> Settings</ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()" routerLinkActive="active"> <ion-icon name="log-out-outline"></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 
-  <!-- <ion-menu side="end" content-id="main-content">
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Menu</ion-title>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content>
-      <ion-list>
-        <ion-item (click)="editEvent()">
-          <ion-icon name="create-outline" slot="start"></ion-icon>
-          Edit event
-        </ion-item>
-        <ion-item (click)="leaveEvent()">
-          <ion-icon name="exit-outline" slot="start"></ion-icon>
-          Leave event
-        </ion-item>
-        <ion-item (click)="deleteEvent()">
-          <ion-icon name="trash-outline" slot="start"></ion-icon>
-          Delete event
-        </ion-item>
-      </ion-list>
-    </ion-content>
-  </ion-menu>
-   -->
+<!-- Small screen view -->
+<ion-header class="ion-hide-lg-up">
+  <ion-toolbar>
+    <ion-title class="ion-text-center"> Event</ion-title>
+    <ion-buttons slot="start">
+      <app-backbutton></app-backbutton>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()" routerLinkActive="active"> <ion-icon name="log-out-outline"></ion-icon></ion-button>
+    </ion-buttons>
+
+    
+  </ion-toolbar>
+</ion-header>
 
       <ion-content [fullscreen]="true" id="main-content" class="custom-backround">
-        <ion-header [translucent]="true">
+        <!-- <ion-header [translucent]="true">
           <ion-toolbar class="custom-toolbar" >
-            <ion-buttons slot="end" (click)="editEvent()">
+            <button class="regular-btn" slot="end" (click)="editEvent()">
              edit
-            </ion-buttons>
+            </button>
             <ion-buttons slot="start">
               <app-backbutton></app-backbutton>
             </ion-buttons>
             <ion-title class="event-title">Event</ion-title>
           </ion-toolbar>
-        </ion-header>
-      <app-loading-icon *ngIf="loading"></app-loading-icon>
+        </ion-header> -->
+      <!-- <app-loading-icon *ngIf="loading"></app-loading-icon> -->
 
     
       <ion-segment [(ngModel)]="filterType"  (ionChange)="applyFilter()">
-        <ion-segment-button v5alue="posts" id="posts_tab">
+        <ion-segment-button value="posts" id="posts_tab">
           Posts
         </ion-segment-button>
         <ion-segment-button value="message-board">
@@ -92,8 +99,13 @@
         <ion-header [translucent]="true">
           <ion-toolbar>
             <ion-title>{{ current_event?.title }}</ion-title>
-          </ion-toolbar>
-        </ion-header>
+            <ion-buttons slot="end">
+              <ion-button (click)="editEvent()" class="edutton">
+                <ion-icon slot="start" name="create-outline"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+             </ion-toolbar>
+           </ion-header>
         
         <!-- <ion-content [fullscreen]="true"> -->
           <div>

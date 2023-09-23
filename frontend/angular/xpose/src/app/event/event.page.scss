@@ -3,7 +3,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-left: 45%;
+  margin-left: 50%;
+  transform: translateX(-50%);
   border: solid 0.2px #666666;
   border-radius: 35px;
   color: #eb0091;
@@ -168,16 +169,6 @@ ion-item {
 
 ion-item:hover {
   background-color: #e0e0e0; /* Set the background color when hovered */
-}
-ion-header{
-  --background: #ffffff;
-  color: #000000;
-  padding-top: 50px;
-}
-ion-title{
-  align-items: center;
-  font-size: 18px;
-  color: #6b6b6bd8;
 }
 
 

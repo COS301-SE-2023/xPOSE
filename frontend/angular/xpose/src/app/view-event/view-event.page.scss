@@ -49,7 +49,7 @@ ion-card {
 
 
 ion-img {
-  height: 200px; /* Set the desired height for the cover picture */
+  height: 355px; /* Set the desired height for the cover picture */
   width: 100%; /* Ensure the cover picture spans the full width */
   object-fit: cover; /* Crop the image to fit the container without distortion */
   border-radius: 10px; /* Add rounded corners */
@@ -142,14 +142,4 @@ p {
   font-size: 16px; /* Set the font size */
   color: #333; /* Set the color */
   line-height: 1.6; /* Set the line height */
-}
-ion-header{
-  --background: #ffffff;
-  color: #000000;
-  padding-top: 50px;
-}
-ion-title{
-  align-items: center;
-  font-size: 18px;
-  color: #3f3f3fe8;
 }

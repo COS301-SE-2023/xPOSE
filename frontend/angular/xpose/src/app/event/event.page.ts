@@ -19,6 +19,8 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { GalleryModalComponent } from '../gallery-modal/gallery-modal.component';
 import { Service } from '../service/service';
 
+import { AuthService } from '../shared/services/auth.service';
+
 
 interface Item {
   imageSrc: string;
@@ -86,7 +88,8 @@ export class EventPage {
     private api: ApiService,
     private modalController: ModalController,
     private sanitizer: DomSanitizer,
-    private userService:Service
+    public authService: AuthService,
+    private userService: Service
     ) {
       // click the 
       this.url = "sdafsda";
@@ -222,6 +225,9 @@ export class EventPage {
     });
   }
 
+  logout() {
+		this.authService.signOut();
+	}
   deleteEvent() {
     // Implement the API call to delete the event here
     // Make a request to delete the event using this.current_event.code as the event ID
