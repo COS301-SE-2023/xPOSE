@@ -8,7 +8,7 @@ import { EventModal } from '../event-modal/event-modal';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AngularFireAuth } from "@angular/fire/compat/auth";
-import { Observable } from "rxjs";
+import { Observable, generate } from "rxjs";
 import '@angular/compiler';
 import { map } from "rxjs/operators";
 import { ViewChild } from "@angular/core";
@@ -79,7 +79,9 @@ export class CreateEventPage implements OnInit, AfterViewInit {
 		console.log('Privacy changed:', this.createEvent.privacy_setting);
 	  }
 
-	ngOnInit(): void {}
+	ngOnInit(): void {
+		this.getCurrentDate();
+	}
 	
 	current_image_url: string = '';
 
@@ -99,6 +101,25 @@ export class CreateEventPage implements OnInit, AfterViewInit {
 		return num < 10 ? `0${num}` : `${num}`;
 	  }
 
+	  tag_input: string = '';
+	  tags_list: string[] = [];
+	  selected_tags: string[] = [];
+	  
+	  onTagInput(event: any) {
+		this.tag_input = event.target.value;
+		this.tags_list = ['tag1', 'tag2', 'tag3', 'tag4', 'tag5'];
+	  }
+
+	  onTagRemove(tag: string) {
+		this.selected_tags = this.selected_tags.filter(t => t !== tag);
+	  }
+
+	  onTagSelect(tag: any) {
+		if (!this.selected_tags.includes(tag)) {
+			this.selected_tags.push(tag);
+		}
+	  }
+	  
 
 	  getCurrentUserId(): Observable<string> {
 		return this.afAuth.authState.pipe(

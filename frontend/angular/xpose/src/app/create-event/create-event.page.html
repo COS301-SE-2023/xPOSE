@@ -106,6 +106,55 @@
             </ion-row> -->
           </section>
           
+          <section class="privacy">
+            <h3><label for="" class="label">Add Tags</label></h3>
+            <ion-searchbar class="ther" name="tags" [(ngModel)]="tag_input" (ionInput)="onTagInput($event)" autocomplete="off"></ion-searchbar>
+            <ion-list>
+              <ion-item *ngFor="let tag of tags_list" (click)="onTagSelect(tag)">
+                <ion-icon name="pricetag"></ion-icon> {{ tag }}
+              </ion-item>
+            </ion-list>
+          
+            <div class="tags">
+              <span class="tag" *ngFor="let tag of selected_tags">
+                {{ tag }}
+                <button class="close" (click)="onTagRemove(tag)">x</button>
+              </span>
+            </div>
+          </section>
+          
+          <style>
+            .tags {
+              display: flex;
+              flex-wrap: wrap;
+              margin-top: 10px;
+            }
+          
+            .tag {
+              display: inline-flex;
+              align-items: center;
+              background-color: #eee;
+              border-radius: 4px;
+              padding: 4px 8px;
+              margin-right: 8px;
+              margin-bottom: 8px;
+            }
+          
+            .close {
+              display: inline-flex;
+              align-items: center;
+              justify-content: center;
+              background-color: #ccc;
+              border-radius: 50%;
+              color: #fff;
+              font-size: 12px;
+              width: 16px;
+              height: 16px;
+              margin-left: 4px;
+              cursor: pointer;
+            }
+          </style>
+
           <div class="centrr">
             <ion-button id="submitBtn" type="submit" class="custom-btn">
               <ion-spinner *ngIf="loading"></ion-spinner>
