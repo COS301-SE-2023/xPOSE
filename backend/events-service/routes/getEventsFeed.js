@@ -15,7 +15,7 @@ const {
 async function getEventsFeed(req, res) {
     try {
         console.log('queries: ', req.query);
-        const { uid, tags, dates, title, description, status } = req.query;
+        const { uid, tags, dates, title, description, status, code, n } = req.query;
 
         if (!uid) {
             return res.status(400).json({ error: 'Missing required fields' });
@@ -32,15 +32,25 @@ async function getEventsFeed(req, res) {
             return res.status(400).json({ error: 'Invalid user' });
         }
 
+        
         // Build a filter object based on query parameters
         const filter = {
             where: {},
             include: [{
-            model: User,
-            attributes: ['uid'],
-            as: 'owner',
+                model: User,
+                attributes: ['uid'],
+                as: 'owner',
             }],
         };
+        
+        
+        if(n && !isNaN(parseInt(n))) {
+            filter.limit = parseInt(n);
+        }
+
+        if(code) {
+            filter.where.code = code;
+        }
 
         // Filter by tags
         if (tags) {
