@@ -90,14 +90,10 @@ export class CreateEventPage implements OnInit, AfterViewInit {
 	  }
 
 	  getCurrentDate(): string {
-		const now = new Date();
-		const year = now.getUTCFullYear();
-		const month = this.padNumber(now.getUTCMonth() + 1);
-		const day = this.padNumber(now.getUTCDate());
-		const hour = this.padNumber(now.getUTCHours());
-		const minute = this.padNumber(now.getUTCMinutes());
-		return `${year}-${month}-${day}T${hour}:${minute}:00.000Z`;
-	  }
+		let date = new Date();
+		return `${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}-${("0" + date.getDate()).slice(-2)}T${date.toTimeString().slice(0, 5)}`;
+	}
+	
 	  
 	  padNumber(num: number): string {
 		return num < 10 ? `0${num}` : `${num}`;
