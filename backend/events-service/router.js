@@ -17,7 +17,8 @@ const {
     joinEvent,
     getEventParticipants,
     searchEvents,
-    getTags
+    getTags,
+    getEventsFeed
 } = require('./routes/index');
 
 // const setupSwagger = require('./swagger');
@@ -71,6 +72,9 @@ router.get('/tags', getTags);
 
 // search events
 router.get('/search', searchEvents);
+
+// get events feed
+router.get('/feed', getEventsFeed);
 
 // export router
 module.exports = router;
