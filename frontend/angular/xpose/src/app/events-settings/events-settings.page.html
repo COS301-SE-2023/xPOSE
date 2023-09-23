@@ -66,6 +66,30 @@
         </ion-radio-group>
       </div>
 
+      <!-- Event Tags -->
+      <div class="form-group">
+        <h3><label for="" class="label">Add Tags</label></h3>
+        <ion-searchbar id="tag_search" class="ther" name="tags"
+        [(ngModel)]="tag_input"
+        (ionInput)="onTagInput($event)"
+        autocomplete="off"></ion-searchbar>
+        <ion-button (click)="onTagSelect(tag_input)">
+          <ion-icon name="add"></ion-icon>
+        </ion-button>
+        <ion-list>
+          <ion-item *ngFor="let tag of tags_list" (click)="onTagSelect(tag)">
+            <ion-icon name="pricetag"></ion-icon> {{ tag }}
+          </ion-item>
+        </ion-list>
+      
+        <div class="tags">
+          <span class="tag" *ngFor="let tag of selected_tags">
+            {{ tag }}
+            <button class="close" (click)="onTagRemove(tag)">x</button>
+          </span>
+        </div>
+      </div>
+
       <!-- Save Changes Button -->
       <div class="form-group">
         <button type="submit" (click)="updateEvent()">Save Changes</button>

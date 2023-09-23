@@ -18,6 +18,7 @@ import { MenuController } from '@ionic/angular';
 
 export class HomePage {
 	currentPageName = 'xPose';
+	tags: string[] = ['Angular', 'Ionic', 'JavaScript', 'TypeScript', 'HTML', 'CSS'];
 
 	loading: boolean = true;
 	searchResults: { title: string; description: string; }[] | undefined;
@@ -44,14 +45,36 @@ export class HomePage {
 		
 	}
 
+	refreshFeed(query: string) {
+		this.getCurrentUserId().subscribe((uid) => {
+			if(uid){
+				console.log(`We got that ${uid}`);
+				this.http.get<Event[]>(`${this.api.apiUrl}/e/feed?uid=${uid}&tags=${query}`).subscribe((events: Event[]) => {
+					console.log(events);
+					  this.events = events;
+					this.populateCards();
+				  });
+			}
+			else {
+				console.log("no user id");
+				
+			}
+		});
+	}
 
 	   
   getEventsFromAPI() {
 
 	this.getCurrentUserId().subscribe((uid) => {
 		if(uid){
-			console.log(`We got that ${uid}`);
-			this.http.get<Event[]>(`${this.api.apiUrl}/e/events?uid=${uid}`).subscribe((events: Event[]) => {
+			this.http.get(`${this.api.apiUrl}/e/tags?n=${10}}`)
+			.subscribe((data: any) => {
+				console.log(data);
+				this.tags = data;
+			});
+
+			// console.log(`We got that ${uid}`);
+			this.http.get<Event[]>(`${this.api.apiUrl}/e/feed?uid=${uid}`).subscribe((events: Event[]) => {
 				console.log(events);
 				  this.events = events;
 				this.populateCards();
@@ -113,7 +136,8 @@ export class HomePage {
 		  created_at: event.createdAt,
 		  start_date: event.start_date,
 		  end_date: event.end_date,
-		  date: new Date(event.start_date).toDateString(),		  
+		  date: new Date(event.start_date).toDateString(),	
+		  tags: event.tags,	  
 		  // Add event listener to the button
 		  buttonClick: function() {
 			// Redirect to event details page

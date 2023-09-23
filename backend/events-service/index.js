@@ -1,7 +1,8 @@
 const app = require('./app');
 const {sequelize} = require('./data-access/sequelize');
 // simple config
-const PORT = 8004;
+
+const PORT = process.env.PORT || 8004;
 
 sequelize
 .sync({ force: false })

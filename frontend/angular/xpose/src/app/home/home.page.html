@@ -35,31 +35,16 @@
   <!-- <ion-toolbar class="ion-hide-lg-down"> -->
     <!-- <ion-searchbar animated placeholder="Search for events" (ionChange)="search($event)"></ion-searchbar> -->
   <div class="swiper-container" id="tags-swiper">
-    <div class="swiper-wrapper">
-      <!-- All tags on the same row -->
-      <div class="swiper-slide">
-        <ion-row>
-          <ion-col size="3">
-            <div class="swiper-tag recent-events">
-              Recent Events
-            </div>
-          </ion-col>
-          <ion-col size="3">
-            <div class="swiper-tag new-events">
-              New Events
-            </div>
-          </ion-col>
-          <ion-col size="3">
-            <div class="swiper-tag close-events">
-              Close Events
-            </div>
-          </ion-col>
-          <ion-col size="3">
-            <div class="swiper-tag trending-events">
-              Trending Events
-            </div>
-          </ion-col>
-        </ion-row>
+    <div class="scrolling-wrapper">
+        <div class="swiper-slide">
+          <ion-chip class="swiper-tag" (click)="getEventsFromAPI()">
+            <ion-label>all</ion-label>
+          </ion-chip>
+        <div class="swiper-slide" *ngFor="let tag of tags">
+          <ion-chip class="swiper-tag" (click)="refreshFeed(tag)">
+            <ion-label>{{ tag }}</ion-label>
+          </ion-chip>
+        </div>
       </div>
     </div>
   
@@ -97,7 +82,14 @@
                     <ion-card-subtitle>
                       {{ card.description }}
                     </ion-card-subtitle>
+                    <div class="tags">
+                      <span class="tag" *ngFor="let tag of card.tags">
+                        #{{ tag }}
+                      </span>
+                    </div>
               </ion-card-header>
+              <!-- footer -->
+                        
             </ion-card>
           </ion-col>
         </ion-row>

@@ -219,25 +219,26 @@ ion-searchbar {
 /* Styles for the Swiper container */
 /* Styles for the Swiper container */
 /* Styles for the Swiper container */
+/* Styles for the Swiper container */
 #tags-swiper {
   width: 100%;
-  height: auto; /* Adjust the height as needed */
-  margin-top: 10px;
+  overflow-x: auto; /* Enable horizontal scrolling for tags */
+  white-space: nowrap; /* Prevent tags from wrapping to the next line */
+  padding: 10px 0; /* Add some padding to the top and bottom for spacing */
 }
 
-/* Styles for the Swiper slide */
+/* Styles for the Swiper slide (if needed) */
 .swiper-slide {
-  padding: 10px;
-  text-align: center;
+  display: inline-block; /* Display tags in a row */
+  margin-right: 10px; /* Add spacing between tags */
 }
 
 /* Customize the styles for each tag */
 .swiper-tag {
   display: inline-block;
-  padding: 10px 10px;
-  // margin: 5px;
-  border-radius: 10px;
-  font-size: 12px;
+  padding: 10px 16px; /* Adjust padding for each tag */
+  border-radius: 20px; /* Increase border-radius for pill-like design */
+  font-size: 14px;
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.3s ease, color 0.3s ease;
@@ -270,6 +271,16 @@ ion-searchbar {
 /* Pagination styles (optional) */
 .swiper-pagination {
   bottom: 10px;
+}
+
+.scrolling-wrapper {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+
+  .tag {
+    display: inline-block;
+  }
 }
 
 /* Responsive styles for smaller screens */

@@ -102,13 +102,20 @@
                   [value]="getCurrentDate()"
                   name="end_date"
                 ></ion-input>
+                
               <!-- </ion-col>
             </ion-row> -->
           </section>
           
           <section class="privacy">
             <h3><label for="" class="label">Add Tags</label></h3>
-            <ion-searchbar class="ther" name="tags" [(ngModel)]="tag_input" (ionInput)="onTagInput($event)" autocomplete="off"></ion-searchbar>
+            <ion-searchbar id="tag_search" class="ther" name="tags"
+            [(ngModel)]="tag_input"
+            (ionInput)="onTagInput($event)"
+            autocomplete="off"></ion-searchbar>
+            <ion-button (click)="onTagSelect(tag_input)">
+              <ion-icon name="add"></ion-icon>
+            </ion-button>
             <ion-list>
               <ion-item *ngFor="let tag of tags_list" (click)="onTagSelect(tag)">
                 <ion-icon name="pricetag"></ion-icon> {{ tag }}
@@ -123,38 +130,6 @@
             </div>
           </section>
           
-          <style>
-            .tags {
-              display: flex;
-              flex-wrap: wrap;
-              margin-top: 10px;
-            }
-          
-            .tag {
-              display: inline-flex;
-              align-items: center;
-              background-color: #eee;
-              border-radius: 4px;
-              padding: 4px 8px;
-              margin-right: 8px;
-              margin-bottom: 8px;
-            }
-          
-            .close {
-              display: inline-flex;
-              align-items: center;
-              justify-content: center;
-              background-color: #ccc;
-              border-radius: 50%;
-              color: #fff;
-              font-size: 12px;
-              width: 16px;
-              height: 16px;
-              margin-left: 4px;
-              cursor: pointer;
-            }
-          </style>
-
           <div class="centrr">
             <ion-button id="submitBtn" type="submit" class="custom-btn">
               <ion-spinner *ngIf="loading"></ion-spinner>

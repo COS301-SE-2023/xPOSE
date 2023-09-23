@@ -107,8 +107,13 @@ export class CreateEventPage implements OnInit, AfterViewInit {
 	  
 	  onTagInput(event: any) {
 		this.tag_input = event.target.value;
-		// TODO: Fetch tags from the backend
-		this.tags_list = ['tag1', 'tag2', 'tag3', 'tag4', 'tag5'];
+		this.http.get(`${this.api.apiUrl}/e/tags?q=${this.tag_input}`)
+		.subscribe({
+		  next: (response: any) => {
+			this.tags_list = response;
+		  },
+		  error: (error) => {}
+		});
 	  }
 
 	  onTagRemove(tag: string) {
@@ -116,12 +121,15 @@ export class CreateEventPage implements OnInit, AfterViewInit {
 	  }
 
 	  onTagSelect(tag: any) {
-		if (!this.selected_tags.includes(tag)) {
+		console.log(`Selected tags before: ${this.selected_tags}`);
+		if (!this.selected_tags.includes(tag) && tag !== '') {
 			this.selected_tags.push(tag);
 		}
+		console.log(`Selected tags after: ${this.selected_tags}`);
+		this.tags_list = [];
+		this.tag_input = '';
 	  }
 	  
-
 	  getCurrentUserId(): Observable<string> {
 		return this.afAuth.authState.pipe(
 		  map((user) => {
