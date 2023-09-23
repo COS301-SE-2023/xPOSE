@@ -204,4 +204,4 @@ Tag.belongsToMany(Event, {
   onDelete: 'CASCADE',
 });
 
-module.exports = { User, Event, EventParticipant, EventInvitation, EventJoinRequest, sequelize, Sequelize };
+module.exports = { User, Event, EventParticipant, EventInvitation, EventJoinRequest, Tag, EventTag, sequelize, Sequelize };
