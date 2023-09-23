@@ -580,10 +580,8 @@ export class EventPage {
   }
 
   removeParticipant(participant: any) {
-    const index = this.participants.indexOf(participant);
-    if (index > -1) {
-      this.participants.splice(index, 1);
-    }
+    console.log(participant);
+    
   }
   
 
