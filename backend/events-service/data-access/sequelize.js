@@ -118,6 +118,25 @@ const EventJoinRequest = sequelize.define('eventJoinRequest', {
     allowNull: false,
   },
 });
+const Tag = sequelize.define('tag', {
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  tag_name: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+});
+
+const EventTag = sequelize.define('eventTag', {
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+});
 
 // Associations
 User.hasMany(Event, { foreignKey: 'owner_id_fk', as: 'owner', onDelete: 'CASCADE' });
@@ -168,6 +187,20 @@ Event.belongsToMany(User, {
   through: EventJoinRequest,
   foreignKey: 'event_id_fk',
   otherKey: 'user_id_fk',
+  onDelete: 'CASCADE',
+});
+
+Event.belongsToMany(Tag, {
+  through: EventTag,
+  foreignKey: 'event_id_fk',
+  otherKey: 'tag_id_fk',
+  onDelete: 'CASCADE',
+});
+
+Tag.belongsToMany(Event, {
+  through: EventTag,
+  foreignKey: 'tag_id_fk',
+  otherKey: 'event_id_fk',
   onDelete: 'CASCADE',
 });
 
