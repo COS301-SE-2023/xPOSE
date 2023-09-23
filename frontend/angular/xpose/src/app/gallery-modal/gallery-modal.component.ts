@@ -85,8 +85,9 @@ export class GalleryModalComponent  implements OnInit {
   
     let nameOfUserInImage: string = ''; // Initialize an empty string for concatenation
     let completedRequests = 0; // Counter for completed requests
-  
+    let flag = false;
     for (const uid of usersInImageArray) {
+      flag = true;
       this.getUserNameFromUid(uid).subscribe(
         (userName: string) => {
           completedRequests++;
@@ -110,6 +111,9 @@ export class GalleryModalComponent  implements OnInit {
     }
 
 
+    if(!flag){
+      this.openModalUser("Users in image:\n" +  ('Unknown User'));
+    }
 
     // iterate through users_in_image array and display each uid using getUserNameFromUid(uid)
 
