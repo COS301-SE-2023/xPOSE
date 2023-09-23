@@ -530,6 +530,21 @@ export class EventPage {
             )
           });
         });
+
+        console.log(`The messages are before sorting: ${messages}`);
+        console.log(this.messages);
+        
+        // sort the messages
+        this.messages.sort((a: Message, b: Message) => {
+          const timestampA = a.timestamp ? a.timestamp.toMillis() : 0;
+          const timestampB = b.timestamp ? b.timestamp.toMillis() : 0;
+          return timestampB - timestampA;
+        });
+        
+        // this.messages.reverse();
+        console.log(`The messages are after sorting: ${messages}`);
+        console.log(this.messages);
+
         // console.log('Retrieving messages from Firestore...');
         // console.log(this.messages);
       });
@@ -612,6 +627,13 @@ export class EventPage {
       return color;
     }
 
+    toDate(firebase_timestamp:  firebase.default.firestore.Timestamp | undefined) {
+      if(firebase_timestamp !== undefined) {
+       return firebase_timestamp.toDate();
+      }
+      return '';
+    }
+
 }
 
 interface Event {
@@ -631,7 +653,7 @@ interface Message {
   displayName?: string; // Add displayName property
   message: string;
   id?: string;
-  timestamp?: Date;
+  timestamp?: firebase.default.firestore.Timestamp;
   photoURL?:string;
 }
 

@@ -18,7 +18,7 @@ import { MenuController } from '@ionic/angular';
 
 export class HomePage {
 	currentPageName = 'xPose';
-	tags: string[] = ['Angular', 'Ionic', 'JavaScript', 'TypeScript', 'HTML', 'CSS'];
+	tags: string[] = [];
 
 	loading: boolean = true;
 	searchResults: { title: string; description: string; }[] | undefined;
@@ -64,7 +64,6 @@ export class HomePage {
 
 	   
   getEventsFromAPI() {
-
 	this.getCurrentUserId().subscribe((uid) => {
 		if(uid){
 			this.http.get(`${this.api.apiUrl}/e/tags?n=${10}}`)
