@@ -107,6 +107,7 @@ export class CreateEventPage implements OnInit, AfterViewInit {
 	  
 	  onTagInput(event: any) {
 		this.tag_input = event.target.value;
+		// TODO: Fetch tags from the backend
 		this.tags_list = ['tag1', 'tag2', 'tag3', 'tag4', 'tag5'];
 	  }
 
@@ -220,15 +221,18 @@ onLocationSelect(prediction: any) {
 	  
 
 	CreateEvent(form: NgForm) {
-	const formData: FormData = new FormData();
-	formData.append('title', this.createEvent.title);
-	formData.append('start_date', this.createEvent.start_date);
-	formData.append('end_date', this.createEvent.end_date);
-	formData.append('location', this.createEvent.location);
-	formData.append('description', this.createEvent.description);
-	formData.append('privacy_setting', this.createEvent.privacy_setting);
-	formData.append('latitude', this.createEvent.latitude.toString());
-	formData.append('longitude', this.createEvent.longitude.toString());
+	// const formData: FormData = new FormData();
+	// formData.append('title', this.createEvent.title);
+	// formData.append('start_date', this.createEvent.start_date);
+	// formData.append('end_date', this.createEvent.end_date);
+	// formData.append('location', this.createEvent.location);
+	// formData.append('description', this.createEvent.description);
+	// formData.append('privacy_setting', this.createEvent.privacy_setting);
+	// formData.append('latitude', this.createEvent.latitude.toString());
+	// formData.append('longitude', this.createEvent.longitude.toString());
+
+
+	// console.log(formData);
 	if(this.createEvent.title != " " || this.createEvent.start_date != " " || this.createEvent.end_date != " " || this.createEvent.location != " " || this.createEvent.description != " " || this.createEvent.longitude != 0 || this.createEvent.latitude != 0){
 		this.getCurrentUserId().subscribe((uid) => {
 			if(uid){
@@ -238,6 +242,11 @@ onLocationSelect(prediction: any) {
 					const formData: FormData = new FormData();
 					formData.append('uid', uid);
 					formData.append('title', this.createEvent.title);
+						// add tags array to form
+					for(let index = 0; index < this.selected_tags.length; index++) {
+						console.log(`Adding tag ${this.selected_tags[index]} to form data`);
+						formData.append('tags[]', this.selected_tags[index]);
+					}
 					if (this.createEvent.image) {
 					formData.append('image', this.createEvent.image, this.createEvent.image.name);
 					}
