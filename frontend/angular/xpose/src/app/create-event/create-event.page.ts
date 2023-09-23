@@ -46,6 +46,19 @@ export class CreateEventPage implements OnInit, AfterViewInit {
 	  map: google.maps.Map | null;
 	  marker: google.maps.Marker | null;
 	
+	  tags: string[] = [];
+	  tagInput: string = '';
+	
+	  addTag() {
+		if (this.tagInput.trim() !== '') {
+		  this.tags.push(this.tagInput.trim());
+		  this.tagInput = '';
+		}
+	  }
+	
+	  removeTag(tag: string) {
+		this.tags = this.tags.filter(t => t !== tag);
+	  }
 
 	constructor(private http: HttpClient,
 		private router: Router,
@@ -67,11 +80,29 @@ export class CreateEventPage implements OnInit, AfterViewInit {
 	  }
 
 	ngOnInit(): void {}
+	
+	current_image_url: string = '';
 
 	onFileSelected(event: any) {
 		const file: File = event.target.files[0];
 		this.createEvent.image = file;
+		this.current_image_url = URL.createObjectURL(file);
 	  }
+
+	  getCurrentDate(): string {
+		const now = new Date();
+		const year = now.getUTCFullYear();
+		const month = this.padNumber(now.getUTCMonth() + 1);
+		const day = this.padNumber(now.getUTCDate());
+		const hour = this.padNumber(now.getUTCHours());
+		const minute = this.padNumber(now.getUTCMinutes());
+		return `${year}-${month}-${day}T${hour}:${minute}:00.000Z`;
+	  }
+	  
+	  padNumber(num: number): string {
+		return num < 10 ? `0${num}` : `${num}`;
+	  }
+
 
 	  getCurrentUserId(): Observable<string> {
 		return this.afAuth.authState.pipe(
