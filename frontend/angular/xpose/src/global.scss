@@ -99,3 +99,34 @@ ion-button{
   border-radius: 4px;
   cursor: pointer;
 }
+
+// The styles for the tags you love so much
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  background-color: #eee;
+  border-radius: 4px;
+  padding: 4px 8px;
+  margin-right: 8px;
+  margin-bottom: 8px;
+}
+
+.close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ccc;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 12px;
+  width: 16px;
+  height: 16px;
+  margin-left: 4px;
+  cursor: pointer;
+}
