@@ -16,7 +16,8 @@ const {
     userRequestToJoinEvent,
     joinEvent,
     getEventParticipants,
-    searchEvents
+    searchEvents,
+    getTags
 } = require('./routes/index');
 
 // const setupSwagger = require('./swagger');
@@ -64,6 +65,9 @@ router.delete('/events/:code/remove', upload.none(), removeUserFromEvent);
 
 // get participants of an event
 router.get('/events/:code/participants', upload.none(), getEventParticipants);
+
+// get tags
+router.get('/tags', getTags);
 
 // search events
 router.get('/search', searchEvents);
