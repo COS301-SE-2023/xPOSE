@@ -5,7 +5,7 @@ import { Observable, map } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { HttpClient } from '@angular/common/http';
 import { ApiService } from '../service/api.service';
-import { get } from 'cypress/types/lodash';
+//import { get } from 'cypress/types/lodash';
 
 @Component({
   selector: 'app-joined-event',
