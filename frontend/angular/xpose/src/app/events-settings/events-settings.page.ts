@@ -319,6 +319,27 @@ export class EventsSettingsPage implements OnInit {
 
   removeParticipant(participant: any) {
     console.log(participant);
+    this.getCurrentUserId().subscribe((uid) => {
+      if(uid) {
+        const url = `${this.api.apiUrl}/e/events/${this.data.code}/remove?uid=${uid}&participant=${participant.uid}`;
+        console.log(url);
+        console.log('Removing participant...');
+        this.http.delete(url)
+        .subscribe({
+          next: (response:any) => {
+          console.log(response);
+          // Handle the response from the server
+          // this.router.navigate(['/home']);
+          },
+          error: (error) => {
+          // Handle any errors that occurred during the request
+          console.error(error);
+          this.loading = false;
+          // Display an error message to the user or perform any necessary error handling
+          }
+        });
+      }
+    });
     
   }
   
