@@ -3,6 +3,7 @@ const uploadImageToFirebase = require('../data-access/firebase.repository');
 const admin = require('firebase-admin');
 const MessageBuilder = require('../libs/MessageBuilder');
 const sender = require('../libs/sender');
+const { sendMessageToQueue } = require('../libs/sender');
 
 async function inviteUserToEvent(req, res) {
     try {
@@ -97,7 +98,11 @@ async function inviteUserToEvent(req, res) {
             })
             .build();
 
-        sender.send(queueName, message);
+    try{
+        sendMessageToQueue(queueName, message);
+        } catch(error){
+        console.log("Error sending notification", error)
+        }
         
         // Create a new invitation
         const invitation = await EventInvitation.create({
