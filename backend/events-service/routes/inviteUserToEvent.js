@@ -95,6 +95,7 @@ async function inviteUserToEvent(req, res) {
                 event_code: event.code,
                 inviter: uid,
                 invitee: invitee,
+                responses: ['accepted', 'rejected']
             })
             .build();
 
