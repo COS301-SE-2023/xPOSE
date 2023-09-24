@@ -65,6 +65,21 @@
               <ion-button fill="clear" (click)="request(message, 'reject_join_event')">Reject</ion-button>
             </ion-buttons>
           </ion-item>
+
+          <!-- Event Invitation notification item --> 
+          <ion-item *ngIf="message.type === 'invitation_to_event'" class="custom-ion-item">
+            <ion-icon name="calendar"></ion-icon>
+            <ion-label>
+              <h2>Event Invitation</h2>
+              <!-- <a [routerLink]="['/user-profile', message.senderId, message.receiverId]"> -->
+              <p>{{ message.message }}</p>
+              <!-- </a> -->
+            </ion-label>
+            <ion-buttons slot="end">
+              <ion-button fill="clear" (click)="request(message, 'invitation_to_event','accepted')">Accept</ion-button>
+              <ion-button fill="clear" (click)="request(message, 'invitation_to_event','rejected')">Reject</ion-button>
+            </ion-buttons>
+          </ion-item>
     
           <!-- Friend request accept -->
           <ion-item *ngIf="message.type === 'friend_accept'" class="custom-ion-item">

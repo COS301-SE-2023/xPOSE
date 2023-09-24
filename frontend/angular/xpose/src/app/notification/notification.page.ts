@@ -13,7 +13,7 @@ import { RejectFriendshipStrategy } from './handle-notifications/rejectFriendshi
 import { AcceptJoinEventStrategy } from './handle-notifications/AcceptJoinEventStrategy';
 import { RejectJoinEventStrategy } from './handle-notifications/RejectJoinEventStrategy';
 import { PostNotificationStrategy } from './handle-notifications/PostNotificationStrategy';
-
+import { ReplyToEventInvitationStrategy } from './handle-notifications/replyToInvitationStrategy';
 @Component({
   selector: 'app-notification',
   templateUrl: './notification.page.html',
@@ -43,16 +43,15 @@ export class NotificationPage implements OnInit {
     const accept_join_event_strategy =  new AcceptJoinEventStrategy(api, http);
     const reject_join_event_Strategy =  new RejectJoinEventStrategy(api, http);
     const post_notification_strategy =  new PostNotificationStrategy(api, http);
-
-
+    const reply_to_invitation_strategy =  new ReplyToEventInvitationStrategy(api, http);
 
     this.strategies = {
       "accept_friendship": accept_friendship_strategy,
       "reject_friendship": reject_friendship_strategy,
       "accept_join_event": accept_join_event_strategy,
       "reject_join_event": reject_join_event_Strategy,
-      "post_notifications": post_notification_strategy
-
+      "post_notifications": post_notification_strategy,
+      "invitation_to_event": reply_to_invitation_strategy
     }
     
     this.notificationHandler = new NotificationHandler(firestore, authService, http, api, this.strategies);
@@ -73,7 +72,10 @@ export class NotificationPage implements OnInit {
     return this.notificationHandler.getMessages();
   }
   
-  request(user:any, request_type: string) {
+  request(user:any, request_type: string, response: string | null = null) {
+    if (response) {
+      user.response = response;
+    }
     this.notificationHandler.request(user, request_type);
   }
 
