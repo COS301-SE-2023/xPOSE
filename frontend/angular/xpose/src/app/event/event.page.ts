@@ -158,7 +158,7 @@ export class EventPage {
       this.getCurrentUserId().subscribe((uid) => {
         if (uid) {
           this.http.get(`${this.api.apiUrl}/e/events/${event_id}?uid=${uid}`).subscribe((data) => {
-            this.url = `${window.location.protocol}//${window.location.host}/view-event/${event_id}`;
+            this.url = `https://xpose-4f48c.web.app/view-event/${event_id}`;
             this.retrieveMessages();
             this.retrievePosts();
             this.current_event = data;
