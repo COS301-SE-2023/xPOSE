@@ -6,6 +6,6 @@
 <ion-content [fullscreen]="true">
   <div class="image-gallery">
     <!-- <img src="path-of-image.jpg" (click)="showLightbox(0)" /> -->
-    <!-- <img *ngFor="let image of images; let i=index" [src]="image.url" [alt]="image.imageAlt" (click)="openImageModal(image, i)"> -->
+    <img *ngFor="let image of images; let i=index" [src]="image.url" [alt]="image.imageAlt" (click)="openImageModal(image, i)">
   </div>
 </ion-content>
