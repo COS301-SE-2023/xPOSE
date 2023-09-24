@@ -9,6 +9,7 @@ import { NgForm } from '@angular/forms';
 import { Event } from '../shared/event';
 import { LocationAutocompleteService } from '../service/location-autocomplete.service';
 import { Service } from '../service/service';
+import { Console } from 'console';
 
 @Component({
   selector: 'app-events-settings',
@@ -297,9 +298,37 @@ export class EventsSettingsPage implements OnInit {
 		this.tag_input = '';
 	  }
 
+    // search code
+    user_input: string = '';
+    users_list: any[] = [];
+    
+    onUserInput(event: any) {
+      this.user_input = event.target.value;
+      const search_endpoint = `${this.api.apiUrl}/u/users/search?field=uniq_username&value=${this.user_input}`;
+      this.loading = true;
+
+     this.http.get<any[]>(search_endpoint).subscribe(
+       (response) => {
+        console.log(response);
+        this.users_list = response;
+       },
+       (error:any) => {
+         console.log(error.error.message);
+       }
+     )
+    }
+
+    onUserSelect(user: any) {
+      console.log(user);
+    }
+
+    inviteUser(user: any) {
+      console.log(user);
+    }
+
     // participants code
   participants: any;
-
+    users: any;
   
   onCardClick(participant: any) {
     console.log('Card clicked');
@@ -316,6 +345,8 @@ export class EventsSettingsPage implements OnInit {
     }
 
   }
+
+
 
   removeParticipant(participant: any) {
     console.log(participant);

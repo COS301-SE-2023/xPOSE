@@ -102,19 +102,30 @@
       <div class="form-group">
         <h4><label for="" class="label">Add new users</label></h4>
         <ion-searchbar id="tag_search" class="ther" name="tags"
-        [(ngModel)]="tag_input"
-        (ionInput)="onTagInput($event)"
+        [(ngModel)]="user_input"
+        (ionInput)="onUserInput($event)"
         autocomplete="off"></ion-searchbar>
 
         <ion-list>
-          <ion-item *ngFor="let tag of tags_list" (click)="onTagSelect(tag)">
-            <ion-icon name="pricetag"></ion-icon> {{ tag }}
+          <ion-item *ngFor="let user of users_list" (click)="onUserSelect(user)">
+            <!-- <ion-icon name="person"></ion-icon> {{ user }} -->
+            <ion-avatar slot="start">
+              <ion-img [src]="user.photoURL"  loading="lazy" (click)="onCardClick(user)"></ion-img>
+            </ion-avatar>
+            <ion-label>
+              <b class="user-name" (click)="onCardClick(user)">{{ user.display_name }}</b>
+              <p class="user-email">{{ user.email }}</p>
+            </ion-label>
+            
+            <ion-button slot="end" fill="clear" *ngIf="user.uid !== data.owner" (click)="inviteUser(user)">
+              <ion-icon name="person-add"></ion-icon>
+            </ion-button>
           </ion-item>
         </ion-list>      
       </div>
 
       <ion-item-divider class="divider"></ion-item-divider>
-      
+
       <div class="form-group">
         <h4>Current Participants</h4>
         <ion-item *ngFor="let participant of participants; let i = index" >
@@ -127,7 +138,7 @@
           </ion-label>
           
           <ion-button slot="end" fill="clear" *ngIf="participant.uid !== data.owner" (click)="removeParticipant(participant)">
-            <ion-icon name="person-remove-outline"></ion-icon>
+            <ion-icon name="person-remove"></ion-icon>
           </ion-button>
         </ion-item>
       </div>
