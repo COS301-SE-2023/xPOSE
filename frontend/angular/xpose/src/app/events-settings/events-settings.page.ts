@@ -8,6 +8,8 @@ import { Observable, map } from 'rxjs';
 import { NgForm } from '@angular/forms';
 import { Event } from '../shared/event';
 import { LocationAutocompleteService } from '../service/location-autocomplete.service';
+import { Service } from '../service/service';
+import { Console } from 'console';
 
 @Component({
   selector: 'app-events-settings',
@@ -42,7 +44,8 @@ export class EventsSettingsPage implements OnInit {
 		private afAuth: AngularFireAuth,
     private locationAutocompleteService: LocationAutocompleteService,
     private activatedRoute: ActivatedRoute,
-    private navCtrl: NavController) { }
+    private navCtrl: NavController,
+    private userService: Service) { }
 
     ngOnInit() {
       // click the element with id of posts_tab
@@ -95,11 +98,14 @@ export class EventsSettingsPage implements OnInit {
                 console.log("You are not the owner of this event");
                 this.router.navigate(['/home']);
               }
+              this.getEventParticipantsFromAPI();
             },
             (error) => {
                 this.loading = false; 
                 console.error(error);
             });
+
+
           }
           else {
             this.loading = false; // Request completed with an error
@@ -249,6 +255,8 @@ export class EventsSettingsPage implements OnInit {
                 // Display an error message to the user or perform any necessary error handling
                 }
               });
+
+              // now load participants
           }
           else {
             console.log("No user is currently logged in.");
@@ -289,6 +297,122 @@ export class EventsSettingsPage implements OnInit {
 		this.tags_list = [];
 		this.tag_input = '';
 	  }
+
+    // search code
+    user_input: string = '';
+    users_list: any[] = [];
+    
+    onUserInput(event: any) {
+      this.user_input = event.target.value;
+      const search_endpoint = `${this.api.apiUrl}/u/users/search?field=uniq_username&value=${this.user_input}`;
+      this.loading = true;
+
+     this.http.get<any[]>(search_endpoint).subscribe(
+       (response) => {
+        console.log(response);
+        this.users_list = response;
+       },
+       (error:any) => {
+         console.log(error.error.message);
+       }
+     )
+    }
+
+    onUserSelect(user: any) {
+      console.log(user);
+    }
+
+    inviteUser(user: any) {
+      this.getCurrentUserId().subscribe((uid) => {
+        this.http.post(`${this.api.apiUrl}/e/events/${this.data.code}/invite?uid=${uid}&invitee=${user.id}`, {})
+        .subscribe({
+          next: (response:any) => {
+            console.log(response);
+            // Handle the response from the server
+            // this.router.navigate(['/home']);
+          },
+          error: (error) => {
+            console.error(error);
+          }
+        });
+      });
+      // console.log(user);
+    }
+
+    // participants code
+  participants: any;
+    users: any;
+  
+  onCardClick(participant: any) {
+    console.log('Card clicked');
+    console.log(participant.id);
+    // this.router.navigateByUrl('/user-profile')
+    // / Check if participant object and participant.id are defined and not null
+    if (participant) {
+      // Navigate to the user profile page with the participant's ID
+      this.router.navigate(['/user-profile', participant.uid]);
+    } else {
+      // Handle the case where participant object or participant.id is invalid or missing
+      console.error('Invalid participant data.');
+      // Optionally, you can show an error message or handle the situation differently.
+    }
+
+  }
+
+
+
+  removeParticipant(participant: any) {
+    console.log(participant);
+    this.getCurrentUserId().subscribe((uid) => {
+      if(uid) {
+        const url = `${this.api.apiUrl}/e/events/${this.data.code}/remove?uid=${uid}&participant=${participant.uid}`;
+        console.log(url);
+        console.log('Removing participant...');
+        this.http.delete(url)
+        .subscribe({
+          next: (response:any) => {
+          console.log(response);
+          // Handle the response from the server
+          // this.router.navigate(['/home']);
+          },
+          error: (error) => {
+          // Handle any errors that occurred during the request
+          console.error(error);
+          this.loading = false;
+          // Display an error message to the user or perform any necessary error handling
+          }
+        });
+      }
+    });
+    
+  }
+  
+  getEventParticipantsFromAPI() {
+    this.getCurrentUserId().subscribe((uid) => {
+      if(uid) {
+        this.http
+          .get(`${this.api.apiUrl}/e/events/${this.data.code}/participants?uid=${uid}`)
+          .subscribe((data) => {
+            this.participants = data;
+
+            // this.event.participants.forEach((participant: any) => {
+            //   participant.since_joining = this.formatDateSinceJoining(participant.join_date);
+            // });
+            this.participants.forEach((participant:any) =>{
+              this.userService.GetUser(participant.uid).subscribe(
+                (user) => {
+                  if(user) {
+                    participant.photoURL = user.photoURL;
+                  }
+                }
+              )
+            })
+
+            console.log("Participants data:",data);
+          });
+      }
+    });
+  }
 	  
 	  
         

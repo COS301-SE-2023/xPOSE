@@ -122,7 +122,7 @@
               <h2 class="participant-name" (click)="onCardClick(participant)">{{ participant.display_name }}</h2>
               <p class="participant-email">{{ participant.email }}</p>
             </ion-label>
-            <ion-button slot="end" fill="clear" (click)="removeParticipant(i)">
+            <ion-button slot="end" fill="clear" (click)="removeParticipant(participant)">
               <ion-icon name="person-remove-outline"></ion-icon>
             </ion-button>
           </ion-item>
