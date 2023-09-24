@@ -98,6 +98,24 @@
     </section>
 
     <section class="form-section">
+      <h3>Participants</h3>
+      <ion-item-divider class="divider"></ion-item-divider>
+    
+      <ion-item *ngFor="let participant of participants; let i = index" >
+        <ion-avatar slot="start">
+          <ion-img [src]="participant.photoURL"  loading="lazy" (click)="onCardClick(participant)"></ion-img>
+        </ion-avatar>
+        <ion-label>
+          <h2 class="participant-name" (click)="onCardClick(participant)">{{ participant.display_name }}</h2>
+          <p class="participant-email">{{ participant.email }}</p>
+        </ion-label>
+        <ion-button slot="end" fill="clear" (click)="removeParticipant(participant)">
+          <ion-icon name="person-remove-outline"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </section>
+
+    <section class="form-section">
       <h3>Posts Settings</h3>
       <!-- Posts Settings -->
       <!-- <form (ngSubmit)="onSubmit()" #form="ngForm"> -->
