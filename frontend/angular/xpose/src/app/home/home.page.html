@@ -30,7 +30,6 @@
     </ion-toolbar>
   </ion-header>
 
-
 <ion-content [fullscreen]="true" id="main-content" class="custom-background">
   <div class="swiper-container" id="tags-swiper">
     <div class="scrolling-wrapper">
@@ -40,16 +39,14 @@
           </ion-chip>
         <div class="swiper-slide" *ngFor="let tag of tags">
           <ion-chip class="swiper-tag" (click)="refreshFeed(tag)">
-            <ion-label class="custom-tag">{{ tag }}</ion-label>
+            <ion-label>{{ tag }}</ion-label>
           </ion-chip>
         </div>
       </div>
     </div>
   </div>
-  
   <ion-row>
-    <ion-col>
-        
+    <ion-col>  
       <div class="no-cards" *ngIf="cards.length === 0">
         <ion-text>
           <h1>No Events could be loaded...</h1>
