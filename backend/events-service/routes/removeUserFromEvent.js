@@ -4,7 +4,7 @@ const admin = require('firebase-admin');
 
 async function removeUserFromEvent(req, res) {
     try {
-        const { uid } = req.query;
+        const { uid, participant } = req.query;
         const { code } = req.params;
 
         // Find the user with the provided uid
@@ -14,8 +14,15 @@ async function removeUserFromEvent(req, res) {
             },
         });
 
+        // Find participant with the provided uid
+        const participantUser = await User.findOne({
+            where: {
+                uid: participant,
+            },
+        });
+
         // If user doesn't exist, throw an error
-        if (!user) {
+        if (!user || !participantUser) {
             res.status(404).json({ error: 'User not found' });
             return;
         }
@@ -34,7 +41,13 @@ async function removeUserFromEvent(req, res) {
         }
 
         // Check if the user is the event owner
-        if (event.owner_id_fk === user.id) {
+        if (event.owner_id_fk !== user.id) {
+            res.status(400).json({ error: 'No authority' });
+            return; 
+        }
+
+        // Check if the user is the event owner
+        if (event.owner_id_fk === participantUser.id) {
             res.status(400).json({ error: 'Event owner cannot be removed' });
             return; 
         }
@@ -42,7 +55,7 @@ async function removeUserFromEvent(req, res) {
         // Check if the user is a participant of the event
         const isParticipant = await EventParticipant.findOne({
             where: {
-                user_id_fk: user.id,
+                user_id_fk: participantUser.id,
                 event_id_fk: event.id,
             },
         });
@@ -56,7 +69,7 @@ async function removeUserFromEvent(req, res) {
         // await event.removeParticipant(user);
         await EventParticipant.destroy({
             where: {
-                user_id_fk: user.id,
+                user_id_fk: participantUser.id,
                 event_id_fk: event.id,
             },
         });
