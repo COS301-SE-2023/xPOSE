@@ -24,6 +24,8 @@ import { CreateEventPage } from "./create-event/create-event.page";
 import { NgxMasonryModule } from 'ngx-masonry';
 import { GalleryModalComponent } from "./gallery-modal/gallery-modal.component";
 
+
+
 @NgModule({
   declarations: [
     AppComponent, 

@@ -39,6 +39,7 @@
     "googlemaps": "^1.12.0",
     "ionicons": "^7.0.0",
     "masonry-layout": "^4.2.2",
+    "ng-image-fullscreen-view": "^3.0.3",
     "ngx-lightbox": "^3.0.0",
     "ngx-masonry": "^14.0.1",
     "rxjs": "^7.8.1",
