@@ -5,7 +5,7 @@ import { Observable, map } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { HttpClient } from '@angular/common/http';
 import { ApiService } from '../service/api.service';
-import { get } from 'cypress/types/lodash';
+//import { get } from 'cypress/types/lodash';
 
 @Component({
   selector: 'app-joined-event',
@@ -63,6 +63,14 @@ export class JoinedEventPage implements OnInit {
       }
     });
     }
+
+    chipColors: { [key: string]: string } = {
+      'all': 'chip-all',
+      'ongoing': 'chip-ongoing',
+      'upcoming': 'chip-upcoming',
+      'ended': 'chip-ended',
+      'my events': 'chip-my-events'
+    };
 
   refreshFeed(query: string) {
 		// filter based on query

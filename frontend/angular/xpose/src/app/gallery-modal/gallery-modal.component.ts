@@ -244,10 +244,7 @@ shareImage(imageUrl: string) {
     this.menuController.open('imageMenu');
   }
 
-  comments: string[] = [
-    'Wow, great picture!',
-    'I wish I could take photos like this.',
-  ];
+  comments: string[] = [];
   newComment: string = '';
 
   addComment() {

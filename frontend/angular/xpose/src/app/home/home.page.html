@@ -32,8 +32,6 @@
 
 
 <ion-content [fullscreen]="true" id="main-content" class="custom-background">
-  <!-- <ion-toolbar class="ion-hide-lg-down"> -->
-    <!-- <ion-searchbar animated placeholder="Search for events" (ionChange)="search($event)"></ion-searchbar> -->
   <div class="swiper-container" id="tags-swiper">
     <div class="scrolling-wrapper">
         <div class="swiper-slide">
@@ -47,16 +45,9 @@
         </div>
       </div>
     </div>
-  
-    <!-- Pagination (optional) -->
-    <!-- <div class="swiper-pagination"></div> -->
   </div>
-  
-  <!-- </ion-toolbar> -->
-<!-- <search-bar></search-bar> -->
   <ion-row>
-    <ion-col>
-        
+    <ion-col>  
       <div class="no-cards" *ngIf="cards.length === 0">
         <ion-text>
           <h1>No Events could be loaded...</h1>
@@ -87,9 +78,7 @@
                         #{{ tag }}
                       </span>
                     </div>
-              </ion-card-header>
-              <!-- footer -->
-                        
+              </ion-card-header>                        
             </ion-card>
           </ion-col>
         </ion-row>
