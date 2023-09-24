@@ -89,5 +89,8 @@ export class AppComponent implements OnInit {
 	  onHelp() {
 		this.router.navigate(['/help']);
 	  }
+	  onMypictures() {
+		this.router.navigate(['/my-pictures']);
+	  }
 	  
 }
