@@ -263,3 +263,23 @@ ion-searchbar {
     font-size: 14px;
   }
 }
+
+.chip-all {
+  --background: #ffebef;
+}
+
+.chip-my-events {
+  --background: #ffebef;
+}
+
+.chip-ongoing {
+  --background: #2ecc71;
+}
+
+.chip-upcoming {
+  --background: #f39c12;
+}
+
+.chip-ended {
+  --background: #e74c3c;
+}

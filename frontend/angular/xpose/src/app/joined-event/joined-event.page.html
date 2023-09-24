@@ -34,7 +34,7 @@
     <div class="scrolling-wrapper">
         <!-- <div class="swiper-slide"> -->
         <div class="swiper-slide" *ngFor="let tag of tags">
-          <ion-chip class="swiper-tag" (click)="refreshFeed(tag)">
+          <ion-chip [class]="chipColors[tag.toLowerCase()]" class="swiper-tag" (click)="refreshFeed(tag)">
             <ion-label>{{ tag }}</ion-label>
           </ion-chip>
         </div>

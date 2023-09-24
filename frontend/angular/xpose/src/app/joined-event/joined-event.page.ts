@@ -64,6 +64,14 @@ export class JoinedEventPage implements OnInit {
     });
     }
 
+    chipColors: { [key: string]: string } = {
+      'all': 'chip-all',
+      'ongoing': 'chip-ongoing',
+      'upcoming': 'chip-upcoming',
+      'ended': 'chip-ended',
+      'my events': 'chip-my-events'
+    };
+
   refreshFeed(query: string) {
 		// filter based on query
     this.getCurrentUserId().subscribe((uid) => {
