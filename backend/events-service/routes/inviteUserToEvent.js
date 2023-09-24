@@ -6,7 +6,7 @@ const sender = require('../libs/sender');
 
 async function inviteUserToEvent(req, res) {
     try {
-        const { uid } = req.query;
+        const { uid, invitee } = req.query;
         const { code } = req.params;
 
         // Find the user with the provided uid
@@ -16,16 +16,31 @@ async function inviteUserToEvent(req, res) {
             },
         });
 
-        // If user doesn't exist, throw an error
-        if (!user) {
-            const firestoreUserDoc = await admin.firestore().collection('Users').doc(uid).get();
+        const inviteeUser = await User.findOne({
+            where: {
+                uid: invitee,
+            },
+        });
 
+        // If user doesn't exist, throw an error
+        if (!user || !inviteeUser) {
+            const firestoreUserDoc = await admin.firestore().collection('Users').doc(uid).get();
+            
             if (firestoreUserDoc.exists) {
               // Create the user in the Users table
               user = await User.create({ uid: uid });
             } else {
-              res.status(400).json({ error: 'Invalid user' });
-              return;
+                res.status(400).json({ error: 'Invalid user' });
+                return;
+            }
+
+            const firestoreInviteeDoc = await admin.firestore().collection('Users').doc(invitee).get();
+            if(firestoreInviteeDoc.exists) {
+                inviteeUser = await User.create({ uid: invitee });
+            }
+            else {
+                res.status(400).json({ error: 'Invalid user' });
+                return;
             }
         }
 
@@ -45,7 +60,7 @@ async function inviteUserToEvent(req, res) {
         // Check if the user is already invited to the event
         const existingInvitation = await EventInvitation.findOne({
             where: {
-                user_id_fk: user.id,
+                user_id_fk: inviteeUser.id,
                 event_id_fk: event.id,
                 response: 'pending'
             },
@@ -57,19 +72,36 @@ async function inviteUserToEvent(req, res) {
         }
 
         // 
+        // try {
+        const existingParticipant = await EventParticipant.findOne({
+            where: {
+                user_id_fk: inviteeUser.id,
+                event_id_fk: event.id,
+            },
+        });
+        if (existingParticipant) {
+            res.status(400).json({ error: 'User is already a participant in the event' });
+            return;
+        }
+        // }
         const queueName = 'notifications';
         const message = new MessageBuilder()
-                    .setType("join_event")
-                    .setMessage(`You got invited to an event called ${event.title}`)
-                    .setSenderId("173")
-                    .setReceiverId("999")
-                    .build();
+            .setType("invitation_to_event")
+            .setMessage(`You got invited to an event called ${event.title}`)
+            .setSenderId(uid)
+            .setReceiverId(invitee)
+            .setValue({
+                event_code: event.code,
+                inviter: uid,
+                invitee: invitee,
+            })
+            .build();
 
         sender.send(queueName, message);
         
         // Create a new invitation
         const invitation = await EventInvitation.create({
-            user_id_fk: user.id,
+            user_id_fk: inviteeUser.id,
             event_id_fk: event.id,
             response: 'pending',
             timestamp: new Date(),
