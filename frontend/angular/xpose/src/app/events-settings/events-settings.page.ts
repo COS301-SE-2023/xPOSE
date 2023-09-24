@@ -323,7 +323,20 @@ export class EventsSettingsPage implements OnInit {
     }
 
     inviteUser(user: any) {
-      console.log(user);
+      this.getCurrentUserId().subscribe((uid) => {
+        this.http.post(`${this.api.apiUrl}/e/events/${this.data.code}/invite?uid=${uid}&invitee=${user.id}`, {})
+        .subscribe({
+          next: (response:any) => {
+            console.log(response);
+            // Handle the response from the server
+            // this.router.navigate(['/home']);
+          },
+          error: (error) => {
+            console.error(error);
+          }
+        });
+      });
+      // console.log(user);
     }
 
     // participants code
