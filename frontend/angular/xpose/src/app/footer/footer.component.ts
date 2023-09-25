@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { AuthService } from '../shared/services/auth.service';
-import { filter } from 'rxjs';
+import { Observable, filter, map } from 'rxjs';
+import { ApiService } from '../service/api.service';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-footer',
@@ -14,7 +17,7 @@ export class FooterComponent  implements OnInit {
 	latitude: number = 0;
 
 	
-  constructor(private router: Router, public authService: AuthService, private activatedRoute: ActivatedRoute) { }
+  constructor(private router: Router, public authService: AuthService, private activatedRoute: ActivatedRoute, private api: ApiService, private afAuth: AngularFireAuth, private http: HttpClient) { }
 
   ngOnInit() {
 	this.router.events
@@ -30,6 +33,21 @@ export class FooterComponent  implements OnInit {
       });
 
   }
+
+  getCurrentUserId(): Observable<string> {
+	return this.afAuth.authState.pipe(
+	  map((user) => {
+		if (user) {
+		  return user.uid;
+		} else {
+		  console.log('No user is currently logged in.');
+		  return '';
+		}
+	  })
+	);
+	
+  }
+
 
   
   private getPageTitle(route: ActivatedRoute): string {
@@ -47,9 +65,17 @@ export class FooterComponent  implements OnInit {
 		console.log('Geolocation is available');
     navigator.geolocation.getCurrentPosition(
         (position) => {
-          this.latitude = position.coords.latitude;
-          this.longitude = position.coords.longitude;
-		  console.log(`Latitude: ${this.latitude} Longitude: ${this.longitude}`);
+
+			this.getCurrentUserId().subscribe((uid) => {
+				// post location to the backend by sending a json object into a post request
+				this.latitude = position.coords.latitude;
+				this.longitude = position.coords.longitude;
+				this.http.post(`${this.api.apiUrl}/u/users/${uid}/location`, {"latitude": this.latitude, "longitude": this.longitude})
+				.subscribe((data: any) => {
+					console.log(data);
+					console.log(`Latitude: ${this.latitude} Longitude: ${this.longitude}`);
+				});
+			});
 		  // Use geoencoder to get address from coordinates
 		  
         },
