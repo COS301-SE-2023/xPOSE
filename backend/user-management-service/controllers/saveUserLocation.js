@@ -27,12 +27,14 @@ export const saveUserLocation = async (req, res) => {
             return;
         }
 
-        // add the longitude and latitude
+        // create a new GeoPoint object with the longitude and latitude
+        const geoPoint = new admin.firestore.GeoPoint(latitud, longit);
+
+        // add the GeoPoint to the user document
         await userRef.set({
-            longit,
-            latitud
+        location: geoPoint
         }, { merge: true });
-        
+
         res.send({message: `User's location saved added to firestore`});
     } catch(error){
         console.error('Error creating user: ', error);
