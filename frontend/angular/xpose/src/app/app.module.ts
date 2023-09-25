@@ -24,13 +24,16 @@ import { CreateEventPage } from "./create-event/create-event.page";
 import { NgxMasonryModule } from 'ngx-masonry';
 import { GalleryModalComponent } from "./gallery-modal/gallery-modal.component";
 
+// import { TimeFormatPipe } from './time-format.pipe';
+
 
 
 @NgModule({
   declarations: [
     AppComponent, 
     GalleryModalComponent,
-    FriendListComponent] ,
+    FriendListComponent,
+    ] ,
   imports: [
     FormsModule,
     BrowserModule,

@@ -101,5 +101,8 @@ export class FooterComponent  implements OnInit {
 	  }
 	  onMypictures() {
 		this.router.navigate(['/myimages']);
+	  } 
+    onSearch() {
+		this.router.navigate(['/search']);
 	  }
 }

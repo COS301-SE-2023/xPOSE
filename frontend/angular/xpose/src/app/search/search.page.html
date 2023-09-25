@@ -4,7 +4,12 @@
       <ion-toolbar>
         <ion-buttons slot="start">
           <app-backbutton></app-backbutton>
+          <ion-title class="ion-text-center">Search</ion-title>
          </ion-buttons>
+        </ion-toolbar>
+        </ion-header>
+     
+      <ion-toolbar>
          <ion-searchbar
             #searchBar
             placeholder="Search"
@@ -12,7 +17,7 @@
             (ionChange)="onSearch()"
           ></ion-searchbar>
       </ion-toolbar>
-    </ion-header>
+  
   
     <ion-segment [(ngModel)]="searchType" (ionChange)="onSearchTypeChange()">
       <ion-segment-button value="events">
