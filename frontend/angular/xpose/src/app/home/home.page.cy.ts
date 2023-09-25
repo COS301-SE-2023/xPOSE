@@ -1,6 +1,10 @@
 import {HomePage} from "./home.page"
 
 describe('HomePage', () => {
+  beforeEach(() => {
+    // Load the Angular app's URL before each test
+    cy.visit('https://xpose-4f48c.web.app/');
+  });
     
    
     it('should display the current page name', () => {
