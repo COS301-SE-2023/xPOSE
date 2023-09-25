@@ -1,0 +1,11 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>My Pictures</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true">
+  <div class="gallery">
+    <!-- ngFor loop to display images in the gallery -->
+    <ion-img *ngFor="let item of galleryData; let i=index" [src]="item.imageSrc" [alt]="item.imageAlt" class="gallery-img" (click)="openImageModal(item, i)"></ion-img>
+  </div>
+</ion-content>

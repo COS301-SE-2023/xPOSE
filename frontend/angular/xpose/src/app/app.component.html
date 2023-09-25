@@ -1,1 +1,57 @@
-<ion-router-outlet></ion-router-outlet>
+<link href="https://cdn.jsdelivr.net/npm/ionicons@5.0.1/dist/css/ionicons.min.css" rel="stylesheet">
+    <ion-menu contentId="main-content" [swipeGesture]="true" class="ion-hide-lg-up" #menu (click)="onMenuItemClick()">
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Menu</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-list>
+          <ion-item (click)="onHome()" class="sidebar-link pointer-cursor">
+            <ion-icon name="home-outline" class="menu-icon"></ion-icon>
+            Home
+          </ion-item>
+          <ion-item (click)="onJoinedEvent()" class="sidebar-link pointer-cursor">
+            <ion-icon name="people-outline" class="menu-icon"></ion-icon>
+            Joined Events
+          </ion-item>
+          <ion-item (click)="onEvent()" class="sidebar-link pointer-cursor">
+            <ion-icon name="add-outline" class="menu-icon"></ion-icon>
+            Create Event
+          </ion-item>
+          <ion-item (click)="onNotifications()" class="sidebar-link pointer-cursor">
+            <ion-icon name="notifications-outline" class="menu-icon"></ion-icon>
+            Notifications
+          </ion-item>
+          <ion-item (click)="onFriends()" class="sidebar-link pointer-cursor">
+            <ion-icon name="people-outline" class="menu-icon"></ion-icon>
+            Friends
+          </ion-item>
+          <ion-item (click)="onMypictures()" class="sidebar-link pointer-cursor">
+            <ion-icon name="images-outline" class="menu-icon"></ion-icon>
+            My Pictures
+          </ion-item>
+          <ion-item (click)="onHelp()" class="sidebar-link pointer-cursor">
+            <ion-icon name="help-outline" class="menu-icon"></ion-icon>
+            Help
+          </ion-item>
+          <ion-item (click)="onSettings()" class="sidebar-link pointer-cursor">
+            <ion-icon name="settings-outline" class="menu-icon"></ion-icon>
+            Settings
+          </ion-item>
+          <ion-item (click)="logout()" class="sidebar-link pointer-cursor">
+            <ion-icon name="log-out-outline" class="menu-icon"></ion-icon>
+            Logout
+          </ion-item>
+        </ion-list>
+      </ion-content>
+    </ion-menu>
+  
+    <!-- <ion-content [fullscreen]="true" id="main-content">
+      
+    </ion-content> -->
+    
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+  
+  <!-- </ion-app> -->
+  

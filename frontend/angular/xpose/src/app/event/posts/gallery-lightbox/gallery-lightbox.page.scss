@@ -3,17 +3,16 @@
     text-align: center;
 }
 
-    // position: relative;
-    // display: inline-block;
-    // padding: 25px;
 
     .gallery {
         line-height: 0;
         column-count: 2;
         column-gap: 0px;
         background-color: #fff;
+        text-align: center;
 
         .gallery-img {
+          display: inline-block;
             width: 95%;
             height: auto;
             cursor: zoom-in;

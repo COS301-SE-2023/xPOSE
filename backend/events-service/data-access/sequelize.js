@@ -118,6 +118,25 @@ const EventJoinRequest = sequelize.define('eventJoinRequest', {
     allowNull: false,
   },
 });
+const Tag = sequelize.define('tag', {
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  tag_name: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+});
+
+const EventTag = sequelize.define('eventTag', {
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+});
 
 // Associations
 User.hasMany(Event, { foreignKey: 'owner_id_fk', as: 'owner', onDelete: 'CASCADE' });
@@ -128,6 +147,8 @@ EventInvitation.belongsTo(User, { foreignKey: 'user_id_fk', as: 'user' });
 EventInvitation.belongsTo(Event, { foreignKey: 'event_id_fk', as: 'event' });
 EventJoinRequest.belongsTo(User, { foreignKey: 'user_id_fk', as: 'user' });
 EventJoinRequest.belongsTo(Event, { foreignKey: 'event_id_fk', as: 'event' });
+EventTag.belongsTo(Event, { foreignKey: 'event_id_fk', as: 'event' });
+EventTag.belongsTo(Tag, { foreignKey: 'tag_id_fk', as: 'tag' });
 
 User.belongsToMany(Event, {
   through: EventParticipant,
@@ -171,4 +192,35 @@ Event.belongsToMany(User, {
   onDelete: 'CASCADE',
 });
 
-module.exports = { User, Event, EventParticipant, EventInvitation, EventJoinRequest, sequelize, Sequelize };
+Event.belongsToMany(Tag, {
+  through: EventTag,
+  foreignKey: 'event_id_fk',
+  otherKey: 'tag_id_fk',
+  onDelete: 'CASCADE',
+});
+
+Tag.belongsToMany(Event, {
+  through: EventTag,
+  foreignKey: 'tag_id_fk',
+  otherKey: 'event_id_fk',
+  onDelete: 'CASCADE',
+});
+
+// Define the association between Event and EventParticipant
+Event.belongsToMany(User, {
+  through: EventParticipant,
+  foreignKey: 'event_id_fk',
+  otherKey: 'user_id_fk',
+  as: 'participants', // Add an alias for the association
+  onDelete: 'CASCADE',
+});
+
+User.belongsToMany(Event, {
+  through: EventParticipant,
+  foreignKey: 'user_id_fk',
+  otherKey: 'event_id_fk',
+  as: 'participatingEvents', // Add an alias for the association
+  onDelete: 'CASCADE',
+});
+
+module.exports = { User, Event, EventParticipant, EventInvitation, EventJoinRequest, Tag, EventTag, sequelize, Sequelize };

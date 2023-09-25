@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { SidebarComponent } from './sidebar.component';
+import { MyPopoverComponent } from './my-popover.component';
 
-describe('SidebarComponent', () => {
-  let component: SidebarComponent;
-  let fixture: ComponentFixture<SidebarComponent>;
+describe('MyPopoverComponent', () => {
+  let component: MyPopoverComponent;
+  let fixture: ComponentFixture<MyPopoverComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ SidebarComponent ],
+      declarations: [ MyPopoverComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(SidebarComponent);
+    fixture = TestBed.createComponent(MyPopoverComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

@@ -89,9 +89,15 @@ button{
 }
 
 ion-header{
-  box-shadow: 0px 2px 4px rgba(0,0,0, 0.10);
+  --background: #ffffff;
+  color: #000000;
+  padding-top: 50px;
 }
-
+ion-title{
+  align-items: center;
+  font-size: 18px;
+  color: #6b6b6bd8;
+}
 .custom-card{
   box-shadow: 0px 2px 6px rgba(0,0,0, 0.20);
 }

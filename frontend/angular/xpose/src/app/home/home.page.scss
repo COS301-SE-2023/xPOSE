@@ -8,14 +8,19 @@ ion-card {
   background-color: hsl(304, 49%, 82%);
   color: #000000;
   margin-bottom: 20px;
-  height: 400px;
-  border: solid 0.1px #adadad;
-  border-radius: 7px;
+  height: 430px;
+  border: 1px solid #d1d1d1;
+  border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15), 0 -2px 5px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
 }
 
-
+.card-transition:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2);
+}
 
 .card-image {
   width: 100%;
@@ -23,8 +28,7 @@ ion-card {
   object-fit: cover;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
- }
-  
+}
 
 .card-title {
   font-size: 24px;
@@ -123,13 +127,13 @@ ion-card-content {
   text-shadow: #f00;
 }
 
-// .header{
-//   font-family: 'Literata', serif;
-//   font-size: 30px;
-//   text-shadow: #3d3d3d;
-//   color: #1d1d1d;
-//   --background: #ffffff;
-// }
+.header{
+  font-family: 'Literata', serif;
+  font-size: 30px;
+  text-shadow: #3d3d3d;
+  color: #1d1d1d;
+  --background: #ffffff;
+}
 
 @keyframes spin {
   0% { transform: rotate(0deg); }
@@ -172,34 +176,91 @@ ion-card-content {
 }
 }
 
-// ion-toolbar{
-//   background-color: #ffffff;
-//   --background: #ffffff;
-//   color: #000000;
-//   font-size: 20px;
-// }
-
 ion-col{
   background: #ffffff;
   color: #000000;
 }
 
-/* Add a box-shadow to the selected card */
 .card-selected {
-  transform: scale(1.05); /* Scale the card slightly when selected (optional) */
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add a smooth transition effect */
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Customize shadow values as needed */
+  transform: scale(1.05);
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
 }
 
-/* Add this class to the selected card using ngClass when it's clicked */
-
-
-/* Add this class to the selected card using ngClass when it's clicked */
-
 ion-searchbar {
-  --background: #f4f4f4; /* Set the background color of the search bar */
-  --color: #333; /* Set the text color */
-  --placeholder-color: #999; /* Set the color of the placeholder text */
-  --border-color: #ddd; /* Set the border color */
-  --border-radius: 10px; /* Set the border radius */
+  --background: #f4f4f4;
+  --color: #333;
+  --placeholder-color: #999;
+  --border-color: #ddd;
+  --border-radius: 10px;
+}
+
+#tags-swiper {
+  width: 100%;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding: 10px 0;
+}
+
+.swiper-slide {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.swiper-tag {
+  display: inline-block;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  --background: #ffebef;
+}
+
+.recent-events {
+  background-color: #3498db;
+  color: #fff;
+}
+
+.new-events {
+  background-color: #e74c3c;
+  color: #fff;
+}
+
+.close-events {
+  background-color: #2ecc71;
+  color: #fff;
+}
+
+.trending-events {
+  background-color: #f39c12;
+  color: #fff;
+}
+
+/* Pagination styles (optional) */
+.swiper-pagination {
+  bottom: 10px;
+}
+
+.scrolling-wrapper {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+
+  .tag {
+    display: inline-block;
+    margin-top: 10px;
+  }
+}
+
+/* Responsive styles for smaller screens */
+@media screen and (max-width: 768px) {
+  .swiper-tag {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+}
+
+.menu-item:hover {
+  cursor: pointer;
 }

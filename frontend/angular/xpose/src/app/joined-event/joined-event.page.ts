@@ -5,6 +5,7 @@ import { Observable, map } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { HttpClient } from '@angular/common/http';
 import { ApiService } from '../service/api.service';
+//import { get } from 'cypress/types/lodash';
 
 @Component({
   selector: 'app-joined-event',
@@ -36,24 +37,63 @@ export class JoinedEventPage implements OnInit {
     this.router.navigate(['/view-event'], { queryParams: { id: eventId } });
   }
 
+  tags: string[] = [];
   // Get events from mock data and display
   getEventsFromAPI() {
     this.getCurrentUserId().subscribe((uid) => {
-      if (uid) {
-        console.log(`We got that ${uid}`);
-        this.http.get<Event[]>(`${this.api.apiUrl}/e/events?uid=${uid}&filter=participant`).subscribe((events: Event[]) => {
-          console.log(events);
+      if(uid){
+        // this.http.get(`${this.api.apiUrl}/e/tags?n=${10}}`)
+        // .subscribe((data: any) => {
+        //   console.log(data);
+        //   this.tags = data;
+        // });
+  
+        this.tags = ['all', 'ongoing', 'upcoming', 'ended', 'my events'];
+
+        // console.log(`We got that ${uid}`);
+        this.http.get<Event[]>(`${this.api.apiUrl}/e/feed?uid=${uid}`).subscribe((events: Event[]) => {
+          // console.log(events);
           this.events = events;
           this.populateCards();
-          this.applyFilter();
-          this.loading = false;
-        });        
-      } else {
-        console.log("No user id");
-        this.loading = false;
+        });
+      }
+      else {
+        console.log("no user id");
+        
       }
     });
-  }
+    }
+
+    chipColors: { [key: string]: string } = {
+      'all': 'chip-all',
+      'ongoing': 'chip-ongoing',
+      'upcoming': 'chip-upcoming',
+      'ended': 'chip-ended',
+      'my events': 'chip-my-events'
+    };
+
+  refreshFeed(query: string) {
+		// filter based on query
+    this.getCurrentUserId().subscribe((uid) => {
+      switch(query) {
+        case 'ongoing':
+          this.filteredCards = this.cards.filter(card => card.status.toLowerCase() === 'ongoing');
+          break;
+        case 'upcoming':
+          this.filteredCards = this.cards.filter(card => card.status.toLowerCase() === 'upcoming');
+          break;
+        case 'ended':
+          this.filteredCards = this.cards.filter(card => card.status.toLowerCase() === 'ended');
+          break;
+        case 'my events':
+          this.filteredCards = this.cards.filter(card => card.owner === uid);
+          break;
+        default:
+          this.filteredCards = this.cards;
+          break;
+      }
+    });
+	}
   
   getCurrentUserId(): Observable<string> {
     return this.afAuth.authState.pipe(
@@ -68,31 +108,39 @@ export class JoinedEventPage implements OnInit {
     );
   }
 
+
   populateCards() {
     if (this.events.length === 0) {
-      this.cards = []; // Empty the cards list when there are no events
-    } else {
-      this.cards = this.events.map((event) => ({
+      this.cards = [];
+      } else {
+      this.events.sort((a,b) => new Date(b.id).getTime() - new Date(a.id).getTime());
+      this.cards = this.events.map(event => ({
         title: event.title,
-        location: `(${event.latitude}, ${event.longitude})`,
+        location: event.location,
         description: '' + event.description,
+        owner: event.owner,
         button: "Join event",
         image_url: event.image_url,
         longitude: event.longitude,
         latitude: event.latitude,
+        status: event.status,
         id: event.code,
         created_at: event.createdAt,
         start_date: event.start_date,
         end_date: event.end_date,
-        status: event.status,
+        date: new Date(event.start_date).toDateString(),	
+        tags: event.tags,	  
         // Add event listener to the button
-        buttonClick: () => {
-          // Redirect to event details page
-          this.onCardButtonClick(event.id);
-        },
+        buttonClick: function() {
+        // Redirect to event details page
+        console.log("Redirecting to event details page: ", event.id)
+        
+        // window.location.href = "/view-event/" + event.id;
+        }
       }));
+      this.filteredCards = this.cards;
+      }
     }
-  }
   
   loadJoinedEvents() {
     // Call your event service method to fetch joined events

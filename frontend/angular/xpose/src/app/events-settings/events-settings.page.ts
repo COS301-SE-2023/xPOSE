@@ -8,6 +8,8 @@ import { Observable, map } from 'rxjs';
 import { NgForm } from '@angular/forms';
 import { Event } from '../shared/event';
 import { LocationAutocompleteService } from '../service/location-autocomplete.service';
+import { Service } from '../service/service';
+import { Console } from 'console';
 
 @Component({
   selector: 'app-events-settings',
@@ -15,7 +17,7 @@ import { LocationAutocompleteService } from '../service/location-autocomplete.se
   styleUrls: ['./events-settings.page.scss'],
 })
 export class EventsSettingsPage implements OnInit {
-  createEvent: Event = {
+  eventObject: Event = {
 		uid: 0,
 		title: ' ',
 		image: null,
@@ -33,6 +35,7 @@ export class EventsSettingsPage implements OnInit {
 	  loading = false;
 	locationPredictions: any[] = [];
 
+  data: any;
 
   constructor(private http: HttpClient,
 		private router: Router,
@@ -41,7 +44,8 @@ export class EventsSettingsPage implements OnInit {
 		private afAuth: AngularFireAuth,
     private locationAutocompleteService: LocationAutocompleteService,
     private activatedRoute: ActivatedRoute,
-    private navCtrl: NavController) { }
+    private navCtrl: NavController,
+    private userService: Service) { }
 
     ngOnInit() {
       // click the element with id of posts_tab
@@ -68,28 +72,40 @@ export class EventsSettingsPage implements OnInit {
   
         console.log(`The event id = ${event_id}`);
       
-        this.getCurrentUserId().subscribe((uid) => {
+        this.getCurrentUserId().subscribe((uid : any) => {
           if (uid) {
-            this.http.get(`${this.api.apiUrl}/e/events/${event_id}?uid=${uid}`).subscribe((data: any) => {
+            console.log(`${this.api.apiUrl}/e/events/${event_id}?uid=${uid}`);
+            console.log(`${this.api.apiUrl}/e/feed?uid=${uid}&code=${event_id}`);
+            this.http.get(`${this.api.apiUrl}/e/feed?uid=${uid}&code=${event_id}`).subscribe((data: any) => {
+              this.data = data[0];
               console.log(data);
-              this.createEvent = {
-                uid: data.id, // Assuming id maps to uid
-                title: data.title,
-                image: data.image_url, // You may need to adjust this depending on your data structure
-                start_date: data.start_date,
-                end_date: data.end_date,
-                location: data.location,
-                description: data.description,
-                privacy_setting: data.privacy_setting,
-                latitude: data.latitude,
-                longitude: data.longitude,
-                image_url: data.image_url,
+              this.eventObject = {
+                uid: this.data.owner_id, // Assuming id maps to uid
+                title: this.data.title,
+                image: null, // You may need to adjust this depending on your data structure
+                start_date: this.data.start_date,
+                end_date: this.data.end_date,
+                location: this.data.location,
+                description: this.data.description,
+                privacy_setting: this.data.privacy_setting,
+                latitude: this.data.latitude,
+                longitude: this.data.longitude,
+                image_url: this.data.image_url,
               };
+              this.selected_tags = this.data.tags;
+              this.current_image_url = this.data.image_url;
+              if(this.data.user_event_position !== "owner") {
+                console.log("You are not the owner of this event");
+                this.router.navigate(['/home']);
+              }
+              this.getEventParticipantsFromAPI();
             },
             (error) => {
                 this.loading = false; 
                 console.error(error);
             });
+
+
           }
           else {
             this.loading = false; // Request completed with an error
@@ -97,10 +113,7 @@ export class EventsSettingsPage implements OnInit {
           }
         });
   
-        // Fetch event data based on the route parameter
-        // Call API or perform necessary logic to fetch event details
-        // Assign the fetched data to this.event
-        // console.log(event_id);
+        
   
         console.log('Hello from event page');
         // // make api call to ${this.api.apiUrl}/e/events/{event_id}
@@ -112,9 +125,13 @@ export class EventsSettingsPage implements OnInit {
       });
     }
 
+    current_image_url: string = '';
   onFileSelected(event: any) {
 		const file: File = event.target.files[0];
-		this.createEvent.image = file;
+		this.eventObject.image = file;
+    // this.eventObject.image_url = file.
+    this.current_image_url = URL.createObjectURL(file);
+
 	  }
 
     getCurrentUserId(): Observable<string> {
@@ -128,7 +145,7 @@ export class EventsSettingsPage implements OnInit {
         }
         })
       );
-      }
+    }
 
       	// Function to fetch location predictions
 	async onLocationInput(event: any) {
@@ -141,7 +158,33 @@ export class EventsSettingsPage implements OnInit {
 		}
 	}
 
-
+  deleteEvent() {
+    this.getCurrentUserId().subscribe((uid) => {
+      if(uid){
+          const url = `${this.api.apiUrl}/e/events/${this.data.code}?uid=${uid}`;
+          console.log(url);
+          console.log('Deleting event...');
+          this.http.delete(url)
+          .subscribe({
+            next: (response:any) => {
+            console.log(response);
+            // Handle the response from the server
+            // this.router.navigate(['/home']);
+            },
+            error: (error) => {
+            // Handle any errors that occurred during the request
+            console.error(error);
+            this.loading = false;
+            // Display an error message to the user or perform any necessary error handling
+            }
+          });
+      }
+      else {
+        console.log("No user is currently logged in.");
+        // ! throw error
+      }
+    });
+  }
     // Function to handle location selection
     onLocationSelect(prediction: any) {
       console.log('Selected location:', prediction.description);
@@ -150,13 +193,13 @@ export class EventsSettingsPage implements OnInit {
       geocoder.geocode({ address: prediction.description }, (results, status) => {
         if (status === 'OK' && results && results[0]) {
         const location = results[0].geometry.location;
-        this.createEvent.location = prediction.description;
-        this.createEvent.latitude = location.lat();
-        this.createEvent.longitude = location.lng();
+        this.eventObject.location = prediction.description;
+        this.eventObject.latitude = location.lat();
+        this.eventObject.longitude = location.lng();
         
-        console.log('Location selected:', this.createEvent.location);
-        console.log('Latitude:', this.createEvent.latitude);
-        console.log('Longitude:', this.createEvent.longitude);
+        console.log('Location selected:', this.eventObject.location);
+        console.log('Latitude:', this.eventObject.latitude);
+        console.log('Longitude:', this.eventObject.longitude);
         } else {
         console.log('Geocoding failed due to: ' + status);
         }
@@ -166,15 +209,6 @@ export class EventsSettingsPage implements OnInit {
     }
 
     updateEvent() {
-      const formData: FormData = new FormData();
-      formData.append('title', this.createEvent.title);
-      formData.append('start_date', this.createEvent.start_date);
-      formData.append('end_date', this.createEvent.end_date);
-      formData.append('location', this.createEvent.location);
-      formData.append('description', this.createEvent.description);
-      formData.append('privacy_setting', this.createEvent.privacy_setting);
-      formData.append('latitude', this.createEvent.latitude.toString());
-      formData.append('longitude', this.createEvent.longitude.toString());
       // if(this.createEvent.title != " " || this.createEvent.start_date != " " || this.createEvent.end_date != " " || this.createEvent.location != " " || this.createEvent.description != " " || this.createEvent.longitude != 0 || this.createEvent.latitude != 0){
         this.getCurrentUserId().subscribe((uid) => {
           if(uid){
@@ -184,28 +218,35 @@ export class EventsSettingsPage implements OnInit {
               // this.createEvent.userId = parseInt(userId);
               const formData: FormData = new FormData();
               formData.append('uid', uid);
-              formData.append('title', this.createEvent.title);
-              if (this.createEvent.image) {
-              formData.append('image', this.createEvent.image, this.createEvent.image.name);
+              formData.append('title', this.eventObject.title);
+              for(let index = 0; index < this.selected_tags.length; index++) {
+                console.log(`Adding tag ${this.selected_tags[index]} to form data`);
+                formData.append('tags[]', this.selected_tags[index]);
               }
-              formData.append('start_date', this.createEvent.start_date);
-              formData.append('end_date', this.createEvent.end_date);
-              formData.append('location', this.createEvent.location);
-              formData.append('description', this.createEvent.description);
-              formData.append('privacy_setting', this.createEvent.privacy_setting);
-              formData.append('latitude', this.createEvent.latitude.toString());
-              formData.append('longitude', this.createEvent.longitude.toString());
-            //   console.log(formData);
-              console.log(this.createEvent);
-              // REfactor this to be done in the service class for better decoupling
-              const url = `${this.api.apiUrl}/e/events?uid=${uid}`;
               
-              this.http.post(url, formData)
+              if (this.eventObject.image) {
+                formData.append('image', this.eventObject.image, this.eventObject.image.name);
+              }
+              
+              formData.append('start_date', this.eventObject.start_date);
+              formData.append('end_date', this.eventObject.end_date);
+              formData.append('location', this.eventObject.location);
+              formData.append('description', this.eventObject.description);
+              formData.append('privacy_setting', this.eventObject.privacy_setting);
+              formData.append('latitude', this.eventObject.latitude.toString());
+              formData.append('longitude', this.eventObject.longitude.toString());
+              console.log(formData);
+              console.log(this.eventObject);
+              // REfactor this to be done in the service class for better decoupling
+              const url = `${this.api.apiUrl}/e/events/${this.data.code}?uid=${uid}`;
+              console.log(url);
+              console.log('Updating event...');
+              this.http.put(url, formData)
               .subscribe({
                 next: (response:any) => {
                 console.log(response);
                 // Handle the response from the server
-                this.router.navigate(['/home']);
+                // this.router.navigate(['/home']);
                 },
                 error: (error) => {
                 // Handle any errors that occurred during the request
@@ -214,6 +255,8 @@ export class EventsSettingsPage implements OnInit {
                 // Display an error message to the user or perform any necessary error handling
                 }
               });
+
+              // now load participants
           }
           else {
             console.log("No user is currently logged in.");
@@ -225,6 +268,153 @@ export class EventsSettingsPage implements OnInit {
       //   console.log("Please fill in all the fields.");
       // }
       }
+
+      tag_input: string = '';
+	  tags_list: string[] = [];
+	  selected_tags: string[] = [];
+	  
+	  onTagInput(event: any) {
+		this.tag_input = event.target.value;
+		this.http.get(`${this.api.apiUrl}/e/tags?q=${this.tag_input}`)
+		.subscribe({
+		  next: (response: any) => {
+			this.tags_list = response;
+		  },
+		  error: (error) => {}
+		});
+	  }
+
+	  onTagRemove(tag: string) {
+		this.selected_tags = this.selected_tags.filter(t => t !== tag);
+	  }
+
+	  onTagSelect(tag: any) {
+		console.log(`Selected tags before: ${this.selected_tags}`);
+		if (!this.selected_tags.includes(tag) && tag !== '') {
+			this.selected_tags.push(tag);
+		}
+		console.log(`Selected tags after: ${this.selected_tags}`);
+		this.tags_list = [];
+		this.tag_input = '';
+	  }
+
+    // search code
+    user_input: string = '';
+    users_list: any[] = [];
+    
+    onUserInput(event: any) {
+      this.user_input = event.target.value;
+      const search_endpoint = `${this.api.apiUrl}/u/users/search?field=uniq_username&value=${this.user_input}`;
+      this.loading = true;
+
+     this.http.get<any[]>(search_endpoint).subscribe(
+       (response) => {
+        console.log(response);
+        this.users_list = response;
+       },
+       (error:any) => {
+         console.log(error.error.message);
+       }
+     )
+    }
+
+    onUserSelect(user: any) {
+      console.log(user);
+    }
+
+    inviteUser(user: any) {
+      this.getCurrentUserId().subscribe((uid) => {
+        this.http.post(`${this.api.apiUrl}/e/events/${this.data.code}/invite?uid=${uid}&invitee=${user.id}`, {})
+        .subscribe({
+          next: (response:any) => {
+            console.log(response);
+            // Handle the response from the server
+            // this.router.navigate(['/home']);
+          },
+          error: (error) => {
+            console.error(error);
+          }
+        });
+      });
+      // console.log(user);
+    }
+
+    // participants code
+  participants: any;
+    users: any;
+  
+  onCardClick(participant: any) {
+    console.log('Card clicked');
+    console.log(participant.id);
+    // this.router.navigateByUrl('/user-profile')
+    // / Check if participant object and participant.id are defined and not null
+    if (participant) {
+      // Navigate to the user profile page with the participant's ID
+      this.router.navigate(['/user-profile', participant.uid]);
+    } else {
+      // Handle the case where participant object or participant.id is invalid or missing
+      console.error('Invalid participant data.');
+      // Optionally, you can show an error message or handle the situation differently.
+    }
+
+  }
+
+
+
+  removeParticipant(participant: any) {
+    console.log(participant);
+    this.getCurrentUserId().subscribe((uid) => {
+      if(uid) {
+        const url = `${this.api.apiUrl}/e/events/${this.data.code}/remove?uid=${uid}&participant=${participant.uid}`;
+        console.log(url);
+        console.log('Removing participant...');
+        this.http.delete(url)
+        .subscribe({
+          next: (response:any) => {
+          console.log(response);
+          // Handle the response from the server
+          // this.router.navigate(['/home']);
+          },
+          error: (error) => {
+          // Handle any errors that occurred during the request
+          console.error(error);
+          this.loading = false;
+          // Display an error message to the user or perform any necessary error handling
+          }
+        });
+      }
+    });
+    
+  }
+  
+  getEventParticipantsFromAPI() {
+    this.getCurrentUserId().subscribe((uid) => {
+      if(uid) {
+        this.http
+          .get(`${this.api.apiUrl}/e/events/${this.data.code}/participants?uid=${uid}`)
+          .subscribe((data) => {
+            this.participants = data;
+
+            // this.event.participants.forEach((participant: any) => {
+            //   participant.since_joining = this.formatDateSinceJoining(participant.join_date);
+            // });
+            this.participants.forEach((participant:any) =>{
+              this.userService.GetUser(participant.uid).subscribe(
+                (user) => {
+                  if(user) {
+                    participant.photoURL = user.photoURL;
+                  }
+                }
+              )
+            })
+
+            console.log("Participants data:",data);
+          });
+      }
+    });
+  }
+	  
+	  
         
       onSubmit() {
         console.log('hit');

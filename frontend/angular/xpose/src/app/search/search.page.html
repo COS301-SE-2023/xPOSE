@@ -1,40 +1,37 @@
-<!-- <ion-content [fullscreen]="true"> -->
-  <ion-header [translucent]="true">
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <app-backbutton></app-backbutton>
-       </ion-buttons>
-       <ion-searchbar
-          #searchBar
-          placeholder="Search"
-          [(ngModel)]="searchQuery"
-          (ionChange)="onSearch()"
-        ></ion-searchbar>
-    </ion-toolbar>
-  </ion-header>
-
-  <ion-segment [(ngModel)]="searchType" (ionChange)="onSearchTypeChange()">
-    <ion-segment-button value="events">
-      Events
-    </ion-segment-button>
-    <ion-segment-button value="users">
-      Users
-    </ion-segment-button>
-  </ion-segment>
-
-  <!-- <ion-searchbar
-    #searchBar
-    placeholder="Search"
-    [(ngModel)]="searchQuery"
-    (ionChange)="onSearch()"
-  ></ion-searchbar> -->
 
   <ion-content id="main-content" class="custom-background" >
+    <ion-header [translucent]="true">
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <app-backbutton></app-backbutton>
+          <ion-title class="ion-text-center">Search</ion-title>
+         </ion-buttons>
+        </ion-toolbar>
+        </ion-header>
+     
+      <ion-toolbar>
+         <ion-searchbar
+            #searchBar
+            placeholder="Search"
+            [(ngModel)]="searchQuery"
+            (ionChange)="onSearch()"
+          ></ion-searchbar>
+      </ion-toolbar>
+  
+  
+    <ion-segment [(ngModel)]="searchType" (ionChange)="onSearchTypeChange()">
+      <ion-segment-button value="events">
+        Events
+      </ion-segment-button>
+      <ion-segment-button value="users">
+        Users
+      </ion-segment-button>
+    </ion-segment>
 
     <div class="fontcolor" *ngIf="searchClicked && loading">
       Please wait searching...
     </div>
-
+    
     <ng-container *ngIf="!found">
       <h2 class="fontcolor">No matches found.</h2>
     </ng-container>
@@ -63,19 +60,3 @@
 
   </ion-content>
   
-
-  
-
-  <!-- Display suggested data or filtered search results based on searchType -->
-  <!-- <ion-list *ngIf="showSuggestions">
-    <ion-item *ngFor="let suggestion of suggestedItems">
-      {{ suggestion.name }}
-    </ion-item>
-  </ion-list>
-
-  <ion-list *ngIf="!showSuggestions">
-    <ion-item *ngFor="let item of filteredItems">
-      {{ item.name }}
-    </ion-item>
-  </ion-list> -->
-<!-- </ion-content> -->

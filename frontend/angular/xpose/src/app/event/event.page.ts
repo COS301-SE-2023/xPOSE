@@ -6,7 +6,7 @@ import { IonTabs } from '@ionic/angular';
 import { NavController } from '@ionic/angular';
 import { CurrentEventDataService } from '../shared/current-event-data.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { Observable, map } from 'rxjs';
+import { Observable, map, subscribeOn } from 'rxjs';
 import { Location } from '@angular/common';
 import { NavigationEnd } from "@angular/router";
 import { GalleryDataService } from './posts/gallery-lightbox/gallery-data.service';
@@ -17,6 +17,11 @@ import { ApiService } from '../service/api.service';
 import { ModalController } from '@ionic/angular';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { GalleryModalComponent } from '../gallery-modal/gallery-modal.component';
+import { Service } from '../service/service';
+
+import { AuthService } from '../shared/services/auth.service';
+
+// import { CommonService } from './common.service';
 
 
 interface Item {
@@ -35,8 +40,11 @@ interface Item {
   styleUrls: ['./event.page.scss'],
 })
 export class EventPage {
+  title = 'uers-location';
+  // location: any;
   filterType: string = 'posts'; 
   event: Event;
+  // location: Event;
   participants: any;
   private history: string[] = [];
   cards: any[] = []; // Array to store cards data
@@ -66,6 +74,10 @@ export class EventPage {
   isGalleryOpen: boolean = false;
   // http: any;
 
+  isMenuOpen = false; // Initialize menu as closed
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen; // Toggle the menu state
+  }
   
 
   constructor(private http: HttpClient,
@@ -80,7 +92,10 @@ export class EventPage {
     // private camera: Camera,
     private api: ApiService,
     private modalController: ModalController,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    public authService: AuthService,
+    private userService: Service,
+    // private commmonService:CommonService
     ) {
       // click the 
       this.url = "sdafsda";
@@ -132,6 +147,11 @@ export class EventPage {
         return;
       }
 
+
+      // this.commmonService.getLocation().subscribe((response)=> 
+      //   console.log(response)
+      //   this.location = response;
+      // )
       // participants: Participants[] = [
       //   { name: 'John' },
       //   { name: 'Thabo' },
@@ -149,7 +169,7 @@ export class EventPage {
       this.getCurrentUserId().subscribe((uid) => {
         if (uid) {
           this.http.get(`${this.api.apiUrl}/e/events/${event_id}?uid=${uid}`).subscribe((data) => {
-            this.url = `${window.location.protocol}//${window.location.host}/view-event/${event_id}`;
+            this.url = `https://xpose-4f48c.web.app/view-event/${event_id}`;
             this.retrieveMessages();
             this.retrievePosts();
             this.current_event = data;
@@ -216,6 +236,9 @@ export class EventPage {
     });
   }
 
+  logout() {
+		this.authService.signOut();
+	}
   deleteEvent() {
     // Implement the API call to delete the event here
     // Make a request to delete the event using this.current_event.code as the event ID
@@ -239,6 +262,27 @@ export class EventPage {
         }
       );
     });
+  }
+
+  transform(value: Date): string {
+    if (!(value instanceof Date)) {
+      return '';
+    }
+
+    const hours = value.getHours();
+    const minutes = value.getMinutes();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+
+    // Convert hours from 24-hour format to 12-hour format
+    const formattedHours = hours % 12 || 12;
+
+    // Add leading zeros to minutes if needed
+    const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
+
+    // Create the formatted time string
+    const formattedTime = `${formattedHours}:${formattedMinutes} ${ampm}`;
+
+    return formattedTime;
   }
 
   leaveEvent() {
@@ -266,7 +310,7 @@ export class EventPage {
   editEvent() {
     console.log('Edit event');
     console.log(this.current_event.code);
-    this.router.navigate([`/event/${this.current_event.code}/settings`]);
+    this.router.navigate(['event', this.current_event.code, 'settings']);
   }
   
   retrievePosts() {
@@ -359,6 +403,8 @@ export class EventPage {
   getEventParticipantsFromAPI() {
     this.getCurrentUserId().subscribe((uid) => {
       if(uid) {
+        const geocoder = new google.maps.Geocoder();
+
         this.http
           .get(`${this.api.apiUrl}/e/events/${this.current_event.code}/participants?uid=${uid}`)
           .subscribe((data) => {
@@ -367,8 +413,24 @@ export class EventPage {
             // this.event.participants.forEach((participant: any) => {
             //   participant.since_joining = this.formatDateSinceJoining(participant.join_date);
             // });
+            this.participants.forEach((participant:any) =>{
+              this.userService.GetUser(participant.uid).subscribe(
+                (user) => {
+                  if(user) {
+                    participant.photoURL = user.photoURL;
+                    participant.uniq_username = user.uniq_username;
+                    // TODO: Add validation on events service, so
+                    if (true) {
+                      participant.location = user.location._lat + ', ' + user.location._long;
+                    }
+                    // participant.location
+                    console.log(user);
+                  }
+                }
+              )
+            })
 
-            console.log(data);
+            console.log("Participants data:",data);
           });
       }
     });
@@ -490,7 +552,7 @@ export class EventPage {
   messagesCollection: AngularFirestoreCollection<Message> | undefined;
   messages: Message[] = [];
 
-  retrieveMessages() {
+  async retrieveMessages() {
     if(this.messagesCollection) {
       this.messagesCollection.valueChanges().subscribe((messages: Message[]) => {
         this.messages = messages;
@@ -499,8 +561,31 @@ export class EventPage {
         this.messages.forEach((message: Message) => {
           this.getUserNameFromUid(message.uid).subscribe((displayName: string) => {
             message.displayName = displayName;
+            // get the profile photo user who's messaged
+            this.userService.GetUser(message.uid).subscribe(
+              (user) => {
+                if(user) {
+                  message.photoURL = user.photoURL;
+                }
+              }
+            )
           });
         });
+
+        console.log(`The messages are before sorting: ${messages}`);
+        console.log(this.messages);
+        
+        // sort the messages
+        this.messages.sort((a: Message, b: Message) => {
+          const timestampA = a.timestamp ? a.timestamp.toMillis() : 0;
+          const timestampB = b.timestamp ? b.timestamp.toMillis() : 0;
+          return timestampB - timestampA;
+        });
+        
+        // this.messages.reverse();
+        console.log(`The messages are after sorting: ${messages}`);
+        console.log(this.messages);
+
         // console.log('Retrieving messages from Firestore...');
         // console.log(this.messages);
       });
@@ -508,6 +593,7 @@ export class EventPage {
     else {
       console.log("messagesCollection is undefined");
     }
+
   }
   
   getUserNameFromUid(uid: string): Observable<string> {
@@ -522,6 +608,8 @@ export class EventPage {
     );
   }
 
+  // getUser with specified ID
+
   // Code to handle participants
 
   addParticipant(participant: any) {
@@ -533,10 +621,8 @@ export class EventPage {
   }
 
   removeParticipant(participant: any) {
-    const index = this.participants.indexOf(participant);
-    if (index > -1) {
-      this.participants.splice(index, 1);
-    }
+    console.log(participant);
+    
   }
   
 
@@ -545,7 +631,7 @@ export class EventPage {
   }
 //  ramdom
     // Function to generate the random avatar based on initials
-    generateAvatar(displayName: string | undefined): string {
+    generateAvatar(photoURL: string | undefined): string {
       // const initials = this.getInitials(name);
       // const color = this.getRandomColor();
   
@@ -556,8 +642,9 @@ export class EventPage {
     // }
   
     // Function to get the initials from a name
+    // console.log("Testing displayname", displayName);
     const defaultAvatarUrl = 'path/to/default/avatar.jpg';
-    return displayName ? `path/to/avatar/${displayName}.jpg` : defaultAvatarUrl;
+    return photoURL ? photoURL : defaultAvatarUrl;
     }
 
     getInitials(name: string): string {
@@ -579,6 +666,13 @@ export class EventPage {
       return color;
     }
 
+    toDate(firebase_timestamp:  firebase.default.firestore.Timestamp | undefined) {
+      if(firebase_timestamp !== undefined) {
+       return firebase_timestamp.toDate();
+      }
+      return '';
+    }
+
 }
 
 interface Event {
@@ -598,7 +692,8 @@ interface Message {
   displayName?: string; // Add displayName property
   message: string;
   id?: string;
-  timestamp?: Date;
+  timestamp?: firebase.default.firestore.Timestamp;
+  photoURL?:string;
 }
 
 interface Post {

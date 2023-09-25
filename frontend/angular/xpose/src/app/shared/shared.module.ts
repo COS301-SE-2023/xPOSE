@@ -8,6 +8,7 @@ import { FooterComponent } from '../footer/footer.component';
 import { BackbuttonComponent } from '../shared/backbutton/backbutton.component';
 import { LoadingPageComponent } from '../shared/loading-icon/loading-icon.component';
 
+
 @NgModule({
   declarations: [FooterComponent, BackbuttonComponent, LoadingPageComponent],
   imports: [CommonModule, IonicModule, FormsModule], // Add IonicModule and FormsModule here

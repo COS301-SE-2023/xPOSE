@@ -1,26 +1,33 @@
-ion-card {
-  background-color: hsl(304, 49%, 82%);
-  color: #000000;
-  margin-bottom: 20px;
-  height: auto;
-  border: solid 0.1px #adadad;
-  box-shadow: 0 4px 8px rgba(255, 160, 215, 0.1);
-  border-radius: 5px;
-  overflow: hidden;
-}
-ion-toolbar{
-  background-color: #ffffff;
+.custom-backround{
   --background: #ffffff;
   color: #000000;
   font-size: 20px;
 }
 
+ion-card {
+  background-color: hsl(304, 49%, 82%);
+  color: #000000;
+  margin-bottom: 20px;
+  height: 430px;
+  border: 1px solid #d1d1d1;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.card-transition:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2);
+}
+
 .card-image {
   width: 100%;
-  height: 200px;
+  height: 210px;
   object-fit: cover;
-  --background: #ffffff;
-  background-color: #f0f0f0;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
 .card-title {
@@ -28,38 +35,31 @@ ion-toolbar{
   font-weight: bold;
   padding: 10px;
   color: #000000;
+  font-family: 'Pacifico', cursive;
 }
 
 ion-card-content {
   display: inline;
   padding-left: 10px;
   color: #353535;
-  // --background: #ffffff;
-  // background-color: #f0f0f0;
-}
-ion-content{
-  --background: #ffffff;
-  background-color: #ffffff;
-  color: #000000;
-}
-ion-list{
-  --background: #ffffff;
-  background-color: #ffffff;
-  color: #000000;
+  font-family: "Poppins", sans-serif;
 }
 
 .card-content {
   padding: 10px;
-  color: #000000;
+  color: #353535;
+  font-family: "Merriweather", serif;
   --background: #ffffff;
 }
 
 .card-subtitle {
-  color: #292929;
+  color: #3d3d3d;
+  font-family: "Merriweather", serif;
 }
 
 .card-description {
   padding: 10px 0;
+  font-family: "Merriweather", serif;
 }
 
 .card-button-container {
@@ -69,45 +69,17 @@ ion-list{
   padding: 10px;
 }
 
-.card-button {
-  --color: #000000;
-  --background: linear-gradient(135deg, #ff0066, #ea00ff);
-  --box-shadow: none;
-  border: none;
-  --border-radius: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 18px;
-  font-family: 'Roboto', sans-serif;
-  --padding-start: 20px;
-  --padding-end: 20px;
-  --margin: 5px;
-  transition: background-color 0.3s ease-in-out;
-}
-
-.card-button:hover {
-  --background: linear-gradient(135deg, #ea00ff, #ff0066);
-}
-
-.card-button-share {
-  color: #ff0066;
-}
-
-.card-button-view {
-  color: #ea00ff;
-}
-
 .card-label {
   position: absolute;
   bottom: 10px;
   right: 10px;
   background-color: #f00;
-  color: #000000;
+  color: #fff;
   padding: 6px 10px;
   border-radius: 4px;
   font-size: 14px;
   font-weight: bold;
+  --background: #ffffff;
 }
 
 .label-default {
@@ -138,13 +110,14 @@ ion-list{
   position: absolute;
   top: 0;
   right: 0;
-  color: #000000;
+  color: #fff;
   padding: 6px 10px;
   border-radius: 4px;
   font-size: 14px;
   font-weight: bold;
   display: flex;
   align-items: center;
+  --background: #ffffff;
 }
 
 .iconp{
@@ -154,53 +127,160 @@ ion-list{
   text-shadow: #f00;
 }
 
-
-// ion-item{
-//   --background: #ffffff;
-// }
-ion-segment{
+.header{
+  font-family: 'Literata', serif;
+  font-size: 30px;
+  text-shadow: #3d3d3d;
+  color: #1d1d1d;
   --background: #ffffff;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-icon {
+  animation: spin 2s linear infinite;
+}
+
+.page-row {
+  display: flex;
+  max-height: 100vh;
+  overflow: hidden;
+}
+
+.scrollable-row {
+  max-height: 100vh;
+  overflow-y: auto;
+}
+
+.scrollable-content {
+  max-height: calc(100vh - 56px);
+  overflow-y: auto;
+}
+
+@media screen and (max-width: 768px) {
+  .custom-toolbar ion-title {
+    display: none;
+    background-color: #ffffff;
+    
+  
+  .custom-toolbar ion-menu-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    color: #000000;
+  }
+}
+}
+
+ion-col{
+  background: #ffffff;
   color: #000000;
 }
-ion-segment-button{
-  --background: #ffffff;
-  color: #000000;
+
+.card-selected {
+  transform: scale(1.05);
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
 }
 
-//menu styling 
-
-/* styles.css or your custom CSS file */
-
-/* Style the entire menu */
-ion-menu {
-  --width: 200px; /* Set the width of the sidebar menu */
-  --background: #f4f4f4; /* Set the background color of the sidebar menu */
-}
-
-ion-item {
-  --padding-start: 20px; /* Set the padding from the start of the item */
-  --padding-end: 20px; /* Set the padding from the end of the item */
-}
-
-ion-item:hover {
-  background-color: #e0e0e0; /* Set the background color when hovered */
-}
-
-a.sidebar-link {
-  color: #000; /* Set the color of the link */
-  text-decoration: none; /* Remove the underline from the link */
-}
-ion-icon {
-  --color: #333; /* Color of the icon */
-  --ionicon-stroke-width: 32px; /* Size of the icon */
-}
-
-
-//search bar styling
 ion-searchbar {
-  --background: #f4f4f4; /* Set the background color of the search bar */
-  --color: #333; /* Set the text color */
-  --placeholder-color: #999; /* Set the color of the placeholder text */
-  --border-color: #ddd; /* Set the border color */
-  --border-radius: 10px; /* Set the border radius */
+  --background: #f4f4f4;
+  --color: #333;
+  --placeholder-color: #999;
+  --border-color: #ddd;
+  --border-radius: 10px;
+}
+
+#tags-swiper {
+  width: 100%;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding: 10px 0;
+}
+
+.swiper-slide {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.swiper-tag {
+  display: inline-block;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  --background: #ffebef;
+}
+
+.recent-events {
+  background-color: #3498db;
+  color: #fff;
+}
+
+.new-events {
+  background-color: #e74c3c;
+  color: #fff;
+}
+
+.close-events {
+  background-color: #2ecc71;
+  color: #fff;
+}
+
+.trending-events {
+  background-color: #f39c12;
+  color: #fff;
+}
+
+/* Pagination styles (optional) */
+.swiper-pagination {
+  bottom: 10px;
+}
+
+.scrolling-wrapper {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+
+  .tag {
+    display: inline-block;
+    margin-top: 10px;
+  }
+}
+
+/* Responsive styles for smaller screens */
+@media screen and (max-width: 768px) {
+  .swiper-tag {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+}
+
+.menu-item:hover {
+  cursor: pointer;
+}
+
+.chip-all {
+  --background: #ffebef;
+}
+
+.chip-my-events {
+  --background: #ffebef;
+}
+
+.chip-ongoing {
+  --background: #2ecc71;
+}
+
+.chip-upcoming {
+  --background: #f39c12;
+}
+
+.chip-ended {
+  --background: #e74c3c;
 }

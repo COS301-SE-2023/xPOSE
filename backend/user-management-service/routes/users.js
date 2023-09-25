@@ -12,8 +12,8 @@ import { getUsers,
         rejectFriendRequest,
         searchUser,
         isFriend,
-        signInWithProvider 
-        
+        signInWithProvider,
+        saveUserLocation
     } from '../controllers/index.js';
 
 const router = express.Router();
@@ -28,6 +28,10 @@ router.get('/search', searchUser);
 router.post('/', createUser);
 
 // get all friends of user
+
+// save longitude and latitude of user
+router.post('/:userId/location', saveUserLocation);
+
 router.get('/:userId/friends', getFriends);
 
 // sign in with provider
@@ -59,8 +63,6 @@ router.patch('/:userId', updateUser);
 
 // delete specified user
 router.delete('/:userId', deleteUser);
-
-
 
 
 export default router;
