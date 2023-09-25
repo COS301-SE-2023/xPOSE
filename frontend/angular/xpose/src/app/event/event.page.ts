@@ -6,7 +6,7 @@ import { IonTabs } from '@ionic/angular';
 import { NavController } from '@ionic/angular';
 import { CurrentEventDataService } from '../shared/current-event-data.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { Observable, map } from 'rxjs';
+import { Observable, map, subscribeOn } from 'rxjs';
 import { Location } from '@angular/common';
 import { NavigationEnd } from "@angular/router";
 import { GalleryDataService } from './posts/gallery-lightbox/gallery-data.service';
@@ -21,6 +21,7 @@ import { Service } from '../service/service';
 
 import { AuthService } from '../shared/services/auth.service';
 
+// import { CommonService } from './common.service';
 
 
 interface Item {
@@ -39,8 +40,11 @@ interface Item {
   styleUrls: ['./event.page.scss'],
 })
 export class EventPage {
+  title = 'uers-location';
+  // location: any;
   filterType: string = 'posts'; 
   event: Event;
+  // location: Event;
   participants: any;
   private history: string[] = [];
   cards: any[] = []; // Array to store cards data
@@ -90,7 +94,8 @@ export class EventPage {
     private modalController: ModalController,
     private sanitizer: DomSanitizer,
     public authService: AuthService,
-    private userService: Service
+    private userService: Service,
+    // private commmonService:CommonService
     ) {
       // click the 
       this.url = "sdafsda";
@@ -142,6 +147,11 @@ export class EventPage {
         return;
       }
 
+
+      // this.commmonService.getLocation().subscribe((response)=> 
+      //   console.log(response)
+      //   this.location = response;
+      // )
       // participants: Participants[] = [
       //   { name: 'John' },
       //   { name: 'Thabo' },
