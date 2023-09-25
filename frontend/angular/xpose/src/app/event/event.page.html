@@ -68,7 +68,7 @@
         <ion-header [translucent]="true">
           <ion-toolbar>
             <ion-title>{{ current_event?.title }}</ion-title>
-            <ion-buttons slot="end">
+            <ion-buttons *ngIf="current_event.user_event_position==='owner'" slot="end">
               <ion-button (click)="editEvent()" class="edutton">
                 <ion-icon slot="start" name="create-outline"></ion-icon>
               </ion-button>
