@@ -10,7 +10,10 @@ import { filter } from 'rxjs';
 })
 export class FooterComponent  implements OnInit {
   currentPageName = '';
- 	
+ 	longitude: number = 0;
+	latitude: number = 0;
+
+	
   constructor(private router: Router, public authService: AuthService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
@@ -23,9 +26,12 @@ export class FooterComponent  implements OnInit {
         }
 
         this.currentPageName = this.getPageTitle(route);
+		console.log('Your location is:', this.getCurrentLocation());
       });
+
   }
 
+  
   private getPageTitle(route: ActivatedRoute): string {
     if (route.snapshot.data['title']) {
       return route.snapshot.data['title'];
@@ -35,7 +41,26 @@ export class FooterComponent  implements OnInit {
       return '';
     }
   }
-
+  async getCurrentLocation() {
+	console.log('Getting your location...')
+    if ('geolocation' in navigator) {
+		console.log('Geolocation is available');
+    navigator.geolocation.getCurrentPosition(
+        (position) => {
+          this.latitude = position.coords.latitude;
+          this.longitude = position.coords.longitude;
+		  console.log(`Latitude: ${this.latitude} Longitude: ${this.longitude}`);
+		  // Use geoencoder to get address from coordinates
+		  
+        },
+        (error) => {
+          console.error('Error getting location', error);
+        }
+      );
+    } else {
+      console.error('Geolocation is not available in this browser.');
+    }
+  }
 
   viewEvent() {
 		this.router.navigate(['/event']);
