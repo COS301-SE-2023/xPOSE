@@ -121,12 +121,12 @@
               <ion-img [src]="participant.photoURL"  loading="lazy" (click)="onCardClick(participant)"></ion-img>
             </ion-avatar>
             <ion-label>
-              <h2 class="participant-name" (click)="onCardClick(participant)">{{ participant.display_name }}</h2>
-              <p class="participant-email">{{ participant.email }}</p>
+              <p class="participant-name" (click)="onCardClick(participant)">
+                {{ participant.display_name }} <b>@{{ participant.uniq_username }}</b>
+                
+              </p>
+              <p class="participant-email"> <b *ngIf="participant.location">{{ participant.location }} </b></p>
             </ion-label>
-            <ion-button slot="end" fill="clear" (click)="removeParticipant(participant)">
-              <ion-icon name="person-remove-outline"></ion-icon>
-            </ion-button>
           </ion-item>
         
           <ion-item-divider class="divider"></ion-item-divider>       
