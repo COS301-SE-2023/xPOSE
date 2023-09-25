@@ -143,7 +143,7 @@ ion-toolbar{
 ion-card-header{
   color: #000000;
   font-size: 20px;
-  --background: #a1a1a1;
+  // --background: #a1a1a1;
 }
 ion-card-content{
   color: #000000;
@@ -205,4 +205,10 @@ ion-item:hover {
 /* Apply styles when the menu is open */
 .menu-open {
   display: block;
+}
+.time{
+  font-size: 18px; /* Adjust the font size as needed */
+  font-family: Arial, sans-serif; /* Specify the font family you prefer */
+  color: #333; /* Choose a color for the time */
+  // text-align: center; /* Center-align the time */
 }
