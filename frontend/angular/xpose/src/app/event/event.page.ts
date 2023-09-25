@@ -22,6 +22,7 @@ import { Service } from '../service/service';
 import { AuthService } from '../shared/services/auth.service';
 
 
+
 interface Item {
   imageSrc: string;
   imageAlt: string;
