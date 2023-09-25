@@ -403,6 +403,8 @@ export class EventPage {
   getEventParticipantsFromAPI() {
     this.getCurrentUserId().subscribe((uid) => {
       if(uid) {
+        const geocoder = new google.maps.Geocoder();
+
         this.http
           .get(`${this.api.apiUrl}/e/events/${this.current_event.code}/participants?uid=${uid}`)
           .subscribe((data) => {
@@ -416,6 +418,13 @@ export class EventPage {
                 (user) => {
                   if(user) {
                     participant.photoURL = user.photoURL;
+                    participant.uniq_username = user.uniq_username;
+                    // TODO: Add validation on events service, so
+                    if (true) {
+                      participant.location = user.location._lat + ', ' + user.location._long;
+                    }
+                    // participant.location
+                    console.log(user);
                   }
                 }
               )
