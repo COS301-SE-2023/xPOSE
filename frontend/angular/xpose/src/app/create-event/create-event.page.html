@@ -7,14 +7,14 @@
       <div>
         <form #form="ngForm" (ngSubmit)="CreateEvent(form)">
           <section class="privacy">
-            <h3><label class="label" for="image">Title</label></h3>
+            <label class="label" for="image">Title</label>
             <ion-input class="ther" name="title" [(ngModel)]="createEvent.title"></ion-input>
-            <h3><label class="label" for="image">Description</label></h3>
+            <label class="label" for="image">Description</label>
             <ion-textarea class="ther" name="description" [(ngModel)]="createEvent.description"></ion-textarea>
           </section>
           
           <section class="privacy">
-            <h3><label class="label" for="privacy_setting">Privacy setting</label></h3>
+            <label class="label" for="privacy_setting">Privacy Setting</label>
             <ion-radio-group value="privacy" name="privacy_setting" [(ngModel)]="createEvent.privacy_setting">
               <ion-item>
                 <ion-icon name="earth"></ion-icon>
@@ -32,15 +32,15 @@
           </section>
 
           <section class="privacy">
-            <h3><label class="label" for="image">Event Cover Image</label></h3>
+            <label class="label" for="image">Event Cover Image</label>
             <div class="input-container">
               <img [src]="current_image_url" alt="Current Cover Image" *ngIf="current_image_url">
               <input type="file" accept="image/*" (change)="onFileSelected($event)" name="image" id="image">
             </div>
           </section>
           
-          <section class="privacy">
-            <h3><label class="label" for="location">Location</label></h3>
+          <section class="loc">
+            <label class="label" for="location">Location</label>
             <ion-searchbar class="ther" name="location" [(ngModel)]="createEvent.location" (ionInput)="onLocationInput($event)" autocomplete="off"></ion-searchbar>
 
             <ion-list>
@@ -51,11 +51,11 @@
           </section>
       
           <section class="privacy">
-            <h3><label class="label" for="">Date and time</label></h3>
+            <label class="label" for="">Date and Time</label><br><br>
             <!-- <ion-row> -->
               <!-- Start date -->
               <!-- <ion-col size="6"> -->
-                <h4>Start Date</h4>
+                Start Date
                 <ion-input
                   type="datetime-local"
                   [(ngModel)]="createEvent.start_date"
@@ -66,7 +66,7 @@
   
               <!-- End date -->
               <!-- <ion-col size="6"> -->
-                <h4>End Date</h4>
+                End Date
                 <ion-input
                   type="datetime-local"
                   [(ngModel)]="createEvent.end_date"
@@ -79,7 +79,7 @@
           </section>
           
           <section class="privacy">
-            <h3><label for="" class="label">Add Tags</label></h3>
+            <label for="" class="label">Add Tags</label>
             <ion-searchbar id="tag_search" class="ther" name="tags"
             [(ngModel)]="tag_input"
             (ionInput)="onTagInput($event)"
