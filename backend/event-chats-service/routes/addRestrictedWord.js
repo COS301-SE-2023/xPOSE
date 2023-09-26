@@ -52,7 +52,7 @@ async function addRestrictedWord(req, res) {
                     }
                 } else {
                     if (nonEmptyTagWords.length === 0) {
-                        // Return an empty array if the request body only contains empty values and the document doesn't exist
+                        // Return a response without storing an empty array in Firestore
                         res.status(200).json({ message: 'No restricted words added', tagWords: [] });
                     } else {
                         // Create a new document if the event_id doesn't exist

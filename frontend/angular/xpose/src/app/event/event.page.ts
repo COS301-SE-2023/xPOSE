@@ -66,6 +66,15 @@ export class EventPage {
   //   this.galleryDataService.setData(this.data);
   // }
 
+  getStatusColor(status: string) {
+    if (status === 'ongoing') {
+      return 'success';
+    } else if (status === 'upcoming') {
+      return 'warning';
+    } else {
+      return 'danger';
+    }
+      }
 
   @ViewChild('eventTabs', { static: false }) tabs: IonTabs | undefined;
   selectedTab: any;
@@ -135,6 +144,9 @@ export class EventPage {
   url: string = window.location.href;
   posts: any;
 
+
+  user_id:string ="";
+
   ngOnInit() {
     // click the element with id of posts_tab
     document.getElementById("posts_tab")?.click();
@@ -170,6 +182,7 @@ export class EventPage {
 
       this.getCurrentUserId().subscribe((uid) => {
         if (uid) {
+          this.user_id = uid;
           this.http.get(`${this.api.apiUrl}/e/events/${event_id}?uid=${uid}`).subscribe((data) => {
             this.url = `https://xpose-4f48c.web.app/view-event/${event_id}`;
             this.retrieveMessages();
@@ -495,7 +508,7 @@ export class EventPage {
     // / Check if participant object and participant.id are defined and not null
     if (participant) {
       // Navigate to the user profile page with the participant's ID
-      this.router.navigate(['/user-profile', participant.uid]);
+      this.router.navigate(['/user-profile', participant.uid, this.user_id]);
     } else {
       // Handle the case where participant object or participant.id is invalid or missing
       console.error('Invalid participant data.');
