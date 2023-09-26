@@ -9,14 +9,11 @@ import { get } from "http";
 import { ApiService } from "../service/api.service";
 import { MenuController } from '@ionic/angular';
 
-
-
 @Component({
 	selector: "app-home",
 	templateUrl: "./home.page.html",
 	styleUrls: ["./home.page.scss"]
 })
-
 
 export class HomePage {
 	currentPageName = 'xPose';
@@ -51,7 +48,7 @@ export class HomePage {
 		this.getCurrentUserId().subscribe((uid) => {
 			if(uid){
 				console.log(`We got that ${uid}`);
-				this.http.get<Event[]>(`${this.api.apiUrl}/e/feed?uid=${uid}&tags=${query}`).subscribe((events: Event[]) => {
+				this.http.get<Event[]>(`${this.api.apiUrl}/e/feed?uid=${uid}&tags=${query}&n=30`).subscribe((events: Event[]) => {
 					console.log(events);
 					  this.events = events;
 					this.populateCards();
@@ -65,44 +62,28 @@ export class HomePage {
 	}
 
 	   
-	getEventsFromAPI() {
-		this.getCurrentUserId().subscribe((uid) => {
-		  if (uid) {
-			// Request for tags
-			this.http.get(`${this.api.apiUrl}/e/tags?n=${10}`)
-			  .subscribe(
-				(data: any) => {
-				  console.log(data);
-				  this.tags = data;
-				},
-				(error) => {
-				  console.error('Error fetching tags:', error);
-				  // Handle the error (e.g., show an error message to the user)
-				}
-			  );
-	  
-			console.log(`We got that ${uid}`);
-			
-			// Request for events
-			this.http.get<Event[]>(`${this.api.apiUrl}/e/feed?uid=${uid}`)
-			  .subscribe(
-				(events: Event[]) => {
-				  console.log(events);
+  getEventsFromAPI() {
+	this.getCurrentUserId().subscribe((uid) => {
+		if(uid){
+			this.http.get(`${this.api.apiUrl}/e/tags?n=30`)
+			.subscribe((data: any) => {
+				console.log(data);
+				this.tags = data;
+			});
+
+			// console.log(`We got that ${uid}`);
+			this.http.get<Event[]>(`${this.api.apiUrl}/e/feed?uid=${uid}`).subscribe((events: Event[]) => {
+				console.log(events);
 				  this.events = events;
-				  this.populateCards();
-				},
-				(error) => {
-				  console.error('Error fetching events:', error);
-				  // Handle the error (e.g., show an error message to the user)
-				}
-			  );
-		  } else {
+				this.populateCards();
+			  });
+		}
+		else {
 			console.log("no user id");
-			// Handle the case when there is no user ID (e.g., show a message)
-		  }
-		});
-	  }
-	  
+			
+		}
+	});
+  }
 
   truncateText(text: string, words: number): string {
 	if (!text) return '';

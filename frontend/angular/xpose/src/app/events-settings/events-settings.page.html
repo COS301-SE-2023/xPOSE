@@ -53,13 +53,15 @@
 
       <!-- Access Privacy (Public/Private) -->
       <div class="form-group">
-        <label>Access Privacy:</label>
+        <label class="label" for="privacy_setting">Access Privacy:</label>
         <ion-radio-group id="accessPrivacy" [(ngModel)]="eventObject.privacy_setting">
           <ion-item>
+            <ion-icon name="earth"></ion-icon>
             <ion-label>Public</ion-label>
             <ion-radio value="public"></ion-radio>
           </ion-item>
           <ion-item>
+            <ion-icon name="lock-closed"></ion-icon>
             <ion-label>Private</ion-label>
             <ion-radio value="private"></ion-radio>
           </ion-item>
@@ -68,7 +70,7 @@
 
       <!-- Event Tags -->
       <div class="form-group">
-        <h3><label for="" class="label">Add Tags</label></h3>
+        <label for="" class="label">Add Tags:</label>
         <ion-searchbar id="tag_search" class="ther" name="tags"
         [(ngModel)]="tag_input"
         (ionInput)="onTagInput($event)"
@@ -181,20 +183,41 @@
         </div>
         <!-- Chat Restrictions -->
         <div class="form-group">
-          <h4>Chat Restrictions</h4>
+          <!-- <h4>Chat Restrictions</h4>
           <ion-checkbox id="profanity">Allow Profanity</ion-checkbox>
-          <ion-checkbox id="negativeMessages">Allow Negative Messages</ion-checkbox>
+          <ion-checkbox id="negativeMessages">Allow Negative Messages</ion-checkbox> -->
+
+          <h3><label for="" class="label"> Add restricted words </label></h3>
+          <ion-input id="tag_search" class="ion-input-" name="tags"
+          [(ngModel)]="word_input"
+          autocomplete="off" placeholder="Type restricted word"></ion-input>
+          <ion-button (click)="addRestricted(word_input)">
+            <ion-icon name="add"></ion-icon>
+          </ion-button>
+          <!-- <ion-list>
+            <ion-item *ngFor="let word of restrictedWords_list" (click)="onTagSelect(word)">
+              <ion-icon name="pricetag"></ion-icon> {{ word }}
+            </ion-item>
+          </ion-list>
+         -->
+          <div class="tags">
+            <span class="tag" *ngFor="let word of restrictedWords_list">
+              {{ word }}
+              <button class="close" (click)="onWordRemove(word)">x</button>
+            </span>
+          </div>
+
         </div>
     
         <!-- Save Changes Button -->
         <div class="form-group">
-          <button id="saveChangesButton">Save Changes</button>
+          <!-- <button id="saveChangesButton" (click)="updateEvent()">Save Changes</button> -->
         </div>
       <!-- </form> -->
     </section>
 
     <section class="form-section">
-      <h3>Delete event</h3>
+      <h3>Delete Event</h3>
       <!-- Posts Settings -->
       <!-- <form (ngSubmit)="onSubmit()" #form="ngForm"> -->
         <div class="form-group">
@@ -205,7 +228,7 @@
         </div>
         <!-- Save Changes Button -->
         <div class="form-group">
-          <button (click)="deleteEvent()">Delete event</button>
+          <button (click)="deleteEvent()">Delete Event</button>
         </div>
       <!-- </form> -->
     </section>

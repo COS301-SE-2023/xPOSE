@@ -37,7 +37,7 @@
       </ion-item>
       <ion-item (click)="toggleLike()" class="menu-item">
         <ion-label>Like</ion-label>
-        <ion-icon slot="end" [name]="isLiked ? 'heart' : 'heart-outline'"></ion-icon>
+        <ion-icon slot="end" [name]="isLiked ? 'heart' : 'heart-outline'" [color]="isLiked ? 'danger' : 'medium'"></ion-icon>
         <span>{{ likeCount }}</span>
       </ion-item>
       <ion-item (click)="toggleComment()" class="menu-item">

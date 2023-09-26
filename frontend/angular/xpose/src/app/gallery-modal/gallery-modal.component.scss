@@ -91,6 +91,7 @@ button{
 
 .menu-item {
   cursor: pointer;
+  --border-color: hsl(304, 49%, 82%)
 }
 
 .custom-backround{
@@ -106,6 +107,7 @@ ion-toolbar{
   background-color: violet;
   --background:#ffffff;
   padding-left: 5px;
+  padding-right: 5px;
 }
 
 .header{
@@ -147,4 +149,8 @@ ion-toolbar{
 
 .close-user:hover {
   color: black;
+}
+
+ion-title {
+  margin-left: 5px;
 }

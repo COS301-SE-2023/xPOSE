@@ -1,9 +1,8 @@
-// cypress/integration/joined-event-page.spec.js
+ // cypress/integration/joined-event-page.spec.js
 
-describe('JoinedEventPage Tests', () => {
-  beforeEach(() => {
+it('should test the request info',() => {
     // Load the Angular app's URL before each test
-    cy.visit('https://xpose-4f48c.web.app/');
+    cy.visit('http://localhost:4200/');
   });
 
   it('should display events after loading', () => {
@@ -45,7 +44,7 @@ describe('JoinedEventPage Tests', () => {
     cy.url().should('include', '/create-event');
   });
 
-  // Add more tests for other functionality as needed
-});
+  
+
 
     
