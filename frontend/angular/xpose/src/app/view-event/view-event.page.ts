@@ -48,6 +48,15 @@ export class ViewEventPage implements OnInit, AfterViewInit {
     this.location.back();
   }
 
+  getStatusColor(status: string) {
+    if (status === 'ongoing') {
+      return 'success';
+    } else if (status === 'upcoming') {
+      return 'warning';
+    } else {
+      return 'danger';
+    }
+      }
 
   // getEventDataFromAPI() {
   //   this.getCurrentUserId().subscribe((uid) => {

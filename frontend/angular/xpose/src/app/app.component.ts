@@ -91,6 +91,5 @@ export class AppComponent implements OnInit {
 	  }
 	  onMypictures() {
 		this.router.navigate(['/myimages']);
-	  }
-	  
+	  }	  
 }
