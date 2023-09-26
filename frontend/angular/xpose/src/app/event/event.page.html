@@ -1,35 +1,4 @@
-<ion-header class="ion-hide-lg-down">
-  <ion-toolbar>
-    <ion-title slot="start"> Event</ion-title>
-    <ion-buttons slot="start" class="center-items">
-      <ion-button routerLink="/home" routerLinkActive="active">Home</ion-button>
-      <ion-button routerLink="/joined-event" routerLinkActive="active">Joined Events</ion-button>
-      <ion-button routerLink="/create-event" routerLinkActive="active">Create Event</ion-button>
-      <ion-button routerLink="/notification" routerLinkActive="active">Notifications</ion-button>
-      <ion-button routerLink="/friends" routerLinkActive="active">Friends</ion-button>
-      <!-- <ion-button routerLink="/profile" routerLinkActive="active"> Profile</ion-button> -->
-      <ion-button routerLink="/settings" routerLinkActive="active"> Settings</ion-button>
-    </ion-buttons>
-    <ion-buttons slot="end">
-      <ion-button (click)="logout()" routerLinkActive="active"> <ion-icon name="log-out-outline"></ion-icon></ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-
-<!-- Small screen view -->
-<ion-header class="ion-hide-lg-up">
-  <ion-toolbar>
-    <ion-title class="ion-text-center"> Event</ion-title>
-    <ion-buttons slot="start">
-      <app-backbutton></app-backbutton>
-    </ion-buttons>
-    <ion-buttons slot="end">
-      <ion-button (click)="logout()" routerLinkActive="active"> <ion-icon name="log-out-outline"></ion-icon></ion-button>
-    </ion-buttons>
-
-    
-  </ion-toolbar>
-</ion-header>
+<app-footer></app-footer>
 
       <ion-content [fullscreen]="true" id="main-content" class="custom-backround">
         <!-- <ion-header [translucent]="true">
@@ -99,20 +68,18 @@
         <ion-header [translucent]="true">
           <ion-toolbar>
             <ion-title>{{ current_event?.title }}</ion-title>
-            <ion-buttons slot="end">
+            <ion-buttons *ngIf="current_event.user_event_position==='owner'" slot="end">
               <ion-button (click)="editEvent()" class="edutton">
                 <ion-icon slot="start" name="create-outline"></ion-icon>
               </ion-button>
             </ion-buttons>
              </ion-toolbar>
            </ion-header>
-        
-        <!-- <ion-content [fullscreen]="true"> -->
           <div>
             <ion-card>
               <ion-card-header>
-                <ion-card-subtitle>Date</ion-card-subtitle>
-                <ion-card-title> {{ current_event?.start_date }} - {{ current_event?.end_date }} ({{ current_event?.status }}) </ion-card-title>
+                <ion-card-subtitle>Date ({{ current_event?.status }})</ion-card-subtitle>
+                <ion-card-title class="time"> {{ current_event?.start_date  }} - {{ current_event?.end_date  }}  </ion-card-title>
               </ion-card-header>
               <ion-card-content>
                 <ion-card-subtitle>Location</ion-card-subtitle>
@@ -150,12 +117,12 @@
               <ion-img [src]="participant.photoURL"  loading="lazy" (click)="onCardClick(participant)"></ion-img>
             </ion-avatar>
             <ion-label>
-              <h2 class="participant-name" (click)="onCardClick(participant)">{{ participant.display_name }}</h2>
-              <p class="participant-email">{{ participant.email }}</p>
+              <p class="participant-name" (click)="onCardClick(participant)">
+                {{ participant.display_name }} <b>@{{ participant.uniq_username }}</b>
+                
+              </p>
+              <p class="participant-email"> <b *ngIf="participant.location">{{ participant.location }} </b></p>
             </ion-label>
-            <ion-button slot="end" fill="clear" (click)="removeParticipant(participant)">
-              <ion-icon name="person-remove-outline"></ion-icon>
-            </ion-button>
           </ion-item>
         
           <ion-item-divider class="divider"></ion-item-divider>       

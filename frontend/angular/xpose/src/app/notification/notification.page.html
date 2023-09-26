@@ -1,34 +1,4 @@
-<ion-header class="ion-hide-lg-down">
-  <ion-toolbar>
-    <ion-title slot="start"> Notifications</ion-title>
-    <ion-buttons slot="start" class="center-items">
-      <ion-button routerLink="/home" routerLinkActive="active">Home</ion-button>
-      <ion-button routerLink="/joined-event" routerLinkActive="active">Joined Events</ion-button>
-      <ion-button routerLink="/create-event" routerLinkActive="active">Create Event</ion-button>
-      <ion-button routerLink="/notification" routerLinkActive="active">Notifications</ion-button>
-      <ion-button routerLink="/friends" routerLinkActive="active">Friends</ion-button>
-      <!-- <ion-button routerLink="/profile" routerLinkActive="active"> Profile</ion-button> -->
-      <ion-button routerLink="/settings" routerLinkActive="active"> Settings</ion-button>
-    </ion-buttons>
-    <ion-buttons slot="end">
-      <ion-button (click)="logout()" routerLinkActive="active"> <ion-icon name="log-out-outline"></ion-icon></ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-
-<!-- Small screen view -->
-<ion-header class="ion-hide-lg-up">
-  <ion-toolbar>
-    <ion-title class="ion-text-center"> Notifications</ion-title>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-buttons slot="end">
-      <ion-button (click)="logout()" routerLinkActive="active"> <ion-icon name="log-out-outline"></ion-icon></ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-  
+<app-footer></app-footer>
 
 <ion-content [fullscreen]="true" id="main-content" class="custom-backround">
  <div>
@@ -65,6 +35,21 @@
               <ion-button fill="clear" (click)="request(message, 'reject_join_event')">Reject</ion-button>
             </ion-buttons>
           </ion-item>
+
+          <!-- Event Invitation notification item --> 
+          <ion-item *ngIf="message.type === 'invitation_to_event'" class="custom-ion-item">
+            <ion-icon name="calendar"></ion-icon>
+            <ion-label>
+              <h2>Event Invitation</h2>
+              <!-- <a [routerLink]="['/user-profile', message.senderId, message.receiverId]"> -->
+              <p>{{ message.message }}</p>
+              <!-- </a> -->
+            </ion-label>
+            <ion-buttons slot="end">
+              <ion-button fill="clear" (click)="request(message, 'invitation_to_event','accepted')">Accept</ion-button>
+              <ion-button fill="clear" (click)="request(message, 'invitation_to_event','rejected')">Reject</ion-button>
+            </ion-buttons>
+          </ion-item>
     
           <!-- Friend request accept -->
           <ion-item *ngIf="message.type === 'friend_accept'" class="custom-ion-item">
@@ -83,7 +68,7 @@
           </ion-item>
 
           <!-- accept_join_event -->
-          <ion-item *ngIf="message.type === 'accept_join_event' ">
+          <ion-item *ngIf="message.type === 'accept_join_event' " class="custom-ion-item">
             <ion-label>
               <h2>Request to join event accepted</h2>
                <p>
@@ -98,7 +83,7 @@
           </ion-item>
 
           <!-- post_notifications -->
-          <ion-item *ngIf="message.type === 'post_notifications' ">
+          <ion-item *ngIf="message.type === 'post_notifications' " class="custom-ion-item">
               <ion-label>
                 <h2>Posts</h2>
                   <p>

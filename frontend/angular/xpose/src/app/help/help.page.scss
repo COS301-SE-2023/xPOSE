@@ -1,0 +1,23 @@
+ion-card {
+    background-color: #ffffff;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    margin: 16px;
+  }
+  
+  ion-card-header {
+    background-color: hsl(304, 49%, 82%);
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 10px 10px 0 0;
+    margin-bottom: 7px;
+  }
+  
+  ion-card-content {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+  }
+  

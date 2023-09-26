@@ -1,58 +1,71 @@
-.custom-background{
-    --background: #ffffff;
-    background-color: #ffffff   ;
-    color: #000000;
-    font-size: 20px;
-  
-  }
-  ion-searchbar {
-    --background: #f4f4f4; /* Set the background color of the search bar */
-    --color: #333; /* Set the text color */
-    --placeholder-color: #999; /* Set the color of the placeholder text */
-    --border-color: #ddd; /* Set the border color */
-    --border-radius: 10px; /* Set the border radius */
-  }
-  
-  ion-segment {
-    --color: #b53fab; /* Set the color of the segment */
-    --color-checked: #fff; /* Set the color when checked */
-    --background: #f4f4f4; /* Set the background color */
-    --background-checked: #b53fab; /* Set the background color when checked */
-  }
-  
-  ion-segment-button{
-    --background: #ffffff;
-    color: #000000;
-  }
-  ion-content{
-    --background: #ffffff;
-    background-color: #ffffff;
-    color: #000000;
-  }
-  ion-list {
-    --padding-start: 0; /* Remove the padding from the start of the list */
-    --padding-end: 0; /* Remove the padding from the end of the list */
-  }
-  
-  ion-item {
-    --padding-start: 20px; /* Set the padding from the start of the item */
-    --padding-end: 20px; /* Set the padding from the end of the item */
-    --min-height: 50px; /* Set the minimum height of the item */
-  }
-  
-  ion-toolbar{
-    --background: #ffffff;
-    background-color: #ffffff;
-    color: #000000;
-  }
-  .fontcolor{
-    color: #000000;
-  }
-  ion-label{
-    color: #000000;
-  }
-  ion-header{
-    --background: #ffffff;
-    color: #000000;
-    padding-top: 54px;
-  }
+/* Add these styles to your component's SCSS file (e.g., home.page.scss) */
+
+/* Styling for the ion-content */
+#main-content {
+  --background: #f0f0f0; /* Set the background color */
+}
+
+/* Styling for the ion-header */
+ion-header {
+  --background: #ffffff; /* Set the background color for the header */
+}
+
+/* Styling for the ion-toolbar inside ion-header */
+ion-toolbar {
+  --background: #ffffff; /* Set the background color for the toolbar */
+}
+
+/* Styling for the ion-title inside ion-toolbar */
+ion-title {
+  font-size: 20px; /* Set the font size for the title */
+  text-align: center; /* Center-align the title */
+}
+
+/* Styling for the ion-searchbar */
+ion-searchbar {
+  --background: #ffffff; /* Set the background color for the search bar */
+  --border-radius: 10px; /* Set the border radius for the search bar */
+  --placeholder-color: #999; /* Set the placeholder text color */
+  --searchbar-icon-color: #007bff; /* Set the search icon color */
+  --searchbar-input-color: #333; /* Set the input text color */
+  --searchbar-input-padding: 10px 15px; /* Set the input padding */
+}
+
+/* Styling for the ion-segment buttons */
+ion-segment-button {
+  color: #000000;
+    --border-radius: 10px;
+    --padding-start: 20px;
+    --padding-end: 20px;
+    --margin: 5px;
+    --font-size: 18px;
+    --font-family: "Roboto", sans-serif;
+    --color-checked: #ff00aa;
+}
+
+/* Styling for the loading message */
+.fontcolor {
+  color: #007bff; /* Set the loading message text color */
+}
+
+/* Styling for the "No matches found" message */
+h2.fontcolor {
+  color: #ff0000; /* Set the "No matches found" message text color */
+}
+
+/* Styling for the ion-list items */
+ion-item {
+  --border-width: 0 0 1px 0; /* Add a bottom border */
+  --border-color: #e0e0e0; /* Set the border color */
+}
+
+/* Styling for the ion-labels inside ion-list items */
+ion-label {
+  font-weight: bold; /* Make the text bold */
+  color: #333; /* Set the text color for labels */
+}
+
+/* Optional: Add margin to ion-item for better spacing between items */
+ion-item {
+  margin-bottom: 10px;
+}

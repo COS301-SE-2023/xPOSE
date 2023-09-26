@@ -6,7 +6,7 @@ import { IonTabs } from '@ionic/angular';
 import { NavController } from '@ionic/angular';
 import { CurrentEventDataService } from '../shared/current-event-data.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { Observable, map } from 'rxjs';
+import { Observable, map, subscribeOn } from 'rxjs';
 import { Location } from '@angular/common';
 import { NavigationEnd } from "@angular/router";
 import { GalleryDataService } from './posts/gallery-lightbox/gallery-data.service';
@@ -20,6 +20,8 @@ import { GalleryModalComponent } from '../gallery-modal/gallery-modal.component'
 import { Service } from '../service/service';
 
 import { AuthService } from '../shared/services/auth.service';
+
+// import { CommonService } from './common.service';
 
 
 interface Item {
@@ -38,8 +40,11 @@ interface Item {
   styleUrls: ['./event.page.scss'],
 })
 export class EventPage {
+  title = 'uers-location';
+  // location: any;
   filterType: string = 'posts'; 
   event: Event;
+  // location: Event;
   participants: any;
   private history: string[] = [];
   cards: any[] = []; // Array to store cards data
@@ -89,7 +94,8 @@ export class EventPage {
     private modalController: ModalController,
     private sanitizer: DomSanitizer,
     public authService: AuthService,
-    private userService: Service
+    private userService: Service,
+    // private commmonService:CommonService
     ) {
       // click the 
       this.url = "sdafsda";
@@ -141,6 +147,11 @@ export class EventPage {
         return;
       }
 
+
+      // this.commmonService.getLocation().subscribe((response)=> 
+      //   console.log(response)
+      //   this.location = response;
+      // )
       // participants: Participants[] = [
       //   { name: 'John' },
       //   { name: 'Thabo' },
@@ -158,7 +169,7 @@ export class EventPage {
       this.getCurrentUserId().subscribe((uid) => {
         if (uid) {
           this.http.get(`${this.api.apiUrl}/e/events/${event_id}?uid=${uid}`).subscribe((data) => {
-            this.url = `${window.location.protocol}//${window.location.host}/view-event/${event_id}`;
+            this.url = `https://xpose-4f48c.web.app/view-event/${event_id}`;
             this.retrieveMessages();
             this.retrievePosts();
             this.current_event = data;
@@ -251,6 +262,27 @@ export class EventPage {
         }
       );
     });
+  }
+
+  transform(value: Date): string {
+    if (!(value instanceof Date)) {
+      return '';
+    }
+
+    const hours = value.getHours();
+    const minutes = value.getMinutes();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+
+    // Convert hours from 24-hour format to 12-hour format
+    const formattedHours = hours % 12 || 12;
+
+    // Add leading zeros to minutes if needed
+    const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
+
+    // Create the formatted time string
+    const formattedTime = `${formattedHours}:${formattedMinutes} ${ampm}`;
+
+    return formattedTime;
   }
 
   leaveEvent() {
@@ -371,6 +403,8 @@ export class EventPage {
   getEventParticipantsFromAPI() {
     this.getCurrentUserId().subscribe((uid) => {
       if(uid) {
+        const geocoder = new google.maps.Geocoder();
+
         this.http
           .get(`${this.api.apiUrl}/e/events/${this.current_event.code}/participants?uid=${uid}`)
           .subscribe((data) => {
@@ -384,6 +418,13 @@ export class EventPage {
                 (user) => {
                   if(user) {
                     participant.photoURL = user.photoURL;
+                    participant.uniq_username = user.uniq_username;
+                    // TODO: Add validation on events service, so
+                    if (true) {
+                      participant.location = user.location._lat + ', ' + user.location._long;
+                    }
+                    // participant.location
+                    console.log(user);
                   }
                 }
               )

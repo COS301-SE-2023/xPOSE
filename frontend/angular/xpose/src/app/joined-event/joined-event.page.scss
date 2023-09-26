@@ -9,23 +9,18 @@ ion-card {
   color: #000000;
   margin-bottom: 20px;
   height: 430px;
-  border: solid 0.1px #adadad;
-  border-radius: 7px;
+  border: 1px solid #d1d1d1;
+  border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15), 0 -2px 5px rgba(0, 0, 0, 0.15);
-  transition: transform 0.7s; /* Smooth hover transition */
-  padding-bottom: 5px;
-}
-
-.card-transition {
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Define the properties to transition and their duration */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
 }
 
 .card-transition:hover {
-  transform: scale(1.05); /* Scale up the card on hover */
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Apply a box shadow on hover */
+  transform: scale(1.05);
+  box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2);
 }
-
 
 .card-image {
   width: 100%;
@@ -33,8 +28,7 @@ ion-card {
   object-fit: cover;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
- }
-  
+}
 
 .card-title {
   font-size: 24px;
@@ -187,86 +181,60 @@ ion-col{
   color: #000000;
 }
 
-/* Add a box-shadow to the selected card */
 .card-selected {
-  transform: scale(1.05); /* Scale the card slightly when selected (optional) */
-  // transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add a smooth transition effect */
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Customize shadow values as needed */
-  transition: transform 0.2s; /* Smooth hover transition */
+  transform: scale(1.05);
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
 }
-
-/* Add this class to the selected card using ngClass when it's clicked */
-
-
-/* Add this class to the selected card using ngClass when it's clicked */
 
 ion-searchbar {
-  --background: #f4f4f4; /* Set the background color of the search bar */
-  --color: #333; /* Set the text color */
-  --placeholder-color: #999; /* Set the color of the placeholder text */
-  --border-color: #ddd; /* Set the border color */
-  --border-radius: 10px; /* Set the border radius */
+  --background: #f4f4f4;
+  --color: #333;
+  --placeholder-color: #999;
+  --border-color: #ddd;
+  --border-radius: 10px;
 }
-// ion-header{
-//   --background: #ffffff;
-//   color: #000000;
-//   padding-top: 50px;
-// }
-// ion-title{
-//   align-items: center;
-//   font-size: 18px;
-//   color: #3f3f3fe8;
-// }
-/* Styles for the Swiper container */
-/* Styles for the Swiper container */
-/* Styles for the Swiper container */
-/* Styles for the Swiper container */
+
 #tags-swiper {
   width: 100%;
-  overflow-x: auto; /* Enable horizontal scrolling for tags */
-  white-space: nowrap; /* Prevent tags from wrapping to the next line */
-  padding: 10px 0; /* Add some padding to the top and bottom for spacing */
+  overflow-x: auto;
+  white-space: nowrap;
+  padding: 10px 0;
 }
 
-/* Styles for the Swiper slide (if needed) */
 .swiper-slide {
-  display: inline-block; /* Display tags in a row */
-  margin-right: 10px; /* Add spacing between tags */
+  display: inline-block;
+  margin-right: 10px;
 }
 
-/* Customize the styles for each tag */
 .swiper-tag {
   display: inline-block;
-  padding: 10px 16px; /* Adjust padding for each tag */
-  border-radius: 20px; /* Increase border-radius for pill-like design */
+  border-radius: 20px;
   font-size: 14px;
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.3s ease, color 0.3s ease;
+  --background: #ffebef;
 }
 
-/* Recent Events tag */
 .recent-events {
-  background-color: #3498db; /* Blue background for "Recent Events" */
-  color: #fff; /* White text color */
+  background-color: #3498db;
+  color: #fff;
 }
 
-/* New Events tag */
 .new-events {
-  background-color: #e74c3c; /* Red background for "New Events" */
-  color: #fff; /* White text color */
+  background-color: #e74c3c;
+  color: #fff;
 }
 
-/* Close Events tag */
 .close-events {
-  background-color: #2ecc71; /* Green background for "Close Events" */
-  color: #fff; /* White text color */
+  background-color: #2ecc71;
+  color: #fff;
 }
 
-/* Trending Events tag */
 .trending-events {
-  background-color: #f39c12; /* Orange background for "Trending Events" */
-  color: #fff; /* White text color */
+  background-color: #f39c12;
+  color: #fff;
 }
 
 /* Pagination styles (optional) */
@@ -291,4 +259,28 @@ ion-searchbar {
     padding: 8px 16px;
     font-size: 14px;
   }
+}
+
+.menu-item:hover {
+  cursor: pointer;
+}
+
+.chip-all {
+  --background: #ffebef;
+}
+
+.chip-my-events {
+  --background: #ffebef;
+}
+
+.chip-ongoing {
+  --background: #2ecc71;
+}
+
+.chip-upcoming {
+  --background: #f39c12;
+}
+
+.chip-ended {
+  --background: #e74c3c;
 }

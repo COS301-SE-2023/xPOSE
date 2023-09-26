@@ -5,11 +5,11 @@ const admin = require('firebase-admin');
 async function responseToEventInvite(req, res) {
     try {
         const { code } = req.params; // Change req.code to req.body.code
-        const { uid } = req.query;
+        const { uid, invitee } = req.query;
         const { response } = req.body; // Remove invitation_id from req.body
 
         // Check if required fields are present in the request body
-        if (!uid || !code || !response) {
+        if (!uid || !invitee || !code || !response) {
             res.status(400).json({ error: 'Invalid request. Required fields are missing.' });
             return;
         }
@@ -27,8 +27,15 @@ async function responseToEventInvite(req, res) {
             },
         });
 
+        // Find the invitee
+        const inviteeUser = await User.findOne({
+            where: {
+                uid: invitee,
+            },
+        });
+
         // If user doesn't exist, throw an error
-        if (!user) {
+        if (!user || !inviteeUser) {
             res.status(404).json({ error: 'User not found' });
             return;
         }
@@ -49,7 +56,7 @@ async function responseToEventInvite(req, res) {
         const invitation = await EventInvitation.findOne({
             where: {
                 event_id_fk: event.id,
-                user_id_fk: user.id,
+                user_id_fk: inviteeUser.id,
                 response: 'pending',
             },
         });
@@ -64,15 +71,21 @@ async function responseToEventInvite(req, res) {
         await invitation.update({
             response: response,
         });
-
+        
         // If the response is "accepted", add the user to the event participants
         if (response === 'accepted') {
             await EventParticipant.create({
-                user_id_fk: user.id,
+                user_id_fk: inviteeUser.id,
                 event_id_fk: invitation.event_id_fk,
                 timestamp: new Date(),
             });
         }
+
+        // Delete the invitation
+        await invitation.destroy();
+
+        // Send back notification to the user who sent the invitation
+
 
         res.json({ message: 'Invitation response processed successfully.' });
 

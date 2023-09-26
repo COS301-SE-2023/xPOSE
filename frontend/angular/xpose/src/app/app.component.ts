@@ -86,5 +86,11 @@ export class AppComponent implements OnInit {
 	  logout() {
 		this.authService.signOut();
 	  }
+	  onHelp() {
+		this.router.navigate(['/help']);
+	  }
+	  onMypictures() {
+		this.router.navigate(['/myimages']);
+	  }
 	  
 }
