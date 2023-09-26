@@ -53,13 +53,15 @@
 
       <!-- Access Privacy (Public/Private) -->
       <div class="form-group">
-        <label>Access Privacy:</label>
+        <label class="label" for="privacy_setting">Access Privacy:</label>
         <ion-radio-group id="accessPrivacy" [(ngModel)]="eventObject.privacy_setting">
           <ion-item>
+            <ion-icon name="earth"></ion-icon>
             <ion-label>Public</ion-label>
             <ion-radio value="public"></ion-radio>
           </ion-item>
           <ion-item>
+            <ion-icon name="lock-closed"></ion-icon>
             <ion-label>Private</ion-label>
             <ion-radio value="private"></ion-radio>
           </ion-item>
@@ -68,7 +70,7 @@
 
       <!-- Event Tags -->
       <div class="form-group">
-        <h3><label for="" class="label">Add Tags</label></h3>
+        <label for="" class="label">Add Tags:</label>
         <ion-searchbar id="tag_search" class="ther" name="tags"
         [(ngModel)]="tag_input"
         (ionInput)="onTagInput($event)"
