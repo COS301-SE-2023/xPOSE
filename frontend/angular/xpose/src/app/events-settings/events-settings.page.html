@@ -181,14 +181,35 @@
         </div>
         <!-- Chat Restrictions -->
         <div class="form-group">
-          <h4>Chat Restrictions</h4>
+          <!-- <h4>Chat Restrictions</h4>
           <ion-checkbox id="profanity">Allow Profanity</ion-checkbox>
-          <ion-checkbox id="negativeMessages">Allow Negative Messages</ion-checkbox>
+          <ion-checkbox id="negativeMessages">Allow Negative Messages</ion-checkbox> -->
+
+          <h3><label for="" class="label"> Add restricted words </label></h3>
+          <ion-input id="tag_search" class="ion-input-" name="tags"
+          [(ngModel)]="word_input"
+          autocomplete="off" placeholder="Type restricted word"></ion-input>
+          <ion-button (click)="addRestricted(word_input)">
+            <ion-icon name="add"></ion-icon>
+          </ion-button>
+          <!-- <ion-list>
+            <ion-item *ngFor="let word of restrictedWords_list" (click)="onTagSelect(word)">
+              <ion-icon name="pricetag"></ion-icon> {{ word }}
+            </ion-item>
+          </ion-list>
+         -->
+          <div class="tags">
+            <span class="tag" *ngFor="let word of restrictedWords_list">
+              {{ word }}
+              <button class="close" (click)="onWordRemove(word)">x</button>
+            </span>
+          </div>
+
         </div>
     
         <!-- Save Changes Button -->
         <div class="form-group">
-          <button id="saveChangesButton">Save Changes</button>
+          <!-- <button id="saveChangesButton" (click)="updateEvent()">Save Changes</button> -->
         </div>
       <!-- </form> -->
     </section>

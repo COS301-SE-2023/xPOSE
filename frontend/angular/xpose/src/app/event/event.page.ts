@@ -80,6 +80,8 @@ export class EventPage {
   }
   
 
+  restrictedWords_list: string[] = [];
+
   constructor(private http: HttpClient,
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -177,6 +179,12 @@ export class EventPage {
             console.log(this.current_event); 
             this.getEventParticipantsFromAPI();
             console.log(this.participants);
+
+
+
+            // Load restricted words
+               // restricted words data
+               this.addRestrictedWords(event_id, []);
           },
           (error) => {
               this.loading = false; // Request completed with an error
@@ -208,6 +216,36 @@ export class EventPage {
   // import { HttpClient } from '@angular/common/http';
   
   // ...
+
+
+  addRestrictedWords(event_id:string, tagWords: string[]) {
+    this.computationOfRestrictedWords(event_id, tagWords).subscribe(
+      (response: any) => {
+        //
+        console.log("Restricted words added:", response);
+
+        this.restrictedWords_list = response.tagWords;
+        console.log("Restricted words array:", this.restrictedWords_list);
+      },
+      (error) => {
+        console.log("Error adding restricted words", error)
+      }
+    )
+   }
+
+    computationOfRestrictedWords(event_id: string, tagWordsArray: string[]) {      
+      const formData:FormData = new FormData();
+      let flag = false;
+      for(let index = 0; index < tagWordsArray.length; index++) {
+        flag = true;
+        formData.append('restrictedWords[]',tagWordsArray[index].toLowerCase());
+      }
+      if(!flag){
+        formData.append('restrictedWords[]', '');
+      }
+      
+      return this.http.post(`${this.api.apiUrl}/c/chats/${event_id}/restrictedWord`, formData);
+    }
 
   
   onLogoutClick() {
@@ -498,7 +536,46 @@ export class EventPage {
   // Code to create and send messages
   newMessage!: string;
 
+  // Check if there's a banned word
+  containsRestrictedWord() {
+    for (const word of this.restrictedWords_list) {
+      if (this.newMessage.toLocaleLowerCase().includes(word.toLowerCase())) {
+        return [true,word]
+      }
+    }
+    return [false, ''];
+  }
+
+  openModalUser(content: any) {
+    let modal = document.getElementById("myModal")
+    let modalContent = document.getElementById("modalContent");
+    if(modal) { 
+      modal.style.display = "block";
+    }
+    if(modalContent) {
+      modalContent.textContent = content;
+    }
+
+  }
+
+  closeModalUser() {
+    var modal = document.getElementById("myModal");
+    if(modal) modal.style.display = "none";
+  }
+
+  
   createMessage() {
+    // check if message has banned or restriced words
+    const [containsRestricted, restrictedWord] = this.containsRestrictedWord();
+    if(this.newMessage) {
+      if(containsRestricted) {
+        this.openModalUser('Can\'t send message with banned word(s):\n' + restrictedWord);
+        return;
+      } else{
+        console.log("Message does not contain banned word");
+      }
+    }
+
     if (this.newMessage) {
       this.getCurrentUserId().subscribe((uid) => {
         const message: Message = {
@@ -526,7 +603,7 @@ export class EventPage {
     if(this.messagesCollection) {
       this.messagesCollection.valueChanges().subscribe((messages: Message[]) => {
         this.messages = messages;
-        
+
         // Fetch and assign the displayName for each message
         this.messages.forEach((message: Message) => {
           this.getUserNameFromUid(message.uid).subscribe((displayName: string) => {
@@ -563,7 +640,6 @@ export class EventPage {
     else {
       console.log("messagesCollection is undefined");
     }
-
   }
   
   getUserNameFromUid(uid: string): Observable<string> {
