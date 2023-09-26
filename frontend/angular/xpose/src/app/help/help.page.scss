@@ -1,29 +1,23 @@
-/* Add these styles to your component's SCSS file for the help page (e.g., help.page.scss) */
-
-/* Styling for the ion-card */
 ion-card {
-    background-color: #ffffff; /* Set the background color for the card */
-    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
-    border-radius: 10px; /* Add border radius */
-    margin: 16px; /* Add margin for spacing */
-    padding: 16px; /* Add padding inside the card */
+    background-color: #ffffff;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    margin: 16px;
   }
   
-  /* Styling for the ion-card-header */
   ion-card-header {
-    background-color: #ff54ff; /* Set a background color for the header */
-    color: #fff; /* Set the text color for the header */
-    font-size: 24px; /* Set the font size for the header */
-    font-weight: bold; /* Make the header text bold */
-    text-align: center; /* Center-align the header text */
-    border-radius: 10px 10px 0 0; /* Rounded top corners for the header */
-    padding: 16px; /* Add padding to the header */
+    background-color: hsl(304, 49%, 82%);
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 10px 10px 0 0;
+    margin-bottom: 7px;
   }
   
-  /* Styling for the ion-card-content */
   ion-card-content {
-    font-size: 16px; /* Set the font size for the content */
-    line-height: 1.5; /* Set the line height for better readability */
-    color: #333; /* Set the text color for the content */
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
   }
   

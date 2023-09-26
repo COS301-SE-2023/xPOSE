@@ -72,8 +72,7 @@ ion-card-subtitle {
 }
 
 ion-button{
-  margin-top: 20px;
-  --background: #ff00f0;
+  --background: hsl(304, 49%, 82%);
   --color: #000000;
 }
 
@@ -92,10 +91,9 @@ ion-button{
 // }
 
 .regular-btn {
-  background-color: #eb0091;
+  background-color: hsl(304, 49%, 82%);
   color: #000000;
   border: none;
-  padding: 10px 20px;
   border-radius: 4px;
   cursor: pointer;
 }

@@ -1,4 +1,4 @@
-
+<!-- 
 <app-footer></app-footer>
 
 <ion-content [fullscreen]="true" id="main-content" class="custom-background">
@@ -11,15 +11,35 @@
           </ion-avatar>
           <ion-label>
             <h2>{{ friend.displayName }}</h2>
-            <!-- <p>{{ friend.uniq_username }}</p>
-            <p>{{ friend.email }}</p> -->
           </ion-label>
         </p>
         <ion-button slot="end" (click)="unfriend(friend)">Unfriend</ion-button>
       </ion-item>
     </ion-list>
-    <div *ngIf="!friends || friends.length === 0"> <!-- Add another ngIf for no friends -->
+    <div *ngIf="!friends || friends.length === 0">
       <p  class="ion-text-center">No friends to display.</p>
+    </div>
+  </div>
+</ion-content> -->
+<app-footer></app-footer>
+
+<ion-content [fullscreen]="true" id="main-content" class="custom-background">
+  <div class="friends-container">
+    <ion-list class="friends-list">
+      <ion-item *ngFor="let friend of friends">
+        <ion-avatar slot="start" (click)="forceRedirect(friend.uid)">
+          <img [src]="friend.photoURL" alt="{{ friend.displayName }} Avatar">
+        </ion-avatar>
+        <ion-label class="user-details">
+          <h2>{{ friend.displayName }}</h2>
+          <!-- <p>{{ friend.uniq_username }}</p>
+          <p>{{ friend.email }}</p> -->
+        </ion-label>
+        <ion-button slot="end" (click)="unfriend(friend)" class="unfriend-button">Unfriend</ion-button>
+      </ion-item>
+    </ion-list>
+    <div *ngIf="!friends || friends.length === 0" class="no-friends-message">
+      <p class="ion-text-center">No friends to display.</p>
     </div>
   </div>
 </ion-content>
