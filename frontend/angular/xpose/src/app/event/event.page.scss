@@ -206,7 +206,40 @@ ion-item:hover {
 .menu-open {
   display: block;
 }
-.time{
+
+
+/******************* css for  Modal for banned with banned ord ******************8*/
+/* Styles for the modal */
+.modal-user {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1;
+}
+
+.modal-content-user {
+  background-color: #fff;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 60%;
+}
+
+.close-user {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close-user:hover {
+  color: black;
+}.time{
   font-size: 18px; /* Adjust the font size as needed */
   font-family: Arial, sans-serif; /* Specify the font family you prefer */
   color: #333; /* Choose a color for the time */

@@ -3,12 +3,12 @@ import Friendship from '../data-access/models/friendship.table.js';
 import { sendMessageToQueue } from '../sender.js';
 import MessageBuilder from './messagebuilder.js';
 import admin from "firebase-admin";
+import { Op } from 'sequelize';
 
 export const acceptFriendRequest = async (req, res) => {
     const  {requestId} = req.params;
     const {senderId: requestSenderId, notificationId: notificationUid}  = req.body;
 
-    // console.log("Req.body::::::", req.body);
     try {
 
         const sender = await User.findByPk(requestSenderId);
@@ -18,6 +18,25 @@ export const acceptFriendRequest = async (req, res) => {
             return res.status(404).json({ error: 'Friend request not found' });
         }
 
+
+
+        // Check if users are already friends
+        const  areFriends = await Friendship.findOne({
+            where: {
+                [Op.or]: [
+                    { userID1: requestSenderId, userID2: requestId },
+                    { userID1: requestId, userID2: requestSenderId },
+                ],
+                Status: 'accepted',
+            }
+        });
+
+        // users are friends. Do not make a friendship again
+        if(areFriends) {
+            return res.status(400).json({ error: 'Users are already friends' }); 
+        }
+        
+        // add friendship
         await Friendship.create({
             userID1: requestSenderId,
             userID2: requestId,
@@ -44,7 +63,7 @@ export const acceptFriendRequest = async (req, res) => {
             console.error(`Error deleting notification document with ID ${notificationUid}:`, error);
         }
 
-        // send a notification to user
+          // send a notification to user
           // Communicate with the notification service
 
 
