@@ -14,10 +14,6 @@ ion-list {
   background-color: #ffffff;
 }
 
-// ion-icon {
-//   color: black;
-// }
-
 h2 {
   font-size: 15px;
   margin-bottom: 5px;
@@ -89,28 +85,25 @@ ion-buttons{
   color: #000000;
 }
 
-/* styles.css or your custom CSS file */
-
-/* Style the entire menu */
 ion-menu {
-  --width: 200px; /* Set the width of the sidebar menu */
-  --background: #f4f4f4; /* Set the background color of the sidebar menu */
+  --width: 200px;
+  --background: #f4f4f4;
 }
 
 ion-item {
-  --padding-start: 20px; /* Set the padding from the start of the item */
-  --padding-end: 20px; /* Set the padding from the end of the item */
+  --padding-start: 20px;
+  --padding-end: 20px;
 }
 
 ion-item:hover {
-  background-color: #e0e0e0; /* Set the background color when hovered */
+  background-color: #e0e0e0;
 }
 
 a.sidebar-link {
-  color: #000; /* Set the color of the link */
-  text-decoration: none; /* Remove the underline from the link */
+  color: #000;
+  text-decoration: none;
 }
 ion-icon {
-  --color: #333; /* Color of the icon */
-  --ionicon-stroke-width: 32px; /* Size of the icon */
+  --color: #333;
+  --ionicon-stroke-width: 32px;
 }
