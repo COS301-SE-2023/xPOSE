@@ -39,7 +39,7 @@ ion-radio-group {
 }
 
 button {
-  background-color: #eb0091;
+  background-color: hsl(304, 49%, 82%);
   color: #000000;
   border: none;
   padding: 10px 20px;
@@ -48,7 +48,7 @@ button {
 }
 
 button:hover {
-  background-color: #eb0091;
+  background-color: hsl(304, 49%, 82%);
 }
 
 /* Add additional styling as needed */
@@ -63,4 +63,8 @@ input{
 textarea{
   color:#000;
   background-color: #ffffff ;
+}
+
+.form-section {
+  border: 1px solid hsl(304, 49%, 82%);
 }

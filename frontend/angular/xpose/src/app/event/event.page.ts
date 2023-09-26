@@ -66,6 +66,15 @@ export class EventPage {
   //   this.galleryDataService.setData(this.data);
   // }
 
+  getStatusColor(status: string) {
+    if (status === 'ongoing') {
+      return 'success';
+    } else if (status === 'upcoming') {
+      return 'warning';
+    } else {
+      return 'danger';
+    }
+      }
 
   @ViewChild('eventTabs', { static: false }) tabs: IonTabs | undefined;
   selectedTab: any;
