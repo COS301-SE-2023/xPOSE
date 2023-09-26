@@ -31,23 +31,30 @@
     <div class="fontcolor" *ngIf="searchClicked && loading">
       Please wait searching...
     </div>
-    
-    <ng-container *ngIf="!found">
-      <h2 class="fontcolor">No matches found.</h2>
-    </ng-container>
+    <div *ngIf="searchType === 'events'">
+      <ng-container *ngIf="!found">
+        <h2 class="fontcolor">No matches found.</h2>
+      </ng-container>
 
-    <!-- Display  array of events information if available -->
-    <h2 class="fontcolor" *ngIf="search_result" >{{search_result}}</h2>
-    <div *ngIf="this.events">
-      <ion-list>
-        <ion-item *ngFor="let eventItem of this.events">
-          <!-- Replace 'displayName' with the actual property you want to display for each event -->
-          <ion-label (click)="viewEvent(eventItem)">{{ eventItem.title }}</ion-label>
-        </ion-item>
-      </ion-list>
+      <!-- Display  array of events information if available -->
+      <h2 class="fontcolor" *ngIf="search_result" >{{search_result}}</h2>
+      <div *ngIf="this.events">
+        <ion-list>
+          <ion-item *ngFor="let eventItem of this.events">
+            <!-- Replace 'displayName' with the actual property you want to display for each event -->
+            <ion-label (click)="viewEvent(eventItem)">{{ eventItem.title }}</ion-label>
+          </ion-item>
+        </ion-list>
+      </div>
     </div>
 
+    <div *ngIf="searchType === 'users'">    
       <!-- Display user information if available -->
+      <ng-container *ngIf="!found">
+        <h2 class="fontcolor">No matches found.</h2>
+      </ng-container>
+      <h2 class="fontcolor" *ngIf="search_result" >{{search_result}}</h2>
+      
       <div *ngIf="this.user">
         <!-- <h2 class="ion-text-center">{{search_result}}</h2> -->
         <ion-list>
@@ -57,6 +64,7 @@
           </ion-item>
         </ion-list>
       </div>
+    </div>
 
   </ion-content>
   
