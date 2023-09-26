@@ -88,12 +88,12 @@ export class SearchPage implements OnInit {
 
         this.http.get<any[]>(search_endpoint).subscribe(
           (response) => {
-            this.user =response
+            this.user = response
             this.loading = false;
             this.searchClicked = false;
             
             this.user = response;
-            this.search_result = "Search results:";
+            this.search_result = " Search history results:";
             
           },
           (error:any) => {
@@ -111,6 +111,9 @@ export class SearchPage implements OnInit {
     // Clear the search query and show suggestions when search type changes
     this.searchQuery = '';
     this.showSuggestions = true;
+    this.user = [];
+    this.events = [];
+    // this.search_result = '';
   }
 
   closeSearchPage() {
