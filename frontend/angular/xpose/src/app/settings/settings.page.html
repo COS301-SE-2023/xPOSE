@@ -3,10 +3,11 @@
 
 <ion-content [fullscreen]="true" id="main-content" class="custom-backround">
   <div class="account-settings">
-   
+  
     <!-- Change Profile Section -->
+    <div class="section">Account Information</div>
     <section class="profile-section">
-      <!-- <h3>Change Profile</h3> -->
+      <!-- Change Profile -->
       <form (submit)="updateProfile()">
         <div class="form-group">
           <!-- <ion-label for="profileImage">Profile Image:</ion-label> -->
@@ -14,7 +15,7 @@
             <img class="profile-image" [src]="photoURL" alt="Selected Image">
           </div>
           <label class="file-label">
-            Change profile picture
+            Change Profile Picture
             <input class="file-input" type="file" accept="image/*"
             (change)="onProfilePictureChange($event)" />
           </label>
@@ -40,23 +41,29 @@
     
 
     <!-- Account Privacy Section -->
+    <div class="section">Account Privacy</div>
     <section class="privacy-section">
-      <h3>Account Privacy</h3>
       <div class="form-group">
-        <label>Privacy Setting:</label>
-        <label>
-          <input type="radio" [(ngModel)]="privacy" name="privacy" value="public" > Public
-        </label>
-        <label>
-          <input type="radio" [(ngModel)]="privacy" name="privacy" value="private"> Private
-        </label>
+      <ion-radio-group value="privacy" name="privacy_setting">
+        <ion-item>
+          <ion-icon name="earth"></ion-icon>
+          <ion-label>Public</ion-label>
+          <ion-radio value="public"></ion-radio>
+        </ion-item>
+      </ion-radio-group>
+      <ion-radio-group value="privacy" name="privacy_setting">
+        <ion-item>
+          <ion-icon name="lock-closed"></ion-icon>
+          <ion-label>Private</ion-label>
+          <ion-radio value="private"></ion-radio>
+        </ion-item>
+      </ion-radio-group>
       </div>
-      <ion-button (click)="updatePrivacy()">Save Changes</ion-button>
     </section>
 
     <!-- Facial Recognition Section -->
+    <div class="section">Facial Recognition</div>
     <section class="facial-recognition-section">
-      <h3>Facial Recognition</h3>
       <!-- add image linking to headshot_image_url -->
       <img [src]="headshot_image_url" alt="No Headshot Image">
       <input type="file" (change)="uploadFacialData($event)">
@@ -65,8 +72,8 @@
     </section>
 
     <!-- Delete Account Section -->
+    <div class="section">Delete Account</div>
     <section class="delete-account-section">
-      <h3>Delete Account</h3>
       <!-- <p>Are you sure you want to delete your account?</p> -->
       <ion-button (click)="deleteAccount()">Delete Account</ion-button>
     </section>
