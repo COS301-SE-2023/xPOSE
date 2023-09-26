@@ -468,7 +468,11 @@ export class EventPage {
                     participant.uniq_username = user.uniq_username;
                     // TODO: Add validation on events service, so
                     if (true) {
-                      participant.location = user.location._lat + ', ' + user.location._long;
+                      this.http.get(`https://geocode.maps.co/reverse?lat=${user.location._lat}&lon=${user.location._long}`)
+                      .subscribe((response: any) => {
+                        participant.location = response.display_name;
+                      });
+                      // participant.location = user.location._lat + ', ' + user.location._long;
                     }
                     // participant.location
                     console.log(user);
@@ -757,6 +761,22 @@ export class EventPage {
       }
       return '';
     }
+
+    getPlaceName(latitude: number, longitude: number): Observable<string> {
+      const apiUrl = `https://geocode.maps.co/reverse?lat=${latitude}&lon=${longitude}`;
+    
+      return this.http.get(apiUrl).pipe(
+        map((response: any) => {
+          if (response && response.results && response.results.length > 0) {
+            const place = response.results[0].formatted;
+            return place;
+          } else {
+            return 'Unknown Location';
+          }
+        })
+      );
+    }
+    
 
 }
 
