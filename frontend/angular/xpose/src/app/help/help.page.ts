@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./help.page.scss'],
 })
 export class HelpPage implements OnInit {
+  currentPageName = 'Help';
 
   constructor() { }
 

@@ -64,11 +64,17 @@ button:hover {
 
 .profile-section,
 .privacy-section,
-.facial-recognition-section,
-.delete-account-section {
+.facial-recognition-section {
   border: 1px solid hsl(304, 49%, 82%);
   padding: 15px;
   margin-bottom: 20px;
+}
+
+.delete-account-section {
+  border: 1px solid hsl(304, 49%, 82%);
+  padding-bottom: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 .radio-label {
@@ -141,4 +147,8 @@ ion-button {
 
 ion-radio {
   --color-checked: #ff00ff;
+}
+
+.image {
+  margin-bottom: 10px;
 }
