@@ -65,7 +65,7 @@
     <div class="section">Facial Recognition</div>
     <section class="facial-recognition-section">
       <!-- add image linking to headshot_image_url -->
-      <img [src]="headshot_image_url" alt="No Headshot Image">
+      <img class="image" [src]="headshot_image_url" alt="No Headshot Image">
       <input type="file" (change)="uploadFacialData($event)">
       <ion-button (click)="registerFacialData()">Register Facial Data</ion-button>
       <ion-button (click)="deleteFacialData()">Delete Facial Data</ion-button>

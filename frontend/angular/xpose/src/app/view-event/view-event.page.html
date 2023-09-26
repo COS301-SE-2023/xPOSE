@@ -24,7 +24,7 @@
           <h1 class="h1">Owner</h1>
           <p>{{ event?.owner_display_name }}</p>
 
-          <h1 class="h1">Description ({{ event?.status }})</h1>
+          <h1 class="h1">Description <span class="label label-{{ getStatusColor(event?.status) }} label">{{ event?.status }}</span></h1>
           <p class="description">{{ event?.description }}</p>
 
           <h1 class="h1">Location</h1>
