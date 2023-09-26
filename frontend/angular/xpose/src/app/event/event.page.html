@@ -68,22 +68,18 @@
         <ion-header [translucent]="true">
           <ion-toolbar>
             <ion-title>{{ current_event?.title }}</ion-title>
-            <ion-buttons slot="end">
+            <ion-buttons *ngIf="current_event.user_event_position==='owner'" slot="end">
               <ion-button (click)="editEvent()" class="edutton">
                 <ion-icon slot="start" name="create-outline"></ion-icon>
               </ion-button>
             </ion-buttons>
              </ion-toolbar>
            </ion-header>
-
-           <!-- <p> {{location.city}}</p> -->
-        
-        <!-- <ion-content [fullscreen]="true"> -->
           <div>
             <ion-card>
               <ion-card-header>
-                <ion-card-subtitle>Date</ion-card-subtitle>
-                <ion-card-title> {{ current_event?.start_date }} - {{ current_event?.end_date }} ({{ current_event?.status }}) </ion-card-title>
+                <ion-card-subtitle>Date ({{ current_event?.status }})</ion-card-subtitle>
+                <ion-card-title class="time"> {{ current_event?.start_date  }} - {{ current_event?.end_date  }}  </ion-card-title>
               </ion-card-header>
               <ion-card-content>
                 <ion-card-subtitle>Location</ion-card-subtitle>
@@ -104,11 +100,14 @@
             <!-- Event link -->
             <ion-card>
               <ion-card-header>
-                <ion-card-title>Event link</ion-card-title>
+                <ion-card-title>My event settings</ion-card-title>
               </ion-card-header>
               <ion-card-content>
-                <!-- Display your event link here -->
-                <p style="color: blue;">{{ this.url }}</p>
+                <div class="form-group">
+                  <ion-checkbox></ion-checkbox> Notifications for post <br>
+                  <ion-checkbox></ion-checkbox> Share location
+                </div>
+              <!-- </form> -->
               </ion-card-content>
             </ion-card>
           </div>
@@ -121,12 +120,12 @@
               <ion-img [src]="participant.photoURL"  loading="lazy" (click)="onCardClick(participant)"></ion-img>
             </ion-avatar>
             <ion-label>
-              <h2 class="participant-name" (click)="onCardClick(participant)">{{ participant.display_name }}</h2>
-              <p class="participant-email">{{ participant.email }}</p>
+              <p class="participant-name" (click)="onCardClick(participant)">
+                {{ participant.display_name }} <b>@{{ participant.uniq_username }}</b>
+                
+              </p>
+              <p class="participant-email"> <b *ngIf="participant.location">{{ participant.location }} </b></p>
             </ion-label>
-            <ion-button slot="end" fill="clear" (click)="removeParticipant(participant)">
-              <ion-icon name="person-remove-outline"></ion-icon>
-            </ion-button>
           </ion-item>
         
           <ion-item-divider class="divider"></ion-item-divider>       

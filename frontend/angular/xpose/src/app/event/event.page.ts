@@ -302,6 +302,27 @@ export class EventPage {
     });
   }
 
+  transform(value: Date): string {
+    if (!(value instanceof Date)) {
+      return '';
+    }
+
+    const hours = value.getHours();
+    const minutes = value.getMinutes();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+
+    // Convert hours from 24-hour format to 12-hour format
+    const formattedHours = hours % 12 || 12;
+
+    // Add leading zeros to minutes if needed
+    const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
+
+    // Create the formatted time string
+    const formattedTime = `${formattedHours}:${formattedMinutes} ${ampm}`;
+
+    return formattedTime;
+  }
+
   leaveEvent() {
     // Implement the API call to leave the event here
     // Make a request to remove the current user from the participants list
@@ -420,6 +441,8 @@ export class EventPage {
   getEventParticipantsFromAPI() {
     this.getCurrentUserId().subscribe((uid) => {
       if(uid) {
+        const geocoder = new google.maps.Geocoder();
+
         this.http
           .get(`${this.api.apiUrl}/e/events/${this.current_event.code}/participants?uid=${uid}`)
           .subscribe((data) => {
@@ -433,6 +456,13 @@ export class EventPage {
                 (user) => {
                   if(user) {
                     participant.photoURL = user.photoURL;
+                    participant.uniq_username = user.uniq_username;
+                    // TODO: Add validation on events service, so
+                    if (true) {
+                      participant.location = user.location._lat + ', ' + user.location._long;
+                    }
+                    // participant.location
+                    console.log(user);
                   }
                 }
               )

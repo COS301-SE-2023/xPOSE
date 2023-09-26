@@ -1,58 +1,58 @@
-.custom-background{
-    --background: #ffffff;
-    background-color: #ffffff   ;
-    color: #000000;
-    font-size: 20px;
-  
-  }
-  ion-searchbar {
-    --background: #f4f4f4; /* Set the background color of the search bar */
-    --color: #333; /* Set the text color */
-    --placeholder-color: #999; /* Set the color of the placeholder text */
-    --border-color: #ddd; /* Set the border color */
-    --border-radius: 10px; /* Set the border radius */
-  }
-  
-  ion-segment {
-    --color: #b53fab; /* Set the color of the segment */
-    --color-checked: #fff; /* Set the color when checked */
-    --background: #f4f4f4; /* Set the background color */
-    --background-checked: #b53fab; /* Set the background color when checked */
-  }
-  
-  ion-segment-button{
-    --background: #ffffff;
-    color: #000000;
-  }
-  ion-content{
-    --background: #ffffff;
-    background-color: #ffffff;
-    color: #000000;
-  }
-  ion-list {
-    --padding-start: 0; /* Remove the padding from the start of the list */
-    --padding-end: 0; /* Remove the padding from the end of the list */
-  }
-  
-  ion-item {
-    --padding-start: 20px; /* Set the padding from the start of the item */
-    --padding-end: 20px; /* Set the padding from the end of the item */
-    --min-height: 50px; /* Set the minimum height of the item */
-  }
-  
-  ion-toolbar{
-    --background: #ffffff;
-    background-color: #ffffff;
-    color: #000000;
-  }
-  .fontcolor{
-    color: #000000;
-  }
-  ion-label{
-    color: #000000;
-  }
-  ion-header{
-    --background: #ffffff;
-    color: #000000;
-    padding-top: 54px;
-  }
+#main-content {
+  --background: #f0f0f0;
+}
+
+ion-header {
+  --background: #ffffff;
+}
+
+ion-toolbar {
+  --background: #ffffff;
+}
+
+ion-title {
+  font-size: 20px;
+  text-align: center;
+}
+
+ion-searchbar {
+  --background: #ffffff;
+  --border-radius: 10px;
+  --placeholder-color: #999;
+  --searchbar-icon-color: #007bff;
+  --searchbar-input-color: #333;
+  --searchbar-input-padding: 10px 15px;
+}
+
+ion-segment-button {
+  color: #000000;
+    --border-radius: 10px;
+    --padding-start: 20px;
+    --padding-end: 20px;
+    --margin: 5px;
+    --font-size: 18px;
+    --font-family: "Roboto", sans-serif;
+    --color-checked: #ff00aa;
+}
+
+.fontcolor {
+  color: #007bff;
+}
+
+h2.fontcolor {
+  color: #ff0000;
+}
+
+ion-item {
+  --border-width: 0 0 1px 0;
+  --border-color: #e0e0e0;
+}
+
+ion-label {
+  font-weight: bold;
+  color: #333;
+}
+
+ion-item {
+  margin-bottom: 10px;
+}

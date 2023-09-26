@@ -13,6 +13,9 @@
         <ion-button (click)="onSettings()" routerLinkActive="active"> Settings</ion-button>
       </ion-buttons>
       <ion-buttons slot="end">
+        <ion-button (click)="onSearch()" routerLinkActive="active"> <ion-icon name="search-outline"></ion-icon></ion-button>
+      </ion-buttons>
+      <ion-buttons slot="end">
         <ion-button (click)="logout()" routerLinkActive="active"> <ion-icon name="log-out-outline"></ion-icon></ion-button>
       </ion-buttons>
     </ion-toolbar>
@@ -26,7 +29,11 @@
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
       <ion-buttons slot="end">
-        <ion-button (click)="logout()" routerLinkActive="active"> <ion-icon name="log-out-outline"></ion-icon></ion-button>
+        <ion-button (click)="onSearch()" routerLinkActive="active"> <ion-icon name="search-outline"></ion-icon></ion-button>
       </ion-buttons>
+      <ion-buttons slot="end">
+        <ion-button (click)="logout()" routerLinkActive="active"> <ion-icon name="log-out-outline"></ion-icon></ion-button>
+      </ion-buttons> 
+     
     </ion-toolbar>
   </ion-header>

@@ -12,6 +12,8 @@ import { GalleryLightboxPage } from './posts/gallery-lightbox/gallery-lightbox.p
 import { SharedModule } from '../shared/shared.module';
 import { QRCodeModule } from 'angularx-qrcode';
 
+
+
 @NgModule({
   imports: [
     CommonModule,
