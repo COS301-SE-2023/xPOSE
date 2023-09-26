@@ -65,28 +65,44 @@ export class HomePage {
 	}
 
 	   
-  getEventsFromAPI() {
-	this.getCurrentUserId().subscribe((uid) => {
-		if(uid){
-			this.http.get(`${this.api.apiUrl}/e/tags?n=${10}}`)
-			.subscribe((data: any) => {
-				console.log(data);
-				this.tags = data;
-			});
-
-			// console.log(`We got that ${uid}`);
-			this.http.get<Event[]>(`${this.api.apiUrl}/e/feed?uid=${uid}`).subscribe((events: Event[]) => {
-				console.log(events);
-				  this.events = events;
-				this.populateCards();
-			  });
-		}
-		else {
-			console.log("no user id");
+	getEventsFromAPI() {
+		this.getCurrentUserId().subscribe((uid) => {
+		  if (uid) {
+			// Request for tags
+			this.http.get(`${this.api.apiUrl}/e/tags?n=${10}`)
+			  .subscribe(
+				(data: any) => {
+				  console.log(data);
+				  this.tags = data;
+				},
+				(error) => {
+				  console.error('Error fetching tags:', error);
+				  // Handle the error (e.g., show an error message to the user)
+				}
+			  );
+	  
+			console.log(`We got that ${uid}`);
 			
-		}
-	});
-  }
+			// Request for events
+			this.http.get<Event[]>(`${this.api.apiUrl}/e/feed?uid=${uid}`)
+			  .subscribe(
+				(events: Event[]) => {
+				  console.log(events);
+				  this.events = events;
+				  this.populateCards();
+				},
+				(error) => {
+				  console.error('Error fetching events:', error);
+				  // Handle the error (e.g., show an error message to the user)
+				}
+			  );
+		  } else {
+			console.log("no user id");
+			// Handle the case when there is no user ID (e.g., show a message)
+		  }
+		});
+	  }
+	  
 
   truncateText(text: string, words: number): string {
 	if (!text) return '';
