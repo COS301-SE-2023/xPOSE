@@ -2,63 +2,52 @@
   --background: #ffffff;
   color: #000000;
   font-size: 20px;
-  // --min-height: 70px;
 }
 
-
-/* Add your custom styles here */
-/* view-event.page.scss */
 ion-card {
   display: flex;
   align-items: center;
-  // padding: 16px;
-  background-color: #f8f8f8; /* Background color for the card */
+  background-color: #f8f8f8;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
   ion-avatar {
     width: 50px;
     height: 50px;
-    border: 2px solid #f39c12; /* Border color for the avatar */
+    border: 2px solid #f39c12;
     border-radius: 50%;
     overflow: hidden;
-    margin-right: 16px; /* Add some space between avatar and content */
+    margin-right: 16px;
   }
 
-/* Add this CSS to your global styles or in your component's CSS file */
-
-
-
   ion-card-content {
-    flex: 1; /* Expand to fill remaining space */
-    text-align: left; /* Align content to the left */
-    overflow-wrap: break-word; /* Wrap text if it's too long */
+    flex: 1;
+    text-align: left;
+    overflow-wrap: break-word;
   }
 
   .participant-name {
     font-size: 16px;
     font-weight: bold;
-    margin-bottom: 8px; /* Add some space between name and timestamp */
+    margin-bottom: 8px;
   }
 
   .participant-timestamp {
     font-size: 14px;
-    color: #000000; /* Timestamp color */
+    color: #000000;
   }
 }
 
-
 ion-img {
-  height: 355px; /* Set the desired height for the cover picture */
-  width: 100%; /* Ensure the cover picture spans the full width */
-  object-fit: cover; /* Crop the image to fit the container without distortion */
-  border-radius: 10px; /* Add rounded corners */
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
-  transition: all 0.3s ease-in-out; /* Add smooth transition on hover */
-  cursor: pointer; /* Show pointer cursor when hovering over the image */
+  height: 355px;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
 }
 
-/* Optional: Add hover effects to the cover picture */
 ion-img:hover {
   box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.2);
   transform: scale(1.05);
@@ -67,8 +56,6 @@ ion-img:hover {
 ion-footer{
   background-color: #ffffff;
 }
-
-
 
 .custom-toolbar {
   --background: #ffffff;
@@ -108,38 +95,70 @@ ion-footer{
   --background: #000000;
   pointer-events: none;
 }
+
 ion-item{
   --background: #ffffff;
   color: #ff0000;
-  // font-size: 20px;
-  // --min-height: 70px;
-  // text-align: center;
 }
-/* Example styles for the provided HTML elements */
+
 .h1 {
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 10px;
-  color: #333; /* Adjust the color as needed */
+  color: #333;
 }
 
 p {
   font-size: 16px;
   line-height: 1.6;
-  color: #666; /* Adjust the color as needed */
+  color: #666;
 }
 
 #map {
   width: 100%;
-  height: 400px; /* Adjust the height as needed */
+  height: 400px;
   margin-top: 20px;
-  background-color: #f2f2f2; /* Optional background color for the map container */
-  border: 1px solid #ccc; /* Optional border for the map container */
+  background-color: #f2f2f2;
+  border: 1px solid #ccc;
 }
 
-/* Optional styles for the description section */
 .description {
-  font-size: 16px; /* Set the font size */
-  color: #333; /* Set the color */
-  line-height: 1.6; /* Set the line height */
+  font-size: 16px;
+  color: #333;
+  line-height: 1.6;
+}
+
+.label-default {
+  background-color: #bdc3c7;
+}
+
+.label-primary {
+  background-color: #3498db;
+}
+
+.label-success {
+  background-color: #2ecc71;
+}
+
+.label-info {
+  background-color: #46b8da;
+}
+
+.label-warning {
+  background-color: #f0ad4e;
+}
+
+.label-danger {
+  background-color: #e74c3c;
+}
+
+.label{
+  color: #fff;
+  padding: 5px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: bold;
+  --background: #ffffff;
+  text-align: center;
+  max-width: 50%;
 }

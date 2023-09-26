@@ -6,7 +6,7 @@ async function createChat(req, res) {
         const { uid } = req.query;
         const { event_id } = req.params;
         const { message } = req.body;
-
+        
         // const settings = {};
         const timestamp = admin.firestore.FieldValue.serverTimestamp();
 
