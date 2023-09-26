@@ -10,7 +10,7 @@
 
 ion-list {
   margin-top:0px;
-  color: #ea00ff;
+  color: hsl(304, 49%, 82%);
   background-color: #ffffff;
 }
 
@@ -55,7 +55,7 @@ ion-tab-button.tab-selected {
   --border-color: #f4f5f8;
   --box-shadow: 0 0 0 0;
   --box-shadow: none;
-  border: solid 1px #ffcefb;
+  border: solid 1px hsl(304, 49%, 82%);
 }
 
 ion-toolbar.custom-toolbar {
@@ -71,8 +71,8 @@ ion-footer {
 
 ion-tab-button{
   background: #ffffff;
-  border: #ea00ff;
-  border-color: #ea00ff;
+  border: hsl(304, 49%, 82%);
+  border-color: hsl(304, 49%, 82%);
   color: #000000;
 }
 
