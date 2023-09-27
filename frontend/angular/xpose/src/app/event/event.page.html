@@ -115,7 +115,7 @@
           <h1 class="section-title">Participants</h1>
           <ion-item-divider class="divider"></ion-item-divider>
         
-          <ion-item *ngFor="let participant of participants; let i = index" >
+          <ion-item class="participants" *ngFor="let participant of participants; let i = index" >
             <ion-avatar slot="start">
               <ion-img [src]="participant.photoURL"  loading="lazy" (click)="onCardClick(participant)"></ion-img>
             </ion-avatar>
@@ -147,10 +147,10 @@
     </ion-footer>
     
 
-<!--     
-  <div id="myModal" class="modal-user">
-    <div class="modal-content-user">
-      <span class="close-user" (click)="closeModalUser()">&times;</span>
-      <p id="modalContent" style="white-space: pre-line;"></p>
+    
+  <div id="myModal-chat" class="modal-chat">
+    <div class="modal-content-chat">
+      <span class="close-chat" (click)="closeModalChat()">&times;</span>
+      <p id="modalContent-chat" style="white-space: pre-line;"></p>
     </div>
-  </div> -->
+  </div>
