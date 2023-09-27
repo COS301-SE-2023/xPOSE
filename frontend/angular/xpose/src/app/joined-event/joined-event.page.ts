@@ -50,8 +50,9 @@ export class JoinedEventPage implements OnInit {
   
         this.tags = ['all', 'ongoing', 'upcoming', 'ended', 'my events'];
 
-        // console.log(`We got that ${uid}`);
-        this.http.get<Event[]>(`${this.api.apiUrl}/e/feed?uid=${uid}`).subscribe((events: Event[]) => {
+        console.log(`We got that ${uid}`);
+        console.log(`${this.api.apiUrl}/e/feed?uid=${uid}`)
+        this.http.get<Event[]>(`${this.api.apiUrl}/e/feed?uid=${uid}&participant=${uid}`).subscribe((events: Event[]) => {
           // console.log(events);
           this.events = events;
           this.populateCards();
