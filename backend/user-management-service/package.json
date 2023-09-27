@@ -4,6 +4,9 @@
   "description": "",
   "main": "server.js",
   "type": "module",
+  "transform": {
+    "^.+\\.js$": "babel-jest"
+  },
   "scripts": {
     "start": "node .",
     "start:dev": "nodemon server.js",
@@ -23,6 +26,8 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.22.20",
+    "babel-jest": "^29.7.0",
     "jest": "^29.6.1",
     "nodemon": "^1.19.4"
   }
