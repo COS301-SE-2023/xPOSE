@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { MenuController, ModalController, Platform } from '@ionic/angular';
 import firebase from 'firebase/compat/app';
@@ -7,8 +7,7 @@ import { ApiService } from '../service/api.service';
 import { Observable, map } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
-
-
+import { DomSanitizer } from '@angular/platform-browser';
 
 
 @Component({
@@ -35,7 +34,8 @@ export class GalleryModalComponent  implements OnInit {
     private http: HttpClient,
     private api: ApiService,
     private afs: AngularFirestore,
-    private router: Router
+    private router: Router,
+    private sanitizer: DomSanitizer
   ) {
     this.currentIndex = this.initialIndex;
   }
@@ -164,22 +164,27 @@ export class GalleryModalComponent  implements OnInit {
   }
     
   ngOnInit() {}
+
   downloadImage() {
-    // const imageUrl = 'https://example.com/path-to-your-image.jpg'; // Replace with your image URL
-    // const saveDirectory = this.file.dataDirectory; // Use 'dataDirectory' for the app's data directory
-    // const fileName = 'downloaded_image.jpg'; // Desired file name
-  
-    // const fileTransfer: FileTransferObject = this.fileTransfer.create();
-  
-    // fileTransfer.download(imageUrl, saveDirectory + fileName).then(
-    //   entry => {
-    //     console.log('Image downloaded successfully:', entry.toURL());
-    //     // You can now use 'entry.toURL()' to access the saved image file path
-    //   },
-    //   error => {
-    //     console.error('Error downloading image:', error);
-    //   }
-    // );
+    console.log("Downloading the picture....");
+  const imageSrc = this.galleryData[this.currentIndex].imageSrc;
+  this.http.get(imageSrc, { responseType: 'blob' }).subscribe(
+    (data) => {
+      const a = document.createElement('a');
+      const objectURL = URL.createObjectURL(data);
+      a.href = objectURL;
+      a.download = 'image.jpg'; // You can set the desired file name here
+      a.style.display = 'none';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(objectURL);
+    },
+    (error) => {
+      console.error('Error downloading the image:', error);
+      // You can handle the error here, e.g., show a message to the user.
+    }
+  );
   }
 
   viewFullImage() {
