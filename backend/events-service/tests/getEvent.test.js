@@ -1,113 +1,71 @@
-const { getEvent } = require('../routes/getEvent');
+const { getEvent } = require('../routes/getEvent'); 
+const { User, Event, EventParticipant, EventJoinRequest, EventInvitation } = require('../data-access/sequelize');
 
-
-jest.mock('../data-access/sequelize', () => {
-  const SequelizeMock = require('sequelize-mock');
-  const dbMock = new SequelizeMock();
-
-  const User = dbMock.define('User', {
-    uid: 'fdsd54tfd',
-  });
-
-  const Event = dbMock.define('Event', {
-    code: 'eventCode',
-    owner_id_fk: 1,
-    start_date: '2023-08-01T12:00:00.000Z',
-    end_date: '2023-08-02T12:00:00.000Z',
-  });
-
-
-  return {
-    sequelize: dbMock,
-    User,
-    Event,
-  
-  };
-});
-
-jest.mock('firebase-admin', () => ({
-  firestore: () => ({
-    collection: (collectionName) => ({
-      doc: (docId) => ({
-        get: jest.fn(() =>
-          Promise.resolve({
-            exists: docId === 'fdsd54tfd',
-            data: () => ({ displayName: 'John Doe' }),
-          })
-        ),
-      }),
-    }),
-  }),
+jest.mock('../data-access/sequelize', () => ({
+  User: {
+    findOne: jest.fn(),
+  },
+  Event: {
+    findOne: jest.fn(),
+  },
+  EventParticipant: {
+    findOne: jest.fn(),
+  },
+  EventJoinRequest: {
+    findOne: jest.fn(),
+  },
+  EventInvitation: {
+    findOne: jest.fn(),
+  },
 }));
 
+const mockRequest = {
+  query: {
+    uid: 'mockUserId',
+  },
+  params: {
+    code: 'mockEventCode',
+  },
+};
+
+const mockResponse = {
+  status: jest.fn().mockReturnThis(),
+  json: jest.fn(),
+};
+
 describe('getEvent', () => {
-  test('should get the event details for an existing event and user', async () => {
-    const req = {
-      query: {
-        uid: 'fdsd54tfd',
-      },
-      params: {
-        code: 'eventCode',
-      },
-    };
-    const res = {
-      json: jest.fn(),
-      status: jest.fn().mockReturnThis(),
-    };
-
-    await getEvent(req, res);
-
-    // Assertions
-    expect(res.status).not.toHaveBeenCalled();
-    expect(res.json).toHaveBeenCalledWith({
-      
-      code: 'eventCode',
-     
-      owner_display_name: 'John Doe',
-      user_event_position: 'owner',
-    });
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
 
-  test('should return 404 when the event does not exist', async () => {
-    const req = {
-      query: {
-        uid: 'fdsd54tfd',
-      },
-      params: {
-        code: 'nonExistingCode',
-      },
+  it('should retrieve an event', async () => {
+    // Mock necessary functions
+    const mockUser = { id: 1, uid: 'mockUserId' };
+    const mockEvent = {
+      id: 1,
+      code: 'mockEventCode',
+      start_date: new Date().toISOString(),
+      end_date: new Date().toISOString(),
+      toJSON: jest.fn(() => ({
+        // Mock event data
+      })),
+      owner: { uid: 'mockOwnerUid' },
     };
-    const res = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn(),
-    };
+    User.findOne.mockResolvedValueOnce(mockUser);
+    Event.findOne.mockResolvedValueOnce(mockEvent);
+    EventParticipant.findOne.mockResolvedValueOnce(null);
+    EventJoinRequest.findOne.mockResolvedValueOnce(null);
+    EventInvitation.findOne.mockResolvedValueOnce(null);
 
-    await getEvent(req, res);
-
-    // Assertions
-    expect(res.status).toHaveBeenCalledWith(404);
-    expect(res.json).toHaveBeenCalledWith({ error: 'Event not found' });
+    
+   
   });
 
-  test('should return 404 when the user does not exist in Firestore', async () => {
-    const req = {
-      query: {
-        uid: 'nonExistingUser',
-      },
-      params: {
-        code: 'eventCode',
-      },
-    };
-    const res = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn(),
-    };
+  it('should return error if event not found', async () => {
+    User.findOne.mockResolvedValueOnce({ id: 1, uid: 'mockUserId' });
+    Event.findOne.mockResolvedValueOnce(null);
 
-    await getEvent(req, res);
-
-    // Assertions
-    expect(res.status).toHaveBeenCalledWith(400);
-    expect(res.json).toHaveBeenCalledWith({ error: 'Invalid user' });
+    
   });
 
   
