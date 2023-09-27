@@ -67,13 +67,13 @@ export class MyPicturesPage implements OnInit {
     
           data.forEach((doc: any) => {
             const post: any = doc.payload.doc.data();
-    
+            console.log(post);
             this.galleryData.push({
               imageSrc: post.image_url,
               imageAlt: post.timestamp,
-              event_id: post.code,
+              event_id: post.event_id,
               uid: post.uid,
-              id: post.id,
+              id: doc.payload.doc.id,
               users_in_image: post.users_in_image
             } as Item);
             
