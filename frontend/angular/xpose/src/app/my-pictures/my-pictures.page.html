@@ -1,13 +1,16 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>My Pictures</ion-title>
-  </ion-toolbar>
-</ion-header>
+
+<app-footer></app-footer>
+
 <ion-content [fullscreen]="true">
   <div class="gallery">
     <ion-img *ngFor="let item of galleryData; let i=index" [src]="item.imageSrc" [alt]="item.imageAlt" class="gallery-img" (click)="openImageModal(item, i)"></ion-img>
+    <!-- Message to show when there are no images -->
+    <div *ngIf="galleryData.length === 0" class="no-images-message">
+      No images available.
+    </div>
   </div>
 </ion-content>
+
 <!-- <app-gallery-lightbox></app-gallery-lightbox> -->
 <app-gallery>
 
