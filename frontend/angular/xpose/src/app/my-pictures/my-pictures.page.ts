@@ -6,6 +6,8 @@ import { ApiService } from 'src/app/service/api.service';
 import { HttpClient } from '@angular/common/http';
 import { GalleryDataService } from '../event/posts/gallery-lightbox/gallery-data.service';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
+import { Observable, map } from 'rxjs';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 
 interface Item {
@@ -41,39 +43,53 @@ export class MyPicturesPage implements OnInit {
     private api: ApiService,
     private http: HttpClient,
     private modalController: ModalController,
-    private afs: AngularFirestore
+    private afs: AngularFirestore,
+    private afAuth: AngularFireAuth
     ) {}
 
     postsCollection: AngularFirestoreCollection<Post> | undefined;
 
   ngOnInit() {
     // this.galleryData = this.galleryDataService.getData();
-    this.postsCollection = this.afs.collection('Event-Posts/9681b5b4-dc90-4ae4-a5b7-6dc888e19463/posts');
-    this.totalImageCount = this.galleryData.length;
-    if(this.postsCollection === undefined) {
-      console.log('Could not load posts');
-    }
 
-    this.postsCollection.snapshotChanges().pipe().subscribe((data) => {
-      this.galleryData.length = 0;
 
-      data.forEach((doc: any) => {
-        const post: any = doc.payload.doc.data();
 
-        this.galleryData.push({
-          imageSrc: post.image_url,
-          imageAlt: post.timestamp,
-          event_id: post.code,
-          uid: post.uid,
-          id: post.id,
-          users_in_image: post.users_in_image
-        } as Item);
-        
-      });
-
-      console.log('Gallery Data: ')
-      console.log(this.galleryData);
+    this.getCurrentUserId().subscribe((uid) => {
+      if(uid) {
+        this.postsCollection = this.afs.collection(`Users/${uid}/posts`);
+        if(this.postsCollection === undefined) {
+          console.log('Could not load posts');
+          return;
+        }
+    
+        this.postsCollection.snapshotChanges().pipe().subscribe((data) => {
+          this.galleryData.length = 0;
+    
+          data.forEach((doc: any) => {
+            const post: any = doc.payload.doc.data();
+    
+            this.galleryData.push({
+              imageSrc: post.image_url,
+              imageAlt: post.timestamp,
+              event_id: post.code,
+              uid: post.uid,
+              id: post.id,
+              users_in_image: post.users_in_image
+            } as Item);
+            
+          });
+    
+          console.log('Gallery Data: ')
+          console.log(this.galleryData);
+        });
+      }
+      else {
+        console.log("no user id");
+      }
     });
+    this.totalImageCount = this.galleryData.length;
+
+
   }
 
   //buttons
@@ -85,6 +101,19 @@ export class MyPicturesPage implements OnInit {
   totalImageCount = 0;
   currentItem: any ;
   
+  getCurrentUserId(): Observable<string> {
+    return this.afAuth.authState.pipe(
+      map((user) => {
+      if (user) {
+        return user.uid;
+      } else {
+        console.log('No user is currently logged in.');
+        return '';
+      }
+      })
+    );
+    
+    }
 
   async openImageModal(item: any, index: number) {
     console.log('clicked', index)
