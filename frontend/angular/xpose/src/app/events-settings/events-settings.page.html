@@ -17,13 +17,13 @@
       <!-- Change Title -->
       <div class="form-group">
         <label for="eventTitle">Change Title:</label>
-        <input [(ngModel)]="eventObject.title" type="text" id="eventTitle">
+        <ion-input [(ngModel)]="eventObject.title" type="text" id="eventTitle"></ion-input>
       </div>
 
       <!-- Change Description -->
       <div class="form-group">
         <label for="eventDescription">Change Description:</label>
-        <textarea id="eventDescription" [(ngModel)]="eventObject.description"></textarea>
+        <ion-textarea id="eventDescription" [(ngModel)]="eventObject.description"></ion-textarea>
       </div>
 
       <!-- Change Cover Image -->
@@ -48,18 +48,18 @@
     <!-- Change Dates from Calendar -->
     <div class="form-group">
       <label for="startDate">Start Date:</label>
-      <ion-input [(ngModel)]="eventObject.start_date" type="datetime-local" id="startDate"></ion-input>
+      <ion-input [(ngModel)]="eventObject.start_date" type="datetime-local" id="startDate" class="date"></ion-input>
     </div>
 
     <div class="form-group">
       <label for="endDate">End Date:</label>
-      <ion-input [(ngModel)]="eventObject.end_date" type="datetime-local" id="endDate"></ion-input>
+      <ion-input [(ngModel)]="eventObject.end_date" type="datetime-local" id="endDate" class="date"></ion-input>
     </div>
 
       <!-- Access Privacy (Public/Private) -->
       <div class="form-group">
         <label class="label" for="privacy_setting">Access Privacy:</label>
-        <ion-radio-group id="accessPrivacy" [(ngModel)]="eventObject.privacy_setting">
+        <ion-radio-group id="accessPrivacy" [(ngModel)]="eventObject.privacy_setting" name="privacy_setting">
           <ion-item>
             <ion-icon name="earth"></ion-icon>
             <ion-label>Public</ion-label>
@@ -74,15 +74,23 @@
       </div>
 
       <!-- Event Tags -->
-      <div class="form-group">
-        <label for="" class="label">Add Tags:</label>
-        <ion-searchbar id="tag_search" class="ther" name="tags"
-        [(ngModel)]="tag_input"
-        (ionInput)="onTagInput($event)"
-        autocomplete="off"></ion-searchbar>
-        <ion-button (click)="onTagSelect(tag_input)">
-          <ion-icon name="add"></ion-icon>
-        </ion-button>
+      <section class="loc">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="9">
+              <label class="label">Add Tags</label>
+              <ion-searchbar id="tag_search" class="ther" name="tags"
+                [(ngModel)]="tag_input"
+                (ionInput)="onTagInput($event)"
+                autocomplete="off"></ion-searchbar>
+            </ion-col>
+            <ion-col size="3">
+              <ion-button (click)="onTagSelect(tag_input)" class="add-button">
+                <ion-icon name="add" class="add-icon"></ion-icon>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
         <ion-list>
           <ion-item *ngFor="let tag of tags_list" (click)="onTagSelect(tag)">
             <ion-icon name="pricetag"></ion-icon> {{ tag }}
@@ -95,11 +103,11 @@
             <button class="close" (click)="onTagRemove(tag)">x</button>
           </span>
         </div>
-      </div>
+      </section>
 
-      <!-- Save Changes Button -->
+      <!-- Save Changes ion-button -->
       <div class="form-group">
-        <button type="submit" (click)="updateEvent()">Save Changes</button>
+        <ion-button type="submit" (click)="updateEvent()">Save Changes</ion-button>
       </div>
       <!-- </form> -->
     </section>
@@ -157,13 +165,13 @@
       <!-- <form (ngSubmit)="onSubmit()" #form="ngForm"> -->
         <div class="form-group">
           <h4>Image processing</h4>
-          <ion-checkbox id="facialRecognition">Facial Recognition</ion-checkbox>
-          <ion-checkbox id="deepFaceProtection">Deep Face Protection</ion-checkbox>
-          <ion-checkbox id="encryption">Encryption</ion-checkbox>
+          <ion-checkbox class="check" id="facialRecognition">Facial Recognition</ion-checkbox>
+          <ion-checkbox class="check" id="deepFaceProtection">Deep Face Protection</ion-checkbox>
+          <ion-checkbox class="check" id="encryption">Encryption</ion-checkbox>
         </div>
-        <!-- Save Changes Button -->
+        <!-- Save Changes ion-button -->
         <div class="form-group">
-          <button>Save Changes</button>
+          <ion-button>Save Changes</ion-button>
         </div>
       <!-- </form> -->
     </section>
@@ -186,37 +194,30 @@
             </ion-item>
           </ion-radio-group>
         </div>
+
         <!-- Chat Restrictions -->
         <div class="form-group">
-          <!-- <h4>Chat Restrictions</h4>
-          <ion-checkbox id="profanity">Allow Profanity</ion-checkbox>
-          <ion-checkbox id="negativeMessages">Allow Negative Messages</ion-checkbox> -->
-
-          <h3><label for="" class="label"> Add restricted words </label></h3>
-          <ion-input id="tag_search" class="ion-input-" name="tags"
-          [(ngModel)]="word_input"
-          autocomplete="off" placeholder="Type restricted word"></ion-input>
-          <ion-button (click)="addRestricted(word_input)">
-            <ion-icon name="add"></ion-icon>
-          </ion-button>
-          <!-- <ion-list>
-            <ion-item *ngFor="let word of restrictedWords_list" (click)="onTagSelect(word)">
-              <ion-icon name="pricetag"></ion-icon> {{ word }}
-            </ion-item>
-          </ion-list>
-         -->
+          <h3><label for="" class="label">Add restricted words</label></h3>
+          <div class="search-container">
+            <ion-input id="tag_search" class="ion-input-" name="tags"
+              [(ngModel)]="word_input"
+              autocomplete="off" placeholder="Type restricted word">
+            </ion-input>
+            <ion-button (click)="addRestricted(word_input)">
+              <ion-icon name="add"></ion-icon> Add
+            </ion-button>
+          </div>
           <div class="tags">
             <span class="tag" *ngFor="let word of restrictedWords_list">
               {{ word }}
               <button class="close" (click)="onWordRemove(word)">x</button>
             </span>
           </div>
-
-        </div>
+        </div>        
     
-        <!-- Save Changes Button -->
+        <!-- Save Changes ion-button -->
         <div class="form-group">
-          <!-- <button id="saveChangesButton" (click)="updateEvent()">Save Changes</button> -->
+          <!-- <ion-button id="saveChangesion-button" (click)="updateEvent()">Save Changes</ion-button> -->
         </div>
       <!-- </form> -->
     </section>
@@ -231,9 +232,9 @@
           <ion-checkbox id="deepFaceProtection">Deep Face Protection</ion-checkbox>
           <ion-checkbox id="encryption">Encryption</ion-checkbox> -->
         </div>
-        <!-- Save Changes Button -->
+        <!-- Save Changes ion-button -->
         <div class="form-group">
-          <button (click)="deleteEvent()">Delete Event</button>
+          <ion-button (click)="deleteEvent()">Delete Event</ion-button>
         </div>
       <!-- </form> -->
     </section>

@@ -63,8 +63,13 @@ button:hover {
 }
 
 .profile-section,
-.privacy-section,
 .facial-recognition-section {
+  border: 1px solid hsl(304, 49%, 82%);
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+.privacy {
   border: 1px solid hsl(304, 49%, 82%);
   padding: 15px;
   margin-bottom: 20px;

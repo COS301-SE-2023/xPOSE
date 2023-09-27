@@ -1,4 +1,4 @@
-import { deleteUser } from './deleteUser';
+import { deleteUser } from '../controllers/deleteUser';
 import admin from 'firebase-admin';
 
 jest.mock('firebase-admin', () => ({

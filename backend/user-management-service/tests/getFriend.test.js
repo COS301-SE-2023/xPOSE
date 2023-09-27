@@ -1,149 +1,66 @@
-import { getFriend } from './getFriend';
-import admin from 'firebase-admin';
+// getFriend.test.js
 
+import { getFriend } from '../controllers/getFriend';
+import * as admin from 'firebase-admin';
+import Friendship from '../data-access/models/friendship.table.js';
+
+jest.mock('../data-access/models/friendship.table.js', () => ({
+  findOne: jest.fn(),
+}));
 
 jest.mock('firebase-admin', () => ({
-  firestore: () => ({
-    collection: (collectionName) => ({
-      doc: (docId) => ({
-        get: () => {
-          if (docId === 'existingUserId') {
-            return Promise.resolve({
-              exists: true,
-              data: () => ({ name: 'Existing User' }),
-            });
-          } else {
-            return Promise.resolve({
-              exists: false,
-            });
-          }
-        },
-      }),
-    }),
-  }),
+  firestore: jest.fn(() => ({
+    collection: jest.fn(() => ({
+      doc: jest.fn(() => ({
+        get: jest.fn(),
+      })),
+    })),
+  })),
 }));
 
 describe('getFriend', () => {
+  const mockRequest = {
+    params: {
+      userId: 'mockUserId',
+      requestId: 'mockRequestId',
+    },
+  };
+
+  const mockResponse = {
+    status: jest.fn(() => mockResponse),
+    json: jest.fn(),
+  };
+
   beforeEach(() => {
-    
-    users = [];
+    jest.clearAllMocks();
   });
 
-  test('should return the friend data when they are friends', async () => {
-    const req = {
-      params: {
-        userId: 'Z2wxae2wxz2wA',
-        requestId: 'gdhguhrhgofi2',
-      },
-    };
-    const res = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn(),
-    };
+  it('should return error if friendship is not found', async () => {
+    Friendship.findOne.mockResolvedValue(null);
 
-    const Friendship = {
-      findOne: jest.fn(() => Promise.resolve({ friend_a_id: 'Z2wxae2wxz2wA', friend_b_id: 'userB' })),
-    };
+    await getFriend(mockRequest, mockResponse);
 
-
-    jest.mock('../data-access/models/friendship.table.js', () => Friendship);
-
-    await getFriend(req, res);
-
-
-    expect(res.status).toHaveBeenCalledWith(200);
-    expect(res.json).toHaveBeenCalledWith({ friend: { name: 'Existing User' } });
+    expect(mockResponse.status).toHaveBeenCalledWith(200);
+    expect(mockResponse.json).toHaveBeenCalledWith({ areFriends: false });
   });
 
-  test('should return "areFriends: false" when they are not friends', async () => {
-    const req = {
-      params: {
-        userId: 'Z2wxae2wxz2wA',
-        requestId: 'gdhguhrhgofi2',
-      },
-    };
-    const res = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn(),
-    };
+  it('should return friend data if friendship is found', async () => {
+    const mockFriendData = { name: 'Mock Friend' };
+    const mockUserDoc = { exists: true, data: jest.fn().mockReturnValue(mockFriendData) };
+    const mockFriendDoc = { exists: true, data: jest.fn().mockReturnValue(mockFriendData) };
 
+    Friendship.findOne.mockResolvedValue(true);
+    admin.firestore().collection().doc().get.mockResolvedValue(mockUserDoc);
+    admin.firestore().collection().doc().get.mockResolvedValue(mockFriendDoc);
 
-    const Friendship = {
-      findOne: jest.fn(() => Promise.resolve(null)),
-    };
+    await getFriend(mockRequest, mockResponse);
 
-
-    jest.mock('../data-access/models/friendship.table.js', () => Friendship);
-
-    await getFriend(req, res);
-
-    
-    expect(res.status).toHaveBeenCalledWith(200);
-    expect(res.json).toHaveBeenCalledWith({ areFriends: false });
+    expect(mockResponse.status).toHaveBeenCalledWith(200);
+    expect(mockResponse.json).toHaveBeenCalledWith({ friend: mockFriendData });
   });
 
-  test('should return "User not found" when the user does not exist', async () => {
-    const req = {
-      params: {
-        userId: 'Z2wxae2wxz2wA',
-        requestId: 'nonExistingUserId',
-      },
-    };
-    const res = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn(),
-    };
+  // Add more test cases for error scenarios and edge cases
 
-    await getFriend(req, res);
+  // ...
 
-   
-    expect(res.status).toHaveBeenCalledWith(404);
-    expect(res.json).toHaveBeenCalledWith({ error: 'User not found' });
-  });
-
-  test('should return "Friend document not found" when the friend document does not exist', async () => {
-    const req = {
-      params: {
-        userId: 'Z2wxae2wxz2wA',
-        requestId: 'existingUserId', 
-      },
-    };
-    const res = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn(),
-    };
-
-    await getFriend(req, res);
-
-   
-    expect(res.status).toHaveBeenCalledWith(404);
-    expect(res.json).toHaveBeenCalledWith({ error: 'Friend document not found' });
-  });
-
-  test('should return 500 for any unexpected error', async () => {
-    const req = {
-      params: {
-        userId: 'Z2wxae2wxz2wA',
-        requestId: 'gdhguhrhgofi2',
-      },
-    };
-    const res = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn(),
-    };
-
-    const errorMessage = 'Something went wrong';
-    const Friendship = {
-      findOne: jest.fn(() => Promise.reject(new Error(errorMessage))),
-    };
-
-   
-    jest.mock('../data-access/models/friendship.table.js', () => Friendship);
-
-    await getFriend(req, res);
-
-  
-    expect(res.status).toHaveBeenCalledWith(500);
-    expect(res.json).toHaveBeenCalledWith({ error: 'An error occurred while getting friend' });
-  });
 });

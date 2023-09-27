@@ -190,7 +190,8 @@ ion-item:hover {
   display: block;
 }
 
-.modal-user {
+
+.modal-chat {
   display: none;
   position: fixed;
   top: 0;
@@ -201,7 +202,7 @@ ion-item:hover {
   z-index: 1;
 }
 
-.modal-content-user {
+.modal-content-chat {
   background-color: #fff;
   margin: 15% auto;
   padding: 20px;
@@ -209,7 +210,7 @@ ion-item:hover {
   width: 60%;
 }
 
-.close-user {
+.close-chat {
   color: #aaa;
   float: right;
   font-size: 28px;
@@ -217,7 +218,7 @@ ion-item:hover {
   cursor: pointer;
 }
 
-.close-user:hover {
+.close-chat:hover {
   color: black;
 }.time{
   font-size: 18px;
@@ -266,4 +267,8 @@ ion-item:hover {
 
 .sub {
   margin-bottom: 10px;
+}
+
+.participants {
+  cursor: pointer;
 }

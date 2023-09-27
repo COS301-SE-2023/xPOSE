@@ -42,16 +42,16 @@
 
     <!-- Account Privacy Section -->
     <div class="section">Account Privacy</div>
-    <section class="privacy-section">
+    <section class="privacy">
       <div class="form-group">
-      <ion-radio-group value="privacy" name="privacy_setting">
+      <ion-radio-group value="privacy" name="privacy_setting" [(ngModel)]="privacy">
         <ion-item>
           <ion-icon name="earth"></ion-icon>
           <ion-label>Public</ion-label>
           <ion-radio value="public"></ion-radio>
         </ion-item>
       </ion-radio-group>
-      <ion-radio-group value="privacy" name="privacy_setting">
+      <ion-radio-group value="privacy" name="privacy_setting" [(ngModel)]="privacy">
         <ion-item>
           <ion-icon name="lock-closed"></ion-icon>
           <ion-label>Private</ion-label>
