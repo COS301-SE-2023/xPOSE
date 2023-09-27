@@ -12,13 +12,13 @@
       <!-- Change Title -->
       <div class="form-group">
         <label for="eventTitle">Change Title:</label>
-        <input [(ngModel)]="eventObject.title" type="text" id="eventTitle">
+        <ion-input [(ngModel)]="eventObject.title" type="text" id="eventTitle"></ion-input>
       </div>
 
       <!-- Change Description -->
       <div class="form-group">
         <label for="eventDescription">Change Description:</label>
-        <textarea id="eventDescription" [(ngModel)]="eventObject.description"></textarea>
+        <ion-textarea id="eventDescription" [(ngModel)]="eventObject.description"></ion-textarea>
       </div>
 
       <!-- Change Cover Image -->
@@ -43,18 +43,18 @@
     <!-- Change Dates from Calendar -->
     <div class="form-group">
       <label for="startDate">Start Date:</label>
-      <ion-input [(ngModel)]="eventObject.start_date" type="datetime-local" id="startDate"></ion-input>
+      <ion-input [(ngModel)]="eventObject.start_date" type="datetime-local" id="startDate" class="date"></ion-input>
     </div>
 
     <div class="form-group">
       <label for="endDate">End Date:</label>
-      <ion-input [(ngModel)]="eventObject.end_date" type="datetime-local" id="endDate"></ion-input>
+      <ion-input [(ngModel)]="eventObject.end_date" type="datetime-local" id="endDate" class="date"></ion-input>
     </div>
 
       <!-- Access Privacy (Public/Private) -->
       <div class="form-group">
         <label class="label" for="privacy_setting">Access Privacy:</label>
-        <ion-radio-group id="accessPrivacy" [(ngModel)]="eventObject.privacy_setting">
+        <ion-radio-group id="accessPrivacy" [(ngModel)]="eventObject.privacy_setting" name="privacy_setting">
           <ion-item>
             <ion-icon name="earth"></ion-icon>
             <ion-label>Public</ion-label>
@@ -160,9 +160,9 @@
       <!-- <form (ngSubmit)="onSubmit()" #form="ngForm"> -->
         <div class="form-group">
           <h4>Image processing</h4>
-          <ion-checkbox id="facialRecognition">Facial Recognition</ion-checkbox>
-          <ion-checkbox id="deepFaceProtection">Deep Face Protection</ion-checkbox>
-          <ion-checkbox id="encryption">Encryption</ion-checkbox>
+          <ion-checkbox class="check" id="facialRecognition">Facial Recognition</ion-checkbox>
+          <ion-checkbox class="check" id="deepFaceProtection">Deep Face Protection</ion-checkbox>
+          <ion-checkbox class="check" id="encryption">Encryption</ion-checkbox>
         </div>
         <!-- Save Changes ion-button -->
         <div class="form-group">
@@ -189,7 +189,7 @@
             </ion-item>
           </ion-radio-group>
         </div>
-        
+
         <!-- Chat Restrictions -->
         <div class="form-group">
           <h3><label for="" class="label">Add restricted words</label></h3>
@@ -205,7 +205,7 @@
           <div class="tags">
             <span class="tag" *ngFor="let word of restrictedWords_list">
               {{ word }}
-              <ion-button class="close" (click)="onWordRemove(word)">x</ion-button>
+              <button class="close" (click)="onWordRemove(word)">x</button>
             </span>
           </div>
         </div>        
