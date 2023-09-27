@@ -599,9 +599,9 @@ export class EventPage {
     return [false, ''];
   }
 
-  openModalUser(content: any) {
-    let modal = document.getElementById("myModal")
-    let modalContent = document.getElementById("modalContent");
+  openModalChat(content: any) {
+    let modal = document.getElementById("myModal-chat")
+    let modalContent = document.getElementById("modalContent-chat");
     if(modal) { 
       modal.style.display = "block";
     }
@@ -611,8 +611,8 @@ export class EventPage {
 
   }
 
-  closeModalUser() {
-    var modal = document.getElementById("myModal");
+  closeModalChat() {
+    var modal = document.getElementById("myModal-chat");
     if(modal) modal.style.display = "none";
   }
 
@@ -622,7 +622,7 @@ export class EventPage {
     const [containsRestricted, restrictedWord] = this.containsRestrictedWord();
     if(this.newMessage) {
       if(containsRestricted) {
-        this.openModalUser('Can\'t send message with banned word(s):\n' + restrictedWord);
+        this.openModalChat('Can\'t send message with banned word(s):\n' + restrictedWord);
         return;
       } else{
         console.log("Message does not contain banned word");
