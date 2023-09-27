@@ -74,6 +74,7 @@ def decode_faces(image):
 
                 if is_match:
                     detected_users.append(user.uid)
+                
 
         return {'detected_users': detected_users}, 200
     except Exception as e:

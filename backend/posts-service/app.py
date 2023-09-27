@@ -66,8 +66,12 @@ def create_post(event_id):
             detected_users = result.get('detected_users', [])
             print('Detected ', detected_users)
 
+            # iterate through detected users and send each one
+            # TODO: Add a notification to the notifications queue for each detected user
             # Initialize Firestore client
             firestore_client = firestore.Client()
+
+            timestamp = firestore.SERVER_TIMESTAMP
 
             # Create a new post document in the Firestore collection
             posts_ref = firestore_client.collection(f'Event-Posts/{event_id}/posts')
@@ -75,7 +79,7 @@ def create_post(event_id):
                 'image_url': image_url,
                 'uid': user_id,
                 'users_in_image': detected_users,
-                'timestamp': firestore.SERVER_TIMESTAMP
+                'timestamp': timestamp
             })
 
             print(new_post_doc)
@@ -86,8 +90,37 @@ def create_post(event_id):
             print('Post Document ID:', post_doc_id.id)
             print('Post Document Reference:', post_doc_ref)
 
-            post_id = post_doc_id.id
+            # Save the document references inside user in the Users collection
+            for detected_user_id in detected_users:
+                # Check if the user exists in the Users collection
+                detected_user_ref = firestore_client.collection('Users').document(detected_user_id)
+                detected_user_doc = detected_user_ref.get()
 
+                if detected_user_doc.exists:
+                    # Update the existing document
+                    # store post reference in the posts collection inside the user document
+                    detected_user_ref.collection('posts').document(post_doc_id.id).set({
+                        'event_id': event_id,
+                        'image_url': image_url,
+                        'uid': user_id,
+                        'users_in_image': detected_users,
+                        'timestamp': timestamp
+                    })
+
+                    # detected_user_ref.update({
+                    #     'posts': firestore.ArrayUnion([f'Event-Posts/{event_id}/posts/{post_doc_id}'])
+                    # })
+                else:
+                    # Create a new user document
+                    # detected_user_ref.set({
+                    #     'posts': firestore.ArrayUnion([new_post_doc[1].id])
+                    # })
+                    # delete the user from the database
+                    # User.delete().where(User.uid == detected_user_id).execute()
+                    # return jsonify({'error': 'User not found'}), 400
+                    pass
+
+            post_id = post_doc_id.id
 
             # Create a new post entry in the SQL 'posts' table
             new_post = Post.create(
@@ -131,6 +164,19 @@ def delete_post(event_id, post_id):
         # Delete image from Firebase Storage
 
         if post_doc.exists:
+            # Get the users_in_image field from the post document
+            post_data = post_doc.to_dict()
+            users_in_image = post_data['users_in_image']
+
+            # Delete the image from Firebase Storage
+            image_url = post_data['image_url']
+            delete_image_from_firebase(image_url)
+
+            # delete document from each user's posts collection
+            for user_id in users_in_image:
+                user_ref = firestore_client.collection('Users').document(user_id)
+                user_ref.collection('posts').document(post_id).delete()
+
             # Delete the post from the Firestore collection
             post_ref.delete()
 

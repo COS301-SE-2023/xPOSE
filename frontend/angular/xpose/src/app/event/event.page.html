@@ -76,21 +76,21 @@
              </ion-toolbar>
            </ion-header>
           <div>
-            <ion-card>
+            <ion-card class="custom-card">
               <ion-card-header>
-                <ion-card-subtitle>Date ({{ current_event?.status }})</ion-card-subtitle>
-                <ion-card-title class="time"> {{ current_event?.start_date  }} - {{ current_event?.end_date  }}  </ion-card-title>
+                <ion-card-subtitle class="sub">Date <span class="label label-{{ getStatusColor(current_event?.status) }} label">{{current_event?.status }}</span></ion-card-subtitle>
+                <ion-card-subtitle class="time"> {{ current_event?.start_date  }} - {{ current_event?.end_date  }}  </ion-card-subtitle>
               </ion-card-header>
               <ion-card-content>
                 <ion-card-subtitle>Location</ion-card-subtitle>
-                <ion-card-title> {{ current_event?.location }} </ion-card-title>
+                <ion-card-subtitle> {{ current_event?.location }} </ion-card-subtitle>
               </ion-card-content>
             </ion-card>
         
             <!-- QR Code -->
-            <ion-card>
+            <ion-card class="custom-card">
               <ion-card-header>
-                <ion-card-title>QR Code</ion-card-title>
+                <ion-card-subtitle>QR Code</ion-card-subtitle>
               </ion-card-header>
                 <div class="qrcode-container">
                   <qrcode [qrdata]="url" [width]="400" [errorCorrectionLevel]="'H'"></qrcode>
@@ -98,13 +98,16 @@
             </ion-card>
         
             <!-- Event link -->
-            <ion-card>
+            <ion-card class="custom-card">
               <ion-card-header>
-                <ion-card-title>Event link</ion-card-title>
+                <ion-card-subtitle>Event Settings</ion-card-subtitle>
               </ion-card-header>
               <ion-card-content>
-                <!-- Display your event link here -->
-                <p style="color: blue;">{{ this.url }}</p>
+                <div class="form-group">
+                  <ion-checkbox></ion-checkbox> Notifications for post <br>
+                  <ion-checkbox></ion-checkbox> Share location
+                </div>
+              <!-- </form> -->
               </ion-card-content>
             </ion-card>
           </div>
@@ -143,3 +146,11 @@
       <!-- </ion-toolbar> -->
     </ion-footer>
     
+
+    
+  <div id="myModal" class="modal-user">
+    <div class="modal-content-user">
+      <span class="close-user" (click)="closeModalUser()">&times;</span>
+      <p id="modalContent" style="white-space: pre-line;"></p>
+    </div>
+  </div>

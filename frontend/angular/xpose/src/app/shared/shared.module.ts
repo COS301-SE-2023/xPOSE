@@ -7,11 +7,12 @@ import { FormsModule } from '@angular/forms';
 import { FooterComponent } from '../footer/footer.component';
 import { BackbuttonComponent } from '../shared/backbutton/backbutton.component';
 import { LoadingPageComponent } from '../shared/loading-icon/loading-icon.component';
+import { GalleryComponent } from './gallery/gallery.component';
 
 
 @NgModule({
-  declarations: [FooterComponent, BackbuttonComponent, LoadingPageComponent],
+  declarations: [FooterComponent, BackbuttonComponent, LoadingPageComponent, GalleryComponent],
   imports: [CommonModule, IonicModule, FormsModule], // Add IonicModule and FormsModule here
-  exports: [FooterComponent, BackbuttonComponent, LoadingPageComponent],
+  exports: [FooterComponent, BackbuttonComponent, LoadingPageComponent, GalleryComponent],
 })
 export class SharedModule {}

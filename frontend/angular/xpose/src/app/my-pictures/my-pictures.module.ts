@@ -8,12 +8,15 @@ import { MyPicturesPageRoutingModule } from './my-pictures-routing.module';
 
 import { MyPicturesPage } from './my-pictures.page';
 
+import { SharedModule } from '../shared/shared.module'; 
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    MyPicturesPageRoutingModule
+    MyPicturesPageRoutingModule,
+    SharedModule
   ],
   declarations: [MyPicturesPage]
 })

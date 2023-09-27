@@ -66,6 +66,15 @@ export class EventPage {
   //   this.galleryDataService.setData(this.data);
   // }
 
+  getStatusColor(status: string) {
+    if (status === 'ongoing') {
+      return 'success';
+    } else if (status === 'upcoming') {
+      return 'warning';
+    } else {
+      return 'danger';
+    }
+      }
 
   @ViewChild('eventTabs', { static: false }) tabs: IonTabs | undefined;
   selectedTab: any;
@@ -79,6 +88,8 @@ export class EventPage {
     this.isMenuOpen = !this.isMenuOpen; // Toggle the menu state
   }
   
+
+  restrictedWords_list: string[] = [];
 
   constructor(private http: HttpClient,
     private activatedRoute: ActivatedRoute,
@@ -133,6 +144,9 @@ export class EventPage {
   url: string = window.location.href;
   posts: any;
 
+
+  user_id:string ="";
+
   ngOnInit() {
     // click the element with id of posts_tab
     document.getElementById("posts_tab")?.click();
@@ -168,6 +182,7 @@ export class EventPage {
 
       this.getCurrentUserId().subscribe((uid) => {
         if (uid) {
+          this.user_id = uid;
           this.http.get(`${this.api.apiUrl}/e/events/${event_id}?uid=${uid}`).subscribe((data) => {
             this.url = `https://xpose-4f48c.web.app/view-event/${event_id}`;
             this.retrieveMessages();
@@ -177,6 +192,12 @@ export class EventPage {
             console.log(this.current_event); 
             this.getEventParticipantsFromAPI();
             console.log(this.participants);
+
+
+
+            // Load restricted words
+               // restricted words data
+               this.addRestrictedWords(event_id, []);
           },
           (error) => {
               this.loading = false; // Request completed with an error
@@ -208,6 +229,36 @@ export class EventPage {
   // import { HttpClient } from '@angular/common/http';
   
   // ...
+
+
+  addRestrictedWords(event_id:string, tagWords: string[]) {
+    this.computationOfRestrictedWords(event_id, tagWords).subscribe(
+      (response: any) => {
+        //
+        console.log("Restricted words added:", response);
+
+        this.restrictedWords_list = response.tagWords;
+        console.log("Restricted words array:", this.restrictedWords_list);
+      },
+      (error) => {
+        console.log("Error adding restricted words", error)
+      }
+    )
+   }
+
+    computationOfRestrictedWords(event_id: string, tagWordsArray: string[]) {      
+      const formData:FormData = new FormData();
+      let flag = false;
+      for(let index = 0; index < tagWordsArray.length; index++) {
+        flag = true;
+        formData.append('restrictedWords[]',tagWordsArray[index].toLowerCase());
+      }
+      if(!flag){
+        formData.append('restrictedWords[]', '');
+      }
+      
+      return this.http.post(`${this.api.apiUrl}/c/chats/${event_id}/restrictedWord`, formData);
+    }
 
   
   onLogoutClick() {
@@ -421,7 +472,11 @@ export class EventPage {
                     participant.uniq_username = user.uniq_username;
                     // TODO: Add validation on events service, so
                     if (true) {
-                      participant.location = user.location._lat + ', ' + user.location._long;
+                      this.http.get(`https://geocode.maps.co/reverse?lat=${user.location._lat}&lon=${user.location._long}`)
+                      .subscribe((response: any) => {
+                        participant.location = response.display_name;
+                      });
+                      // participant.location = user.location._lat + ', ' + user.location._long;
                     }
                     // participant.location
                     console.log(user);
@@ -453,7 +508,7 @@ export class EventPage {
     // / Check if participant object and participant.id are defined and not null
     if (participant) {
       // Navigate to the user profile page with the participant's ID
-      this.router.navigate(['/user-profile', participant.uid]);
+      this.router.navigate(['/user-profile', participant.uid, this.user_id]);
     } else {
       // Handle the case where participant object or participant.id is invalid or missing
       console.error('Invalid participant data.');
@@ -511,6 +566,9 @@ export class EventPage {
 
   onProfile() {
     this.router.navigate(['/profile']);
+  } 
+  onPosts() {
+    this.router.navigate(['../event/posts']);
   }
 
   onJoinedEvent() {
@@ -528,7 +586,49 @@ export class EventPage {
   // Code to create and send messages
   newMessage!: string;
 
+  // Check if there's a banned word
+  containsRestrictedWord() {
+    const message = this.newMessage.toLowerCase();
+    for (const word of this.restrictedWords_list) {
+      const regex = new RegExp(`\\b${word.toLowerCase()}\\b`);
+      
+      if (regex.test(message)) {
+        return [true, word];
+      }
+    }
+    return [false, ''];
+  }
+
+  openModalUser(content: any) {
+    let modal = document.getElementById("myModal")
+    let modalContent = document.getElementById("modalContent");
+    if(modal) { 
+      modal.style.display = "block";
+    }
+    if(modalContent) {
+      modalContent.textContent = content;
+    }
+
+  }
+
+  closeModalUser() {
+    var modal = document.getElementById("myModal");
+    if(modal) modal.style.display = "none";
+  }
+
+  
   createMessage() {
+    // check if message has banned or restriced words
+    const [containsRestricted, restrictedWord] = this.containsRestrictedWord();
+    if(this.newMessage) {
+      if(containsRestricted) {
+        this.openModalUser('Can\'t send message with banned word(s):\n' + restrictedWord);
+        return;
+      } else{
+        console.log("Message does not contain banned word");
+      }
+    }
+
     if (this.newMessage) {
       this.getCurrentUserId().subscribe((uid) => {
         const message: Message = {
@@ -556,7 +656,7 @@ export class EventPage {
     if(this.messagesCollection) {
       this.messagesCollection.valueChanges().subscribe((messages: Message[]) => {
         this.messages = messages;
-        
+
         // Fetch and assign the displayName for each message
         this.messages.forEach((message: Message) => {
           this.getUserNameFromUid(message.uid).subscribe((displayName: string) => {
@@ -593,7 +693,6 @@ export class EventPage {
     else {
       console.log("messagesCollection is undefined");
     }
-
   }
   
   getUserNameFromUid(uid: string): Observable<string> {
@@ -672,6 +771,22 @@ export class EventPage {
       }
       return '';
     }
+
+    getPlaceName(latitude: number, longitude: number): Observable<string> {
+      const apiUrl = `https://geocode.maps.co/reverse?lat=${latitude}&lon=${longitude}`;
+    
+      return this.http.get(apiUrl).pipe(
+        map((response: any) => {
+          if (response && response.results && response.results.length > 0) {
+            const place = response.results[0].formatted;
+            return place;
+          } else {
+            return 'Unknown Location';
+          }
+        })
+      );
+    }
+    
 
 }
 

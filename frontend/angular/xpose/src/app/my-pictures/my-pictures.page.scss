@@ -1,18 +1,202 @@
-.image-gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 16px;
-    padding: 16px;
+:host{
+  display: block;
+  text-align: center;
+}
+
+
+  .gallery {
+      line-height: 0;
+      column-count: 2;
+      column-gap: 0px;
+      background-color: #fff;
+      text-align: center;
+
+      .gallery-img {
+        display: inline-block;
+          width: 95%;
+          height: auto;
+          cursor: zoom-in;
+          border-radius: 5px;
+          margin-bottom: 9px;
+          box-shadow: 0 1px 5px rgba(0,0,0,.21);
+
+      }
+
+  }
+  .lightbox{
+      // display: flex;
+      align-items: center;
+      // justify-content: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 1050px;
+      background: rgba(146, 146, 146, 0.85);
+  
+
+      .background-element {
+          /* Set CSS properties to hide the background element */
+          display: none; /* or visibility: hidden; or opacity: 0; or any other appropriate styling */
+        }
+     
+      .btn-lightbox-carousel{
+          position: absolute;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          z-index: 1;
+          width: 8%;
+          height: 8%;
+          padding: 0;
+          color:#000000;
+          text-align: center;
+          background: 0 0;
+          border: 0;
+          cursor: pointer;
+          background-color: #fff;
+          }
+          // .btn-prev{
+          //     left: 0;
+          //     font-size: 30px;
+          // }
+          .btn-next{
+              right: 0;
+          }
+          .icon-lightbox-carousel {
+              // color:#ffffff;
+              opacity: 0.5;
+              transition: all 0.15s ease;
+
+          }
+          .icon-Lightbox-carousel:hover {
+              opacity: 0.9;
+          }
+          .icon-lightbox-carousel:active {
+              opacity: 0.5;
+
+          }
+          .btn-prev,
+          .btn-next {
+              font-size: 10px;
+          }
+          .lightbox-img {
+              width: 100%;
+              // height: 100%;
+              position: absolute; /* Change from 'absolute' to 'fixed' */
+              top: 0; /* Position the image at the top of the viewport */
+              left: 0; /* Position the image at the left of the viewport */
+              // display: flex;
+              justify-content: center;
+              align-items: center;
+              flex-direction: column;
+            }
+          
+            .lightbox-img img {
+              max-width: 100%; /* Ensure the image doesn't exceed the lightbox width */
+              max-height: 100%; /* Ensure the image doesn't exceed the lightbox height */
+              // object-fit: contain; /* Fit the image within the container, preserving its aspect ratio */
+              border-radius: .35rem;
+            }
+
+
+  
   }
   
-  .image-gallery img {
-    width: 100%;
-    cursor: pointer;
-    border-radius: 8px;
-  }
+    .icon-prev{
+      font-size: 100px;
+      font-weight: bolder;
+      padding-top: 350px;
+      color: #fff;
   
-  .image-gallery img:hover {
-    transform: scale(1.05);
-    transition: transform 0.3s ease-in-out;
-  }
+    }
+    /* ... (previous styles) ... */
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1;
+  font-size: 30px;
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: none;
+  border-radius: 50%;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.icon-close-btn {
+  font-size: 30px;
+}
+
+
   
+  .icon-p{
+      font-size: 30px;
+      font-weight: bolder;
+  }
+
+  .style-create-icon{
+      font-size: 200px;
+      color: deeppink;
+      // font-weight: bolder;
+      // padding-bottom: 1300px;
+  }
+  .btn-lightbox-carousel,
+.btn-lightbox-control {
+cursor: pointer;
+background-color: #333;
+color: #fff;
+border: none;
+border-radius: 50%;
+padding: 10px;
+font-size: 20px;
+margin: 5px;
+}
+
+.btn-lightbox-control {
+font-size: 20px;
+}
+
+.btn-lightbox-carousel:hover,
+.btn-lightbox-control:hover {
+background-color: #555;
+}
+
+/* Add custom styles for the download button */
+.btn-lightbox-control.btn-download {
+cursor: pointer;
+background-color: #333;
+color: #fff;
+border: none;
+border-radius: 50%;
+padding: 10px;
+font-size: 20px;
+margin: 5px;
+}
+
+.btn-lightbox-control.btn-download:hover {
+background-color: #555;
+}
+
+//input styling
+input[type="text"] {
+width: 100%; /* Full width */
+max-width: 400px;
+padding: 12px; /* Padding */
+border: 1px solid #ccc; /* Gray border */
+border-radius: 4px; /* Rounded borders */
+box-sizing: border-box; /* Make sure that padding and width stays in place */
+margin-top: 6px; /* Add a top margin */
+margin-bottom: 16px; /* Bottom margin */
+resize: vertical; /* Allow the user to vertically resize the textarea (not horizontally) */
+font-size: 16px; /* Increase font size */
+background-color: #ececec /* Set a background color */;
+}
+
+input[type="text"]:focus {
+border-color: #b837ad; /* Set the border color when in focus */
+outline: none; /* Remove the default outline */
+}
+

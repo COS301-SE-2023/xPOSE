@@ -1,5 +1,9 @@
 /* event-settings.component.css */
 
+.ion-input-{
+  border: 1px solid #ccc;
+}
+
 .event-settings {
   max-width: 600px;
   margin: 0 auto;
@@ -35,16 +39,17 @@ ion-radio-group {
 }
 
 button {
-  background-color: #eb0091;
+  background-color: hsl(304, 49%, 82%);
   color: #000000;
   border: none;
-  padding: 10px 20px;
+  padding: 10px;
   border-radius: 4px;
   cursor: pointer;
+  font-weight: bold;
 }
 
 button:hover {
-  background-color: #eb0091;
+  background-color: hsl(304, 49%, 82%);
 }
 
 /* Add additional styling as needed */
@@ -59,4 +64,30 @@ input{
 textarea{
   color:#000;
   background-color: #ffffff ;
+}
+
+.form-section {
+  border: 1px solid hsl(304, 49%, 82%);
+}
+
+.form-group button {
+  margin-top: 10px;
+  align-items: center;
+}
+
+ion-icon {
+  padding-right: 5px;
+}
+
+ion-radio {
+  --color-checked: #ff00ff;
+}
+
+.form-section button {
+  display: block;
+  margin: 0 auto;
+}
+
+.form-section button:not(:last-child) {
+  margin-bottom: 10px;
 }

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../service/api.service';
@@ -9,7 +9,13 @@ import { NgForm } from '@angular/forms';
 import { Event } from '../shared/event';
 import { LocationAutocompleteService } from '../service/location-autocomplete.service';
 import { Service } from '../service/service';
-import { Console } from 'console';
+import { Console, error } from 'console';
+import { LoadingController } from "@ionic/angular";
+
+// interface ApiResponse {
+//   message: string;
+//   tagWords: string[]; // Assuming tagWords is an array of strings
+// }
 
 @Component({
   selector: 'app-events-settings',
@@ -35,8 +41,13 @@ export class EventsSettingsPage implements OnInit {
 	  loading = false;
 	locationPredictions: any[] = [];
 
-  data: any;
 
+  restrictedWords_list: string[] = [];
+  word_input: string = '';
+
+  data: any;
+  eventUID:string = "";
+  
   constructor(private http: HttpClient,
 		private router: Router,
 		private api: ApiService,
@@ -45,7 +56,8 @@ export class EventsSettingsPage implements OnInit {
     private locationAutocompleteService: LocationAutocompleteService,
     private activatedRoute: ActivatedRoute,
     private navCtrl: NavController,
-    private userService: Service) { }
+    private userService: Service,
+    private loadingController: LoadingController) { }
 
     ngOnInit() {
       // click the element with id of posts_tab
@@ -74,6 +86,7 @@ export class EventsSettingsPage implements OnInit {
       
         this.getCurrentUserId().subscribe((uid : any) => {
           if (uid) {
+            this.eventUID =event_id;
             console.log(`${this.api.apiUrl}/e/events/${event_id}?uid=${uid}`);
             console.log(`${this.api.apiUrl}/e/feed?uid=${uid}&code=${event_id}`);
             this.http.get(`${this.api.apiUrl}/e/feed?uid=${uid}&code=${event_id}`).subscribe((data: any) => {
@@ -106,7 +119,10 @@ export class EventsSettingsPage implements OnInit {
             });
 
 
+            // restricted words data
+            this.addRestrictedWords(event_id, []);
           }
+
           else {
             this.loading = false; // Request completed with an error
             console.log("no user id");
@@ -123,6 +139,79 @@ export class EventsSettingsPage implements OnInit {
         //   // this.currentEventDataService.event_id = res._id;
         // });
       });
+    }
+
+    async removeRestrictedWord(word:string) {
+      const arrayOfWords = [];
+      arrayOfWords.push(word);
+      this.computeRemovedWords(this.eventUID, arrayOfWords).subscribe(
+        (response: any) => {
+          //
+          console.log("Restricted words deleted:", response);
+  
+          this.restrictedWords_list = response.tagWords;
+          // console.log("Restricted words array:", this.restrictedWords_list);
+        },
+        (error) => {
+          console.log("Error deleting restricted words", error)
+        }
+      )
+    }
+
+    computeRemovedWords(event_id: string, tagWordsArray: string[]) {      
+      const formData:FormData = new FormData();
+      let flag = false;
+      for(let index = 0; index < tagWordsArray.length; index++) {
+        flag = true;
+        formData.append('restrictedWords[]',tagWordsArray[index].toLowerCase());
+      }
+      if(!flag){
+        formData.append('restrictedWords[]', '');
+      }
+
+      return this.http.post(`${this.api.apiUrl}/c/chats/${event_id}/restrictedWord_deleted`, formData);
+    }
+
+    async addRestricted(word:string) {
+      const arrayOfWords = word.split(/[ ,]+/);
+      // Filter out empty strings
+      const nonEmptyWords = arrayOfWords.filter(t => t.trim() !== '');
+      // console.log("Restricted words before", this.restrictedWords_list);
+      // Filter out words that are already in this.restrictedWords_list
+      const uniqueWords = nonEmptyWords.filter(word => !this.restrictedWords_list.includes(word));
+    
+      this.restrictedWords_list = this.restrictedWords_list.filter(t => t !== word);
+      console.log("Restricted words after", this.restrictedWords_list);
+      this.addRestrictedWords(this.eventUID, uniqueWords);
+  }
+
+  async addRestrictedWords(event_id:string, tagWords: string[]) {
+    this.computationOfRestrictedWords(event_id, tagWords).subscribe(
+      (response: any) => {
+        //
+        console.log("Restricted words added:", response);
+
+        this.restrictedWords_list = response.tagWords;
+        console.log("Restricted words array:", this.restrictedWords_list);
+      },
+      (error) => {
+        console.log("Error adding restricted words", error)
+      }
+    )
+   }
+
+    computationOfRestrictedWords(event_id: string, tagWordsArray: string[]) {      
+      const formData:FormData = new FormData();
+      let flag = false;
+      for(let index = 0; index < tagWordsArray.length; index++) {
+        flag = true;
+        formData.append('restrictedWords[]',tagWordsArray[index].toLowerCase());
+      }
+      if(!flag){
+        formData.append('restrictedWords[]', '');
+      }
+
+      return this.http.post(`${this.api.apiUrl}/c/chats/${event_id}/restrictedWord`, formData);
     }
 
     current_image_url: string = '';
@@ -284,6 +373,9 @@ export class EventsSettingsPage implements OnInit {
 		});
 	  }
 
+
+
+
 	  onTagRemove(tag: string) {
 		this.selected_tags = this.selected_tags.filter(t => t !== tag);
 	  }
@@ -297,6 +389,27 @@ export class EventsSettingsPage implements OnInit {
 		this.tags_list = [];
 		this.tag_input = '';
 	  }
+
+    loading_!: HTMLIonLoadingElement;
+
+  async  onWordRemove(word: string) {
+      console.log("Restricted words before", this.restrictedWords_list);
+      this.restrictedWords_list = this.restrictedWords_list.filter(t => t !== word);
+      console.log("Restricted words after", this.restrictedWords_list);
+      // try {
+      //   this.loading_ = await this.loadingController.create({
+      //     message: "please wait...",
+      //   });
+
+      //     await this.loading_.present();
+            this.removeRestrictedWord(word);
+         await this.loading_.dismiss();
+		// } catch (error) {
+		// 	await this.loading_.dismiss();
+		// 	console.error("Error updating profile", error);
+		// }
+    }
+
 
     // search code
     user_input: string = '';
