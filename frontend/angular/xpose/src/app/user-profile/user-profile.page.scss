@@ -9,7 +9,8 @@
 .user-info {
   display: flex;
   flex-direction: column;
-  margin-left: 20px; /* Adjust this margin as needed to separate the image and user info */
+  margin-left: 20px;
+  align-items: flex-start;
 }
 
 .profile_div { 
@@ -47,7 +48,7 @@
     background-color: hsl(304, 49%, 82%);
     color: #000000;
     margin-bottom: 20px;
-    height: 430px;
+    height: 380px;
     border: 1px solid #d1d1d1;
     border-radius: 10px;
     overflow: hidden;
@@ -82,6 +83,10 @@
     padding-left: 10px;
     color: #353535;
     font-family: "Poppins", sans-serif;
+  }
+
+  ion-card-subtitle {
+    color: #000;
   }
   
   .card-content {
@@ -648,23 +653,51 @@
   }
   
   //input styling
-  input[type="text"] {
-  width: 100%; /* Full width */
-  max-width: 400px;
-  padding: 12px; /* Padding */
-  border: 1px solid #ccc; /* Gray border */
-  border-radius: 4px; /* Rounded borders */
-  box-sizing: border-box; /* Make sure that padding and width stays in place */
-  margin-top: 6px; /* Add a top margin */
-  margin-bottom: 16px; /* Bottom margin */
-  resize: vertical; /* Allow the user to vertically resize the textarea (not horizontally) */
-  font-size: 16px; /* Increase font size */
-  background-color: #ececec /* Set a background color */;
-  }
+  // input[type="text"] {
+  // width: 100%; /* Full width */
+  // max-width: 400px;
+  // padding: 12px; /* Padding */
+  // border: 1px solid #ccc; /* Gray border */
+  // border-radius: 4px; /* Rounded borders */
+  // box-sizing: border-box; /* Make sure that padding and width stays in place */
+  // margin-top: 6px; /* Add a top margin */
+  // margin-bottom: 16px; /* Bottom margin */
+  // resize: vertical; /* Allow the user to vertically resize the textarea (not horizontally) */
+  // font-size: 16px; /* Increase font size */
+  // background-color: #ececec /* Set a background color */;
+  // }
   
   input[type="text"]:focus {
   border-color: #b837ad; /* Set the border color when in focus */
   outline: none; /* Remove the default outline */
   }
   
+  .profile-details-container {
+    display: flex;
+    align-items: center;
+  }
+
+  .user-details {
+    flex-grow: 1;
+    margin-left: 20px;
+  }
+
+  .username {
+    margin-bottom: 2px;
+  }
+
+  .username[data-label]::before {
+    content: attr(data-label);
+    font-weight: bold;
+    display: inline-block;
+  }
+
+  @media screen and (max-width: 768px) {
+    .user-info {
+      margin-left: 0;
+    }
   
+    .username::before {
+      margin-right: 0; /* Remove spacing for mobile view */
+    }
+  }

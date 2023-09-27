@@ -7,6 +7,10 @@
   </ion-toolbar>
 </ion-header>
 
+
+
+
+
 <ion-content id="main-content">
   <ion-segment [(ngModel)]="selectedSegment">
     <ion-segment-button value="details">
@@ -23,75 +27,29 @@
     </ion-segment-button>
   </ion-segment>
 
-  <div class="profile_div" *ngIf="false">
+  <div class="profile_div" *ngIf="selectedSegment === 'details'">
     <div class="user_div" *ngIf="user">
       <!-- Profile Picture (Left) -->
-      <!-- <img class="profile-image" [src]="user.photoURL"> -->
+      <img class="profile-image" [src]="user.photoURL">
       
       <!-- User Info (Right) -->
       <div class="user-info">
-        <!-- <ion-label class="username"><b>Name: </b>{{}}</ion-label><br> -->
-        <!-- <ion-label class="username"><b>Email: </b>{{}}</ion-label><br> -->
-        <!-- <ion-label class="username"><b>Unique Code: </b>{{}}</ion-label><br> -->
-        <!-- <ion-label class="username"><b>Account: </b>{{}}</ion-label><br> -->
-        <br>
+        <ion-label class="username" data-label="Name: "> {{user.displayName}}</ion-label>
+        <ion-label class="username" data-label="Email: "> {{user.email}}</ion-label>
+        <ion-label class="username" data-label="Unique Code: "> {{user.username}}</ion-label>
+        <ion-label class="username" data-label="Account: "> {{user.visibility}}</ion-label>
       </div>
     </div>
-
-    <div class="section">Account Information</div>
-
   
     <!-- Button (Centered) -->
- 
-  </div>
-  
-  <div class="account-settings" *ngIf="selectedSegment === 'details'">
-    
-      <section class="profile-section">
-        <!-- Change Profile -->
-        <!-- <form (submit)="updateProfile()"> -->
-          <div class="form-group">
-            <!-- <ion-label for="profileImage">Profile Image:</ion-label> -->
-            <div class="user_div" >
-              <img class="profile-image" [src]="user.photoURL" alt="Selected Image">
-            </div>
-            <!-- <label class="file-label">
-              Change Profile Picture
-              <input class="file-input" type="file" accept="image/*"/>
-            </label> -->
-            
-            <!-- <input type="file" id="profileImage" (change)="onProfilePictureChange($event)" accept="image/*"> -->
-            <!-- <ion-img [src]="selectedImage" *ngIf="selectedImage" class="profile-preview" alt="Selected Image"></ion-img> -->
-          </div>
-          <div class="form-group">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" [value]="user.displayName" disabled>
-          </div>
-          <div class="form-group">
-            <label for="fullName">Unique Code:</label>
-            <input type="text" id="fullName" name="fullName" [value]="user.username" disabled>
-          </div>
-          <div class="form-group">
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" [value]="user.email" disabled>
-          </div>
-          <div class="form-group">
-            <label for="privacy_setting">Visibility:</label>
-            <input type="text" id="privacy_setting" name="privacy_setting" [value]="user.visibility" disabled>
-          </div>
-    
-          <div class="ion-text-center">
-            <ion-button class="edit_div" (click)="handleFunction(user)">
-              <ion-icon name="person-add-outline" *ngIf="!isFriend && !requestSent"></ion-icon>
-              <ion-icon name="person-remove-outline" *ngIf="isFriend"></ion-icon>
-              <ion-icon name="checkmark-done-outline" *ngIf="requestSent"></ion-icon>
-              {{ isFriend ? 'Unfriend' : requestSent ? 'Request Sent' : 'Send Request' }}
-            </ion-button>
-          </div>
-          <!-- <ion-button type="submit">Save Changes</ion-button> -->
-        <!-- </form> -->
-      </section>
-    
+    <div class="ion-text-center">
+      <ion-button class="edit_div" (click)="handleFunction(user)">
+        <ion-icon name="person-add-outline" *ngIf="!isFriend && !requestSent"></ion-icon>
+        <ion-icon name="person-remove-outline" *ngIf="isFriend"></ion-icon>
+        <ion-icon name="checkmark-done-outline" *ngIf="requestSent"></ion-icon>
+        {{ isFriend ? 'Unfriend' : requestSent ? 'Request Sent' : 'Send Request' }}
+      </ion-button>
+    </div>
   </div>
 
   <div *ngIf="selectedSegment === 'events'">
@@ -118,23 +76,21 @@
                   <!-- <span class="label-{{ getStatusColor(card?.status) }} label">{{ card?.status }}</span> -->
                   <img [src]="card.image_url" alt="Card Image" class="card-image">
                   <ion-card-header class="">
-                    <ion-card-title>
-                      {{ card?.title }}
+                    <ion-card-title><b>{{ card?.title }}</b>
                     </ion-card-title>
-                    <ion-card-content>
-                      <ion-icon name="calendar"></ion-icon>
+                    <!-- <ion-card-content> -->
+                      <!-- <p><b>Description</b></p> -->
+                      <!-- <ion-icon name="calendar"></ion-icon>
                       {{ card.date | date: 'mediumDate' }}<br>
-                      <ion-icon name="location"></ion-icon>
+                      <ion-icon name="location"></ion-icon> -->
                       <!-- {{ truncateText(card.location, 4) }} -->
-                    </ion-card-content>
-                        <ion-card-subtitle>
-                          {{ card.description }}
-                        </ion-card-subtitle>
-                        <div class="tags">
+                    <!-- </ion-card-content> -->
+                        <ion-card-subtitle><b>{{ card.description }}</b></ion-card-subtitle>
+                        <!-- <div class="tags">
                           <span class="tag" *ngFor="let tag of card.tags">
                             #{{ tag }}
                           </span>
-                        </div>
+                        </div> -->
                   </ion-card-header>                        
                 </ion-card>
               </ion-col>
@@ -154,17 +110,16 @@
   <div *ngIf="selectedSegment === 'friends'">
     <div *ngIf="(isPublic || isFriend);else content_for_private">
           <ion-list *ngIf="userFriends && userFriends.length > 0">
-            <ion-item class="participants" *ngFor="let friend of userFriends; let i = index" >
-              <ion-avatar slot="start">
-                <ion-img [src]="friend.photoURL"  loading="lazy"></ion-img>
-              </ion-avatar>
-              <ion-label>
-                <p class="participant-name">
-                  {{ friend.display_name }} <b>@{{ friend.uniq_username }}</b>
-                  
-                </p>
-                <p class="participant-email"> <b *ngIf="friend.location">{{ friend.email }} </b></p>
-              </ion-label>
+            <ion-item *ngFor="let friend of userFriends">
+              <div (click)="forceRedirect(friend.uid, uid_viewing_user)">
+                <ion-thumbnail slot="start">
+                  <img [src]="friend.photoURL">
+                </ion-thumbnail>
+                <ion-label>
+                  <h2>{{ friend.displayName }}</h2>
+                    <p>{{ friend.uniq_username }}</p>
+                </ion-label>
+              </div>       
             </ion-item>
           </ion-list>
           <div *ngIf="!userFriends || userFriends.length === 0">
@@ -175,14 +130,11 @@
     </div>
     <ng-template #content_for_private>
       <ion-row class="ion-justify-content-center">
-        <p>Cannot show friends of private account</p>
+          <p>Cannot show friends of private account</p>
       </ion-row>
-    </ng-template>
+      </ng-template>
   </div>
 
   <div *ngIf="selectedSegment === 'photos'">
-    <div class="gallery">
-      <ion-img *ngFor="let item of galleryData; let i=index" [src]="item.imageSrc" [alt]="item.imageAlt" class="gallery-img" (click)="openImageModal(item, i)"></ion-img>
-    </div>
   </div>
 </ion-content>
