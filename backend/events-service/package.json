@@ -3,6 +3,9 @@
   "version": "3.1.0",
   "description": "This is the CRUD RESTful api for the events service",
   "main": "index.js",
+  "transform": {
+    "^.+\\.js$": "babel-jest"
+  },
   "scripts": {
     "start": "node .",
     "start:dev": "nodemon .",
@@ -31,6 +34,8 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.22.20",
+    "babel-jest": "^29.7.0",
     "nodemon": "^2.0.22"
   }
 }

@@ -9,8 +9,6 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 
 
-
-
 @Component({
   selector: 'app-gallery-modal',
   templateUrl: './gallery-modal.component.html',

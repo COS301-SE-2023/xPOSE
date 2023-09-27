@@ -51,9 +51,6 @@ export class MyPicturesPage implements OnInit {
 
   ngOnInit() {
     // this.galleryData = this.galleryDataService.getData();
-
-
-
     this.getCurrentUserId().subscribe((uid) => {
       if(uid) {
         this.postsCollection = this.afs.collection(`Users/${uid}/posts`);

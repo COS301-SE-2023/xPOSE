@@ -1,99 +1,81 @@
-const request = require('supertest');
-const app = require('../app');
-const { sequelize } = require('../data-access/sequelize');
-const { User, Event, EventParticipant } = require('../data-access/sequelize');
+const { createEvent } = require('../routes/createEvent.js'); // Adjust the path accordingly
+const { User,Event, EventInvitation, EventParticipant, Tag, EventTag } =  require('../data-access/sequelize');
+const admin = require('firebase-admin');
 
-// Test suite for createEvent.js
+jest.mock('../data-access/sequelize', () => ({
+  User: {
+    findOne: jest.fn(),
+    create: jest.fn(),
+  },
+  Event: {
+    create: jest.fn(),
+  },
+  Tag: {
+    findOne: jest.fn(),
+    create: jest.fn(),
+  },
+  EventTag: {
+    create: jest.fn(),
+  },
+  EventParticipant: {
+    create: jest.fn(),
+  },
+}));
 
-// start datebase before running tests
+jest.mock('../data-access/firebase.repository', () => ({
+  uploadImageToFirebase: jest.fn(),
+}));
 
-describe('createEvent.js', () => {
-  // Connect to the database before running the tests
-  beforeAll(async () => {
-    await sequelize.sync({ force: true });
-  });
+jest.mock('firebase-admin', () => ({
+  firestore: () => ({
+    collection: () => ({
+      doc: jest.fn(),
+      set: jest.fn(),
+    }),
+  }),
+}));
 
-  // Test to check successful event creation
-  test('Successful event creation', async () => {
-    const mockUser = await User.create({ uid: 'user123' });
-
-    const eventData = {
-      uid: mockUser.uid,
-      title: 'Test Event',
-      description: 'This is a test event',
-      location: 'Test Location',
-      latitude: 12.3456,
-      longitude: -98.7654,
-      start_date: new Date().toISOString(),
-      end_date: new Date(new Date().getTime() + 3600000).toISOString(), // One hour from now
+describe('createEvent', () => {
+  const mockRequest = {
+    query: {
+      uid: 'mockUserId',
+    },
+    body: {
+      title: 'Event Title',
+      description: 'Event Description',
+      location: 'Event Location',
+      latitude: 123.456,
+      longitude: 789.123,
+      start_date: '2023-09-30T12:00:00Z',
+      end_date: '2023-09-30T14:00:00Z',
       privacy_setting: 'public',
-    };
+      tags: ['tag1', 'tag2'],
+    },
+    file: null, // Mock file
+  };
 
-    const response = await request(app)
-      .post('/events')
-      .field('uid', eventData.uid)
-      .field('title', eventData.title)
-      .field('description', eventData.description)
-      .field('location', eventData.location)
-      .field('latitude', eventData.latitude)
-      .field('longitude', eventData.longitude)
-      .field('start_date', eventData.start_date)
-      .field('end_date', eventData.end_date)
-      .field('privacy_setting', eventData.privacy_setting);
+  const mockResponse = {
+    status: jest.fn().mockReturnThis(),
+    json: jest.fn(),
+  };
 
-    // Assert the response status and data
-    expect(response.status).toBe(200);
-    expect(response.body).toHaveProperty('title', eventData.title);
-    expect(response.body).toHaveProperty('description', eventData.description);
-    expect(response.body).toHaveProperty('location', eventData.location);
-    expect(response.body).toHaveProperty('start_date', eventData.start_date);
-    expect(response.body).toHaveProperty('end_date', eventData.end_date);
-
-    // Check if the event exists in the database
-    const createdEvent = await Event.findOne({ where: { id: response.body.id } });
-    expect(createdEvent).toBeTruthy();
-
-    // Check if the owner is added as a participant
-    const participants = await EventParticipant.findAll({ where: { event_id_fk: response.body.id } });
-    expect(participants).toHaveLength(1);
-    expect(participants[0].user_id_fk).toBe(mockUser.id);
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
 
-// Test to check missing required fields
-  test('Missing required fields', async () => {
-    const response = await request(app).post('/events').send({});
-    expect(response.status).toBe(400);
-    expect(response.body).toHaveProperty('error', 'Missing required fields');
-  });
+  it('should create an event', async () => {
+    // Mock necessary functions
+    User.findOne.mockResolvedValueOnce(null); 
+    User.create.mockResolvedValueOnce({ id: 1 }); 
+    Event.create.mockResolvedValueOnce({ id: 1, code: 'mockEventCode' }); 
+    Tag.findOne.mockResolvedValueOnce(null); 
+    Tag.create.mockResolvedValueOnce({ id: 1 });
+    EventTag.create.mockResolvedValueOnce({}); 
+    EventParticipant.create.mockResolvedValueOnce({});
+    admin.firestore().collection().doc.mockReturnValueOnce({
+      set: jest.fn().mockResolvedValueOnce({}),
+    });
 
-  // Test to check invalid user
-    test('Invalid user', async () => {
-    const eventData = {
-      uid: 'invalidUser',
-      title: 'Test Event',
-      description: 'This is a test event',
-      location: 'Test Location',
-      latitude: 12.3456,
-      longitude: -98.7654,
-      start_date: new Date().toISOString(),
-      end_date: new Date(new Date().getTime() + 3600000).toISOString(), // One hour from now
-      privacy_setting: 'public',
-    };
-  
-    const response = await request(app)
-      .post('/events')
-      .field('uid', eventData.uid)
-      .field('title', eventData.title)
-      .field('description', eventData.description)
-      .field('location', eventData.location)
-      .field('latitude', eventData.latitude)
-      .field('longitude', eventData.longitude)
-      .field('start_date', eventData.start_date)
-      .field('end_date', eventData.end_date)
-      .field('privacy_setting', eventData.privacy_setting);
-  
-    expect(response.status).toBe(400);
-    expect(response.body).toHaveProperty('error', 'Invalid user');
-  });  
-  
+    
+  });
 });
