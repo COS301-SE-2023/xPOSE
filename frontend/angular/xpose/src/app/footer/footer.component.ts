@@ -29,7 +29,7 @@ export class FooterComponent  implements OnInit {
         }
 
         this.currentPageName = this.getPageTitle(route);
-		console.log('Your location is:', this.getCurrentLocation());
+		// console.log('Your location is:', this.getCurrentLocation());
       });
 
   }
