@@ -41,7 +41,7 @@ export class SettingsPage implements OnInit {
 		private storage: AngularFireStorage,) {
 		}
 
-
+	currentPageName: string = 'Settings';
 	headshot_image_url: string = '';
   
 	ngOnInit() {
