@@ -20,12 +20,15 @@ import { error } from 'console';
 })
 
 export class UserProfilePage implements OnInit {
+  // user: any; // Define your user object
+  isDropdownOpen = false;
   userEvents: any[] | undefined;
   events: any[] = [];
   userFriends: any[] = [];
   loading:boolean = true;
   cards: any[] = [];
   selectedSegment: string = 'events';
+  
   user: {
     photoURL: string;
     displayName: string;
@@ -34,13 +37,15 @@ export class UserProfilePage implements OnInit {
     uid: string;
     visibility: string;
   };
-  
+  eventDate: string = ''; // Initialize with the event date
+  eventLocation: string = ''; // Initialize with the event location
   uid_viewing_user: string ="";
   isFriend: boolean = false;
   requestSent: boolean = false;
   isPublic: boolean = true;
   selectedTab: any;
   tabs: any;
+  selectedOption: string = '';
   private history: string[] = [];
   
   constructor (
@@ -63,8 +68,12 @@ export class UserProfilePage implements OnInit {
     };
     this.user.photoURL = ''; 
   }
-
+  // ngOnInit() {
+  //    // 'event' should be the path to your "Event" page
+  // }
+  
    async ngOnInit() {
+    
     try {
       let id = window.location.href;
       // Split the URL by slashes (/)
@@ -168,6 +177,29 @@ export class UserProfilePage implements OnInit {
       // console.log("Response body:", error.error);
       return Promise.reject(error);
     });
+  }
+
+  toggleDropdown() {
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  // Define functions to handle menu options
+  showEvent() {
+    // Implement what should happen when "Event" is clicked
+    // For example, navigate to an event page
+    this.isDropdownOpen = false;
+  }
+
+  showFriends() {
+    // Implement what should happen when "Friends" is clicked
+    // For example, navigate to a friends page
+    this.isDropdownOpen = false;
+  }
+
+  showPhotos() {
+    // Implement what should happen when "Photos" is clicked
+    // For example, navigate to a photos page
+    this.isDropdownOpen = false;
   }
 
 
@@ -312,14 +344,19 @@ export class UserProfilePage implements OnInit {
     
   }
 
-  // back(): void {
-  //   this.history.pop();
-  //   if (this.history.length >= 0) {
-  //     this.location.back();
-  //   } else {
-  //     this.router.navigate(['/home']);
-  //   }
-  // }
+  setSelectedOption(option: string) {
+    this.selectedOption = option;
+
+    // Set event-related data when "Event" is selected
+    if (option === 'Event') {
+      this.eventDate = '2023-09-30'; // Replace with your event date
+      this.eventLocation = 'Event Location'; // Replace with your event location
+    } else {
+      // Clear event-related data if a different option is selected
+      this.eventDate = '';
+      this.eventLocation = '';
+    }
+  }
 
   setCurrentTab() {
     this.selectedTab = this.tabs?.getSelected();

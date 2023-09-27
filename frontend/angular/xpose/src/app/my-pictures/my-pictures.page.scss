@@ -199,4 +199,13 @@ input[type="text"]:focus {
 border-color: #b837ad; /* Set the border color when in focus */
 outline: none; /* Remove the default outline */
 }
-
+.no-images-message{
+  font: 1em sans-serif;
+  align-content: center;
+  height: 50%;
+  align-items: center;
+  text-align: center;
+  margin-left: 50px;
+  margin-top: 50px;
+  color: #ff0000;
+}

@@ -100,6 +100,7 @@ export class MyPicturesPage implements OnInit {
   controls = true;
   totalImageCount = 0;
   currentItem: any ;
+  currentPageName: string = 'Settings';
   
   getCurrentUserId(): Observable<string> {
     return this.afAuth.authState.pipe(
