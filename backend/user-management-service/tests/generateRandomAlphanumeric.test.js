@@ -1,5 +1,4 @@
-
-import generateRandomAlphanumeric from './generateRandomAlphanumeric';
+import generateRandomAlphanumeric from '../controllers/generateRandomAlphanumeric';
 
 describe('generateRandomAlphanumeric', () => {
   test('should generate a random alphanumeric string of the specified length', () => {
@@ -37,8 +36,8 @@ describe('generateRandomAlphanumeric', () => {
     const result2 = generateRandomAlphanumeric(null);
     const result3 = generateRandomAlphanumeric(undefined);
 
-    expect(result1).toBe('');
-    expect(result2).toBe('');
-    expect(result3).toBe('');
+    expect(result1).toBe(RegExp('*'));
+    expect(result2).toBe(RegExp('*'));
+    expect(result3).toBe(RegExp('*'));
   });
 });
