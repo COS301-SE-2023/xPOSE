@@ -10,7 +10,9 @@ const {
   Tag,
   EventTag,
 } = require('../data-access/sequelize');
-
+// const { sequelize, User, Event, EventInvitation, EventParticipant, EventJoinRequest } = require('../data-access/sequelize');
+// const uploadImageToFirebase = require('../data-access/firebase.repository');
+const admin = require('firebase-admin');
 // Define your route to get the event feed
 async function getEventsFeed(req, res) {
     try {
@@ -22,7 +24,7 @@ async function getEventsFeed(req, res) {
         }
 
         // Find the user with the provided uid
-        const user = await User.findOne({
+        let user = await User.findOne({
             where: {
                 uid: uid,
             },
