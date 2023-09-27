@@ -154,16 +154,17 @@
   <div *ngIf="selectedSegment === 'friends'">
     <div *ngIf="(isPublic || isFriend);else content_for_private">
           <ion-list *ngIf="userFriends && userFriends.length > 0">
-            <ion-item *ngFor="let friend of userFriends">
-              <div (click)="forceRedirect(friend.uid, uid_viewing_user)">
-                <ion-thumbnail slot="start">
-                  <img [src]="friend.photoURL">
-                </ion-thumbnail>
-                <ion-label>
-                  <h2>{{ friend.displayName }}</h2>
-                    <p>{{ friend.uniq_username }}</p>
-                </ion-label>
-              </div>       
+            <ion-item class="participants" *ngFor="let friend of userFriends; let i = index" >
+              <ion-avatar slot="start">
+                <ion-img [src]="friend.photoURL"  loading="lazy"></ion-img>
+              </ion-avatar>
+              <ion-label>
+                <p class="participant-name">
+                  {{ friend.display_name }} <b>@{{ friend.uniq_username }}</b>
+                  
+                </p>
+                <p class="participant-email"> <b *ngIf="friend.location">{{ friend.email }} </b></p>
+              </ion-label>
             </ion-item>
           </ion-list>
           <div *ngIf="!userFriends || userFriends.length === 0">
@@ -174,11 +175,14 @@
     </div>
     <ng-template #content_for_private>
       <ion-row class="ion-justify-content-center">
-          <p>Cannot show friends of private account</p>
+        <p>Cannot show friends of private account</p>
       </ion-row>
-      </ng-template>
+    </ng-template>
   </div>
 
   <div *ngIf="selectedSegment === 'photos'">
+    <div class="gallery">
+      <ion-img *ngFor="let item of galleryData; let i=index" [src]="item.imageSrc" [alt]="item.imageAlt" class="gallery-img" (click)="openImageModal(item, i)"></ion-img>
+    </div>
   </div>
 </ion-content>
