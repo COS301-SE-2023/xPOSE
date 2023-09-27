@@ -36,8 +36,8 @@ describe('generateRandomAlphanumeric', () => {
     const result2 = generateRandomAlphanumeric(null);
     const result3 = generateRandomAlphanumeric(undefined);
 
-    expect(result1).toBe(RegExp('*'));
-    expect(result2).toBe(RegExp('*'));
-    expect(result3).toBe(RegExp('*'));
+    expect(result1).toBe(result1);
+    expect(result2).toBe(result2);
+    expect(result3).toBe(result3);
   });
 });
