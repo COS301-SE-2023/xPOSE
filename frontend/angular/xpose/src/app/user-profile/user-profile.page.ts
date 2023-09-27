@@ -25,7 +25,7 @@ export class UserProfilePage implements OnInit {
   userFriends: any[] = [];
   loading:boolean = true;
   cards: any[] = [];
-  selectedSegment: string = 'events';
+  selectedSegment: string = 'details';
   user: {
     photoURL: string;
     displayName: string;

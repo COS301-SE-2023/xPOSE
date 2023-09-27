@@ -7,82 +7,148 @@
   </ion-toolbar>
 </ion-header>
 
-<div class="profile_div">
-  <div class="user_div" *ngIf="user">
-    <img class="profile-image" [src]="user.photoURL">
-    <div class="first_div">
-      <ion-label class="username">Name: {{user.displayName}}</ion-label><br>
-      <ion-label class="username">Email: {{user.email}}</ion-label><br>
-      <ion-label class="username">Unique Code:{{user.username}}</ion-label><br>
-      <ion-label class="username">Account:{{user.visibility}}</ion-label><br>
-      <br>
-    </div>
-    <ion-button class="edit_div" (click)="handleFunction(user)">
-      <ion-icon name="person-add-outline" *ngIf="!isFriend && !requestSent"></ion-icon>
-      <ion-icon name="person-remove-outline" *ngIf="isFriend"></ion-icon>
-      <ion-icon name="checkmark-done-outline" *ngIf="requestSent"></ion-icon>
-      {{ isFriend ? 'Unfriend' : requestSent ? 'Request Sent' : 'Send Request' }}
-    </ion-button>
-    
-     <!-- Use a ternary operator to conditionally set the button label -->
-     <!-- <ion-button class="edit_div" (click)="handleFunction(user)">{{ isFriend? 'Unfriend': requestSent? 'Request Sent':'Request Friendship' }}</ion-button> -->
-  </div>
-</div>
-
 <ion-content id="main-content">
   <ion-segment [(ngModel)]="selectedSegment">
+    <ion-segment-button value="details">
+      Details
+    </ion-segment-button>
     <ion-segment-button value="events">
       Events
     </ion-segment-button>
     <ion-segment-button value="friends">
       Friends
     </ion-segment-button>
+    <ion-segment-button value="photos">
+      Photos
+    </ion-segment-button>
   </ion-segment>
 
-  <div *ngIf="selectedSegment === 'events'">
-        <div *ngIf="isPublic || isFriend;else content_for_private">
-            <div *ngIf="cards && cards.length > 0 ">
-              <ion-list>
-                <ion-card *ngFor="let card of cards">
-                  <div (click)="eventDetails(card.id)">
-                    <img [src]="card.image_url">
-                    <ion-card-header class="card-title">
-                      <ion-card-title class="header">{{ card.title }}</ion-card-title>
-                      <ion-card-content>
-                        <ion-icon name="location"></ion-icon>
-                        {{ card.location }}
-                      </ion-card-content>
-                      <ion-row>
-                        <ion-col center text-center>
-                          <ion-card-subtitle>
-                            {{ card.description }}
-                          </ion-card-subtitle>
-                        </ion-col>
-                        <!-- <ion-col class="ion-text-end">
-                          <ion-button fill="clear" class="right-aligned-button">
-                            <ion-icon class="iconp" name='share'></ion-icon>
-                          </ion-button>
-                        </ion-col> -->
-                      </ion-row>
-                    </ion-card-header>
-                  </div>
-                </ion-card> 
-              </ion-list>
-            </div>
-
-            <div *ngIf="!cards || cards.length === 0">
-              <ion-row class="ion-justify-content-center">
-                <p>No Events to display.</p>
-              </ion-row>
-            </div>
-    
-        </div>
+  <div class="profile_div" *ngIf="false">
+    <div class="user_div" *ngIf="user">
+      <!-- Profile Picture (Left) -->
+      <!-- <img class="profile-image" [src]="user.photoURL"> -->
       
-      <ng-template #content_for_private>
-        <ion-row class="ion-justify-content-center">
-            <p>Cannot show events of private account</p>
-        </ion-row>
-        </ng-template>
+      <!-- User Info (Right) -->
+      <div class="user-info">
+        <!-- <ion-label class="username"><b>Name: </b>{{}}</ion-label><br> -->
+        <!-- <ion-label class="username"><b>Email: </b>{{}}</ion-label><br> -->
+        <!-- <ion-label class="username"><b>Unique Code: </b>{{}}</ion-label><br> -->
+        <!-- <ion-label class="username"><b>Account: </b>{{}}</ion-label><br> -->
+        <br>
+      </div>
+    </div>
+
+    <div class="section">Account Information</div>
+
+  
+    <!-- Button (Centered) -->
+ 
+  </div>
+  
+  <div class="account-settings" *ngIf="selectedSegment === 'details'">
+    
+      <section class="profile-section">
+        <!-- Change Profile -->
+        <!-- <form (submit)="updateProfile()"> -->
+          <div class="form-group">
+            <!-- <ion-label for="profileImage">Profile Image:</ion-label> -->
+            <div class="user_div" >
+              <img class="profile-image" [src]="user.photoURL" alt="Selected Image">
+            </div>
+            <!-- <label class="file-label">
+              Change Profile Picture
+              <input class="file-input" type="file" accept="image/*"/>
+            </label> -->
+            
+            <!-- <input type="file" id="profileImage" (change)="onProfilePictureChange($event)" accept="image/*"> -->
+            <!-- <ion-img [src]="selectedImage" *ngIf="selectedImage" class="profile-preview" alt="Selected Image"></ion-img> -->
+          </div>
+          <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" [value]="user.displayName" disabled>
+          </div>
+          <div class="form-group">
+            <label for="fullName">Unique Code:</label>
+            <input type="text" id="fullName" name="fullName" [value]="user.username" disabled>
+          </div>
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" [value]="user.email" disabled>
+          </div>
+          <div class="form-group">
+            <label for="privacy_setting">Visibility:</label>
+            <input type="text" id="privacy_setting" name="privacy_setting" [value]="user.visibility" disabled>
+          </div>
+    
+          <div class="ion-text-center">
+            <ion-button class="edit_div" (click)="handleFunction(user)">
+              <ion-icon name="person-add-outline" *ngIf="!isFriend && !requestSent"></ion-icon>
+              <ion-icon name="person-remove-outline" *ngIf="isFriend"></ion-icon>
+              <ion-icon name="checkmark-done-outline" *ngIf="requestSent"></ion-icon>
+              {{ isFriend ? 'Unfriend' : requestSent ? 'Request Sent' : 'Send Request' }}
+            </ion-button>
+          </div>
+          <!-- <ion-button type="submit">Save Changes</ion-button> -->
+        <!-- </form> -->
+      </section>
+    
+  </div>
+
+  <div *ngIf="selectedSegment === 'events'">
+    <div *ngIf="isPublic || isFriend;else content_for_private">
+      <ion-row>
+        <ion-col>  
+          <div class="no-cards" *ngIf="cards.length === 0">
+            <ion-text>
+              <h1>No Events could be loaded...</h1>
+              <!-- <app-loading-icon *ngIf="loading"></app-loading-icon> -->
+              <ng-container *ngIf="loading; else noDataTemplate">
+                <app-loading-icon></app-loading-icon>
+              </ng-container>
+              
+              <ng-template #noDataTemplate>
+                <div class="nothing-found-message">Nothing Found</div>
+              </ng-template>
+            </ion-text>
+          </div>
+          <div class="scrollable-content">
+            <ion-row>
+              <ion-col size="12" size-sm="6" size-md="4" size-lg="3" *ngFor="let card of cards">
+                <ion-card class="custom-card" class="card-transition" (click)="eventDetails(card.id)">
+                  <!-- <span class="label-{{ getStatusColor(card?.status) }} label">{{ card?.status }}</span> -->
+                  <img [src]="card.image_url" alt="Card Image" class="card-image">
+                  <ion-card-header class="">
+                    <ion-card-title>
+                      {{ card?.title }}
+                    </ion-card-title>
+                    <ion-card-content>
+                      <ion-icon name="calendar"></ion-icon>
+                      {{ card.date | date: 'mediumDate' }}<br>
+                      <ion-icon name="location"></ion-icon>
+                      <!-- {{ truncateText(card.location, 4) }} -->
+                    </ion-card-content>
+                        <ion-card-subtitle>
+                          {{ card.description }}
+                        </ion-card-subtitle>
+                        <div class="tags">
+                          <span class="tag" *ngFor="let tag of card.tags">
+                            #{{ tag }}
+                          </span>
+                        </div>
+                  </ion-card-header>                        
+                </ion-card>
+              </ion-col>
+            </ion-row>
+          </div>
+        </ion-col>
+      </ion-row>
+    </div>
+      
+    <ng-template #content_for_private>
+      <ion-row class="ion-justify-content-center">
+          <p>Cannot show events of private account</p>
+      </ion-row>
+      </ng-template>
   </div>
 
   <div *ngIf="selectedSegment === 'friends'">
@@ -111,5 +177,8 @@
           <p>Cannot show friends of private account</p>
       </ion-row>
       </ng-template>
+  </div>
+
+  <div *ngIf="selectedSegment === 'photos'">
   </div>
 </ion-content>
