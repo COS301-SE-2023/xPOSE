@@ -585,9 +585,12 @@ export class EventPage {
 
   // Check if there's a banned word
   containsRestrictedWord() {
+    const message = this.newMessage.toLowerCase();
     for (const word of this.restrictedWords_list) {
-      if (this.newMessage.toLocaleLowerCase().includes(word.toLowerCase())) {
-        return [true,word]
+      const regex = new RegExp(`\\b${word.toLowerCase()}\\b`);
+      
+      if (regex.test(message)) {
+        return [true, word];
       }
     }
     return [false, ''];

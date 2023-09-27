@@ -10,6 +10,7 @@ import { Event } from '../shared/event';
 import { LocationAutocompleteService } from '../service/location-autocomplete.service';
 import { Service } from '../service/service';
 import { Console, error } from 'console';
+import { LoadingController } from "@ionic/angular";
 
 // interface ApiResponse {
 //   message: string;
@@ -55,7 +56,8 @@ export class EventsSettingsPage implements OnInit {
     private locationAutocompleteService: LocationAutocompleteService,
     private activatedRoute: ActivatedRoute,
     private navCtrl: NavController,
-    private userService: Service) { }
+    private userService: Service,
+    private loadingController: LoadingController) { }
 
     ngOnInit() {
       // click the element with id of posts_tab
@@ -139,18 +141,51 @@ export class EventsSettingsPage implements OnInit {
       });
     }
 
-
-
-
-  
-    addRestricted(word:string) {
+    async removeRestrictedWord(word:string) {
       const arrayOfWords = [];
       arrayOfWords.push(word);
-      this. addRestrictedWords(this.eventUID, arrayOfWords);
+      this.computeRemovedWords(this.eventUID, arrayOfWords).subscribe(
+        (response: any) => {
+          //
+          console.log("Restricted words deleted:", response);
+  
+          this.restrictedWords_list = response.tagWords;
+          // console.log("Restricted words array:", this.restrictedWords_list);
+        },
+        (error) => {
+          console.log("Error deleting restricted words", error)
+        }
+      )
     }
-      
 
-   addRestrictedWords(event_id:string, tagWords: string[]) {
+    computeRemovedWords(event_id: string, tagWordsArray: string[]) {      
+      const formData:FormData = new FormData();
+      let flag = false;
+      for(let index = 0; index < tagWordsArray.length; index++) {
+        flag = true;
+        formData.append('restrictedWords[]',tagWordsArray[index].toLowerCase());
+      }
+      if(!flag){
+        formData.append('restrictedWords[]', '');
+      }
+
+      return this.http.post(`${this.api.apiUrl}/c/chats/${event_id}/restrictedWord_deleted`, formData);
+    }
+
+    async addRestricted(word:string) {
+      const arrayOfWords = word.split(/[ ,]+/);
+      // Filter out empty strings
+      const nonEmptyWords = arrayOfWords.filter(t => t.trim() !== '');
+      // console.log("Restricted words before", this.restrictedWords_list);
+      // Filter out words that are already in this.restrictedWords_list
+      const uniqueWords = nonEmptyWords.filter(word => !this.restrictedWords_list.includes(word));
+    
+      this.restrictedWords_list = this.restrictedWords_list.filter(t => t !== word);
+      console.log("Restricted words after", this.restrictedWords_list);
+      this.addRestrictedWords(this.eventUID, uniqueWords);
+  }
+
+  async addRestrictedWords(event_id:string, tagWords: string[]) {
     this.computationOfRestrictedWords(event_id, tagWords).subscribe(
       (response: any) => {
         //
@@ -175,7 +210,7 @@ export class EventsSettingsPage implements OnInit {
       if(!flag){
         formData.append('restrictedWords[]', '');
       }
-      
+
       return this.http.post(`${this.api.apiUrl}/c/chats/${event_id}/restrictedWord`, formData);
     }
 
@@ -355,11 +390,24 @@ export class EventsSettingsPage implements OnInit {
 		this.tag_input = '';
 	  }
 
-    onWordRemove(word: string) {
+    loading_!: HTMLIonLoadingElement;
+
+  async  onWordRemove(word: string) {
       console.log("Restricted words before", this.restrictedWords_list);
       this.restrictedWords_list = this.restrictedWords_list.filter(t => t !== word);
-      console.log("Restricted words sfter", this.restrictedWords_list);
-      this.addRestrictedWords(this.eventUID, this.restrictedWords_list);
+      console.log("Restricted words after", this.restrictedWords_list);
+      // try {
+      //   this.loading_ = await this.loadingController.create({
+      //     message: "please wait...",
+      //   });
+
+      //     await this.loading_.present();
+            this.removeRestrictedWord(word);
+         await this.loading_.dismiss();
+		// } catch (error) {
+		// 	await this.loading_.dismiss();
+		// 	console.error("Error updating profile", error);
+		// }
     }
 
 

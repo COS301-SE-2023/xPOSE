@@ -10,7 +10,7 @@ async function addRestrictedWord(req, res) {
 
         // Filter out empty values from the tagWordsArray
         const nonEmptyTagWords = tagWordsArray.filter(tagWord => tagWord.trim() !== '');
-
+        
         // Reference to the Firestore collection
         const eventChatsCollection = db.collection('Event-Chats');
 
@@ -22,14 +22,6 @@ async function addRestrictedWord(req, res) {
                 if (doc.exists) {
                     const existingTagWords = doc.data().tagWords || [];
 
-                    if (nonEmptyTagWords.length === existingTagWords.length - 1) {
-                        // If the new array has one less word, override the current tagWords array
-                        eventChatsCollection.doc(event_id).update({
-                            tagWords: nonEmptyTagWords
-                        }).then(() => {
-                            res.status(200).json({ message: 'Tag words updated successfully', tagWords: nonEmptyTagWords });
-                        });
-                    } else {
                         // Update the tag words array for the specified event_id as before
                         const updatedTagWords = [...existingTagWords];
 
@@ -49,10 +41,9 @@ async function addRestrictedWord(req, res) {
                                 res.status(200).json({ message: 'Tag words updated successfully', tagWords: updatedTagWords });
                             });
                         });
-                    }
                 } else {
                     if (nonEmptyTagWords.length === 0) {
-                        // Return a response without storing an empty array in Firestore
+                        // Return an empty array if the request body only contains empty values and the document doesn't exist
                         res.status(200).json({ message: 'No restricted words added', tagWords: [] });
                     } else {
                         // Create a new document if the event_id doesn't exist
