@@ -115,7 +115,7 @@
           <h1 class="section-title">Participants</h1>
           <ion-item-divider class="divider"></ion-item-divider>
         
-          <ion-item *ngFor="let participant of participants; let i = index" >
+          <ion-item class="participants" *ngFor="let participant of participants; let i = index" >
             <ion-avatar slot="start">
               <ion-img [src]="participant.photoURL"  loading="lazy" (click)="onCardClick(participant)"></ion-img>
             </ion-avatar>
