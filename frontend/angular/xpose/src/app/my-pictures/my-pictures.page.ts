@@ -51,9 +51,6 @@ export class MyPicturesPage implements OnInit {
 
   ngOnInit() {
     // this.galleryData = this.galleryDataService.getData();
-
-
-
     this.getCurrentUserId().subscribe((uid) => {
       if(uid) {
         this.postsCollection = this.afs.collection(`Users/${uid}/posts`);
@@ -100,6 +97,7 @@ export class MyPicturesPage implements OnInit {
   controls = true;
   totalImageCount = 0;
   currentItem: any ;
+  currentPageName: string = 'Settings';
   
   getCurrentUserId(): Observable<string> {
     return this.afAuth.authState.pipe(

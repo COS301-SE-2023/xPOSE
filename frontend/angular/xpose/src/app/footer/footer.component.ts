@@ -29,7 +29,7 @@ export class FooterComponent  implements OnInit {
         }
 
         this.currentPageName = this.getPageTitle(route);
-		console.log('Your location is:', this.getCurrentLocation());
+		// console.log('Your location is:', this.getCurrentLocation());
       });
 
   }
@@ -126,7 +126,7 @@ export class FooterComponent  implements OnInit {
 		this.router.navigate(['/help']);
 	  }
 	  onMypictures() {
-		this.router.navigate(['/myimages']);
+		this.router.navigate(['/my-pictures']);
 	  } 
     onSearch() {
 		this.router.navigate(['/search']);

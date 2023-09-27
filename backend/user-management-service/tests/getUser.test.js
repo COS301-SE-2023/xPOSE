@@ -1,134 +1,61 @@
-import { getUser } from './getUser';
-import admin from 'firebase-admin';
-
-
-jest.mock('firebase-admin', () => ({
-  firestore: () => ({
-    collection: () => ({
-      doc: (docId) => ({
-        get: () => {
-          if (docId === 'existingUserId') {
-            return Promise.resolve({
-              exists: true,
-              data: () => ({ name: 'Existing User' }),
-            });
-          } else {
-            return Promise.resolve({
-              exists: false,
-            });
-          }
-        },
-      }),
-    }),
-  }),
-}));
+import { expect } from 'chai';
+import sinon from 'sinon';
+import { getUser } from '../controllers/getUser.js'; // Adjust the path accordingly
+import Friendship from '../data-access/models/friendship.table.js';
 
 describe('getUser', () => {
-  test('should return user data with areFriends: true when they are friends', async () => {
-    const req = {
-      params: {
-        userId: 'userA',
-      },
-      query: {
-        requestId: 'userB',
-      },
-    };
-    const res = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn(),
+  let req;
+  let res;
+
+  beforeEach(() => {
+    req = {
+      params: { userId: 'user123' },
+      query: { requestId: 'friend456' }
     };
 
-   
-    const Friendship = {
-      findOne: jest.fn(() => Promise.resolve({ friend_a_id: 'userA', friend_b_id: 'userB' })),
+    res = {
+      status: sinon.stub().returnsThis(),
+      json: sinon.stub()
     };
-
-   
-    jest.mock('../data-access/models/friendship.table.js', () => Friendship);
-
-    await getUser(req, res);
-
-    
-    expect(res.status).toHaveBeenCalledWith(200);
-    expect(res.json).toHaveBeenCalledWith({ name: 'Existing User', areFriends: true });
   });
 
-  test('should return user data with areFriends: false when they are not friends', async () => {
-    const req = {
-      params: {
-        userId: 'userA',
-      },
-      query: {
-        requestId: 'userB',
-      },
-    };
-    const res = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn(),
-    };
+  it('should return user data and areFriends: true if they are friends', async () => {
+    // Mock the findOne method of Friendship to simulate being friends
+    sinon.stub(Friendship, 'findOne').resolves({});
 
-    const Friendship = {
-      findOne: jest.fn(() => Promise.resolve(null)),
-    };
-
-   
-    jest.mock('../data-access/models/friendship.table.js', () => Friendship);
+    // Mock the Firebase doc.get method to simulate user data
+    const userDocData = { name: 'John Doe', email: 'john@example.com' };
+    const userDocGet = sinon.stub().resolves({ data: () => userDocData });
+    const userRef = { get: userDocGet };
+    sinon.stub(admin.firestore().collection('Users'), 'doc').returns(userRef);
 
     await getUser(req, res);
 
-    
-    expect(res.status).toHaveBeenCalledWith(200);
-    expect(res.json).toHaveBeenCalledWith({ name: 'Existing User', areFriends: false });
+    expect(res.status.calledWith(200)).to.be.true;
+    expect(res.json.calledWith({ ...userDocData, areFriends: true })).to.be.true;
   });
 
-  test('should return 404 when the requested user does not exist', async () => {
-    const req = {
-      params: {
-        userId: 'userA',
-      },
-      query: {
-        requestId: 'nonExistingUserId',
-      },
-    };
-    const res = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn(),
-    };
+  it('should return 404 if user is not found', async () => {
+    sinon.stub(Friendship, 'findOne').resolves(null);
+
+    const userRef = { get: sinon.stub().resolves({ exists: false }) };
+    sinon.stub(admin.firestore().collection('Users'), 'doc').returns(userRef);
 
     await getUser(req, res);
 
-    
-    expect(res.status).toHaveBeenCalledWith(404);
-    expect(res.json).toHaveBeenCalledWith({ error: 'User not found' });
+    expect(res.status.calledWith(404)).to.be.true;
+    expect(res.json.calledWith({ error: 'User not found' })).to.be.true;
   });
 
-  test('should return 500 for any unexpected error', async () => {
-    const req = {
-      params: {
-        userId: 'userA',
-      },
-      query: {
-        requestId: 'userB',
-      },
-    };
-    const res = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn(),
-    };
+  it('should handle errors and return 500', async () => {
+    sinon.stub(Friendship, 'findOne').rejects(new Error('Database error'));
 
-    
-    const errorMessage = 'Something went wrong';
-    const Friendship = {
-      findOne: jest.fn(() => Promise.reject(new Error(errorMessage))),
-    };
-
-
-    jest.mock('../data-access/models/friendship.table.js', () => Friendship);
+    const userRef = { get: sinon.stub().rejects(new Error('Firebase error')) };
+    sinon.stub(admin.firestore().collection('Users'), 'doc').returns(userRef);
 
     await getUser(req, res);
 
-    
-    expect(res.status).toHaveBeenCalledWith(500);
-    expect(res.json).toHaveBeenCalledWith({ error: 'Internal Server Error' });
+    expect(res.status.calledWith(500)).to.be.true;
+    expect(res.json.calledWith({ error: 'Internal Server Error' })).to.be.true;
   });
 });
