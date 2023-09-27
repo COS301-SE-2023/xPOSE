@@ -21,7 +21,14 @@
       <div class="no-cards" *ngIf="cards.length === 0">
         <ion-text>
           <h1>No Events could be loaded...</h1>
-          <app-loading-icon *ngIf="loading"></app-loading-icon>
+          <!-- <app-loading-icon *ngIf="loading"></app-loading-icon> -->
+          <ng-container *ngIf="loading; else noDataTemplate">
+            <app-loading-icon></app-loading-icon>
+          </ng-container>
+          
+          <ng-template #noDataTemplate>
+            <div class="nothing-found-message">Nothing Found</div>
+          </ng-template>
         </ion-text>
       </div>
       <div class="scrollable-content">

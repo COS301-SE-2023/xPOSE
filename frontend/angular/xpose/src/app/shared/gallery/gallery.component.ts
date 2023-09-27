@@ -1,12 +1,12 @@
+// gallery-lightbox.page.ts
 import { Component, Input, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
-import { GalleryModalComponent } from 'src/app/gallery-modal/gallery-modal.component';
-import {  AnimationEvent } from '@angular/animations';
+// import { GalleryDataService } from './event/posts/gallery-lightbox/gallery-data.service';
+import { GalleryDataService } from '../../event/posts/gallery-lightbox/gallery-data.service';
+import { AnimationEvent } from '@angular/animations';
 import { ApiService } from 'src/app/service/api.service';
 import { HttpClient } from '@angular/common/http';
-import { GalleryDataService } from '../event/posts/gallery-lightbox/gallery-data.service';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
-
+import { ModalController } from '@ionic/angular';
+import { GalleryModalComponent } from 'src/app/gallery-modal/gallery-modal.component';
 
 interface Item {
   imageSrc: string;
@@ -14,66 +14,36 @@ interface Item {
   event_id: string;
   uid: string;
   id: string;
-  users_in_image: string[];
 }
-
-interface Post {
-  event_id: string;
-  uid: string;
-  id: string;
-  timestamp?: Date;
-  imageSrc: string;
-  users_in_image: string[];
-  imageAlt: string;
-}
-
 
 @Component({
-  selector: 'app-my-pictures',
-  templateUrl: './my-pictures.page.html',
-  styleUrls: ['./my-pictures.page.scss'],
+  selector: 'app-gallery',
+  templateUrl: './gallery.component.html',
+  styleUrls: ['./gallery.component.scss'],
 })
-export class MyPicturesPage implements OnInit {
+// export class GalleryComponent  implements OnInit {
+
+//   constructor() { }
+
+//   ngOnInit() {}
+
+// }
+
+
+// import { MatIconModule } from '@angular/material/icon';
+export class GalleryComponent  implements OnInit {
   @Input() galleryData: Item[] = [];
   @Input() showCount = false;
 
   constructor(private galleryDataService: GalleryDataService,
     private api: ApiService,
     private http: HttpClient,
-    private modalController: ModalController,
-    private afs: AngularFirestore
+    private modalController: ModalController
     ) {}
-
-    postsCollection: AngularFirestoreCollection<Post> | undefined;
 
   ngOnInit() {
     // this.galleryData = this.galleryDataService.getData();
-    this.postsCollection = this.afs.collection('Event-Posts/9681b5b4-dc90-4ae4-a5b7-6dc888e19463/posts');
     this.totalImageCount = this.galleryData.length;
-    if(this.postsCollection === undefined) {
-      console.log('Could not load posts');
-    }
-
-    this.postsCollection.snapshotChanges().pipe().subscribe((data) => {
-      this.galleryData.length = 0;
-
-      data.forEach((doc: any) => {
-        const post: any = doc.payload.doc.data();
-
-        this.galleryData.push({
-          imageSrc: post.image_url,
-          imageAlt: post.timestamp,
-          event_id: post.code,
-          uid: post.uid,
-          id: post.id,
-          users_in_image: post.users_in_image
-        } as Item);
-        
-      });
-
-      console.log('Gallery Data: ')
-      console.log(this.galleryData);
-    });
   }
 
   //buttons
@@ -138,14 +108,12 @@ export class MyPicturesPage implements OnInit {
       // You can handle the selected file here, for example, read it as a data URL
       const file = inputElement.files[0];
       const reader = new FileReader();
-      
       reader.onload = (e) => {
         const imageSrc = reader.result as string;
         const imageAlt = file.name; // You can set a default alt text here, or ask the user to provide one.
         // Now you can add the new image to the galleryData array
         // this.galleryData.push({ imageSrc, imageAlt,  });
       };
-
       reader.readAsDataURL(file);
     }
   }
@@ -196,4 +164,6 @@ export class MyPicturesPage implements OnInit {
       this.onClosePreview();
     });
   }
+
 }
+

@@ -566,6 +566,9 @@ export class EventPage {
 
   onProfile() {
     this.router.navigate(['/profile']);
+  } 
+  onPosts() {
+    this.router.navigate(['../event/posts']);
   }
 
   onJoinedEvent() {

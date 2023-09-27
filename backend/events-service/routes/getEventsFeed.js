@@ -29,7 +29,15 @@ async function getEventsFeed(req, res) {
         });
 
         if (!user) {
-            return res.status(400).json({ error: 'Invalid user' });
+            const firestoreUserDoc = await admin.firestore().collection('Users').doc(uid).get();
+
+            if (firestoreUserDoc.exists) {
+                // Create the user in the Users table
+                user = await User.create({ uid: uid });
+            } else {
+                res.status(400).json({ error: 'Invalid user' });
+                return;
+            }
         }
 
         

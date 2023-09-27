@@ -1,0 +1,6 @@
+<div class="gallery-lightox-container" >
+  <input type="text" placeholder="Filter by text" #filter>
+    <div class="gallery">
+      <ion-img *ngFor="let item of galleryData; let i=index" [src]="item.imageSrc" [alt]="item.imageAlt" class="gallery-img" (click)="openImageModal(item, i)"></ion-img>
+    </div>
+</div>
