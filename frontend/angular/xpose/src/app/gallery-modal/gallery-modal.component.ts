@@ -204,8 +204,9 @@ deleteImage() {
     // .catch((error) => {
     //   console.error('Error deleting image:', error);
     // });
-    this.http.delete(`${this.api.apiUrl}/p/${item.event_id}/${item.id}`).subscribe((res) => {
-      console.log(`${this.api.apiUrl}/p/${item.event_id}/${item.id}`);
+    const url = `${this.api.apiUrl}/posts/${item.event_id}/${item.id}`
+    this.http.delete(url).subscribe((res) => {
+      console.log(url);
       this.onClosePreview();
     });
 }

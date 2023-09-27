@@ -164,6 +164,19 @@ def delete_post(event_id, post_id):
         # Delete image from Firebase Storage
 
         if post_doc.exists:
+            # Get the users_in_image field from the post document
+            post_data = post_doc.to_dict()
+            users_in_image = post_data['users_in_image']
+
+            # Delete the image from Firebase Storage
+            image_url = post_data['image_url']
+            delete_image_from_firebase(image_url)
+
+            # delete document from each user's posts collection
+            for user_id in users_in_image:
+                user_ref = firestore_client.collection('Users').document(user_id)
+                user_ref.collection('posts').document(post_id).delete()
+
             # Delete the post from the Firestore collection
             post_ref.delete()
 
