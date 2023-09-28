@@ -167,24 +167,22 @@ export class GalleryModalComponent  implements OnInit {
 
   downloadImage() {
     console.log("Downloading the picture....");
-  const imageSrc = this.galleryData[this.currentIndex].imageSrc;
-  this.http.get(imageSrc, { responseType: 'blob' }).subscribe(
-    (data) => {
-      const a = document.createElement('a');
-      const objectURL = URL.createObjectURL(data);
-      a.href = objectURL;
-      a.download = 'image.jpg'; // You can set the desired file name here
-      a.style.display = 'none';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(objectURL);
-    },
-    (error) => {
-      console.error('Error downloading the image:', error);
-      // You can handle the error here, e.g., show a message to the user.
-    }
-  );
+    const imageSrc = this.galleryData[this.currentIndex].imageSrc;
+  
+    // Create an anchor element for the download
+    const a = document.createElement('a');
+    a.href = imageSrc;
+    a.download = 'image.jpg'; // Set the desired file name here
+    a.style.display = 'none';
+  
+    // Attach the anchor to the DOM
+    document.body.appendChild(a);
+  
+    // Trigger the download
+    a.click();
+  
+    // Clean up
+    document.body.removeChild(a);
   }
 
   viewFullImage() {
