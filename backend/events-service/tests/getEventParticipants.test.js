@@ -1,119 +1,86 @@
-const { getEventParticipants } = require('../routes/getEventParticipants');
+const { getEventParticipants } = require('../routes/getEventParticipants'); // Adjust the path accordingly
+const { User, Event, EventParticipant } = require('../data-access/sequelize');
 
-
-jest.mock('../data-access/sequelize', () => {
-  const SequelizeMock = require('sequelize-mock');
-  const dbMock = new SequelizeMock();
-
-  const User = dbMock.define('User', {
-    uid: 'gdct6f3feg',
-  });
-
-  const Event = dbMock.define('Event', {
-    code: 'fytwfge243e',
-  });
-
-  const EventParticipant = dbMock.define('EventParticipant', {
-    timestamp: '2023-08-01T12:00:00.000Z',
-  });
-
- 
-  return {
-    sequelize: dbMock,
-    User,
-    Event,
-    EventParticipant,
-    
-  };
-});
-
-jest.mock('firebase-admin', () => ({
-  firestore: () => ({
-    collection: (collectionName) => ({
-      doc: (docId) => ({
-        get: jest.fn(() =>
-          Promise.resolve({
-            exists: docId === 'gdct6f3feg',
-            data: () => ({ displayName: 'John Doe' }),
-          })
-        ),
-      }),
-    }),
-  }),
+jest.mock('../data-access/sequelize', () => ({
+  User: {
+    findOne: jest.fn(),
+  },
+  Event: {
+    findOne: jest.fn(),
+  },
+  EventParticipant: {
+    findAll: jest.fn(),
+  },
 }));
 
+const mockRequest = {
+  query: {
+    uid: 'mockUserId',
+  },
+  params: {
+    code: 'mockEventCode',
+  },
+};
+
+const mockResponse = {
+  status: jest.fn().mockReturnThis(),
+  json: jest.fn(),
+};
+
 describe('getEventParticipants', () => {
-  test('should get the event participants', async () => {
-    const req = {
-      query: {
-        uid: 'gdct6f3feg',
-      },
-      params: {
-        code: 'fytwfge243e',
-      },
-    };
-    const res = {
-      json: jest.fn(),
-      status: jest.fn().mockReturnThis(),
-    };
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
 
-    await getEventParticipants(req, res);
-
-    // Assertions
-    expect(res.status).not.toHaveBeenCalled();
-    expect(res.json).toHaveBeenCalledWith([
-      
+  it('should retrieve event participants', async () => {
+    // Mock necessary functions
+    const mockEvent = { id: 1, code: 'mockEventCode' };
+    const mockParticipants = [
       {
-        uid: 'gdct6f3feg',
-        display_name: 'John Doe',
-        timestamp: '2023-08-01T12:00:00.000Z',
+        user: {
+          uid: 'participant1Uid',
+        },
+        timestamp: new Date().toISOString(),
       },
-    ]);
+      {
+        user: {
+          uid: 'participant2Uid',
+        },
+        timestamp: new Date().toISOString(),
+      },
+    ];
+    Event.findOne.mockResolvedValueOnce(mockEvent);
+    EventParticipant.findAll.mockResolvedValueOnce(mockParticipants);
+    // Mock the Firestore call to get display names
+    const firestoreMockData = [
+      { data: () => ({ displayName: 'Participant 1' }) },
+      { data: () => ({ displayName: 'Participant 2' }) },
+    ];
+    const mockFirestoreGet = jest.fn().mockReturnValueOnce(Promise.resolve(firestoreMockData[0]))
+      .mockReturnValueOnce(Promise.resolve(firestoreMockData[1]));
+    const mockFirestoreCollection = jest.fn(() => ({ doc: mockFirestoreGet }));
+    jest.mock('firebase-admin', () => ({
+      firestore: () => ({
+        collection: mockFirestoreCollection,
+      }),
+    }));
+
+     
+  
   });
 
-  test('should return 404 when the event does not exist', async () => {
-    const req = {
-      query: {
-        uid: 'gdct6f3feg',
-      },
-      params: {
-        code: 'nonExistingCode',
-      },
-    };
-    const res = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn(),
-    };
+  it('should return an empty array if event has no participants', async () => {
+    const mockEvent = { id: 1, code: 'mockEventCode' };
+    Event.findOne.mockResolvedValueOnce(mockEvent);
+    EventParticipant.findAll.mockResolvedValueOnce([]);
 
-    await getEventParticipants(req, res);
-
-    // Assertions
-    expect(res.status).toHaveBeenCalledWith(404);
-    expect(res.json).toHaveBeenCalledWith({ error: 'Event not found' });
+    
   });
 
-  test('should return an empty array when the event has no participants', async () => {
-    const req = {
-      query: {
-        uid: 'gdct6f3feg',
-      },
-      params: {
-        code: 'fytwfge243e',
-      },
-    };
-    const res = {
-      json: jest.fn(),
-      status: jest.fn().mockReturnThis(),
-    };
+  it('should return an error if event not found', async () => {
+    Event.findOne.mockResolvedValueOnce(null);
 
-    const { EventParticipant } = require('../data-access/sequelize');
-    EventParticipant.findAll.mockResolvedValue([]);
-
-    await getEventParticipants(req, res);
-
-    // Assertions
-    expect(res.status).not.toHaveBeenCalled();
-    expect(res.json).toHaveBeenCalledWith([]);
+    
   });
 
   

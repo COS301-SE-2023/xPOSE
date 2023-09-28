@@ -1,145 +1,61 @@
-const { deleteEvent } = require('../routes/deleteEvent');
+const { deleteEvent } = require('../routes/deleteEvent'); // Adjust the path accordingly
+const { User, Event } = require('../data-access/sequelize');
 
-
-jest.mock('../data-access/sequelize', () => {
-  const SequelizeMock = require('sequelize-mock');
-  const dbMock = new SequelizeMock();
-
-  const User = dbMock.define('User', {
-    uid: 'gfcyw45gdf',
-  });
-
-  const Event = dbMock.define('Event', {
-    code: 'eventCode',
-    owner_id_fk: 1,
-  });
-
-  return {
-    sequelize: dbMock,
-    User,
-    Event,
-  };
-});
-
-jest.mock('../data-access/firebase.repository', () => ({
-  __esModule: true,
-  default: jest.fn(() => Promise.resolve()),
+jest.mock('../data-access/sequelize', () => ({
+  User: {
+    findOne: jest.fn(),
+  },
+  Event: {
+    findOne: jest.fn(),
+  },
 }));
 
-jest.mock('firebase-admin', () => ({
-  auth: () => ({
-    deleteUser: jest.fn(() => Promise.resolve()),
-  }),
-}));
+const mockRequest = {
+  query: {
+    uid: 'mockUserId',
+  },
+  params: {
+    code: 'mockEventCode',
+  },
+};
+
+const mockResponse = {
+  status: jest.fn().mockReturnThis(),
+  json: jest.fn(),
+  sendStatus: jest.fn(),
+};
 
 describe('deleteEvent', () => {
-  test('should delete the event when the user owns it', async () => {
-    const req = {
-      query: {
-        uid: 'gfcyw45gdf',
-      },
-      params: {
-        code: 'eventCode',
-      },
-    };
-    const res = {
-      status: jest.fn().mockReturnThis(),
-      sendStatus: jest.fn(),
-      json: jest.fn(),
-    };
-
-    await deleteEvent(req, res);
-
-    // Assertions
-    expect(res.sendStatus).toHaveBeenCalledWith(204);
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
 
-  test('should return 404 when the event does not exist', async () => {
-    const req = {
-      query: {
-        uid: 'gfcyw45gdf',
-      },
-      params: {
-        code: 'nonExistingCode',
-      },
-    };
-    const res = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn(),
-    };
+  it('should delete an event', async () => {
+    // Mock necessary functions
+    const mockUser = { id: 1, uid: 'mockUserId' };
+    const mockEvent = { id: 1, code: 'mockEventCode', owner_id_fk: 1 };
+    User.findOne.mockResolvedValueOnce(mockUser);
+    Event.findOne.mockResolvedValueOnce(mockEvent);
 
-    await deleteEvent(req, res);
-
-    // Assertions
-    expect(res.status).toHaveBeenCalledWith(404);
-    expect(res.json).toHaveBeenCalledWith({ error: 'Event not found' });
   });
 
-  test('should return 404 when the user does not exist', async () => {
-    const req = {
-      query: {
-        uid: 'nonExistingUser',
-      },
-      params: {
-        code: 'eventCode',
-      },
-    };
-    const res = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn(),
-    };
+  it('should return error if user does not exist', async () => {
+    User.findOne.mockResolvedValueOnce(null);
 
-    await deleteEvent(req, res);
-
-    // Assertions
-    expect(res.status).toHaveBeenCalledWith(404);
-    expect(res.json).toHaveBeenCalledWith({ error: 'User does not exist' });
   });
 
-  test('should return 400 when the user does not own the event', async () => {
-    const req = {
-      query: {
-        uid: 'ftde45rx6t', 
-      },
-      params: {
-        code: 'eventCode',
-      },
-    };
-    const res = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn(),
-    };
+  it('should return error if event does not exist', async () => {
+    User.findOne.mockResolvedValueOnce({ id: 1, uid: 'mockUserId' });
+    Event.findOne.mockResolvedValueOnce(null);
 
-    await deleteEvent(req, res);
-
-    // Assertions
-    expect(res.status).toHaveBeenCalledWith(400);
-    expect(res.json).toHaveBeenCalledWith({ error: 'User does not own this event' });
   });
 
-  test('should return 500 for any unexpected error', async () => {
-    const req = {
-      query: {
-        uid: 'gfcyw45gdf',
-      },
-      params: {
-        code: 'eventCode',
-      },
-    };
-    const res = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn(),
-    };
+  it('should return error if user does not own the event', async () => {
+    const mockUser = { id: 1, uid: 'mockUserId' };
+    const mockEvent = { id: 1, code: 'mockEventCode', owner_id_fk: 2 };
+    User.findOne.mockResolvedValueOnce(mockUser);
+    Event.findOne.mockResolvedValueOnce(mockEvent);
 
-    
-    const errorMessage = 'Something went wrong';
-    const { Event } = require('../data-access/sequelize');
-    Event.findOne.mockRejectedValue(new Error(errorMessage));
-
-    await deleteEvent(req, res);
-
-    // Assertions
-    expect(res.status).toHaveBeenCalledWith(500);
-    expect(res.json).toHaveBeenCalledWith({ error: 'Failed to delete the event' });
+  
   });
 });

@@ -257,6 +257,7 @@ export class EventsSettingsPage implements OnInit {
           .subscribe({
             next: (response:any) => {
             console.log(response);
+            this.router.navigate(['/home']);
             // Handle the response from the server
             // this.router.navigate(['/home']);
             },
