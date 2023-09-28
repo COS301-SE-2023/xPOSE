@@ -3,7 +3,7 @@
 **xPOSE** is a photo-sharing app for events that allows users to create events, invite participants, and share event or QR codes. Participants can upload photos to the shared cloud storage, which are automatically sorted by event. Privacy settings allow for public or private sharing, and notifications can be set up for new photo uploads. The app uses Angular, NodeJS, PostgreSQL, and Firebase technology and can be hosted on cloud-based servers like Google Cloud Platform (GCP). xPOSE is user-friendly, secure, and provides an easy way to share photos and memories.
 
 ## Link to the website
-[xPOSE](https://xpose-4f48c.web.app/signup) 
+[xPOSE](https://xpose-4f48c.web.app/signup)\
 
 ## Links for Documentation and Project Management
 [Software Requirements Specifications](https://docs.google.com/document/d/1AV8hmgdBZ6FmjpaAfmGA63bMOqiWW4F-_2o7MoCvCT0/edit?usp=sharing)\
