@@ -13,8 +13,9 @@
 [Technology requirements](https://docs.google.com/document/d/1ntLlT2otBE6n4EhSI7ofEMp3vvPY_9YDecTwGbqO0qA/edit?usp=sharing)
 
 ## Links for testing 
-https://github.com/COS301-SE-2023/xPOSE/tree/e81aa95755c82b2ed9bcba27bae812830f93a831/backend/events-service/tests
-https://github.com/COS301-SE-2023/xPOSE/tree/e81aa95755c82b2ed9bcba27bae812830f93a831/backend/user-management-service/tests
+[Event Service Tests](https://github.com/COS301-SE-2023/xPOSE/tree/e81aa95755c82b2ed9bcba27bae812830f93a831/backend/events-service/tests)\
+
+[User Management Service Tests](https://github.com/COS301-SE-2023/xPOSE/tree/e81aa95755c82b2ed9bcba27bae812830f93a831/backend/user-management-service/tests)
 
 ## Technology Stack
 Our technology stack still isn't finalized and we're still researching
