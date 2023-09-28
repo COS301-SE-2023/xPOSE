@@ -41,24 +41,28 @@
     
 
     <!-- Account Privacy Section -->
+
     <div class="section">Account Privacy</div>
     <section class="privacy">
-      <div class="form-group">
-      <ion-radio-group value="privacy" name="privacy_setting" [(ngModel)]="privacy">
-        <ion-item>
-          <ion-icon name="earth"></ion-icon>
-          <ion-label>Public</ion-label>
-          <ion-radio value="public"></ion-radio>
-        </ion-item>
-      </ion-radio-group>
-      <ion-radio-group value="privacy" name="privacy_setting" [(ngModel)]="privacy">
-        <ion-item>
-          <ion-icon name="lock-closed"></ion-icon>
-          <ion-label>Private</ion-label>
-          <ion-radio value="private"></ion-radio>
-        </ion-item>
-      </ion-radio-group>
-      </div>
+      <form (submit)="updatePrivacy()">
+        <div class="form-group">
+        <ion-radio-group value="privacy" name="privacy_setting" [(ngModel)]="privacy">
+          <ion-item>
+            <ion-icon name="earth"></ion-icon>
+            <ion-label>Public</ion-label>
+            <ion-radio value="public"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+        <ion-radio-group value="privacy" name="privacy_setting" [(ngModel)]="privacy">
+          <ion-item>
+            <ion-icon name="lock-closed"></ion-icon>
+            <ion-label>Private</ion-label>
+            <ion-radio value="private"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+        </div>
+        <ion-button type="submit">Save Changes</ion-button>
+    </form>
     </section>
 
     <!-- Facial Recognition Section -->

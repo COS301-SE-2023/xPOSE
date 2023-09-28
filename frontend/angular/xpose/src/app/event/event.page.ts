@@ -161,7 +161,7 @@ export class EventPage {
         return;
       }
 
-
+      
       // this.commmonService.getLocation().subscribe((response)=> 
       //   console.log(response)
       //   this.location = response;

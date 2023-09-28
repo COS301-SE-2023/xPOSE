@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { MenuController, ModalController, Platform } from '@ionic/angular';
 import firebase from 'firebase/compat/app';
@@ -7,6 +7,7 @@ import { ApiService } from '../service/api.service';
 import { Observable, map } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
 
 
 @Component({
@@ -33,7 +34,8 @@ export class GalleryModalComponent  implements OnInit {
     private http: HttpClient,
     private api: ApiService,
     private afs: AngularFirestore,
-    private router: Router
+    private router: Router,
+    private sanitizer: DomSanitizer
   ) {
     this.currentIndex = this.initialIndex;
   }
@@ -162,22 +164,25 @@ export class GalleryModalComponent  implements OnInit {
   }
     
   ngOnInit() {}
+
   downloadImage() {
-    // const imageUrl = 'https://example.com/path-to-your-image.jpg'; // Replace with your image URL
-    // const saveDirectory = this.file.dataDirectory; // Use 'dataDirectory' for the app's data directory
-    // const fileName = 'downloaded_image.jpg'; // Desired file name
+    console.log("Downloading the picture....");
+    const imageSrc = this.galleryData[this.currentIndex].imageSrc;
   
-    // const fileTransfer: FileTransferObject = this.fileTransfer.create();
+    // Create an anchor element for the download
+    const a = document.createElement('a');
+    a.href = imageSrc;
+    a.download = 'image.jpg'; // Set the desired file name here
+    a.style.display = 'none';
   
-    // fileTransfer.download(imageUrl, saveDirectory + fileName).then(
-    //   entry => {
-    //     console.log('Image downloaded successfully:', entry.toURL());
-    //     // You can now use 'entry.toURL()' to access the saved image file path
-    //   },
-    //   error => {
-    //     console.error('Error downloading image:', error);
-    //   }
-    // );
+    // Attach the anchor to the DOM
+    document.body.appendChild(a);
+  
+    // Trigger the download
+    a.click();
+  
+    // Clean up
+    document.body.removeChild(a);
   }
 
   viewFullImage() {
