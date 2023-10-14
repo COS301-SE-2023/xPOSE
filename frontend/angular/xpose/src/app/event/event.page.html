@@ -56,6 +56,9 @@
             <p class="chat-message">{{ message.message }}</p>
             <!-- <span class="chat-timestamp">{{ message.timestamp | date:'shortTime' }}</span> -->
           </ion-label>
+          <ion-button fill="clear" slot="end" (click)="deleteMessage(message)">
+            <ion-icon name="trash"></ion-icon>
+          </ion-button>
         </ion-item>
       
         <ion-item-divider class="divider"></ion-item-divider>

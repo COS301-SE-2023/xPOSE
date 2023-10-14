@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { createChat, getChats, deleteChat, addRestrictedWord, deleteRestrictedWords } = require('./routes/index');
+const { createChat, getChats, deleteChat, addRestrictedWord, deleteRestrictedWords, deleteMessage } = require('./routes/index');
 const multer = require('multer');
 const upload = multer({ dest: 'uploads/' });
 
@@ -14,6 +14,9 @@ router.post('/chats/:event_id/restrictedWord', addRestrictedWord);
 
 // delete restricted word
 router.post('/chats/:event_id/restrictedWord_deleted', deleteRestrictedWords);
+
+// router delete message
+router.post('/chats/:event_id/message_delete/:chat_id', deleteMessage);
 
 // Get all chats
 router.get('/chats/:event_id', getChats);

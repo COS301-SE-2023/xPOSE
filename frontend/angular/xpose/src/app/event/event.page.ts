@@ -631,7 +631,13 @@ export class EventPage {
     if(modal) modal.style.display = "none";
   }
 
-  
+  deleteMessage(messageUID: any){
+    // console.log("Deleting message...",messageUID);
+    this.http.post(`${this.api.apiUrl}/c/chats/${this.current_event.code}/message_delete/${messageUID.id}`,{}).subscribe((res) => {
+      // console.log(res);
+    });
+  }
+
   async createMessage() {  
     // first check if  pre-set banned words are active
     const eventUID = this.current_event.code;
@@ -682,7 +688,6 @@ export class EventPage {
         const event_id = this.current_event.code;
         const formData: FormData = new FormData();
         formData.append('message', message.message);
-
         this.http.post(`${this.api.apiUrl}/c/chats/${event_id}?uid=${uid}`, formData).subscribe((res) => {
           console.log(res);
         });
@@ -694,48 +699,86 @@ export class EventPage {
   messagesCollection: AngularFirestoreCollection<Message> | undefined;
   messages: Message[] = [];
 
-  async retrieveMessages() {
-    if(this.messagesCollection) {
-      this.messagesCollection.valueChanges().subscribe((messages: Message[]) => {
-        this.messages = messages;
+  // async retrieveMessages() {
+  //   if(this.messagesCollection) {
+  //     this.messagesCollection.valueChanges().subscribe((messages: Message[]) => {
+  //       this.messages = messages;
+        
+  //       // Fetch and assign the displayName for each message
+  //       this.messages.forEach((message: Message) => {
+  //         this.getUserNameFromUid(message.uid).subscribe((displayName: string) => {
+  //           message.displayName = displayName;
+  //           message.id =??????
+  //           // get the profile photo user who's messaged
+  //           this.userService.GetUser(message.uid).subscribe(
+  //             (user) => {
+  //               if(user) {
+  //                 message.photoURL = user.photoURL;
+  //               }
+  //             }
+  //           )
+  //         });
+  //       });
 
-        // Fetch and assign the displayName for each message
-        this.messages.forEach((message: Message) => {
+  //       // console.log(`The messages are before sorting: ${messages}`);
+  //       // console.log(this.messages);
+        
+  //       // sort the messages
+  //       this.messages.sort((a: Message, b: Message) => {
+  //         const timestampA = a.timestamp ? a.timestamp.toMillis() : 0;
+  //         const timestampB = b.timestamp ? b.timestamp.toMillis() : 0;
+  //         return timestampB - timestampA;
+  //       });
+        
+  //       // this.messages.reverse();
+  //       // console.log(`The messages are after sorting: ${messages}`);
+  //       // console.log(this.messages);
+
+  //       // console.log('Retrieving messages from Firestore...');
+  //       // console.log(this.messages);
+  //     });
+  //   }
+  //   else {
+  //     console.log("messagesCollection is undefined");
+  //   }
+  // }
+
+  async retrieveMessages() {
+    if (this.messagesCollection) {
+      this.messagesCollection.snapshotChanges().subscribe((messagesSnapshot) => {
+        this.messages = messagesSnapshot.map((messageSnapshot) => {
+          const messageData = messageSnapshot.payload.doc.data() as Message;
+          const messageId = messageSnapshot.payload.doc.id;
+          const message = { ...messageData, id: messageId } as Message;
+  
           this.getUserNameFromUid(message.uid).subscribe((displayName: string) => {
             message.displayName = displayName;
-            // get the profile photo user who's messaged
-            this.userService.GetUser(message.uid).subscribe(
-              (user) => {
-                if(user) {
-                  message.photoURL = user.photoURL;
-                }
+            // get the profile photo of the user who's messaged
+            this.userService.GetUser(message.uid).subscribe((user) => {
+              if (user) {
+                message.photoURL = user.photoURL;
               }
-            )
+            });
           });
+  
+          return message;
         });
-
-        // console.log(`The messages are before sorting: ${messages}`);
-        // console.log(this.messages);
-        
-        // sort the messages
+  
+        // Sort the messages
         this.messages.sort((a: Message, b: Message) => {
           const timestampA = a.timestamp ? a.timestamp.toMillis() : 0;
           const timestampB = b.timestamp ? b.timestamp.toMillis() : 0;
           return timestampB - timestampA;
         });
-        
-        // this.messages.reverse();
-        // console.log(`The messages are after sorting: ${messages}`);
-        // console.log(this.messages);
-
-        // console.log('Retrieving messages from Firestore...');
-        // console.log(this.messages);
+  
+        // ...
       });
-    }
-    else {
+    } else {
       console.log("messagesCollection is undefined");
     }
   }
+  
+
   
   getUserNameFromUid(uid: string): Observable<string> {
     return this.afs.collection('Users').doc(uid).valueChanges().pipe(
