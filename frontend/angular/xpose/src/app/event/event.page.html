@@ -56,7 +56,7 @@
             <p class="chat-message">{{ message.message }}</p>
             <!-- <span class="chat-timestamp">{{ message.timestamp | date:'shortTime' }}</span> -->
           </ion-label>
-          <ion-button fill="clear" slot="end" (click)="deleteMessage(message)">
+          <ion-button fill="clear" slot="end" (click)="deleteMessage(message)" *ngIf="user_id === message.uid">
             <ion-icon name="trash"></ion-icon>
           </ion-button>
         </ion-item>

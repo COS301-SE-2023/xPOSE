@@ -633,8 +633,12 @@ export class EventPage {
 
   deleteMessage(messageUID: any){
     // console.log("Deleting message...",messageUID);
-    this.http.post(`${this.api.apiUrl}/c/chats/${this.current_event.code}/message_delete/${messageUID.id}`,{}).subscribe((res) => {
-      // console.log(res);
+    this.getCurrentUserId().subscribe((uid) => {
+      if(uid) {
+        this.http.post(`${this.api.apiUrl}/c/chats/${this.current_event.code}/message_delete/${messageUID.id}?uid=${uid}`,{}).subscribe((res) => {
+          // console.log(res);
+        });
+      }
     });
   }
 
