@@ -129,7 +129,7 @@
             </ion-avatar>
             <ion-label>
               <b class="user-name" (click)="onCardClick(user)">{{ user.display_name }}</b>
-              <p class="user-email">{{ user.email }}</p>
+              <p class="user-email">{{ user.displayName }}</p>
             </ion-label>
             
             <ion-button slot="end" fill="clear" *ngIf="user.uid !== data.owner" (click)="inviteUser(user)">
@@ -205,11 +205,22 @@
 
         <!-- Chat Restrictions -->
         <div class="form-group">
-          <h3><label for="" class="label">Add restricted words</label></h3>
+          <h3><label for="" class="label">Add restricted words feature</label></h3>
+
+          <div class="custom-checkbox">
+            <p>
+              Avoid offensive words
+              <input type="checkbox" id="featureEnabled" 
+              [(ngModel)]="featureEnabled"
+              (change)="enableWordFilter()"
+              >
+            </p>
+          </div>          
+
           <div class="search-container">
             <ion-input id="tag_search" class="ion-input-" name="tags"
               [(ngModel)]="word_input"
-              autocomplete="off" placeholder="Type restricted word">
+              autocomplete="off" placeholder="Add customized banned words here">
             </ion-input>
             <ion-button (click)="addRestricted(word_input)">
               <ion-icon name="add"></ion-icon> Add
