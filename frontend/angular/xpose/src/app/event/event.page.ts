@@ -13,13 +13,12 @@ import { GalleryDataService } from './posts/gallery-lightbox/gallery-data.servic
 import { AngularFirestore, AngularFirestoreCollection, DocumentChangeAction } from '@angular/fire/compat/firestore';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera'; 
 import { ApiService } from '../service/api.service';
-
 import { ModalController } from '@ionic/angular';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { GalleryModalComponent } from '../gallery-modal/gallery-modal.component';
 import { Service } from '../service/service';
-
 import { AuthService } from '../shared/services/auth.service';
+
 
 // import { CommonService } from './common.service';
 
@@ -161,7 +160,7 @@ export class EventPage {
         return;
       }
 
-
+      
       // this.commmonService.getLocation().subscribe((response)=> 
       //   console.log(response)
       //   this.location = response;
@@ -193,11 +192,8 @@ export class EventPage {
             this.getEventParticipantsFromAPI();
             console.log(this.participants);
 
-
-
             // Load restricted words
-               // restricted words data
-               this.addRestrictedWords(event_id, []);
+            this.addRestrictedWords(event_id, []);
           },
           (error) => {
               this.loading = false; // Request completed with an error
@@ -235,10 +231,10 @@ export class EventPage {
     this.computationOfRestrictedWords(event_id, tagWords).subscribe(
       (response: any) => {
         //
-        console.log("Restricted words added:", response);
+        // console.log("Restricted words added:", response);
 
         this.restrictedWords_list = response.tagWords;
-        console.log("Restricted words array:", this.restrictedWords_list);
+        // console.log("Restricted words array:", this.restrictedWords_list);
       },
       (error) => {
         console.log("Error adding restricted words", error)
@@ -256,7 +252,6 @@ export class EventPage {
       if(!flag){
         formData.append('restrictedWords[]', '');
       }
-      
       return this.http.post(`${this.api.apiUrl}/c/chats/${event_id}/restrictedWord`, formData);
     }
 
@@ -586,7 +581,7 @@ export class EventPage {
   // Code to create and send messages
   newMessage!: string;
 
-  // Check if there's a banned word
+  // Check if there's a banned word 
   containsRestrictedWord() {
     const message = this.newMessage.toLowerCase();
     for (const word of this.restrictedWords_list) {
@@ -595,6 +590,26 @@ export class EventPage {
       if (regex.test(message)) {
         return [true, word];
       }
+    }
+    return [false, ''];
+  }
+
+  // check for pre-set of banned words
+  async containsPreSetRestrictedWord(): Promise<[boolean, string]> {
+    const docRef = this.afs.collection('Offensive-words').doc('words');
+
+    const doc = await docRef.get().toPromise();
+    const bannedWords = doc?.get('words');
+
+    if (!bannedWords) {
+      return [false, ''];
+    }
+
+    const pattern = new RegExp(`\\b(${bannedWords.join('|')})\\b`, 'i');
+    const matches = this.newMessage.match(pattern);
+
+    if (matches && matches.length > 0) {
+      return [true, matches[0]];
     }
     return [false, ''];
   }
@@ -616,13 +631,50 @@ export class EventPage {
     if(modal) modal.style.display = "none";
   }
 
-  
-  createMessage() {
+  deleteMessage(messageUID: any){
+    // console.log("Deleting message...",messageUID);
+    this.getCurrentUserId().subscribe((uid) => {
+      if(uid) {
+        this.http.post(`${this.api.apiUrl}/c/chats/${this.current_event.code}/message_delete/${messageUID.id}?uid=${uid}`,{}).subscribe((res) => {
+          // console.log(res);
+        });
+      }
+    });
+  }
+
+  async createMessage() {  
+    // first check if  pre-set banned words are active
+    const eventUID = this.current_event.code;
+    const docRef = this.afs.collection('Event-Chats').doc(eventUID);
+    const eventDoc = await docRef.get().toPromise();
+
+    if (eventDoc?.exists) {
+      const featureEnabled = eventDoc.get('featureEnabled');
+      
+      if (featureEnabled === true) {
+        console.log("Pre-set banned words active");
+        const [containsPreSetRestricted, preSetRestrictedWord] = await this.containsPreSetRestrictedWord();
+
+        if(this.newMessage) {
+          if(containsPreSetRestricted) {
+            this.openModalChat('Can\'t send message that contains banned word(s)\n' /*+ preSetRestrictedWord*/);
+            return;
+          } else{
+            console.log("Message does not contain banned word");
+          }
+        }
+      }else {
+        console.log("Pre-set banned words disabled");
+      }
+    } else {
+      // event not found
+    }
+
     // check if message has banned or restriced words
     const [containsRestricted, restrictedWord] = this.containsRestrictedWord();
     if(this.newMessage) {
       if(containsRestricted) {
-        this.openModalChat('Can\'t send message with banned word(s):\n' + restrictedWord);
+        this.openModalChat('Can\'t send message that contains banned word(s)\n' /*+ restrictedWord*/);
         return;
       } else{
         console.log("Message does not contain banned word");
@@ -640,7 +692,6 @@ export class EventPage {
         const event_id = this.current_event.code;
         const formData: FormData = new FormData();
         formData.append('message', message.message);
-
         this.http.post(`${this.api.apiUrl}/c/chats/${event_id}?uid=${uid}`, formData).subscribe((res) => {
           console.log(res);
         });
@@ -652,48 +703,86 @@ export class EventPage {
   messagesCollection: AngularFirestoreCollection<Message> | undefined;
   messages: Message[] = [];
 
-  async retrieveMessages() {
-    if(this.messagesCollection) {
-      this.messagesCollection.valueChanges().subscribe((messages: Message[]) => {
-        this.messages = messages;
+  // async retrieveMessages() {
+  //   if(this.messagesCollection) {
+  //     this.messagesCollection.valueChanges().subscribe((messages: Message[]) => {
+  //       this.messages = messages;
+        
+  //       // Fetch and assign the displayName for each message
+  //       this.messages.forEach((message: Message) => {
+  //         this.getUserNameFromUid(message.uid).subscribe((displayName: string) => {
+  //           message.displayName = displayName;
+  //           message.id =??????
+  //           // get the profile photo user who's messaged
+  //           this.userService.GetUser(message.uid).subscribe(
+  //             (user) => {
+  //               if(user) {
+  //                 message.photoURL = user.photoURL;
+  //               }
+  //             }
+  //           )
+  //         });
+  //       });
 
-        // Fetch and assign the displayName for each message
-        this.messages.forEach((message: Message) => {
+  //       // console.log(`The messages are before sorting: ${messages}`);
+  //       // console.log(this.messages);
+        
+  //       // sort the messages
+  //       this.messages.sort((a: Message, b: Message) => {
+  //         const timestampA = a.timestamp ? a.timestamp.toMillis() : 0;
+  //         const timestampB = b.timestamp ? b.timestamp.toMillis() : 0;
+  //         return timestampB - timestampA;
+  //       });
+        
+  //       // this.messages.reverse();
+  //       // console.log(`The messages are after sorting: ${messages}`);
+  //       // console.log(this.messages);
+
+  //       // console.log('Retrieving messages from Firestore...');
+  //       // console.log(this.messages);
+  //     });
+  //   }
+  //   else {
+  //     console.log("messagesCollection is undefined");
+  //   }
+  // }
+
+  async retrieveMessages() {
+    if (this.messagesCollection) {
+      this.messagesCollection.snapshotChanges().subscribe((messagesSnapshot) => {
+        this.messages = messagesSnapshot.map((messageSnapshot) => {
+          const messageData = messageSnapshot.payload.doc.data() as Message;
+          const messageId = messageSnapshot.payload.doc.id;
+          const message = { ...messageData, id: messageId } as Message;
+  
           this.getUserNameFromUid(message.uid).subscribe((displayName: string) => {
             message.displayName = displayName;
-            // get the profile photo user who's messaged
-            this.userService.GetUser(message.uid).subscribe(
-              (user) => {
-                if(user) {
-                  message.photoURL = user.photoURL;
-                }
+            // get the profile photo of the user who's messaged
+            this.userService.GetUser(message.uid).subscribe((user) => {
+              if (user) {
+                message.photoURL = user.photoURL;
               }
-            )
+            });
           });
+  
+          return message;
         });
-
-        console.log(`The messages are before sorting: ${messages}`);
-        console.log(this.messages);
-        
-        // sort the messages
+  
+        // Sort the messages
         this.messages.sort((a: Message, b: Message) => {
           const timestampA = a.timestamp ? a.timestamp.toMillis() : 0;
           const timestampB = b.timestamp ? b.timestamp.toMillis() : 0;
           return timestampB - timestampA;
         });
-        
-        // this.messages.reverse();
-        console.log(`The messages are after sorting: ${messages}`);
-        console.log(this.messages);
-
-        // console.log('Retrieving messages from Firestore...');
-        // console.log(this.messages);
+  
+        // ...
       });
-    }
-    else {
+    } else {
       console.log("messagesCollection is undefined");
     }
   }
+  
+
   
   getUserNameFromUid(uid: string): Observable<string> {
     return this.afs.collection('Users').doc(uid).valueChanges().pipe(

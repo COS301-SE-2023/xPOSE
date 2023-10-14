@@ -229,6 +229,8 @@ async registerFacialData() {
 		}
 
 	} catch(error) {
+		await this.loading.dismiss();
+		window.alert("No Face detected");
 		console.error("Error registering facial data", error);
 	}
 

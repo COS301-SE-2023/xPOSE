@@ -129,7 +129,7 @@
             </ion-avatar>
             <ion-label>
               <b class="user-name" (click)="onCardClick(user)">{{ user.display_name }}</b>
-              <p class="user-email">{{ user.email }}</p>
+              <p class="user-email">{{ user.displayName }}</p>
             </ion-label>
             
             <ion-button slot="end" fill="clear" *ngIf="user.uid !== data.owner" (click)="inviteUser(user)">
@@ -160,28 +160,36 @@
     </section>
 
     <section class="form-section">
-      <h3>Posts Settings</h3>
+      <h3>Posts Image Processing</h3>
       <!-- Posts Settings -->
       <!-- <form (ngSubmit)="onSubmit()" #form="ngForm"> -->
         <div class="form-group">
-          <h4>Image processing</h4>
-          <ion-checkbox class="check" id="facialRecognition">Facial Recognition</ion-checkbox>
-          <ion-checkbox class="check" id="deepFaceProtection">Deep Face Protection</ion-checkbox>
-          <ion-checkbox class="check" id="encryption">Encryption</ion-checkbox>
+          <!-- <h4>Image processing</h4> -->
+          <p class="checkbox-description">
+            Facial Recognition is already applied to your images. This technology allows us to recognize and identify faces within your images, helping you organize and search for photos of specific individuals.
+          </p>
+          
+          <!-- <p class="checkbox-description">
+            Deep Face Protection is already enabled for your images. This feature adds an extra layer of security by protecting your images from unauthorized access, especially when facial recognition is in use. It ensures that only authorized users can access sensitive images.
+          </p>
+          
+          <p class="checkbox-description">
+            Encryption is already applied to your images. Your images are securely encrypted to protect them from any potential threats or unauthorized access. This ensures the privacy and confidentiality of your valuable visual content.
+          </p>           -->
         </div>
         <!-- Save Changes ion-button -->
-        <div class="form-group">
+        <!-- <div class="form-group">
           <ion-button>Save Changes</ion-button>
-        </div>
+        </div> -->
       <!-- </form> -->
     </section>
 
     <section class="form-section">
       <!-- Chats Settings -->
-      <h3>Chats Settings</h3>
+      <!-- <h3>Chats Settings</h3> -->
       
       <!-- <form (ngSubmit)="onSubmit()" #form="ngForm"> -->
-        <div class="form-group">
+        <!-- <div class="form-group">
           <h4>Who can send messages?</h4>
           <ion-radio-group id="chatSettings">
             <ion-item>
@@ -193,15 +201,26 @@
               <ion-radio value="everyone"></ion-radio>
             </ion-item>
           </ion-radio-group>
-        </div>
+        </div> -->
 
         <!-- Chat Restrictions -->
         <div class="form-group">
-          <h3><label for="" class="label">Add restricted words</label></h3>
+          <h3><label for="" class="label">Add restricted words feature</label></h3>
+
+          <div class="custom-checkbox">
+            <p>
+              Avoid offensive words
+              <input type="checkbox" id="featureEnabled" 
+              [(ngModel)]="featureEnabled"
+              (change)="enableWordFilter()"
+              >
+            </p>
+          </div>          
+
           <div class="search-container">
             <ion-input id="tag_search" class="ion-input-" name="tags"
               [(ngModel)]="word_input"
-              autocomplete="off" placeholder="Type restricted word">
+              autocomplete="off" placeholder="Add customized banned words here">
             </ion-input>
             <ion-button (click)="addRestricted(word_input)">
               <ion-icon name="add"></ion-icon> Add

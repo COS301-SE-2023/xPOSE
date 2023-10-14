@@ -2,6 +2,9 @@
 ## Project description
 **xPOSE** is a photo-sharing app for events that allows users to create events, invite participants, and share event or QR codes. Participants can upload photos to the shared cloud storage, which are automatically sorted by event. Privacy settings allow for public or private sharing, and notifications can be set up for new photo uploads. The app uses Angular, NodeJS, PostgreSQL, and Firebase technology and can be hosted on cloud-based servers like Google Cloud Platform (GCP). xPOSE is user-friendly, secure, and provides an easy way to share photos and memories.
 
+## Link to the website
+[xPOSE](https://xpose-4f48c.web.app/signup)\
+
 ## Links for Documentation and Project Management
 [Software Requirements Specifications](https://docs.google.com/document/d/1AV8hmgdBZ6FmjpaAfmGA63bMOqiWW4F-_2o7MoCvCT0/edit?usp=sharing)\
 [Architectural Requirements](https://docs.google.com/document/d/1YoSeht_d0vz5lK-ZFnmmHecyxw9szGn9NituXYBYW4E/edit?usp=sharing)\
@@ -12,7 +15,10 @@
 [Technical installation manual](https://docs.google.com/document/d/1qnxa1F8AP8EpryEYgJlkma4I1rv0TalAjX16g_LHoh0/edit)\
 [Technology requirements](https://docs.google.com/document/d/1ntLlT2otBE6n4EhSI7ofEMp3vvPY_9YDecTwGbqO0qA/edit?usp=sharing)
 
-will add more here...
+## Links for testing 
+[Event Service Tests](https://github.com/COS301-SE-2023/xPOSE/tree/e81aa95755c82b2ed9bcba27bae812830f93a831/backend/events-service/tests)\
+
+[User Management Service Tests](https://github.com/COS301-SE-2023/xPOSE/tree/e81aa95755c82b2ed9bcba27bae812830f93a831/backend/user-management-service/tests)
 
 ## Technology Stack
 Our technology stack still isn't finalized and we're still researching

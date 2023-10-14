@@ -29,13 +29,13 @@
       <ion-item (click)="deleteImage()" class="menu-item">
         <ion-label>Delete</ion-label>
       </ion-item>
-      <ion-item (click)="shareImage('')" class="menu-item">
+      <!-- <ion-item (click)="shareImage('')" class="menu-item">
         <ion-label>Share</ion-label>
-      </ion-item>
+      </ion-item> -->
       <ion-item (click)="usersInImage()" class="menu-item">
         <ion-label>Who's in this?</ion-label>
       </ion-item>
-      <ion-item (click)="toggleLike()" class="menu-item">
+      <!-- <ion-item (click)="toggleLike()" class="menu-item">
         <ion-label>Like</ion-label>
         <ion-icon slot="end" [name]="isLiked ? 'heart' : 'heart-outline'" [color]="isLiked ? 'danger' : 'medium'"></ion-icon>
         <span>{{ likeCount }}</span>
@@ -62,7 +62,7 @@
             <ion-label>{{ comment }}</ion-label>
           </ion-item>
         </ion-list>
-      </div>
+      </div> -->
     </ion-list>
   </ion-content>
 </ion-menu>

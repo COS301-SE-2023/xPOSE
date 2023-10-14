@@ -9,7 +9,7 @@ import { NgForm } from '@angular/forms';
 import { Event } from '../shared/event';
 import { LocationAutocompleteService } from '../service/location-autocomplete.service';
 import { Service } from '../service/service';
-import { Console, error } from 'console';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { LoadingController } from "@ionic/angular";
 
 // interface ApiResponse {
@@ -41,7 +41,7 @@ export class EventsSettingsPage implements OnInit {
 	  loading = false;
 	locationPredictions: any[] = [];
 
-
+  featureEnabled: boolean = false;
   restrictedWords_list: string[] = [];
   word_input: string = '';
 
@@ -57,7 +57,8 @@ export class EventsSettingsPage implements OnInit {
     private activatedRoute: ActivatedRoute,
     private navCtrl: NavController,
     private userService: Service,
-    private loadingController: LoadingController) { }
+    private loadingController: LoadingController,
+    private firestore: AngularFirestore) { }
 
     ngOnInit() {
       // click the element with id of posts_tab
@@ -118,7 +119,7 @@ export class EventsSettingsPage implements OnInit {
                 console.error(error);
             });
 
-
+            this.getFilterWordState();
             // restricted words data
             this.addRestrictedWords(event_id, []);
           }
@@ -141,6 +142,39 @@ export class EventsSettingsPage implements OnInit {
       });
     }
 
+    toggleFeatureEnabled(flag: boolean) {
+      const documentId = this.eventUID; // Replace with your specified document ID
+      const docRef = this.firestore.collection('Event-Chats').doc(documentId);
+    
+      // Get the current value of featureEnabled
+      docRef.get().subscribe((doc) => {
+        const currentFeatureEnabled = doc.get('featureEnabled');
+        const updatedValue = !currentFeatureEnabled;
+    
+        // Update the featureEnabled field
+        docRef.update({ featureEnabled: updatedValue }).then(() => {
+          console.log('FeatureEnabled updated to', updatedValue);
+        });
+      });
+    }
+
+    async getFilterWordState() {
+      const documentId = this.eventUID; // Replace with your specified document ID
+      const docRef = this.firestore.collection('Event-Chats').doc(documentId);
+    
+      // Get the current value of featureEnabled
+      docRef.get().subscribe((doc) => {
+        const currentFeatureEnabled = doc.get('featureEnabled');
+        this.featureEnabled = currentFeatureEnabled;
+      });
+    }
+    
+    enableWordFilter() {
+
+      console.log("featureEnabled", this.featureEnabled);
+
+      this.toggleFeatureEnabled(this.featureEnabled);
+    }
     async removeRestrictedWord(word:string) {
       const arrayOfWords = [];
       arrayOfWords.push(word);
@@ -257,6 +291,7 @@ export class EventsSettingsPage implements OnInit {
           .subscribe({
             next: (response:any) => {
             console.log(response);
+            this.router.navigate(['/home']);
             // Handle the response from the server
             // this.router.navigate(['/home']);
             },
