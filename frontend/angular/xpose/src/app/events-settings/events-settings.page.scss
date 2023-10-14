@@ -132,3 +132,18 @@ ion-input, ion-textarea {
 .check ion-checkbox {
   --color-checked: #ff00ff;
 }
+
+
+.custom-checkbox {
+  /* Change the checkbox label's color */
+  ion-label {
+    color: #333; /* Change to your desired text color */
+  }
+
+  /* Change the checkbox's appearance */
+  ion-checkbox {
+    --border-color: #007BFF; /* Change the border color */
+    --background-checked: #007BFF; /* Change the background color when checked */
+    --border-radius: 4px; /* Adjust border radius as needed */
+  }
+}
