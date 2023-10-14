@@ -103,4 +103,14 @@ export class SignupPage implements OnInit {
 		// TODO document why this method 'ngOnInit' is empty
   
 	}
+	// sign in with facebook
+	signInWithFacebook() {
+		this.authService.signInWithFacebook();
+	}
+
+	// sign in with google
+	signInWithGoogle() {
+		this.authService.signInWithGoogle();
+	}
+
 }
