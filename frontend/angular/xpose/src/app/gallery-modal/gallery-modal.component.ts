@@ -95,7 +95,7 @@ export class GalleryModalComponent  implements OnInit {
   
           if (completedRequests === usersInImageArray.length) {
             // All requests have completed, open the modal with the concatenated usernames
-            this.openModalUser("Users in image:\n" + (nameOfUserInImage || 'Unknown User'));
+            this.openModalUser("Users in image:\n" + (nameOfUserInImage || 'No user(s) detected'));
           }
         },
         (error: any) => {
@@ -104,7 +104,7 @@ export class GalleryModalComponent  implements OnInit {
   
           if (completedRequests === usersInImageArray.length) {
             // All requests have completed, open the modal with the concatenated usernames
-            this.openModalUser("Users in image:\n" + 'Unknown User');
+            this.openModalUser("Users in image:\n" + 'No user(s) detected');
           }
         }
       );
@@ -112,7 +112,7 @@ export class GalleryModalComponent  implements OnInit {
 
 
     if(!flag){
-      this.openModalUser("Users in image:\n" +  ('Unknown User'));
+      this.openModalUser("Users in image:\n" +  ('No user(s) detected'));
     }
 
     // iterate through users_in_image array and display each uid using getUserNameFromUid(uid)
@@ -156,8 +156,8 @@ export class GalleryModalComponent  implements OnInit {
       map((user: any) => {
         if (user && user.displayName) {
           return user.displayName;
-        } else {
-          return 'Unknown User';
+        } else { 
+          return 'No user(s) detected'; 
         }
       })
     );
