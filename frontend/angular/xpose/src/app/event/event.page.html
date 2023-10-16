@@ -52,7 +52,7 @@
             <ion-img [src]="generateAvatar(message.photoURL)" loading="lazy"></ion-img>
           </ion-avatar>
           <ion-label class="chat-content">
-            <h2 class="chat-name">{{ message.displayName }} <b>{{ toDate(message.timestamp) }}</b></h2>
+            <h2 class="chat-name">{{ message.displayName }} <p>{{ toDate(message.timestamp) }}</p></h2>
             <p class="chat-message">{{ message.message }}</p>
             <!-- <span class="chat-timestamp">{{ message.timestamp | date:'shortTime' }}</span> -->
           </ion-label>
@@ -127,7 +127,7 @@
                 {{ participant.display_name }} <b>@{{ participant.uniq_username }}</b>
                 
               </p>
-              <p class="participant-email"> <b *ngIf="participant.location">{{ participant.location }} </b></p>
+              <!-- <p class ="participant-email"> <b *ngIf="participant.location">{{ participant.location }} </b></p> -->
             </ion-label>
           </ion-item>
         
