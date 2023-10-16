@@ -59,8 +59,15 @@
         <!-- <h2 class="ion-text-center">{{search_result}}</h2> -->
         <ion-list>
           <ion-item *ngFor="let userItem of this.user">
+            <ion-avatar slot="start">
+              <ion-img [src]="userItem.image_url"  loading="lazy" ></ion-img>
+            </ion-avatar>
             <!-- Replace 'displayName' with the actual property you want to display for each user -->
-            <ion-label (click)="viewUser(userItem)">{{ userItem.displayName }}</ion-label>
+            <ion-label (click)="viewUser(userItem)">
+              {{ userItem.displayName }}
+              <br>
+              {{userItem.uniq_username}}
+            </ion-label>
           </ion-item>
         </ion-list>
       </div>

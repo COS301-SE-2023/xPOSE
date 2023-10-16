@@ -122,7 +122,7 @@ export class SearchPage implements OnInit {
   }
 
   viewUser(userItem: any){
-    console.log("Testing viewed profile:::", userItem.uid);
+    console.log("Testing viewed profile:::", userItem);
     this.router.navigate(['/user-profile', userItem.uid, this.currentUserId]);
   }
 
