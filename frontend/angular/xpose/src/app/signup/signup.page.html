@@ -1,9 +1,9 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title class="centered-title">Sign Up</ion-title>
-    <ion-buttons slot="start">
+    <!-- <ion-buttons slot="start">
       <app-backbutton></app-backbutton>
-    </ion-buttons>
+    </ion-buttons> -->
   </ion-toolbar>
   
 </ion-header>
@@ -12,7 +12,25 @@
   <div class="container">
     <img src="../assets/icon/icon.png" alt="Logo" class="logo-image">
   </div>
+
   <div class="container">
+    <!-- <ion-row>
+      <a class="log-in-text">Sign Up using social networks</a>
+    </ion-row>
+    
+      <ion-row>
+      <button id="google-button" type="submit" class="custom-bt" (click)="signInWithGoogle()">
+        <ion-icon name="logo-google" class="icon-g"></ion-icon>
+      </button>
+      <div class="or-text">or</div>
+      <button id="Facebook-button" type="submit" class="custom-bt" (click)="signInWithFacebook()">
+        <ion-icon name="logo-facebook" class="icon-g"></ion-icon>
+      </button>
+    </ion-row> -->
+
+
+
+  <!-- <div class="container"> -->
     <form [formGroup]="signUpForm">
       <ion-input label="Username" label-placement="floating" fill="outline" placeholder="Username" name="username" formControlName="username"></ion-input>
       <ion-input label="Email" label-placement="floating" fill="outline" placeholder="xpose@gmail.com" name="email" formControlName="email"></ion-input>
@@ -51,13 +69,12 @@
        formControlName="conf-password"
        type="password"
        ></ion-input>
-      
-
-
-      <ion-button id="submitBtn" type="submit" class="custom-btn" (click)="signUp()">Sign Up</ion-button>
+       <ion-button id="login-button" type="submit" class="custom-btn" (click)="signUp()">Sign Up</ion-button>
     </form>
     <div class="no-account-link">
-      <p>No account? <a href="/login">Click here</a></p>
+      <p>Already have an account <a href="/login">Click here</a></p>
     </div>
-  </div>
+    </div>
+  
+  <!-- </div> -->
 </ion-content>
