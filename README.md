@@ -4,6 +4,7 @@
 
 ## Link to the website
 [xPOSE](https://xpose-4f48c.web.app/signup)\
+[Presentation](https://youtu.be/94gLL2VcNPY?si=jkK2fqgaJuhCcVCF)\
 
 ## Links for Documentation and Project Management
 [Software Requirements Specifications](https://docs.google.com/document/d/1AV8hmgdBZ6FmjpaAfmGA63bMOqiWW4F-_2o7MoCvCT0/edit?usp=sharing)\
