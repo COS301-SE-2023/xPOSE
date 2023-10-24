@@ -7,7 +7,6 @@ from google.cloud import firestore
 import os
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "./permissions.json"
 
-
 app = Flask(__name__)
 
 @app.route('/<event_id>', methods=['POST'])
@@ -351,6 +350,9 @@ def register_user():
             result, status_code = encode_and_store_face(image_file, user_id)
             print('Retrieved result: ', result, ' with status code: ', status_code)
 
+            if status_code != 200:
+                return jsonify(result), status_code
+
             # Save or update the image URL in Firestore
             firestore_client = firestore.Client()
             user_ref = firestore_client.collection('Users').document(user_id)
@@ -425,6 +427,87 @@ def detect_users():
 @app.route('/', methods=['GET'])
 def health_check():
     return jsonify({'Message': 'Posts service is healthy'}, 200)
+
+# Add a new collection for a specific user
+@app.route('/user/<user_id>/collections', methods=['POST'])
+def create_collection(user_id):
+    if request.method == 'POST':
+        try:
+            collection_name = request.form['collection_name']
+            is_private = request.form['is_private'].lower() == 'true'
+
+            # Check if the user exists
+            user = User.get(User.uid == user_id)
+
+            if not user:
+                return jsonify({'error': 'User not found'}), 404
+            
+            # Create a firebase collection inside the document inside Users collection and create a new collection using this collection name
+            firestore_client = firestore.Client()
+            user_ref = firestore_client.collection('Users').document(user_id)
+            user_ref.collection('collections').document().set({
+                'collection_name': collection_name,
+                'is_private': is_private
+            })
+            
+            # Create a new collection for the user
+            collection = Collections.create(collection_name=collection_name, is_private=is_private, user_uid=user)
+
+            return jsonify({'message': 'Collection created successfully', 'collection_id': collection.collection_id}), 201
+        except User.DoesNotExist:
+            return jsonify({'error': 'User not found'}), 404
+        except Exception as e:
+            return jsonify({'error': str(e)}), 400
+
+# Add a post to a specific collection
+@app.route('/collection/<collection_id>/posts/<post_id>', methods=['POST'])
+def add_post_to_collection(collection_id, post_id):
+    if request.method == 'POST':
+        try:
+            # Check if the collection and post exist
+            collection = Collections.get(Collections.collection_id == collection_id)
+            post = Post.get(Post.pid == post_id)
+
+            # Check if the post already belongs to the collection
+            if PostsCollection.select().where(PostsCollection.collection_id == collection, PostsCollection.post_id == post).exists():
+                return jsonify({'error': 'Post already exists in the collection'}), 400
+
+            # Add the post to the collection
+            PostsCollection.create(collection_id=collection, post_id=post)
+
+            return jsonify({'message': 'Post added to the collection successfully'}), 201
+        except Collections.DoesNotExist:
+            return jsonify({'error': 'Collection not found'}), 404
+        except Post.DoesNotExist:
+            return jsonify({'error': 'Post not found'}), 404
+        except Exception as e:
+            return jsonify({'error': str(e)}), 400
+
+# Remove a post from a specific collection
+@app.route('/collection/<collection_id>/posts/<post_id>', methods=['DELETE'])
+def remove_post_from_collection(collection_id, post_id):
+    if request.method == 'DELETE':
+        try:
+            #   Check if the collection and post exist
+            collection = Collections.get(Collections.collection_id == collection_id)
+            post = Post.get(Post.pid == post_id)
+
+            # Check if the post belongs to the collection
+            posts_collection_entry = PostsCollection.get(PostsCollection.collection_id == collection, PostsCollection.post_id == post)
+            if posts_collection_entry:
+                posts_collection_entry.delete_instance()
+                return jsonify({'message': 'Post removed from the collection successfully'}), 200
+            else:
+                return jsonify({'error': 'Post not found in the collection'}), 404
+        except Collections.DoesNotExist:
+            return jsonify({'error': 'Collection not found'}), 404
+        except Post.DoesNotExist:
+            return jsonify({'error': 'Post not found'}), 404
+        except PostsCollection.DoesNotExist:
+            return jsonify({'error': 'Post not found in the collection'}), 404
+        except Exception as e:
+            return jsonify({'error': str(e)}), 400
+
 
 if __name__ == '__main__':
     create_tables()

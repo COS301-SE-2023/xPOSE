@@ -7,6 +7,9 @@ import sys
 from db_connector import User
 from PIL import Image, ExifTags
 
+class MultipleFacesError(Exception):
+    pass
+
 def preprocess_image(image_file):
     original_image = Image.open(image_file)
     
@@ -38,12 +41,11 @@ def preprocess_image(image_file):
     resized_image.info['dpi'] = (72, 72)
     
     return resized_image
-
 def encode_and_store_face(image_file, user_id):
     try:
         # Preprocess the image
         resized_image = preprocess_image(image_file)
-        
+
         if resized_image is None:
             return {'error': 'Error during image preprocessing'}, 400
 
@@ -55,8 +57,10 @@ def encode_and_store_face(image_file, user_id):
 
         if len(face_encodings) == 0:
             return {'error': 'No faces were detected in the provided image'}, 400
+        elif len(face_encodings) > 1:
+            raise MultipleFacesError('More than one face detected in the provided image')
 
-        encoding = face_encodings[0]  # Assuming there's at least one face
+        encoding = face_encodings[0]  # Assuming there's only one face
 
         # Serialize the encoding array to a JSON string
         encoding_json = json.dumps(encoding.tolist())
@@ -75,6 +79,9 @@ def encode_and_store_face(image_file, user_id):
             print("User created and face encoding saved in the database successfully")
 
         return {'message': 'User face encoding saved successfully'}, 200
+    except MultipleFacesError as e:
+        print("Error:", str(e))
+        return {'error': 'Multiple faces detected in the provided image'}, 400
     except Exception as e:
         print("Error:", str(e))
         return {'error': str(e)}, 400
