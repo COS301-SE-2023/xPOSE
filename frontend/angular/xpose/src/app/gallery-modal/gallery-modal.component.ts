@@ -195,7 +195,7 @@ export class GalleryModalComponent  implements OnInit {
   // Chat functionality
   messagesCollection: AngularFirestoreCollection<Message> | undefined;
   messages: Message[] = [];
-  temp_code = '4ace835e-5efd-4be5-8108-2b4c5aee1ba0';
+  temp_code = 'a69e488b-332e-4727-9ca4-655f07c3e8fc';
   
   generateAvatar(photoURL: string | undefined): string {
     // const initials = this.getInitials(name);

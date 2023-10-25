@@ -209,3 +209,707 @@ outline: none; /* Remove the default outline */
   margin-top: 50px;
   color: #ff0000;
 }
+
+.profile-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ccc;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+  align-items: flex-start;
+}
+
+.profile_div { 
+    border: 1px solid hsl(304, 49%, 82%);
+    margin: 10px;
+    padding: 10px;
+    box-shadow: 1px 1px hsl(304, 49%, 82%);
+  }
+   
+  ion-toolbar.custom-toolbar {
+    --background: #ffffff;
+    color: #000000;
+    font-size: 20px;
+    --min-height: 70px;
+  }
+
+  ion-segment-button{
+    --color: #000000;
+    --border-radius: 10px;
+    --padding-start: 20px;
+    --padding-end: 20px;
+    --margin: 5px;
+    --font-size: 18px;
+    --font-family: 'Roboto', sans-serif;
+    --color-checked: #ff00aa;
+  }
+
+  .custom-backround{
+    --background: #ffffff;
+    color: #000000;
+    font-size: 20px;
+  }
+  
+  ion-card {
+    background-color: hsl(304, 49%, 82%);
+    color: #000000;
+    margin-bottom: 20px;
+    height: 380px;
+    border: 1px solid #d1d1d1;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .card-transition:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  .card-image {
+    width: 100%;
+    height: 210px;
+    object-fit: cover;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+  
+  .card-title {
+    font-size: 24px;
+    font-weight: bold;
+    padding: 10px;
+    color: #000000;
+    font-family: 'Pacifico', cursive;
+  }
+  
+  ion-card-content {
+    display: inline;
+    padding-left: 10px;
+    color: #353535;
+    font-family: "Poppins", sans-serif;
+  }
+
+  ion-card-subtitle {
+    color: #000;
+  }
+  
+  .card-content {
+    padding: 10px;
+    color: #353535;
+    font-family: "Merriweather", serif;
+    --background: #ffffff;
+  }
+  
+  .card-subtitle {
+    color: #3d3d3d;
+    font-family: "Merriweather", serif;
+  }
+  
+  .card-description {
+    padding: 10px 0;
+    font-family: "Merriweather", serif;
+  }
+  
+  .card-button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+  }
+  
+  .card-label {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: #f00;
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: bold;
+    --background: #ffffff;
+  }
+  
+  .label-default {
+    background-color: #bdc3c7;
+  }
+  
+  .label-primary {
+    background-color: #3498db;
+  }
+  
+  .label-success {
+    background-color: #2ecc71;
+  }
+  
+  .label-info {
+    background-color: #46b8da;
+  }
+  
+  .label-warning {
+    background-color: #f0ad4e;
+  }
+  
+  .label-danger {
+    background-color: #e74c3c;
+  }
+  
+  .label{
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    --background: #ffffff;
+  }
+  
+  .iconp{
+    color: #ff00bfa8;
+    font-size: 40px;
+    box-shadow: #000000;
+    text-shadow: #f00;
+  }
+  
+  .header{
+    font-family: 'Literata', serif;
+    font-size: 30px;
+    text-shadow: #3d3d3d;
+    color: #1d1d1d;
+    --background: #ffffff;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  .loading-icon {
+    animation: spin 2s linear infinite;
+  }
+  
+  .page-row {
+    display: flex;
+    max-height: 100vh;
+    overflow: hidden;
+  }
+  
+  .scrollable-row {
+    max-height: 100vh;
+    overflow-y: auto;
+  }
+  
+  .scrollable-content {
+    max-height: calc(100vh - 56px);
+    overflow-y: auto;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .custom-toolbar ion-title {
+      display: none;
+      background-color: #ffffff;
+      
+    
+    .custom-toolbar ion-menu-button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #ffffff;
+      color: #000000;
+    }
+  }
+  }
+  
+  ion-col{
+    background: #ffffff;
+    color: #000000;
+  }
+  
+  .card-selected {
+    transform: scale(1.05);
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+  }
+  
+  ion-searchbar {
+    --background: #f4f4f4;
+    --color: #333;
+    --placeholder-color: #999;
+    --border-color: #ddd;
+    --border-radius: 10px;
+  }
+  
+  #tags-swiper {
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 10px 0;
+  }
+  
+  .swiper-slide {
+    display: inline-block;
+    margin-right: 10px;
+  }
+  
+  .swiper-tag {
+    display: inline-block;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    --background: #ffebef;
+  }
+  
+  .recent-events {
+    background-color: #3498db;
+    color: #fff;
+  }
+  
+  .new-events {
+    background-color: #e74c3c;
+    color: #fff;
+  }
+  
+  .close-events {
+    background-color: #2ecc71;
+    color: #fff;
+  }
+  
+  .trending-events {
+    background-color: #f39c12;
+    color: #fff;
+  }
+  
+  /* Pagination styles (optional) */
+  .swiper-pagination {
+    bottom: 10px;
+  }
+  
+  .scrolling-wrapper {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+  
+    .tag {
+      display: inline-block;
+      margin-top: 10px;
+    }
+  }
+  
+  /* Responsive styles for smaller screens */
+  @media screen and (max-width: 768px) {
+    .swiper-tag {
+      padding: 8px 16px;
+      font-size: 14px;
+    }
+  }
+  
+  .menu-item:hover {
+    cursor: pointer;
+  }
+
+
+  .profile-picture {
+    display: block;
+    position: relative;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    display: block;
+    margin: 0 auto 16px;
+  }
+  
+  .file-input{
+    display: none;
+  }
+  
+  .file-label {
+    display: block;
+    width: 75%;
+    text-align: center;
+    margin-top: 5px;
+    padding: 8px;
+    background-color:hsl(304, 49%, 82%);
+    color: black;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-left: 45px;
+  }
+  
+  .account-settings {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #000;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+    color: #000;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  input[type="text"],
+  input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #ccc  ;
+  }
+  
+  button:hover {
+    background-color: #eb0091;
+  }
+  
+  .profile-section,
+  .facial-recognition-section {
+    border: 1px solid hsl(304, 49%, 82%);
+    padding: 15px;
+    margin-bottom: 20px;
+  }
+  
+  .privacy {
+    border: 1px solid hsl(304, 49%, 82%);
+    padding: 15px;
+    margin-bottom: 20px;
+  }
+  
+  .delete-account-section {
+    border: 1px solid hsl(304, 49%, 82%);
+    padding-bottom: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  
+  .radio-label {
+    margin-right: 10px;
+  }
+  
+  .custom-backround{
+    background-color: #eb0091;
+    --background: #ffffff;
+    color: #a06363;
+    font-size: 20px;
+  }
+  
+  h3{
+    color: #000;
+  }
+  
+  p{
+    color: #000;
+  }
+  
+  ion-menu {
+    --width: 200px;
+    --background: #f4f4f4;
+  }
+  
+  ion-item {
+    --padding-start: 20px;
+    --padding-end: 20px;
+  }
+  
+  ion-item:hover {
+    background-color: #e0e0e0;
+  }
+  
+  a.sidebar-link {
+    color: #000;
+    text-decoration: none;
+  }
+  
+  ion-icon {
+    --color: #333;
+    --ionicon-stroke-width: 32px;
+  }
+  
+  .user_div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .profile-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 5px;
+  }
+  
+  ion-button {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .section {
+    border: 1px solid hsl(304, 49%, 82%);
+    padding: 15px;
+    text-align: center;
+  }
+  
+  ion-radio {
+    --color-checked: #ff00ff;
+  }
+  
+  .image {
+    margin-bottom: 10px;
+  }
+
+  :host{
+    display: block;
+    text-align: center;
+  }
+  
+  
+    .gallery {
+        line-height: 0;
+        column-count: 2;
+        column-gap: 0px;
+        background-color: #fff;
+        text-align: center;
+  
+        .gallery-img {
+          display: inline-block;
+            width: 95%;
+            height: auto;
+            cursor: zoom-in;
+            border-radius: 5px;
+            margin-bottom: 9px;
+            box-shadow: 0 1px 5px rgba(0,0,0,.21);
+  
+        }
+  
+    }
+    .lightbox{
+        // display: flex;
+        align-items: center;
+        // justify-content: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 1050px;
+        background: rgba(146, 146, 146, 0.85);
+    
+  
+        .background-element {
+            /* Set CSS properties to hide the background element */
+            display: none; /* or visibility: hidden; or opacity: 0; or any other appropriate styling */
+          }
+       
+        .btn-lightbox-carousel{
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1;
+            width: 8%;
+            height: 8%;
+            padding: 0;
+            color:#000000;
+            text-align: center;
+            background: 0 0;
+            border: 0;
+            cursor: pointer;
+            background-color: #fff;
+            }
+            // .btn-prev{
+            //     left: 0;
+            //     font-size: 30px;
+            // }
+            .btn-next{
+                right: 0;
+            }
+            .icon-lightbox-carousel {
+                // color:#ffffff;
+                opacity: 0.5;
+                transition: all 0.15s ease;
+  
+            }
+            .icon-Lightbox-carousel:hover {
+                opacity: 0.9;
+            }
+            .icon-lightbox-carousel:active {
+                opacity: 0.5;
+  
+            }
+            .btn-prev,
+            .btn-next {
+                font-size: 10px;
+            }
+            .lightbox-img {
+                width: 100%;
+                // height: 100%;
+                position: absolute; /* Change from 'absolute' to 'fixed' */
+                top: 0; /* Position the image at the top of the viewport */
+                left: 0; /* Position the image at the left of the viewport */
+                // display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+              }
+            
+              .lightbox-img img {
+                max-width: 100%; /* Ensure the image doesn't exceed the lightbox width */
+                max-height: 100%; /* Ensure the image doesn't exceed the lightbox height */
+                // object-fit: contain; /* Fit the image within the container, preserving its aspect ratio */
+                border-radius: .35rem;
+              }
+  
+  
+    
+    }
+    
+      .icon-prev{
+        font-size: 100px;
+        font-weight: bolder;
+        padding-top: 350px;
+        color: #fff;
+    
+      }
+      /* ... (previous styles) ... */
+  
+  .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1;
+    font-size: 30px;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    border-radius: 50%;
+    padding: 5px;
+    cursor: pointer;
+  }
+  
+  .icon-close-btn {
+    font-size: 30px;
+  }
+  
+  
+    
+    .icon-p{
+        font-size: 30px;
+        font-weight: bolder;
+    }
+  
+    .style-create-icon{
+        font-size: 200px;
+        color: deeppink;
+        // font-weight: bolder;
+        // padding-bottom: 1300px;
+    }
+    .btn-lightbox-carousel,
+  .btn-lightbox-control {
+  cursor: pointer;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  padding: 10px;
+  font-size: 20px;
+  margin: 5px;
+  }
+  
+  .btn-lightbox-control {
+  font-size: 20px;
+  }
+  
+  .btn-lightbox-carousel:hover,
+  .btn-lightbox-control:hover {
+  background-color: #555;
+  }
+  
+  /* Add custom styles for the download button */
+  .btn-lightbox-control.btn-download {
+  cursor: pointer;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  padding: 10px;
+  font-size: 20px;
+  margin: 5px;
+  }
+  
+  .btn-lightbox-control.btn-download:hover {
+  background-color: #555;
+  }
+  
+  //input styling
+  // input[type="text"] {
+  // width: 100%; /* Full width */
+  // max-width: 400px;
+  // padding: 12px; /* Padding */
+  // border: 1px solid #ccc; /* Gray border */
+  // border-radius: 4px; /* Rounded borders */
+  // box-sizing: border-box; /* Make sure that padding and width stays in place */
+  // margin-top: 6px; /* Add a top margin */
+  // margin-bottom: 16px; /* Bottom margin */
+  // resize: vertical; /* Allow the user to vertically resize the textarea (not horizontally) */
+  // font-size: 16px; /* Increase font size */
+  // background-color: #ececec /* Set a background color */;
+  // }
+  
+  input[type="text"]:focus {
+  border-color: #b837ad; /* Set the border color when in focus */
+  outline: none; /* Remove the default outline */
+  }
+  
+  .profile-details-container {
+    display: flex;
+    align-items: center;
+  }
+
+  .user-details {
+    flex-grow: 1;
+    margin-left: 20px;
+  }
+
+  .username {
+    margin-bottom: 2px;
+  }
+
+  .username[data-label]::before {
+    content: attr(data-label);
+    font-weight: bold;
+    display: inline-block;
+  }
+
+  @media screen and (max-width: 768px) {
+    .user-info {
+      margin-left: 0;
+    }
+  
+    .username::before {
+      margin-right: 0; /* Remove spacing for mobile view */
+    }
+  }

@@ -50,6 +50,8 @@ export class MyPicturesPage implements OnInit {
     postsCollection: AngularFirestoreCollection<Post> | undefined;
 
   ngOnInit() {
+    this.getEventsFromAPI();
+
     // this.galleryData = this.galleryDataService.getData();
     this.getCurrentUserId().subscribe((uid) => {
       if(uid) {
@@ -223,4 +225,54 @@ export class MyPicturesPage implements OnInit {
       this.onClosePreview();
     });
   }
+
+  // gallery
+  cards: any[] = [];
+  loading:boolean = true;
+  events: any[] = [];
+
+  
+  eventDetails(event_id: string) {
+		// this.router.navigate(['/view-event', event_id]);
+	}
+
+  async getEventsFromAPI() {
+
+      this.getCurrentUserId().subscribe((uid) => {
+        
+        if (uid) {
+          // console.log(`We got that ${uid}`);
+          this.http.get<Event[]>(`${this.api.apiUrl}/e/feed?uid=${uid}&participant=${uid}`).subscribe((events: Event[]) => {
+            // console.log(events);
+            this.events = events;
+            this.populateCards();
+          });       
+        } else {
+          console.log("No user id");
+        }
+      });
+    
+  }
+
+  populateCards() {
+    if (this.events.length === 0) {
+      this.cards = []; // Empty the cards list when there are no events
+    } else {
+      this.cards = this.events.map((event) => ({
+        title: event.title,
+        location: `${event.location}`,
+        description: '' + event.description,
+        button: "Join event",
+        image_url: event.image_url,
+        longitude: event.longitude,
+        latitude: event.latitude,
+        id: event.code,
+        created_at: event.createdAt,
+        start_date: event.start_date,
+        end_date: event.end_date,
+        status: event.status,
+      }));
+    }
+  }
+
 }
