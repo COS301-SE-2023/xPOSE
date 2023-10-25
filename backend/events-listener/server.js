@@ -15,5 +15,5 @@ const PORT = 8006;
 // initialize body-parser middleware
 app.use(bodyParser.json()); // will be using Json  data
 app.use('/notifications', notify);
-app.get('/', (req, res) => res.send(" Notifications services"));
+app.get('/', (req, res) => res.send(" Events listener service"));
 app.listen(PORT, () => console.log(`Server running on port: http://localhost:${PORT}`));

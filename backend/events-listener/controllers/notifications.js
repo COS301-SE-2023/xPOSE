@@ -4,11 +4,12 @@ import admin from "firebase-admin";
 
 async function processReceivedMessage() {
     try{
-        const queueName = 'notifications';
+        const queueName = 'events-queue';
         const receivedMsg = await receiveMessageFromQueue(queueName);
         if(receivedMsg !== null){
             console.log("Received message:", receivedMsg);
-            handleNotification(receivedMsg);
+            // handleNotification(receivedMsg);
+            
         }else {
             console.log("No messages received...");
         }
