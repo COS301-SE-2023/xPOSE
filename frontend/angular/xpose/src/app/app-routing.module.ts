@@ -44,7 +44,7 @@ const routes: Routes = [
   {
     path: "event/:id",
     loadChildren: () => import("./event/event.module").then(m => m.EventPageModule),
-    canActivate:[AuthGuard],
+    // canActivate:[AuthGuard],
     data: {title: 'Event' }
   },
   {
@@ -71,7 +71,7 @@ const routes: Routes = [
   {
     path: 'view-event/:id',
     loadChildren: () => import('./view-event/view-event.module').then( m => m.ViewEventPageModule)
-    ,canActivate:[AuthGuard],
+    ,//canActivate:[AuthGuard],
     data: {title: 'View Event' }
   },
   {
