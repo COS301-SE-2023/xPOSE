@@ -7,7 +7,7 @@ const routes: Routes = [
   {
     path: "home",
     loadChildren: () => import("./home/home.module").then(m => m.HomePageModule)
-    ,canActivate:[AuthGuard],
+    ,//canActivate:[AuthGuard],
     data: {title: 'xPOSE' }
   },
   {
@@ -83,23 +83,28 @@ const routes: Routes = [
   {
     path: 'search',
     loadChildren: () => import('./search/search.module').then( m => m.SearchPageModule)
+    ,canActivate:[AuthGuard]
   },
   {
     path: 'user-profile/:id/:id',
     loadChildren: () => import('./user-profile/user-profile.module').then( m => m.UserProfilePageModule)
+    ,canActivate:[AuthGuard]
   },
   {
   path: 'user-profile/:id',
   loadChildren: () => import('./user-profile/user-profile.module').then( m => m.UserProfilePageModule)
+  ,canActivate:[AuthGuard]
 },
   {
     path: 'search-image',
     loadChildren: () => import('./search-image/search-image.module').then( m => m.SearchImagePageModule)
+    ,canActivate:[AuthGuard]
   },
   {
     path: 'event/:id/settings',
     loadChildren: () => import('./events-settings/events-settings.module').then( m => m.EventsSettingsPageModule),
     data: {title: 'Settings' }
+    ,canActivate:[AuthGuard]
   },
   {
     path: 'friends',
@@ -118,6 +123,7 @@ const routes: Routes = [
   {
     path: 'my-pictures',
     loadChildren: () => import('./my-pictures/my-pictures.module').then( m => m.MyPicturesPageModule)
+    ,canActivate:[AuthGuard]
   },
 
 ];
