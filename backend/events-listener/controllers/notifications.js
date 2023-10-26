@@ -1,14 +1,32 @@
 import express from 'express';
 import { receiveMessageFromQueue } from '../receiver.js';
 import admin from "firebase-admin";
+import {
+    User
+} from '../data-access/sequelize.js';
 
 async function processReceivedMessage() {
     try{
-        const queueName = 'notifications';
+        const queueName = 'events-queue';
         const receivedMsg = await receiveMessageFromQueue(queueName);
         if(receivedMsg !== null){
             console.log("Received message:", receivedMsg);
-            handleNotification(receivedMsg);
+            // handleNotification(receivedMsg);
+            console.log(receivedMsg.data.values);
+            const data = receivedMsg.data.values[0];
+            switch(receivedMsg.data.type) {
+                case 'delete_user':
+                    // delete user from sql table
+                    console.log('Deleting user from sql table');
+                    await User.destroy({
+                        where: {
+                            uid: data.deleted_user_id
+                        }
+                    });
+                    break;
+                default:
+                    console.log(`Invalid message type: ${receiveMsg.data.type}`);
+            }
         }else {
             console.log("No messages received...");
         }

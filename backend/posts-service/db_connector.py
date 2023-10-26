@@ -34,9 +34,20 @@ class PostTaggedUser(BaseModel):
     uid = ForeignKeyField(User, on_delete='CASCADE')
     post_id = ForeignKeyField(Post, on_delete='CASCADE')
 
+class Collections(BaseModel):
+    collection_id = AutoField(primary_key=True)
+    collection_name = CharField()
+    is_private = BooleanField()
+    user_uid = ForeignKeyField(User, backref='collections', on_delete='CASCADE')
+
+class PostsCollection(BaseModel):
+    id = AutoField(primary_key=True)
+    collection_id = ForeignKeyField(Collections, on_delete='CASCADE')
+    post_id = ForeignKeyField(Post, on_delete='CASCADE')
+
 def create_tables():
     db.connect()
-    db.create_tables([User, Event, Post, PostTaggedUser])
+    db.create_tables([User, Event, Post, PostTaggedUser, Collections, PostsCollection])
 
 def close_connection():
     db.close()

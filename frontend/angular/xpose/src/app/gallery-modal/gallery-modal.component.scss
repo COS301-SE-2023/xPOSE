@@ -154,3 +154,70 @@ ion-toolbar{
 ion-title {
   margin-left: 5px;
 }
+
+// This is for chats
+.chat-list {
+  --background: #ffffff;
+  color: #000000;
+  ion-item-divider {
+    background-color: #ffffff;
+    color: var(--ion-color-medium-shade);
+}
+
+.chat-item {
+    ion-avatar {
+      width: 40px;
+      height: 40px;
+      background-color: #ffffff;
+      color: #000000;
+      --background: #ffffff;
+    }
+    --background: #ffffff;
+    color: #000000;
+  }
+
+  .chat-content {
+    background-color: #ffffff;
+    color: #000000;
+
+    ion-label {
+      display: block;
+      padding-left: 10px;
+      background-color: #ffffff;
+      color: #000000;
+
+      .chat-name {
+        font-weight: bold;
+        font-size: 16px;
+      }
+
+      .chat-message {
+        font-size: 14px;
+ 
+      }
+
+      .chat-timestamp {
+        font-size: 12px;
+        color: var(--ion-color-medium-shade);
+      }
+    }
+  }
+
+  .comment-input {
+    background-color: #ffffff;
+    --background: #ffffff;
+    ion-input {
+      flex-grow: 1;
+      background-color: #ffffff;
+      color: #000000;
+    }
+
+    ion-button {
+      background-color: #ffffff;
+      color: #000000;
+      ion-icon {
+        --ion-icon-fill-color: var(--ion-color-primary);
+      }
+    }
+  }
+}

@@ -3,6 +3,8 @@ import admin from "firebase-admin";
 import User from '../data-access/models/user.table.js';
 import Friendship from '../data-access/models/friendship.table.js';
 import { Op } from 'sequelize';
+import { sendMessageToQueue } from '../sender.js';
+import MessageBuilder from './messagebuilder.js';
 
 let users = [];
 export const deleteUser = async (req, res) => {
@@ -32,6 +34,18 @@ export const deleteUser = async (req, res) => {
             }
 
         });
+
+        // send delete user message to rabbitmq
+        // const queueName = 'notifications';
+        console.log('Sending delete user message to rabbitmq');
+        const message = new MessageBuilder().setType("delete_user").setValue({deleted_user_id: userId}).build();
+        console.log('Message: ', message);
+
+        sendMessageToQueue('posts-queue', message);
+        sendMessageToQueue('events-queue', message);
+
+        console.log(`Messages sent to rabbitmq`);
+
         res.status(200).json({message:`User with the id ${userId} deleted from DB successfuly`});
 
     } catch(error) {

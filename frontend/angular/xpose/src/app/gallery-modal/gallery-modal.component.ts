@@ -1,13 +1,15 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { MenuController, ModalController, Platform } from '@ionic/angular';
-import firebase from 'firebase/compat/app';
+// import firebase from 'firebase/compat/app';
 import 'firebase/compat/storage';
 import { ApiService } from '../service/api.service';
 import { Observable, map } from 'rxjs';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Service } from '../service/service';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 
 @Component({
@@ -35,11 +37,19 @@ export class GalleryModalComponent  implements OnInit {
     private api: ApiService,
     private afs: AngularFirestore,
     private router: Router,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private userService: Service,
+		private afAuth: AngularFireAuth
   ) {
-    this.currentIndex = this.initialIndex;
+    this.currentIndex = this.initialIndex; 
   }
-
+  
+      
+  ngOnInit() {
+    this.messagesCollection = this.afs.collection<Message>(`Event-Chats/${this.temp_code}/chats`);
+    this.retrieveMessages();
+  }
+  
   toggleComment() {
     this.showCommentBox = !this.showCommentBox;
   }
@@ -59,7 +69,7 @@ export class GalleryModalComponent  implements OnInit {
   closeModal() {
     this.modalController.dismiss();
   }
-
+  
   prev() {
     this.currentIndex = (this.currentIndex - 1 + this.galleryData.length) % this.galleryData.length;
   }
@@ -67,7 +77,7 @@ export class GalleryModalComponent  implements OnInit {
   next() {
     this.currentIndex = (this.currentIndex + 1) % this.galleryData.length;
   }
-
+  
   toggleLike() {
     this.isLiked = !this.isLiked;
 
@@ -78,11 +88,48 @@ export class GalleryModalComponent  implements OnInit {
     }
   }
 
+  async retrieveMessages() {
+    if (this.messagesCollection) {
+      this.messagesCollection.snapshotChanges().subscribe((messagesSnapshot) => {
+        this.messages = messagesSnapshot.map((messageSnapshot) => {
+          const messageData = messageSnapshot.payload.doc.data() as Message;
+          const messageId = messageSnapshot.payload.doc.id;
+          const message = { ...messageData, id: messageId } as Message;
+          
+          this.getUserNameFromUid(message.uid).subscribe((displayName: string) => {
+            message.displayName = displayName;
+            // get the profile photo of the user who's messaged
+            this.userService.GetUser(message.uid).subscribe((user) => {
+              if (user) {
+                message.photoURL = user.photoURL;
+              }
+            });
+          });
+  
+          return message;
+        });
+  
+        // Sort the messages
+        this.messages.sort((a: Message, b: Message) => {
+          const timestampA = a.timestamp ? a.timestamp.toMillis() : 0;
+          const timestampB = b.timestamp ? b.timestamp.toMillis() : 0;
+          return timestampB - timestampA;
+        });
+        
+        // ...
+      });
+    } else {
+      console.log("messagesCollection is undefined");
+    }
+  }
+  
+  user_id: string = '';
+
   async usersInImage() {
     await this.menuController.close('end');
 
     const usersInImageArray = this.galleryData[this.currentIndex].users_in_image;
-  
+    
     let nameOfUserInImage: string = ''; // Initialize an empty string for concatenation
     let completedRequests = 0; // Counter for completed requests
     let flag = false;
@@ -92,7 +139,7 @@ export class GalleryModalComponent  implements OnInit {
         (userName: string) => {
           completedRequests++;
           nameOfUserInImage += userName + `\n`; // Concatenate the usernames in image
-  
+          
           if (completedRequests === usersInImageArray.length) {
             // All requests have completed, open the modal with the concatenated usernames
             this.openModalUser("Users in image:\n" + (nameOfUserInImage || 'No user(s) detected'));
@@ -101,22 +148,22 @@ export class GalleryModalComponent  implements OnInit {
         (error: any) => {
           completedRequests++;
           console.error('Error fetching user name:', error);
-  
+          
           if (completedRequests === usersInImageArray.length) {
             // All requests have completed, open the modal with the concatenated usernames
             this.openModalUser("Users in image:\n" + 'No user(s) detected');
           }
         }
-      );
+        );
     }
-
+    
 
     if(!flag){
       this.openModalUser("Users in image:\n" +  ('No user(s) detected'));
     }
-
+    
     // iterate through users_in_image array and display each uid using getUserNameFromUid(uid)
-
+    
     /*let nameOfUserInImage: string | null = null;
     this.getUserNameFromUid(this.galleryData[this.currentIndex].users_in_image[0]).subscribe(
       (userName: string) => {
@@ -131,7 +178,7 @@ export class GalleryModalComponent  implements OnInit {
       }
     );*/
   }
-
+  
   openModalUser(content: any) {
     let modal = document.getElementById("myModal");
     let closeImageOverlay = document.getElementById("end");
@@ -142,7 +189,28 @@ export class GalleryModalComponent  implements OnInit {
     if(modalContent) {
       modalContent.textContent = content;
     }
+    
+  }
 
+  // Chat functionality
+  messagesCollection: AngularFirestoreCollection<Message> | undefined;
+  messages: Message[] = [];
+  temp_code = 'a69e488b-332e-4727-9ca4-655f07c3e8fc';
+  
+  generateAvatar(photoURL: string | undefined): string {
+    // const initials = this.getInitials(name);
+    // const color = this.getRandomColor();
+
+    // You can customize the avatar appearance (size, font size, background color) here
+  //   const avatarUrl = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='100' width='100'%3E%3Crect width='100' height='100' fill='${color}'/%3E%3Ctext x='50' y='55' font-size='48' fill='white' text-anchor='middle' dy='.3em' font-family='Arial, sans-serif'%3E${initials}%3C/text%3E%3C/svg%3E`;
+    
+  //   return this.sanitizer.bypassSecurityTrustResourceUrl(avatarUrl);
+  // }
+  
+  // Function to get the initials from a name
+  // console.log("Testing displayname", displayName);
+  const defaultAvatarUrl = 'path/to/default/avatar.jpg';
+  return photoURL ? photoURL : defaultAvatarUrl;
   }
 
   closeModalUser() {
@@ -162,8 +230,69 @@ export class GalleryModalComponent  implements OnInit {
       })
     );
   }
-    
-  ngOnInit() {}
+
+  toDate(firebase_timestamp:  firebase.default.firestore.Timestamp | undefined) {
+    if(firebase_timestamp !== undefined) {
+     return firebase_timestamp.toDate();
+    }
+    return '';
+  }
+
+  newMessage!: string;
+  
+  async createMessage() {  
+    // first check if  pre-set banned words are active
+
+
+    if (this.newMessage) {
+      this.getCurrentUserId().subscribe((uid) => {
+        const message: Message = {
+          uid: uid,
+          message: this.newMessage
+        };
+
+        this.newMessage = '';
+        const event_id = this.temp_code;
+        const formData: FormData = new FormData();
+        formData.append('message', message.message);
+        this.http.post(`${this.api.apiUrl}/c/chats/${event_id}?uid=${uid}`, formData).subscribe((res) => {
+          console.log(res);
+        });
+      });
+    }
+  }
+  
+
+  
+  deleteMessage(messageUID: any){
+    // console.log("Deleting message...",messageUID);
+    this.getCurrentUserId().subscribe((uid) => {
+      if(uid) {
+        this.http.post(`${this.api.apiUrl}/c/chats/${this.temp_code}/message_delete/${messageUID.id}?uid=${uid}`,{}).subscribe((res) => {
+          // console.log(res);
+        });
+      }
+    });
+  }
+
+  getCurrentUserId(): Observable<string> {
+    return this.afAuth.authState.pipe(
+      map((user) => {
+      if (user) {
+        return user.uid;
+      } else {
+        // throw error
+        // some extra stuff
+        
+        console.log('No user is currently logged in.');
+        return '';
+      }
+      })
+    );
+    }
+
+
+
 
   downloadImage() {
     console.log("Downloading the picture....");
@@ -257,4 +386,13 @@ shareImage(imageUrl: string) {
       this.newComment = '';
     }
   }
+}
+
+interface Message {
+  uid: string;
+  displayName?: string; // Add displayName property
+  message: string;
+  id?: string;
+  timestamp?: firebase.default.firestore.Timestamp;
+  photoURL?:string;
 }

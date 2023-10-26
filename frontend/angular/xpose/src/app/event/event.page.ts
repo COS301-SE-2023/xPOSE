@@ -387,6 +387,11 @@ export class EventPage {
   }
 
   async openImageGallery() {
+    if(this.user_id === "guest") {
+      // redirect to login page
+      this.router.navigate(['/login']);
+      return;
+    }
     const image = await Camera.getPhoto({
       quality: 90,
       allowEditing: true,
@@ -532,7 +537,7 @@ export class EventPage {
         // some extra stuff
         
         console.log('No user is currently logged in.');
-        return '';
+        return 'guest';
       }
       })
     );

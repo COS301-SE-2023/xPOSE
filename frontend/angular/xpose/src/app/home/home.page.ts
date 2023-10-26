@@ -98,7 +98,7 @@ export class HomePage {
 		  return user.uid;
 		} else {
 		  console.log('No user is currently logged in.');
-		  return '';
+		  return 'guest';
 		}
 	  })
 	);
