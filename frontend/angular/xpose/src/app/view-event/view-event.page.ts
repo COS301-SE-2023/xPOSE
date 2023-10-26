@@ -104,6 +104,7 @@ export class ViewEventPage implements OnInit, AfterViewInit {
   getEventDataFromAPI() {
     this.getCurrentUserId().subscribe((uid) => {
       if (uid) {
+        this.current_user = uid;
         this.http
           .get(`${this.api.apiUrl}/e/events/${this.event_id}?uid=${uid}`)
           .subscribe((data) => {
@@ -146,7 +147,7 @@ export class ViewEventPage implements OnInit, AfterViewInit {
           return user.uid;
         } else {
           console.log('No user is currently logged in.');
-          return '';
+          return 'guest';
         }
       })
     );
@@ -208,8 +209,17 @@ export class ViewEventPage implements OnInit, AfterViewInit {
       case 'none':
         console.log('Will join or request');
         if (this.event?.privacy_setting === 'public') {
+          if (this.current_user === "guest") {
+            this.router.navigate(['/event', this.event.code]);
+            return;
+          }
           this.joinPublicEvent();
         } else {
+          if (this.current_user === "guest") {
+            // TODO: Redirect to login page
+            this.router.navigate(['/login']);
+            return;
+          }
           this.requestPrivateEvent();
         }
         break;
@@ -229,12 +239,16 @@ export class ViewEventPage implements OnInit, AfterViewInit {
         case 'requested':
           return 'Requested';
         case 'none':
-          return this.event?.privacy_setting === 'public' ? 'Join' : 'Request';
+          if (this.event?.privacy_setting === 'public') {
+            return this.current_user === "guest" ? 'View event' : 'Join event';
+          }
+          return this.current_user === "guest" ? 'Sign up to request' : 'Request';
         default:
           return '';
       }
     }
     
+    current_user: string = "";
   
     // Function to accept the invite (Replace this with your actual API call)
     acceptInvite() {

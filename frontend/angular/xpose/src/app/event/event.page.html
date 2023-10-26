@@ -37,7 +37,7 @@
     
       <ion-list *ngIf="filterType === 'message-board'" class="chat-list">
            <!-- Message input -->
-           <ion-item class="comment-input">
+           <ion-item class="comment-input" *ngIf="user_id !== 'guest'">
             <ion-input [(ngModel)]="newMessage" placeholder="Type your message"></ion-input>
             <ion-button (click)="createMessage()" expand="block" fill="clear">
               <ion-icon name="send" class="colorr"></ion-icon>
