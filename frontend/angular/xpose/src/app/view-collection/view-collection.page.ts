@@ -8,35 +8,14 @@ import { GalleryDataService } from '../event/posts/gallery-lightbox/gallery-data
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { Observable, map } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { Router } from '@angular/router';
-
-
-interface Item {
-  imageSrc: string;
-  imageAlt: string;
-  event_id: string;
-  uid: string;
-  id: string;
-  users_in_image: string[];
-}
-
-interface Post {
-  event_id: string;
-  uid: string;
-  id: string;
-  timestamp?: Date;
-  imageSrc: string;
-  users_in_image: string[];
-  imageAlt: string;
-}
 
 
 @Component({
-  selector: 'app-my-pictures',
-  templateUrl: './my-pictures.page.html',
-  styleUrls: ['./my-pictures.page.scss'],
+  selector: 'app-view-collection',
+  templateUrl: './view-collection.page.html',
+  styleUrls: ['./view-collection.page.scss'],
 })
-export class MyPicturesPage implements OnInit {
+export class ViewCollectionPage implements OnInit {
   @Input() galleryData: Item[] = [];
   @Input() showCount = false;
 
@@ -45,15 +24,12 @@ export class MyPicturesPage implements OnInit {
     private http: HttpClient,
     private modalController: ModalController,
     private afs: AngularFirestore,
-    private afAuth: AngularFireAuth,
-    private router: Router
+    private afAuth: AngularFireAuth
     ) {}
 
     postsCollection: AngularFirestoreCollection<Post> | undefined;
 
   ngOnInit() {
-    this.getEventsFromAPI();
-
     // this.galleryData = this.galleryDataService.getData();
     this.getCurrentUserId().subscribe((uid) => {
       if(uid) {
@@ -227,54 +203,25 @@ export class MyPicturesPage implements OnInit {
       this.onClosePreview();
     });
   }
+}
 
-  // gallery
-  cards: any[] = [];
-  loading:boolean = true;
-  events: any[] = [];
 
-  
-  eventDetails(event_id: string) {
-		this.router.navigate(['/my-pictures', event_id]);
-	}
 
-  async getEventsFromAPI() {
+interface Item {
+  imageSrc: string;
+  imageAlt: string;
+  event_id: string;
+  uid: string;
+  id: string;
+  users_in_image: string[];
+}
 
-      this.getCurrentUserId().subscribe((uid) => {
-        
-        if (uid) {
-          // console.log(`We got that ${uid}`);
-          this.http.get<Event[]>(`${this.api.apiUrl}/e/feed?uid=${uid}&participant=${uid}`).subscribe((events: Event[]) => {
-            // console.log(events);
-            this.events = events;
-            this.populateCards();
-          });       
-        } else {
-          console.log("No user id");
-        }
-      });
-    
-  }
-
-  populateCards() {
-    if (this.events.length === 0) {
-      this.cards = []; // Empty the cards list when there are no events
-    } else {
-      this.cards = this.events.map((event) => ({
-        title: event.title,
-        location: `${event.location}`,
-        description: '' + event.description,
-        button: "Join event",
-        image_url: event.image_url,
-        longitude: event.longitude,
-        latitude: event.latitude,
-        id: event.code,
-        created_at: event.createdAt,
-        start_date: event.start_date,
-        end_date: event.end_date,
-        status: event.status,
-      }));
-    }
-  }
-
+interface Post {
+  event_id: string;
+  uid: string;
+  id: string;
+  timestamp?: Date;
+  imageSrc: string;
+  users_in_image: string[];
+  imageAlt: string;
 }

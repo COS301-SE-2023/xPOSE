@@ -119,6 +119,11 @@ const routes: Routes = [
     path: 'my-pictures',
     loadChildren: () => import('./my-pictures/my-pictures.module').then( m => m.MyPicturesPageModule)
   },
+  {
+    path: 'my-pictures/:id',
+    loadChildren: () => import('./view-collection/view-collection.module').then( m => m.ViewCollectionPageModule)
+  },
+
 
 ];
 
