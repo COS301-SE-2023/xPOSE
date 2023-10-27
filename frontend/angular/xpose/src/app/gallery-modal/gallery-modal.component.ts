@@ -46,10 +46,16 @@ export class GalleryModalComponent  implements OnInit {
   
       
   ngOnInit() {
-    this.messagesCollection = this.afs.collection<Message>(`Event-Chats/${this.temp_code}/chats`);
-    this.retrieveMessages();
+    console.log("Gallery Data", this.galleryData);
+    this.updateMessages();
   }
   
+  updateMessages() {
+    this.messagesCollection = this.afs.collection<Message>(`Event-Chats/${this.galleryData[this.currentIndex].id}/chats`);
+    this.retrieveMessages();
+  }
+
+
   toggleComment() {
     this.showCommentBox = !this.showCommentBox;
   }
@@ -61,6 +67,7 @@ export class GalleryModalComponent  implements OnInit {
   // when the component loads
   ionViewDidEnter() {
     this.currentIndex = this.initialIndex;
+    this.updateMessages();
     console.log('Values:');
     console.log(this.galleryData);
     console.log(this.initialIndex);
@@ -72,10 +79,12 @@ export class GalleryModalComponent  implements OnInit {
   
   prev() {
     this.currentIndex = (this.currentIndex - 1 + this.galleryData.length) % this.galleryData.length;
+    this.updateMessages();
   }
 
   next() {
     this.currentIndex = (this.currentIndex + 1) % this.galleryData.length;
+    this.updateMessages();
   }
   
   toggleLike() {
@@ -255,7 +264,7 @@ export class GalleryModalComponent  implements OnInit {
         const event_id = this.temp_code;
         const formData: FormData = new FormData();
         formData.append('message', message.message);
-        this.http.post(`${this.api.apiUrl}/c/chats/${event_id}?uid=${uid}`, formData).subscribe((res) => {
+        this.http.post(`${this.api.apiUrl}/c/chats/${this.galleryData[this.currentIndex].id}?uid=${uid}`, formData).subscribe((res) => {
           console.log(res);
         });
       });
@@ -268,7 +277,7 @@ export class GalleryModalComponent  implements OnInit {
     // console.log("Deleting message...",messageUID);
     this.getCurrentUserId().subscribe((uid) => {
       if(uid) {
-        this.http.post(`${this.api.apiUrl}/c/chats/${this.temp_code}/message_delete/${messageUID.id}?uid=${uid}`,{}).subscribe((res) => {
+        this.http.post(`${this.api.apiUrl}/c/chats/${this.galleryData[this.currentIndex].id}/message_delete/${messageUID.id}?uid=${uid}`,{}).subscribe((res) => {
           // console.log(res);
         });
       }
@@ -285,7 +294,7 @@ export class GalleryModalComponent  implements OnInit {
         // some extra stuff
         
         console.log('No user is currently logged in.');
-        return '';
+        return 'guest';
       }
       })
     );
@@ -336,6 +345,10 @@ deleteImage() {
     // .catch((error) => {
     //   console.error('Error deleting image:', error);
     // });
+    if(this.galleryData[this.currentIndex].uid !== this.user_id) {
+      alert("You are not allowed to delete this image");
+      return;
+    }
     const url = `${this.api.apiUrl}/posts/${item.event_id}/${item.id}`
     this.http.delete(url).subscribe((res) => {
       console.log(url);
@@ -369,8 +382,6 @@ shareImage(imageUrl: string) {
     alert('To share this image, copy and paste the URL: ' + imageUrl);
   }
 }
-
-
 
   openContextMenu() {
     this.menuController.enable(true, 'imageMenu');

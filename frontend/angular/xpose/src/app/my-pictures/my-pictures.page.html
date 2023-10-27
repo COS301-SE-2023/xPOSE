@@ -3,55 +3,13 @@
 
 <ion-content [fullscreen]="true">
  
-  <!-- <div class="gallery"> -->
-    <!-- <ion-img *ngFor="let item of galleryData; let i=index" [src]="item.imageSrc" [alt]="item.imageAlt" class="gallery-img" (click)="openImageModal(item, i)"></ion-img> -->
-    <!-- Message to show when there are no images -->
-    <!-- <div *ngIf="galleryData.length === 0" class="no-images-message"> -->
-      <!-- No images available. -->
-    <!-- </div> -->
-  <!-- </div> -->
-
-  <div class="no-cards" *ngIf="cards.length === 0">
-    <ion-text>
-      <h1>No Events could be loaded...</h1>
-      <!-- <app-loading-icon *ngIf="loading"></app-loading-icon> -->
-      <ng-container *ngIf="loading; else noDataTemplate">
-        <app-loading-icon></app-loading-icon>
-      </ng-container>
-      
-      <ng-template #noDataTemplate>
-        <div class="nothing-found-message">Nothing Found</div>
-      </ng-template>
-    </ion-text>
+  <div class="gallery">
+    <ion-img *ngFor="let item of galleryData; let i=index" [src]="item.imageSrc" [alt]="item.imageAlt" class="gallery-img" (click)="openImageModal(item, i)"></ion-img>
+    Message to show when there are no images
+    <div *ngIf="galleryData.length === 0" class="no-images-message">
+      No images available.
+    </div>
   </div>
-  <div class="scrollable-content">
-    <ion-row>
-      <ion-col size="12" size-sm="6" size-md="4" size-lg="3" *ngFor="let card of cards">
-        <ion-card class="custom-card" class="card-transition" (click)="eventDetails(card.id)">
-          <!-- <span class="label-{{ getStatusColor(card?.status) }} label">{{ card?.status }}</span> -->
-          <img [src]="card.image_url" alt="Card Image" class="card-image">
-          <ion-card-header class="">
-            <ion-card-title><b>{{ card?.title }}</b>
-            </ion-card-title>
-            <!-- <ion-card-content> -->
-              <!-- <p><b>Description</b></p> -->
-              <!-- <ion-icon name="calendar"></ion-icon>
-              {{ card.date | date: 'mediumDate' }}<br>
-              <ion-icon name="location"></ion-icon> -->
-              <!-- {{ truncateText(card.location, 4) }} -->
-            <!-- </ion-card-content> -->
-                <ion-card-subtitle><b>{{ card.description }}</b></ion-card-subtitle>
-                <!-- <div class="tags">
-                  <span class="tag" *ngFor="let tag of card.tags">
-                    #{{ tag }}
-                  </span>
-                </div> -->
-          </ion-card-header>                        
-        </ion-card>
-      </ion-col>
-    </ion-row>
-  </div> 
-</ion-content>
 
 <!-- <app-gallery-lightbox></app-gallery-lightbox> -->
 <app-gallery>
