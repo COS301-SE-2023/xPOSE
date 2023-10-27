@@ -345,10 +345,13 @@ deleteImage() {
     // .catch((error) => {
     //   console.error('Error deleting image:', error);
     // });
-    if(this.galleryData[this.currentIndex].uid !== this.user_id) {
-      alert("You are not allowed to delete this image");
-      return;
-    }
+
+
+    // if(this.galleryData[this.currentIndex].uid !== this.user_id) {
+    //   alert("You are not allowed to delete this image");
+    //   return;
+    // }
+
     const url = `${this.api.apiUrl}/posts/${item.event_id}/${item.id}`
     this.http.delete(url).subscribe((res) => {
       console.log(url);
