@@ -129,6 +129,9 @@ def create_post(event_id):
                 post_owner_uid=user_id
             )
 
+            # Create Event-Chat document in Firestore with the same id as the post
+            firestore_client.collection(f'Event-Chat').document(post_id).set({})
+
             # Add detected users to the PostTaggedUser table
             for detected_user_id in detected_users:
                 PostTaggedUser.create(
