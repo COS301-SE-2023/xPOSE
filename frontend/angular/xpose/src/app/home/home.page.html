@@ -1,8 +1,8 @@
-<link href="https://cdn.jsdelivr.net/npm/ionicons@5.0.1/dist/css/ionicons.min.css" rel="stylesheet">
-<app-footer></app-footer>
+<!-- <link href="https://cdn.jsdelivr.net/npm/ionicons@5.0.1/dist/css/ionicons.min.css" rel="stylesheet">
+<app-footer></app-footer> -->
 
 <ion-content [fullscreen]="true" id="main-content" class="custom-background">
-  <div class="swiper-container" id="tags-swiper">
+  <!-- <div class="swiper-container" id="tags-swiper">
     <div class="scrolling-wrapper">
         <div class="swiper-slide">
           <ion-chip class="swiper-tag" (click)="getEventsFromAPI()">
@@ -15,8 +15,8 @@
         </div>
       </div>
     </div>
-  </div>
-  <ion-row>
+  </div> -->
+  <ion-row *ngIf="false">
     <ion-col>  
       <div class="no-cards" *ngIf="cards.length === 0">
         <ion-text>
@@ -62,4 +62,12 @@
       </div>
     </ion-col>
   </ion-row>
+
+<h1 style="text-align: center;">
+  <div>
+    <img width="30%" height="30%" src="../assets/icon/icon.png" alt="Logo" class="logo-image">
+  </div>
+  
+  Thank you for visiting Xpose☁️! <br> Our backend services are offline, but thank you! <br> Find out about more from our <a href="https://github.com/COS301-SE-2023/xPOSE">github</a> ❤️
+</h1>
 </ion-content>

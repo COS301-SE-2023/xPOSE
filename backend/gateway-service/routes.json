@@ -1,8 +1,8 @@
 {
-    "/c": "https://event-chats-service-wcjsbin3oq-uc.a.run.app",
-    "/p": "https://event-posts-service-old-wcjsbin3oq-uc.a.run.app",
-    "/e": "https://events-service-wcjsbin3oq-uc.a.run.app",
+    "/c": "http://localhost:8001",
+    "/p": "http://localhost:8006",
+    "/e": "http://localhost:8004",
     "/u": "http://localhost:8002",
-    "/n": "https://notifications-service-wcjsbin3oq-uc.a.run.app",
+    "/n": "http://localhost:8003",
     "/posts": "http://127.0.0.1:5000"
 }
